@@ -17,7 +17,7 @@ for v in 1.10.4 1.14.0 ; do
 done
 
 echo "==== private modules"
-source ${HOME}/Software/env_fortran_intel19.sh
+source ${HOME}/Software/env_frontera_intel19.sh >/dev/null 2>&1
 for v in 1.14.0 ; do 
     module load hdf5/$v >/dev/null 2>&1
     ##v=$( modversion hdf5 )
