@@ -1,10 +1,15 @@
 # -*- makefile -*-
 .PHONY: test
 test :
-	@fn=${TEST}_${TACC_SYSTEM}.sh \
-	 && if [ ! -f $${fn} ] ; then \
-	      echo "No such script: $${fn}" && exit 1 ; fi \
-	 && eval ./$${fn}
+	@fns=${TEST}_${TACC_SYSTEM}.sh \
+	 fn=${TEST}.sh \
+	 && if [ -f $${fns} ] ; then \
+	        eval ./$${fns} \
+	    ; elif [ -f ${nf} ] ; then \
+	        eval ./$${fn} \
+	    ; else \
+	        echo "No such script: $${fns} or $${fn}" && exit 1 \
+	    ; fi \
 
 clean ::
 	@rm -f a.out ${TESTS} *.o *~ *.out
