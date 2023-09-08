@@ -14,7 +14,10 @@ for compiler in intel/19 ; do \
 	    echo "compile with petsc $v"
 	    cmdline="$cc -o mumpsi64 mumpsi64.c ${includes} ${libs} "
 	    echo " .. $cmdline"
-	    eval $cmdline
+	    retcode=0 && eval $cmdline || retcode=$?
+	    if [ ${retcode} -ne 0 ] ; then 
+		echo && echo "ERROR compilation failed with compiler=${compiler} and petsc/${v}" && echo
+	    fi
 	else
 	    echo "could not load petsc/$v"
 	fi
