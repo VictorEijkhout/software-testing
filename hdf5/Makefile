@@ -1,6 +1,3 @@
-info ::
-	@echo "make test TEST=..."
-	@echo "    from tests: ${TESTS}"
-TESTS = fmod
-TEST = fmod
+TESTS = fmod_tacc fmod_work
+TEST = fmod_tacc
 include ../Make.common

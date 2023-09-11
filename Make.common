@@ -1,5 +1,10 @@
 # -*- makefile -*-
-.PHONY: test
+info ::
+	@echo "make test TEST=..."
+	@echo "    from tests: ${TESTS}"
+	@echo "make tests : all tests"
+
+.PHONY: test tests
 test :
 	@fns=${TEST}_${TACC_SYSTEM}.sh \
 	 fn=${TEST}.sh \
@@ -9,7 +14,12 @@ test :
 	        eval ./$${fn} \
 	    ; else \
 	        echo "No such script: $${fns} or $${fn}" && exit 1 \
-	    ; fi \
+	    ; fi
+
+tests :
+	@for t in ${TESTS} ; do \
+	    make --no-print-directory test TEST=$$t \
+	; done
 
 clean ::
 	@rm -f a.out ${TESTS} *.o *~ *.out
