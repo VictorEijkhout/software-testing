@@ -6,13 +6,13 @@ for compiler in intel/19 ; do \
     module load $compiler
     ## case $compiler in ( intel* ) cc=icc ;; ( gcc* ) cc=gcc ;; esac
     cc=mpicc
-    for v in 3.19-i64 3.19-complexi64 3.18-i64 ; do 
+    for v in 3.19.4  ; do 
 	module load petsc/$v >/dev/null 2>&1
 	if [ $? -eq 0 ] ; then
 	    includes=$( cd $PETSC_DIR && make getincludedirs )
 	    libs=$( cd $PETSC_DIR && make getlinklibs )
 	    echo "compile with petsc $v"
-	    cmdline="$cc -o mumpsi64 mumpsi64.c ${includes} ${libs} "
+	    cmdline="$cc -o hdf5 hdf5.c ${includes} ${libs} "
 	    echo " .. $cmdline"
 	    retcode=0 && eval $cmdline || retcode=$?
 	    if [ ${retcode} -ne 0 ] ; then 
