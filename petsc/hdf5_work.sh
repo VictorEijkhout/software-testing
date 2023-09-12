@@ -1,16 +1,20 @@
 #!/bin/bash
 
 module reset >/dev/null 2>&1
-echo "==== TACC modules"
-for compiler in intel/19 ; do \
-    module load $compiler
-    ## case $compiler in ( intel* ) cc=icc ;; ( gcc* ) cc=gcc ;; esac
+echo "================"
+echo "==== Local modules"
+echo "================"
+echo 
+for compiler in intel/19 intel/23 gcc/9 gcc13 ; do \
+    config=$( echo $compiler | tr -d '/' )
+    echo "==== Configuration: ${config}"
+    source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
     cc=mpicc
     for v in 3.19.4  ; do 
 	module load petsc/$v >/dev/null 2>&1
 	if [ $? -eq 0 ] ; then
-	    includes=$( cd $PETSC_DIR && make getincludedirs )
-	    libs=$( cd $PETSC_DIR && make getlinklibs )
+	    includes=$( cd $PETSC_DIR && make --no-print-directory getincludedirs )
+	    libs=$( cd $PETSC_DIR && make --no-print-directory getlinklibs )
 	    echo "compile with petsc $v"
 	    cmdline="$cc -o hdf5 hdf5.c ${includes} ${libs} "
 	    echo " .. $cmdline"
