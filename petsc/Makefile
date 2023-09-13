@@ -1,6 +1,3 @@
-info ::
-	@echo "make test TEST=..."
-	@echo "    from tests: ${TESTS}"
-TESTS = sanity mumpsi64 hdf5 hdf5_local
+TESTS = sanity_tacc sanity_work mumpsi64 hdf5_tacc hdf5_work
 TEST = mumpsi64
 include ../Make.common

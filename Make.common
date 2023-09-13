@@ -1,10 +1,11 @@
 # -*- makefile -*-
+.PHONY : info clean
 info ::
 	@echo "make test TEST=..."
 	@echo "    from tests: ${TESTS}"
-	@echo "make tests : all tests"
+	@echo "make tests localtests"
 
-.PHONY: test tests
+.PHONY: test tests localtests
 test :
 	@fns=${TEST}_${TACC_SYSTEM}.sh \
 	 fn=${TEST}.sh \
@@ -14,11 +15,21 @@ test :
 	        eval ./$${fn} \
 	    ; else \
 	        echo "No such script: $${fns} or $${fn}" && exit 1 \
-	    ; fi
+	    ; fi \
+	    2>&1 | tee ${TEST}.log \
+	 && echo && echo "See: ${TEST}.log" && echo
+clean ::
+	@rm -f $.log
 
 tests :
 	@for t in ${TESTS} ; do \
 	    make --no-print-directory test TEST=$$t \
+	; done
+localtests :
+	@for t in ${TESTS} ; do \
+	    case $$t in ( *work* ) \
+	        make --no-print-directory test TEST=$$t \
+	    ;; esac \
 	; done
 
 clean ::

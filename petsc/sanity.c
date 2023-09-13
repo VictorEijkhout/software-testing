@@ -27,7 +27,7 @@ int main(int argc,char **args)
   PetscCall( MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY) );
   PetscCall( MatAssemblyEnd(A,MAT_FINAL_ASSEMBLY) );
 
-  MatDestroy(&A);
+  PetscCall( MatDestroy(&A) );
   return PetscFinalize();
 }
 
