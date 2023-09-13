@@ -19,7 +19,7 @@ test :
 	    2>&1 | tee ${TEST}.log \
 	 && echo && echo "See: ${TEST}.log" && echo
 clean ::
-	@rm -f $.log
+	@rm -f *.log
 
 tests :
 	@for t in ${TESTS} ; do \
