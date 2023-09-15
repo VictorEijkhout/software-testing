@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ $# -lt 1 ] ; then 
+    echo "Usage: $0 program" && exit 1
+fi
+
 module reset >/dev/null 2>&1
 echo "================"
 echo "==== Local modules"
