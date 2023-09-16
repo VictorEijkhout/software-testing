@@ -18,8 +18,11 @@ for compiler in intel/19 intel/23 gcc/9 gcc13 ; do \
     echo "==== Configuration: ${config}"
     source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
     cc=mpicc
-    for v in 3.19.4  3.19.5 ; do 
-	module load petsc/$v >/dev/null 2>&1
+    for v in 3.19.5 ; do 
+	echo "---- loading petsc/${v}"
+	module unload petsc  >/dev/null 2>&1
+	module load petsc/${v} >/dev/null 2>&1
+	echo "    tacc petsc dir: ${TACC_PETSC_DIR}"
 	if [ $? -eq 0 ] ; then
 	    ./petsc_test.sh -c $compiler -v $v ${program}
 	else

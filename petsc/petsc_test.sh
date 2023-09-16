@@ -20,16 +20,17 @@ lang=${program#*.}
 
 if [ ${lang} = "F90" ] ; then cc=mpif90 ; else cc=mpicc ; fi
 
-rm -rf build && mkdir build
 cp ${program} ${lang}/
-pushd ${lang} >/dev/null
+rm -rf build && mkdir build && pushd build >/dev/null
 export CC=${cc}
 ## -D CMAKE_VERBOSE_MAKEFILE=ON 
 retcode=0 && ( \
-    cmake -D PROJECTNAME=${base} ../c \
+    cmake -D PROJECTNAME=${base} ../${lang} \
     && make ) || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
-    echo && echo "ERROR compilation failed with compiler=${compiler} and petsc/${v}" && echo
+    echo
+    echo "ERROR compilation failed program=${program} compiler=${compiler} and petsc/${v}"
+    echo
 fi
 popd >/dev/null
 
