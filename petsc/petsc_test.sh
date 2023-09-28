@@ -1,5 +1,9 @@
 #!/bin/bash
 
+##
+## Test a petsc program C/F given externally loaded compiler/mpi
+##
+
 if [ $# -lt 1 ] ; then 
     echo "Usage: $0 program.[ -c compilername ] [ -v moduleversion ] c/cxx/f" && exit 1
 fi
@@ -18,15 +22,21 @@ program=$1
 base=${program%.*}
 lang=${program#*.}
 
-if [ ${lang} = "F90" ] ; then cc=mpif90 ; else cc=mpicc ; fi
-
 cp ${program} ${lang}/
+echo "testing <<${lang}/${program}>>"
 rm -rf build && mkdir build && pushd build >/dev/null
-export CC=${cc}
-## -D CMAKE_VERBOSE_MAKEFILE=ON 
-retcode=0 && ( \
-    cmake -D PROJECTNAME=${base} ../${lang} \
-    && make ) || retcode=$?
+
+export CC=mpicc
+export FC=mpif90
+retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
+    -D PROJECTNAME=${base} ../${lang} || retcode=$?
+if [ ${retcode} -ne 0 ] ; then 
+    echo
+    echo "ERROR CMake failed program=${program} compiler=${compiler} and petsc/${v}"
+    echo
+fi
+
+retcode=0 && make || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
     echo
     echo "ERROR compilation failed program=${program} compiler=${compiler} and petsc/${v}"
