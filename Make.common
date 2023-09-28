@@ -34,3 +34,4 @@ localtests :
 
 clean ::
 	@rm -f a.out ${TESTS} *.o *~ *.out
+	@rm -rf c cxx f
