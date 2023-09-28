@@ -5,9 +5,10 @@
 ##
 
 function usage() {
-    echo "Usage: $0.[ -c compilername ] [ -v moduleversion ]  program.c/cxx/F90" 
+    echo "Usage: $0.[ -c compilername ] [ -v moduleversion ] [ -p package ]  program.c/cxx/F90" 
 }
 
+package=unknownpackage
 compiler=${TACC_FAMILY_COMPILER}
 version="unknownversion"
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
@@ -16,6 +17,8 @@ fi
 while [ $# -gt 1 ] ; do
     if [ $1 = "-c" ] ; then
 	shift && compiler=$1 && shift 
+    elif [ $1 = "-p" ] ; then 
+	shift && package=$1 && shift
     elif [ $1 = "-v" ] ; then
 	shift && version=$1 && shift 
     fi

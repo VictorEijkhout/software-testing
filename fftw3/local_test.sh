@@ -2,13 +2,18 @@
 
 package=fftw3
 
+##
+## test all programs for this package,
+## looping over locally available modules
+##
+
 function failure() {
     if [ $1 -gt 0 ] ; then 
 	echo && echo "ERROR failed $2" && echo 
     fi
 }
 
-version=3.19
+version=3.3.10
 function usage() {
     echo "Usage: $0 [ -v version (default=${version} ]"
 }
@@ -26,24 +31,22 @@ echo "================"
 echo "==== Local modules"
 echo "================"
 echo 
+compilelog=local_test.log
 for compiler in intel/19 intel/23 gcc/9 gcc/13 ; do \
     config=$( echo $compiler | tr -d '/' )
     echo "==== Configuration: ${config}"
-    source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
-    module load petsc/${version} >/dev/null 2>&1
+    source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1
+    module load ${package}/${version} >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
 
-	echo "==== Test if we can compile Fortran"
+	echo "==== Test if we can compile"
 	retcode=0
-	./petsc_cmake_test.sh fortran.F90 >/dev/null 2>&1 || retcode=$?
-	failure $retcode "fortran compilation"
+	../cmake_test.sh -p ${package} has.c >${compilelog} 2>&1 || retcode=$?
+	failure $retcode "basic compilation"
 
-	echo "==== Test if we have python interfaces"
-	retcode=0
-	./petsc4py_test.sh >/dev/null 2>&1 || retcode=$?
-	failure $retcode "py interfaces"
     else
-	echo "WARNING could not load petsc/${version}"
+	echo "WARNING could not load ${package}/${version}"
     fi
 done
+echo && echo "See: ${compilelog}" && echo
 
