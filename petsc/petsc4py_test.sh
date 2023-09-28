@@ -5,14 +5,16 @@
 ## given externally loaded compiler/mpi
 ##
 
-if [ $# -lt 1 ] ; then 
-    echo "Usage: $0 [ -c compilername ] [ -v moduleversion ] " && exit 1
-fi
+function usage() {
+    echo "Usage: $0 [ -c compilername ] [ -v moduleversion ] " 
+}
 
 compiler=${TACC_FAMILY_COMPILER}
 version="unknownversion"
-while [ $# -gt 1 ] ; do
-    if [ $1 = "-c" ] ; then
+while [ $# -gt 0 ] ; do
+    if [ "$1" = "-h" ] ; then
+	usage && return 0;
+    elif [ $1 = "-c" ] ; then
 	shift && compiler=$1 && shift 
     elif [ $1 = "-v" ] ; then
 	shift && version=$1 && shift 

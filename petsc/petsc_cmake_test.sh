@@ -4,12 +4,15 @@
 ## Test a petsc program C/F given externally loaded compiler/mpi
 ##
 
-if [ $# -lt 1 ] ; then 
-    echo "Usage: $0 program.[ -c compilername ] [ -v moduleversion ] c/cxx/f" && exit 1
-fi
+function usage() {
+    echo "Usage: $0.[ -c compilername ] [ -v moduleversion ]  program.c/cxx/F90" 
+}
 
 compiler=${TACC_FAMILY_COMPILER}
 version="unknownversion"
+if [ $# -eq 1 -a "$1" = "-h" ] ; then
+    usage && exit 0 
+fi
 while [ $# -gt 1 ] ; do
     if [ $1 = "-c" ] ; then
 	shift && compiler=$1 && shift 
@@ -17,6 +20,10 @@ while [ $# -gt 1 ] ; do
 	shift && version=$1 && shift 
     fi
 done
+
+if [ $# -eq 0 ] ; then
+    usage && exit 1
+fi
 
 program=$1
 base=${program%.*}

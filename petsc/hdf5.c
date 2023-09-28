@@ -24,7 +24,7 @@ int main(int argc,char **args)
   PetscCall( MatSetType(A,MATMPIAIJ) );
   PetscCall( MatSetSizes(A,matrix_size,matrix_size,PETSC_DECIDE,PETSC_DECIDE) );
   PetscCall( MatMPIAIJSetPreallocation(A,5,PETSC_NULLPTR,3,PETSC_NULLPTR) );
-
+  PetscCall( MatSetValue(A,0,0,1.,INSERT_VALUES) );
   PetscCall( MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY) );
   PetscCall( MatAssemblyEnd(A,MAT_FINAL_ASSEMBLY) );
 
