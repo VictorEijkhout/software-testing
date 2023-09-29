@@ -1,5 +1,7 @@
 #!/bin/bash
 
+package=petsc
+
 function failure() {
     if [ $1 -gt 0 ] ; then 
 	echo && echo "ERROR failed $2" && echo 
@@ -30,7 +32,7 @@ for compiler in intel/19 intel/23 gcc/9 gcc/13 ; do \
     config=$( echo $compiler | tr -d '/' )
     echo && echo "==== Configuration: ${config}"
     module load ${compiler} >/dev/null 2>&1
-    module load petsc/${version}${extension} >/dev/null 2>&1
+    module load ${package}/${version}${extension} >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
 
 	echo "==== Test if we can compile Fortran"
@@ -43,6 +45,6 @@ for compiler in intel/19 intel/23 gcc/9 gcc/13 ; do \
 	./petsc4py_test.sh >/dev/null 2>&1 || retcode=$?
 	failure $retcode "py interfaces"
     else
-	echo "WARNING could not load petsc/${version}${extension}"
+	echo "WARNING could not load ${package}/${version}${extension}"
     fi
 done
