@@ -27,6 +27,7 @@ done
 module reset >/dev/null 2>&1
 echo "================"
 echo "==== TACC modules"
+echo "    testing ${package}/${version}"
 echo "================"
 for compiler in intel/19 intel/23 gcc/9 gcc/13 ; do \
     config=$( echo $compiler | tr -d '/' )

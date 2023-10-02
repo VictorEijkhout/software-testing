@@ -29,6 +29,7 @@ done
 module reset >/dev/null 2>&1
 echo "================"
 echo "==== TACC modules"
+echo "    testing ${package}/${version}"
 echo "================"
 echo 
 compilelog=local_test.log
