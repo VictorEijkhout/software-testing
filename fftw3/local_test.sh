@@ -44,6 +44,11 @@ for compiler in intel/19 intel/23 gcc/9 gcc/13 ; do \
 	../cmake_test.sh -p ${package} has.c >${compilelog} 2>&1 || retcode=$?
 	failure $retcode "basic compilation"
 
+	echo "==== Test if we can compile single"
+	retcode=0
+	../cmake_test.sh -p ${package} has.cf >${compilelog} 2>&1 || retcode=$?
+	failure $retcode "single precision compilation"
+
     else
 	echo "WARNING could not load ${package}/${version}"
     fi
