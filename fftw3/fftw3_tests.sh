@@ -15,7 +15,7 @@ source ../failure.sh
 
 echo "==== Test if we can compile"
 retcode=0
-../cmake_test.sh -p ${package} has.c >${compilelog} 2>&1 || retcode=$?
+../cmake_test.sh -p ${package} has.c >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "basic compilation"
 
 echo "==== Test if we can compile single"
