@@ -5,7 +5,7 @@ add_executable( ${PROJECTNAME} ${PROJECT_NAME}.c )
 
 find_package( MPI )
 find_package( PkgConfig REQUIRED )
-pkg_check_modules( FFTW3 REQUIRED fftw3 )
+pkg_check_modules( FFTW3 REQUIRED fftw3f )
 
 message( STATUS "Fftw3 includes: ${FFTW3_INCLUDE_DIRS}" )
 message( STATUS "Fftw3 libraries: ${FFTW3_LIBRARY_DIRS}" )
@@ -22,6 +22,6 @@ target_link_directories(
         ${PROJECTNAME} PUBLIC
 	${FFTW3_LIBRARY_DIRS} )
 target_link_libraries(
-        ${PROJECTNAME} PUBLIC fftw3 )
+        ${PROJECTNAME} PUBLIC fftw3f )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
