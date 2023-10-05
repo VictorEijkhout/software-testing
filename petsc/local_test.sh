@@ -1,14 +1,8 @@
 #!/bin/bash
 
 package=petsc
-
-function failure() {
-    if [ $1 -gt 0 ] ; then 
-	echo && echo "ERROR failed $2" && echo 
-    fi
-}
-
 version=3.19
+
 extension=
 function usage() {
     echo "Usage: $0 [ -v version (default=${version} ] [ -x extension ]"
@@ -29,24 +23,19 @@ echo "================"
 echo "==== Local modules"
 echo "================"
 echo 
+export compilelog=local_test.log
+rm -f ${compilelog}
 for compiler in intel/19 intel/23 gcc/9 gcc/13 ; do \
     config=$( echo $compiler | tr -d '/' )
-    echo "==== Configuration: ${config}"
-    source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
+    echo "==== Configuration: ${config}" | tee -a ${compilelog}
+    source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1
     module load ${package}/${version}${extension} >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
 
-	echo "==== Test if we can compile Fortran"
-	retcode=0
-	./petsc_cmake_test.sh fortran.F90 >/dev/null 2>&1 || retcode=$?
-	failure $retcode "fortran compilation"
+	source petsc_tests.sh
 
-	echo "==== Test if we have python interfaces"
-	retcode=0
-	./petsc4py_test.sh >/dev/null 2>&1 || retcode=$?
-	failure $retcode "py interfaces"
     else
-	echo "WARNING could not load ${package}/${version}${extension}"
+	echo "WARNING could not load ${package}/${version}${extension}" | tee -a ${compilelog}
     fi
 done
-
+echo && echo "See: ${compilelog}" && echo

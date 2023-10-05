@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ../failure.sh
+
 ##
 ## Test the presence of  petsc4py & slepc4py
 ## given externally loaded compiler/mpi
@@ -21,4 +23,10 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
-python3 -c "import petsc4py,slepc4py"
+retcode=0 && python3 -c "import petsc4py,slepc4py" || retcode=$?
+failure $retcode "python commandline import"
+if [ $retcode -gt 0 ] ; then exit $retcode ; fi
+
+retcode=0 && python3 p4p.py || retcode=$?
+failure $retcode "python petsc init"
+if [ $retcode -gt 0 ] ; then exit $retcode ; fi

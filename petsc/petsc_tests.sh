@@ -15,7 +15,8 @@ source ../failure.sh
 
 echo "==== Test if we can compile Fortran"
 retcode=0
-./petsc_cmake_test.sh fortran.F90 >>${compilelog} 2>&1 || retcode=$?
+## ./petsc_cmake_test.sh fortran.F90 >>${compilelog} 2>&1 || retcode=$?
+../cmake_test.sh -p ${package} fortran.F90 >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "fortran compilation"
 
 echo "==== Test if we have python interfaces"
