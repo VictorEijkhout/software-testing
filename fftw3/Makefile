@@ -3,4 +3,5 @@ TEST =
 include ../Make.common
 
 clean ::
-	@rm -rf ${TESTS} build *~ *.o
+	@rm -f cf/*.c
+

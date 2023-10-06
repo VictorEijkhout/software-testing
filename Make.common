@@ -35,3 +35,4 @@ localtests :
 clean ::
 	@rm -f a.out ${TESTS} *.o *~ *.out
 	@rm -rf build
+	@rm -f c/*.c F90/*.F90
