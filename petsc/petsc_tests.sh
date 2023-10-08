@@ -27,3 +27,8 @@ failure $retcode "py interfaces"
 if [ "${compilelog}" = "compile.log" ] ; then
     echo "See: ${compilelog}"
 fi
+
+echo "==== Test if we have amgx preconditioner"
+retcode=0
+../cmake_test.sh -p ${package} ksp.c >>${compilelog} 2>&1 || retcode=$?
+failure $retcode "amgx compilation"
