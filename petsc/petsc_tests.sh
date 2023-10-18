@@ -1,12 +1,11 @@
 #!/bin/bash
 
 ##
-## run tests, given a loaded compiler
+## run tests, given a loaded compiler & petsc version
 ##
 
-if [ -z "${package}" ] ; then
-    echo "Error: supply package=..." && exit 1 
-fi
+package=petsc
+
 if [ -z "${compilelog}" ] ; then
     compilelog=compile.log
 fi
@@ -32,3 +31,9 @@ echo "==== Test if we have amgx preconditioner"
 retcode=0
 ../cmake_test.sh -p ${package} ksp.c >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "amgx compilation"
+
+echo "==== Test size of scalar"
+retcode=0
+../cmake_test.sh -p ${package} scalar.c >>${compilelog} 2>&1 || retcode=$?
+failure $retcode "scalar compilation"
+./build/scalar
