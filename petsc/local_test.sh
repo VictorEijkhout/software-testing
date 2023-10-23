@@ -5,7 +5,7 @@ version=3.20
 
 extension=
 function usage() {
-    echo "Usage: $0 [ -v version (default=${version} ] [ -x extension ]"
+    echo "Usage: $0 [ -v version (default=${version} ]"
 }
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
     usage && exit 0
