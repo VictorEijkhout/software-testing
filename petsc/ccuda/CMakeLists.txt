@@ -4,6 +4,7 @@ project( ${PROJECTNAME} VERSION 1.0 )
 add_executable( ${PROJECTNAME} ${PROJECT_NAME}.c )
 
 find_package( MPI )
+find_package( CUDA )
 find_package( PkgConfig REQUIRED )
 pkg_check_modules( PETSC REQUIRED petsc )
 
@@ -18,6 +19,7 @@ target_link_libraries(
         ${PROJECTNAME} PUBLIC
         ${MPI_C_LIBRARIES} 
         ${PETSC_C_LIBRARIES}
+	${CUDA_LIBRARIES}
 	)
 target_link_directories(
         ${PROJECTNAME} PUBLIC

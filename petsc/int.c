@@ -8,7 +8,7 @@ int main(int argc,char **args)
 
   PetscInitialize(&argc,&args,0,0);
   // size of scalar
-  printf("%ld\n",sizeof(PetscScalar));
+  printf("%ld\n",sizeof(PetscInt));
   return PetscFinalize();
 }
 

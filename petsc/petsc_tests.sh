@@ -34,6 +34,12 @@ retcode=0
 failure $retcode "scalar compilation"
 ./build/scalar
 
+echo "==== Test size of int"
+retcode=0
+../cmake_test.sh -p ${package} int.c >>${compilelog} 2>&1 || retcode=$?
+failure $retcode "int compilation"
+./build/int
+
 if [ "${compilelog}" = "compile.log" ] ; then
     echo "See: ${compilelog}"
 fi
