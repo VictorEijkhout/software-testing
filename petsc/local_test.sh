@@ -19,11 +19,15 @@ while [ $# -gt 0 ] ; do
 done
 
 module reset >/dev/null 2>&1
+export compilelog=local_test.log
+rm -f ${compilelog}
+touch ${compilelog}
 echo "================"
+echo "==== Package: ${package}, version: ${version}"
 echo "==== Local modules"
+echo "==== logfile: ${compilelog}"
 echo "================"
 echo 
-export compilelog=local_test.log
 rm -f ${compilelog}
 for compiler in intel/19 intel/23 gcc/9 gcc/12 gcc/13 ; do \
     config=$( echo $compiler | tr -d '/' )
@@ -31,17 +35,7 @@ for compiler in intel/19 intel/23 gcc/9 gcc/12 gcc/13 ; do \
     retcode=0
     source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1 || retcode=$?
     if [ $retcode -eq 0 ] ; then 
-	for ext in "" "-single" ; do 
-	    echo "---- version: ${version}/${extension}"
-	    module load ${package}/${version}${extension} >/dev/null 2>&1
-	    if [ $? -eq 0 ] ; then
-		
-		source petsc_tests.sh
-		
-	    else
-		echo "WARNING could not load ${package}/${version}${extension}" | tee -a ${compilelog}
-	    fi
-	done
+	source petsc_tests.sh
     else
 	echo "==== Could not load configuration ${config}"
     fi
