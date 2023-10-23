@@ -12,6 +12,7 @@ fi
 
 source ../failure.sh
 
+
 echo "==== Test if we can compile Fortran"
 retcode=0
 ## ./petsc_cmake_test.sh fortran.F90 >>${compilelog} 2>&1 || retcode=$?
@@ -43,3 +44,4 @@ failure $retcode "int compilation"
 if [ "${compilelog}" = "compile.log" ] ; then
     echo "See: ${compilelog}"
 fi
+
