@@ -1,5 +1,4 @@
 #include "petsc.h"
-#include "petscviewerhdf5.h"
 
 #undef __FUNCT__
 #define __FUNCT__ "main"

@@ -12,6 +12,12 @@ fi
 
 source ../failure.sh
 
+echo "==== Sanity test"
+retcode=0
+../cmake_test.sh -p ${package} sanity.c >>${compilelog} 2>&1 || retcode=$?
+failure $retcode "sanity compilation"
+./build/sanity || retcode=$?
+failure $retcode "sanity test run"
 
 echo "==== Test if we can compile Fortran"
 retcode=0
