@@ -28,7 +28,6 @@ echo "==== Local modules"
 echo "==== logfile: ${compilelog}"
 echo "================"
 echo 
-rm -f ${compilelog}
 for compiler in intel/19 intel/23 gcc/9 gcc/12 gcc/13 ; do \
     config=$( echo $compiler | tr -d '/' )
     echo "==== Configuration: ${config}" | tee -a ${compilelog}
