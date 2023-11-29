@@ -47,6 +47,15 @@ retcode=0
 failure $retcode "int compilation"
 ./build/int
 
+echo "==== Test presence of hdf5"
+retcode=0
+../cmake_test.sh -p ${package} hdf5.c >>${compilelog} 2>&1 || retcode=$?
+failure $retcode "hdf5 compilation"
+./build/hdf5 >>${compilelog} 2>&1 || retcode=$?
+failure $retcode "hdf5 run"
+
+################
+
 if [ "${compilelog}" = "compile.log" ] ; then
     echo "See: ${compilelog}"
 fi
