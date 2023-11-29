@@ -49,7 +49,7 @@ retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} ../${variant} || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
     echo
-    echo "ERROR CMake failed program=${program} and ${package}/${v}"
+    echo "ERROR CMake failed program=${program} and ${package}/${v}; exit ${retcode}"
     echo
     exit ${retcode}
 fi
