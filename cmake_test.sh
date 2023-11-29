@@ -39,7 +39,6 @@ if [ ! -d "${variant}" ] ; then
     echo "ERROR no language directory <<${variant}>>" && return 1
 fi
 
-cp ${program} ${variant}/
 echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null
 
