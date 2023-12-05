@@ -1,7 +1,7 @@
 #!/bin/bash
 
-package=fmtlib
-version=10.1.1
+package=mdspan
+version=git20231129
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
@@ -29,7 +29,7 @@ echo "==== TACC modules"
 echo "    testing ${package}/${version}"
 echo "================"
 echo 
-compilelog=local_test.log
+compilelog=tacc_test.log
 rm -f ${compilelog}
 for compiler in intel/19 intel/23 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
     retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
