@@ -8,6 +8,10 @@
 ################################################################
 module load python3/3.9
 
+if [ -z "${TACC_CC}" ] ; then
+    echo "Set variable TACC_CC" && exit 1
+fi
+
 swig -python example.i
 ${TACC_CC} -c example.c example_wrap.c \
     -g -fPIC \
