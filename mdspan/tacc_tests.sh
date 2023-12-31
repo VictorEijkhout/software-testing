@@ -1,7 +1,7 @@
 #!/bin/bash
 
-package=fmtlib
-version=10.1.1
+package=mdspan
+version=git20231129
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
