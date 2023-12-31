@@ -6,24 +6,24 @@
 
 package=petsc
 
+if [ "$1" = "-h" ] ; then 
+    echo "Run tests given loaded compiler and petsc version" && exit 0
+fi
+if [ -z "${TACC_PETSC_DIR}" ] ; then 
+    echo "Please load module <<$package>>" && exit 1
+fi
+
 if [ -z "${compilelog}" ] ; then
-    compilelog=compile.log
+    compilelog=${package}.log
 fi
 
 source ../failure.sh
 
 echo "==== Sanity test"
-retcode=0
-../cmake_test.sh -p ${package} sanity.c >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "sanity compilation"
-./build/sanity || retcode=$?
-failure $retcode "sanity test run"
+../cmake_test_driver.sh -p ${package} -l ${compilelog} sanity.c
 
 echo "==== Test if we can compile Fortran"
-retcode=0
-## ./petsc_cmake_test.sh fortran.F90 >>${compilelog} 2>&1 || retcode=$?
-../cmake_test.sh -p ${package} fortran.F90 >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "fortran compilation"
+../cmake_test_driver.sh -p ${package} -l ${compilelog} fortran.F90
 
 echo "==== Test if we have python interfaces"
 retcode=0
@@ -32,27 +32,18 @@ failure $retcode "py interfaces"
 
 echo "==== Test if we have amgx preconditioner"
 retcode=0
-../cmake_test.sh -p ${package} ksp.c >>${compilelog} 2>&1 || retcode=$?
+../cmake_build_single.sh -p ${package} ksp.c >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "amgx compilation"
 
 echo "==== Test size of scalar"
-retcode=0
-../cmake_test.sh -p ${package} scalar.c >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "scalar compilation"
-./build/scalar
+../cmake_test_driver.sh -p ${package} -l ${compilelog} scalar.c
 
 echo "==== Test size of int"
-retcode=0
-../cmake_test.sh -p ${package} int.c >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "int compilation"
-./build/int
+../cmake_test_driver.sh -p ${package} -l ${compilelog} int.c
 
 echo "==== Test presence of hdf5"
-retcode=0
-../cmake_test.sh -p ${package} hdf5.c >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "hdf5 compilation"
-./build/hdf5 >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "hdf5 run"
+../cmake_test_driver.sh -p ${package} -l ${compilelog} hdf5.c
+
 
 ################
 
