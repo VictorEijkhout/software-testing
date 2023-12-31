@@ -45,9 +45,5 @@ echo "==== Test presence of hdf5"
 ../cmake_test_driver.sh -p ${package} -l ${compilelog} hdf5.c
 
 
-################
-
-if [ "${compilelog}" = "compile.log" ] ; then
-    echo "See: ${compilelog}"
-fi
+echo && echo "See: ${compilelog}" && echo
 
