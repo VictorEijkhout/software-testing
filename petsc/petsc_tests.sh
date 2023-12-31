@@ -32,7 +32,7 @@ failure $retcode "py interfaces"
 
 echo "==== Test if we have amgx preconditioner"
 retcode=0
-../cmake_build_single.sh -p ${package} ksp.c >>${compilelog} 2>&1 || retcode=$?
+../cmake_build_single.sh -p ${package} amgx.c >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "amgx compilation"
 
 echo "==== Test size of scalar"

@@ -13,7 +13,7 @@ if [ $# -eq 0 ] ; then
 fi
 
 source ../failure.sh
-package=
+package=unknown
 compilelog=driver.log
 while [ $# -gt 1 ] ; do
     if [ $1 = "-h" ] ; then
@@ -35,5 +35,5 @@ echo "cmake build and run: source=$source" >>${compilelog}
 retcode=0
 ../cmake_build_single.sh -p ${package} "${source}" >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "${executable} compilation"
-ibrun -n 1 ./build/${executable} || retcode=$?
+( ibrun -n 1 ./build/${executable} >run_${executable}.log 2>&1 ) || retcode=$?
 failure $retcode "${executable} test run"

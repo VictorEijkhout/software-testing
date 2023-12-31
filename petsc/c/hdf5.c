@@ -1,6 +1,10 @@
 #include "petsc.h"
 #include "petscviewerhdf5.h"
 
+#ifndef PETSC_HAVE_HDF5
+#error Variable PETSC_HAVE_HDF5 not set
+#endif
+
 #undef __FUNCT__
 #define __FUNCT__ "main"
 int main(int argc,char **args)
@@ -30,16 +34,20 @@ int main(int argc,char **args)
 
   {
     PetscViewer hdf5viewer;
+    PetscPrintf(comm,"Writing hdf5 file\n");
     PetscCall( PetscViewerHDF5Open(comm,"viewhdf5.dat",FILE_MODE_WRITE,&hdf5viewer) );
     PetscCall( MatView( A,hdf5viewer ) );
     PetscCall( PetscViewerDestroy(&hdf5viewer) );
+    PetscPrintf(comm," .. done\n");
   }
 
   {
     PetscViewer hdf5viewer;
+    PetscPrintf(comm,"Reading hdf5 file\n");
     PetscCall( PetscViewerHDF5Open(comm,"viewhdf5.dat",FILE_MODE_READ,&hdf5viewer) );
     PetscCall( MatLoad( A,hdf5viewer ) );
     PetscCall( PetscViewerDestroy(&hdf5viewer) );
+    PetscPrintf(comm," .. done\n");
   }
 
   MatDestroy(&A);

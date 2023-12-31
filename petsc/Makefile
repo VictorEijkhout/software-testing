@@ -7,4 +7,5 @@ work :
 	echo "ERROR rule unimplemented"
 
 clean ::
-	@rm -f sanity mumpsi64 hdf5 fortran
+	@rm -f viewhdf5.dat
+
