@@ -1,7 +1,7 @@
 #!/bin/bash
 
 package=hypre
-version=2.29.0
+version=2.30.0
 
 ##
 ## test all programs for this package,
