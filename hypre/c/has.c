@@ -1,7 +1,9 @@
-#include <fftw3.h>
+#include "HYPRE_config.h"
+
+#ifndef HYPRE_RELEASE_NAME
+#error Hypre not defined
+#endif
 
 int main() {
-  fftw_complex *in, *out;
-  fftw_plan p;
   return 0;
 }

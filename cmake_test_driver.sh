@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##
-## Driver for cmake_tests.sh
+## Driver for cmake_build_single.sh
 ##
 
 function usage() {

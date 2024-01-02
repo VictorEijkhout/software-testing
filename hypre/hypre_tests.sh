@@ -4,24 +4,22 @@
 ## run tests, given a loaded compiler
 ##
 
-if [ -z "${package}" ] ; then
-    echo "Error: supply package=..." && exit 1 
+package=hypre
+if [ -z "${TACC_HYPRE_DIR}" ] ; then 
+    echo "Please load module <<$package>>" && exit 1
 fi
+
 if [ -z "${compilelog}" ] ; then
     compilelog=compile.log
+    rm -f ${compilelog}
 fi
 
 source ../failure.sh
 
+set -x
 echo "==== Test if we can compile"
 retcode=0
-../cmake_test.sh -p ${package} has.c >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "basic compilation"
-
-echo "==== Test if we can compile single"
-retcode=0
-../cmake_test.sh -p ${package} -v cf has.c >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "single precision compilation"
+../cmake_test_driver.sh -m -p ${package} -l ${compilelog} has.c
 
 if [ "${compilelog}" = "compile.log" ] ; then
     echo "See: ${compilelog}"

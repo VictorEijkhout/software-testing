@@ -1,7 +1,7 @@
 #!/bin/bash
 
-package=fftw3
-version=3.3.10
+package=hypre
+version=2.29.0
 
 ##
 ## test all programs for this package,
@@ -24,7 +24,7 @@ for compiler in intel/19 intel/23 gcc/9 gcc/13 ; do \
     module load ${package}/${version} >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
 
-	source fftw3_tests.sh
+	source hypre_tests.sh
 
     else
 	echo "WARNING could not load ${package}/${version}"
