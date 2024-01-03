@@ -1,7 +1,7 @@
 #!/bin/bash
 
-package=cxxopts
-version=3.1.1
+package=eigen
+version=3.4.0
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
