@@ -29,7 +29,7 @@ echo "================"
 echo "==== TACC modules"
 echo "    testing ${package}/${version}"
 echo "================"
-for compiler in intel/19 intel/23 gcc/9 gcc/13 ; do \
+for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/13 ; do \
     config=$( echo $compiler | tr -d '/' )
     echo && echo "==== Configuration: ${config}"
     module load ${compiler} >/dev/null 2>&1
