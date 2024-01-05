@@ -1,7 +1,7 @@
 #!/bin/bash
 
 package=mdspan
-version=git20231129
+version=git20240105
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
@@ -31,7 +31,7 @@ echo "================"
 echo 
 compilelog=tacc_test.log
 rm -f ${compilelog}
-for compiler in intel/19 intel/23 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
+for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
     retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
 	echo ".... Unknown configuration ${compiler}" | tee -a ${compilelog}
