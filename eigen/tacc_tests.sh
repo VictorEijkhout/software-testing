@@ -1,6 +1,6 @@
 #!/bin/bash
 
-package=boost
-version=1.83.0
+package=eigen
+version=3.4.0
 
 source ../tacc_tests.sh

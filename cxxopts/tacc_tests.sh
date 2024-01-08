@@ -1,6 +1,6 @@
 #!/bin/bash
 
-package=boost
-version=1.83.0
+package=cxxopts
+version=3.1.1
 
 source ../tacc_tests.sh
