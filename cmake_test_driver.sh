@@ -5,7 +5,7 @@
 ##
 
 function usage() {
-    echo "Usage: $0 [ -m ] [ -p package ]  [ -l logfile ] program.{c.F90}"
+    echo "Usage: $0 [ -m ] [ -p package ]  [ -l logfile ] [ -x ] program.{c.F90}"
 }
 
 if [ $# -eq 0 ] ; then 
@@ -21,6 +21,8 @@ while [ $# -gt 1 ] ; do
 	usage && exit 0
     elif [ $1 = "-m" ] ; then 
 	shift && mpi=1 
+    elif [ $1 = "-x" ] ; then 
+	shift && set -x
     elif [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
     elif [ $1 = "-l" ] ; then 
@@ -31,7 +33,7 @@ source=$1
 executable=${source%%.*}
 extension=${source##*.}
 if [ ! -f "${extension}/${source}" ] ; then
-    echo "ERROR: no file <<${extension}/${source}>>" && return 0
+    echo "ERROR: no file <<${extension}/${source}>>" && exit 0
 fi
 echo "cmake build and run: source=$source" >>${compilelog}
 
