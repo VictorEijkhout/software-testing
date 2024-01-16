@@ -21,8 +21,6 @@ source ../failure.sh
     # 	case ${compiler} in ( intel* ) fc=ifort ;; ( gcc* ) fc=gfortran ;; esac
     # 	case ${compiler} in ( intel* ) cc=icc ;; ( gcc* ) cc=gcc ;; esac
 
-echo "==== Test if we can compile C"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} has.c
+echo "==== Test if we can compile CXX with MPL"
+../cmake_test_driver.sh -m -p ${package} -l ${compilelog} has.cpp
 
-echo "==== Test if we can compile Fortran"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} has.F90
