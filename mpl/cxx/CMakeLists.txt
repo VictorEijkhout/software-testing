@@ -3,7 +3,7 @@ project( ${PROJECT_NAME} VERSION 1.0 )
 
 find_package( mpl REQUIRED )
 
-add_executable( ${PROJECT_NAME} ${PROJECT_NAME}.cpp )
+add_executable( ${PROJECT_NAME} ${PROJECT_NAME}.cxx )
 target_compile_features( ${PROJECT_NAME} PRIVATE cxx_std_17 )
 target_include_directories(
 	${PROJECT_NAME} PUBLIC
