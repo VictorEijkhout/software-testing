@@ -1,6 +1,6 @@
 #!/bin/bash
 
-package=mdspan
+package=kokkos
 version=git20240105
 
 while [ $# -gt 0 ] ; do

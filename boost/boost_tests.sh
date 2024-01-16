@@ -14,7 +14,8 @@ fi
 source ../failure.sh
 
 echo "---- Test if we can compile and run"
-../cmake_test_driver.sh -p ${package} -l ${compilelog} has.cxx 
+retcode=0
+../cmake_test_driver.sh -p ${package} -l ${compilelog} has.cpp
 
 if [ "${compilelog}" = "compile.log" ] ; then
     echo "See: ${compilelog}"

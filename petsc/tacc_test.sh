@@ -33,7 +33,7 @@ echo "==== Package: ${package}, version: ${version}"
 echo "==== TACC modules"
 echo "==== logfile: ${compilelog}"
 echo "================"
-for compiler in intel/19 intel/23 gcc/9 gcc/13 ; do \
+for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/13 ; do \
     echo && echo "==== Compiler: ${compiler}"
     retcode=0
     module load ${compiler} >/dev/null 2>&1 || retcode=$?

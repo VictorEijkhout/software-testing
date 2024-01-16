@@ -1,7 +1,7 @@
 #!/bin/bash
 
-package=fftw3
-version=3.3.10
+package=cxxopts
+version=3.1.1
 
 ##
 ## test all programs for this package,
@@ -12,26 +12,26 @@ source ../options.sh
 
 module reset >/dev/null 2>&1
 echo "================"
-echo "==== TACC modules"
-echo "    testing ${package}/${version}"
+echo "==== Local modules"
 echo "================"
 echo 
 compilelog=local_test.log
 rm -f ${compilelog}
-for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/13 ; do \
-    retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
-    if [ $retcode -gt 0 ] ; then 
-	echo ".... Unknown configuration ${compiler}" | tee -a ${compilelog}
-    else
-	echo "==== Configuration: ${compiler}" | tee -a ${compilelog}
+for compiler in intel/19 intel/23 gcc/9 gcc/12 gcc/13 ; do \
+    config=$( echo $compiler | tr -d '/' )
+    echo "==== Configuration: ${config}" | tee -a ${compilelog}
+    source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1
+    if [ $? -eq 0 ] ; then 
 	module load ${package}/${version} >/dev/null 2>&1
 	if [ $? -eq 0 ] ; then
 
-	    source fftw3_tests.sh
+	    source ${package}_tests.sh
 
 	else
 	    echo "WARNING could not load ${package}/${version}"
 	fi
+    else
+	echo " .. could not load configuration <<${config}>>"
     fi
 done
 echo && echo "See: ${compilelog}" && echo

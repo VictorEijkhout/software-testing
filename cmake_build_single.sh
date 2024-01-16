@@ -44,6 +44,7 @@ rm -rf build && mkdir build && pushd build >/dev/null
 
 export CC=mpicc
 export FC=mpif90
+export CXX=mpicxx
 retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} ../${variant} || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
