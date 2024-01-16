@@ -46,8 +46,6 @@ export CC=mpicc
 export FC=mpif90
 export CXX=mpicxx
 retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
-    -D CMAKE_1.0_COMPILER=mpicxx \
-    -D CMAKE_CXX_COMPILER=mpicxx \
     -D PROJECTNAME=${base} ../${variant} || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
     echo

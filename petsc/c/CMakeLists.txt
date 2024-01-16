@@ -1,7 +1,7 @@
 cmake_minimum_required( VERSION 3.20 )
 project( ${PROJECTNAME} VERSION 1.0 LANGUAGES C )
 
-add_executable( ${PROJECTNAME} ${PROJECT_NAME}.c )
+add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
 
 find_package( MPI )
 find_package( PkgConfig REQUIRED )
