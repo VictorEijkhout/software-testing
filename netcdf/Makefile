@@ -1,8 +1,7 @@
-TESTS = sanity
-TEST = sanity
+TESTS = 
+TEST = 
 include ../Make.common
 clean ::
-	@rm -f c/*.c
-	@rm -rf build
+	@rm -f example.nc
 
 

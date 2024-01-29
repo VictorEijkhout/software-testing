@@ -10,5 +10,6 @@ program test
   cptr = c_loc(a)
   call c_f_pointer(cptr,b,[2])
   print *,b(1:2)
-  deallocate(b)
+  !! not supported by iso bindings:
+  !!  deallocate(b)
 end program test

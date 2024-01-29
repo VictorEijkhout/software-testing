@@ -15,12 +15,7 @@ source ../failure.sh
 
 echo "==== Test if we can compile"
 retcode=0
-../cmake_test.sh -p ${package} sanity.c >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "basic compilation"
-pushd build
-retcode=0
-./sanity || retcode=$?
-failure $retcode "basic run"					      
+../cmake_test_driver.sh -p ${package} -l ${compilelog} sanity.c
 
 if [ "${compilelog}" = "compile.log" ] ; then
     echo "See: ${compilelog}"
