@@ -1,6 +1,6 @@
 #!/bin/bash
 
-package=netcdf
+package=pnetcdf
 version=4.9.2
 
 source ../options.sh
