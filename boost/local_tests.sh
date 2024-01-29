@@ -3,21 +3,24 @@
 package=boost
 version=1.83.0
 
+source ../options.sh
+
 ##
 ## test all programs for this package,
 ## looping over locally available modules
 ##
 
-source ../options.sh
-
 module reset >/dev/null 2>&1
 echo "================"
+echo "==== Package: ${package}, version: ${version}"
 echo "==== Local modules"
+echo "==== logfile: ${compilelog}"
 echo "================"
 echo 
 compilelog=local_tests.log
 rm -f ${compilelog}
-for compiler in intel/19 intel/23 gcc/9 gcc/12 gcc/13 ; do \
+for compiler in $( cat ../compilers.sh ) ; do 
+
     config=$( echo $compiler | tr -d '/' )
     echo "==== Configuration: ${config}" | tee -a ${compilelog}
     source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1

@@ -25,7 +25,7 @@ echo
 compilelog=local_tests.log
 export compilelog=local_tests.log
 rm -f ${compilelog}
-for compiler in $( cat ../compilers.sh ) ; do \
+for compiler in $( cat ../compilers.sh ) ; do
 
     config=$( echo $compiler | tr -d '/' )
     echo "==== Configuration: ${config}" | tee -a ${compilelog}
