@@ -11,7 +11,7 @@ echo "==== TACC modules"
 echo "    testing ${package}/${version}"
 echo "================"
 echo 
-compilelog=tacc_test.log
+compilelog=tacc_tests.log
 rm -f ${compilelog}
 for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
     retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
