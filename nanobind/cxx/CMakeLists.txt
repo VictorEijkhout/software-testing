@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.15...3.27)
 project( ${PROJECTNAME} )
-find_package(Python 3.8 COMPONENTS Interpreter Development.Module REQUIRED)
+find_package(Python 3.8...3.13 COMPONENTS Interpreter Development.Module REQUIRED)
 
 if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)

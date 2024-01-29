@@ -1,12 +1,7 @@
 #!/bin/bash
 
-package=hypre
-version=2.30.0
-
-##
-## test all programs for this package,
-## looping over locally available modules
-##
+package=netcdf
+version=4.9.2
 
 source ../options.sh
 
@@ -16,18 +11,18 @@ echo "==== TACC modules"
 echo "    testing ${package}/${version}"
 echo "================"
 echo 
-compilelog=local_test.log
+compilelog=tacc_tests.log
 rm -f ${compilelog}
-for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/13 ; do \
+for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
     retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
 	echo ".... Unknown configuration ${compiler}" | tee -a ${compilelog}
     else
 	echo "==== Configuration: ${compiler}" | tee -a ${compilelog}
-	module load ${package}/${version} >/dev/null 2>&1
+	module load ${package}/${version} >>${compilelog} 2>&1
 	if [ $? -eq 0 ] ; then
 
-	    source hypre_tests.sh
+	    source ${package}_tests.sh
 
 	else
 	    echo "WARNING could not load ${package}/${version}"
