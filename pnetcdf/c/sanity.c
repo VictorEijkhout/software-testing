@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <netcdf.h>
 #include <netcdf_par.h>
 
 int main() {
