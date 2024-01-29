@@ -1,5 +1,6 @@
 function usage() {
     echo "Usage: $0 [ -v version (default=${version}) ]"
+    if [ ! -z "${extra_help}" ] ; then echo ${extra_help} ; fi
 }
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
     usage && exit 0
