@@ -23,7 +23,7 @@ echo "    testing ${package}/${version}"
 echo "================"
 echo 
 compilelog=local_tests.log
-export compilelog=local_test.log
+export compilelog=local_tests.log
 rm -f ${compilelog}
 for compiler in $( cat ../compilers.sh ) ; do \
 
