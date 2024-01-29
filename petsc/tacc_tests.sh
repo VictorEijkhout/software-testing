@@ -25,7 +25,7 @@ while [ $# -gt 0 ] ; do
 done
 
 module reset >/dev/null 2>&1
-export compilelog=tacc_test.log
+export compilelog=tacc_tests.log
 rm -f ${compilelog}
 touch ${compilelog}
 echo "================"
