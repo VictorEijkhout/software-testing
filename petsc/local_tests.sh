@@ -18,26 +18,28 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
-module reset >/dev/null 2>&1
-export compilelog=local_test.log
-rm -f ${compilelog}
-touch ${compilelog}
-echo "================"
-echo "==== Package: ${package}, version: ${version}"
-echo "==== Local modules"
-echo "==== logfile: ${compilelog}"
-echo "================"
-echo 
-for compiler in $( cat ../compilers.sh ) ; do
+source ../local_tests.sh 
 
-    config=$( echo $compiler | tr -d '/' )
-    echo "==== Configuration: ${config}" | tee -a ${compilelog}
-    retcode=0
-    source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1 || retcode=$?
-    if [ $retcode -eq 0 ] ; then 
-	source petsc_tests.sh
-    else
-	echo "==== Could not load configuration ${config}"
-    fi
-done
-echo && echo "See: ${compilelog}" && echo
+# module reset >/dev/null 2>&1
+# export compilelog=local_test.log
+# rm -f ${compilelog}
+# touch ${compilelog}
+# echo "================"
+# echo "==== Package: ${package}, version: ${version}"
+# echo "==== Local modules"
+# echo "==== logfile: ${compilelog}"
+# echo "================"
+# echo 
+# for compiler in $( cat ../compilers.sh ) ; do
+
+#     config=$( echo $compiler | tr -d '/' )
+#     echo "==== Configuration: ${config}" | tee -a ${compilelog}
+#     retcode=0
+#     source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1 || retcode=$?
+#     if [ $retcode -eq 0 ] ; then 
+# 	source petsc_tests.sh
+#     else
+# 	echo "==== Could not load configuration ${config}"
+#     fi
+# done
+# echo && echo "See: ${compilelog}" && echo

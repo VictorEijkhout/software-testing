@@ -3,13 +3,13 @@ echo "================"
 echo "==== Package: ${package}, version: ${version}"
 echo "==== Local modules"
 echo "================"
-echo 
+
 compilelog=local_tests.log
 rm -f ${compilelog}
 for compiler in $( cat ../compilers.sh ) ; do
 
     config=$( echo $compiler | tr -d '/' )
-    echo "==== Configuration: ${config}" | tee -a ${compilelog}
+    ( echo && echo "==== Configuration: ${config}" ) | tee -a ${compilelog}
     source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1
     module load ${package}/${version} >/dev/null 2>&1
     if [ $? -eq 0 ] ; then

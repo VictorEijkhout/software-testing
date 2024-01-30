@@ -13,7 +13,7 @@ fi
 
 source ../failure.sh
 
-echo "==== Test if we can compile"
+echo "---- Test if we can compile"
 retcode=0
 ../cmake_test_driver.sh -p ${package} -l ${compilelog} sanity.c
 
