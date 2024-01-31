@@ -49,7 +49,7 @@ retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} ../${variant} || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
     echo
-    echo "ERROR CMake failed program=${program} and ${package}/${v}; exit ${retcode}"
+    echo "    ERROR CMake failed program=${program} and ${package}/${v}; exit ${retcode}"
     echo
     exit ${retcode}
 fi
@@ -57,9 +57,10 @@ fi
 retcode=0 && make || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
     echo
-    echo "ERROR compilation failed program=${program} and ${package}/${v}"
+    echo "    ERROR compilation failed program=${program} and ${package}/${v}"
     echo
     exit ${retcode}
 fi
+echo "    SUCCESS"
 popd >/dev/null
 
