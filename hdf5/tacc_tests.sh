@@ -1,6 +1,6 @@
 #!/bin/bash
 
-package=phdf5
+package=hdf5
 version=1.14.0
 mpi=1
 
