@@ -40,11 +40,11 @@ for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
 	    module load impi >/dev/null
 	fi 
 	echo "==== Configuration: ${compiler}" | tee -a ${compilelog}
-	if [ ! -z "${mpi}" ] ; then
-	    echo "     using cxx=$( which icpx ) mpicxx=$( which mpicxx )" | tee -a ${compilelog}
-	else 
-	    echo "     using cxx=$( which icpx )" | tee -a ${compilelog}
-	fi
+	# if [ ! -z "${mpi}" ] ; then
+	#     echo "     using cxx=$( which ${TACC_CXX} ) mpicxx=$( which mpicxx )" | tee -a ${compilelog}
+	# else 
+	#     echo "     using cxx=$( which icpx )" | tee -a ${compilelog}
+	# fi
 	module load ${package}/${version} >/dev/null 2>&1
 	if [ $? -eq 0 ] ; then
 
