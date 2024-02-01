@@ -10,14 +10,17 @@ for compiler in $( cat ../compilers.sh ) ; do
 
     config=$( echo $compiler | tr -d '/' )
     ( echo && echo "==== Configuration: ${config}" ) | tee -a ${compilelog}
-    source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1
-    module load ${package}/${version} >/dev/null 2>&1
-    if [ $? -eq 0 ] ; then
-
-	source ${package}_tests.sh
-
+    envfile=${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
+    if [ ! -f "${envfile}" ] ; then
+	echo "    could not load configuration"
     else
-	echo "WARNING could not load ${package}/${version}"
+	source ${envfile}  >/dev/null 2>&1
+	module load ${package}/${version} >/dev/null 2>&1
+	if [ $? -gt 0 ] ; then
+	    echo "    WARNING missing module ${package}/${version}"
+	else
+	    source ${package}_tests.sh
+	fi
     fi
 done
 echo && echo "See: ${compilelog}" && echo
