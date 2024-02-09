@@ -4,9 +4,7 @@ project( ${PROJECTNAME} VERSION 1.0 )
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.cxx )
 target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )
 
-find_package( PkgConfig REQUIRED )
-pkg_check_modules( FMTLIB REQUIRED fmt )
-message( STATUS "Fmtlib includes: ${FMTLIB_INCLUDE_DIRS}" )
+find_package( MPI REQUIRED )
 
 target_include_directories(
 	${PROJECTNAME} PUBLIC ${FMTLIB_INCLUDE_DIRS}
