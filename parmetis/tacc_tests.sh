@@ -1,7 +1,7 @@
 #!/bin/bash
 
-package=hypre
-version=2.30.0
+package=parmetis
+version=4.0.3
 mpi=1
 
 source ../tacc_tests.sh

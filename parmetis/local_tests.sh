@@ -1,7 +1,8 @@
 #!/bin/bash
 
-package=hypre
-version=2.30.0
+package=parmetis
+version=4.0.3
+mpi=1
 
 ##
 ## test all programs for this package,
