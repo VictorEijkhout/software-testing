@@ -13,5 +13,5 @@ fi
 
 source ../failure.sh
 
-echo "==== Test if we can compile CXX with MPL"
+echo "---- Test if we can compile CXX with MPL"
 ../cmake_test_driver.sh -m -p ${package} -l ${compilelog} has.cxx

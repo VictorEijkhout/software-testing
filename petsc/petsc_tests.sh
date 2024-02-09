@@ -19,29 +19,29 @@ fi
 
 source ../failure.sh
 
-echo "==== Sanity test"
+echo "---- Sanity test"
 ../cmake_test_driver.sh -m -p ${package} -l ${compilelog} sanity.c
 
-echo "==== Test if we can compile Fortran"
+echo "---- Test if we can compile Fortran"
 ../cmake_test_driver.sh -m -p ${package} -l ${compilelog} fortran.F90
 
-echo "==== Test if we have python interfaces"
+echo "---- Test if we have python interfaces"
 retcode=0
 ./petsc4py_test.sh >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "py interfaces"
 
-# echo "==== Test if we have amgx preconditioner"
+# echo "---- Test if we have amgx preconditioner"
 # retcode=0
 # ../cmake_build_single.sh -m -p ${package} amgx.c >>${compilelog} 2>&1 || retcode=$?
 # failure $retcode "amgx compilation"
 
-echo "==== Test size of scalar"
+echo "---- Test size of scalar"
 ../cmake_test_driver.sh -m -p ${package} -l ${compilelog} scalar.c
 
-echo "==== Test size of int"
+echo "---- Test size of int"
 ../cmake_test_driver.sh -m -p ${package} -l ${compilelog} int.c
 
-echo "==== Test presence of hdf5"
+echo "---- Test presence of hdf5"
 ../cmake_test_driver.sh -m -p ${package} -l ${compilelog} hdf5.c
 
 
