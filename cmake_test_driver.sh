@@ -5,7 +5,10 @@
 ##
 
 function usage() {
-    echo "Usage: $0 [ -m ] [ -p package ]  [ -l logfile ] [ -x ] program.{c.F90}"
+    echo "Usage: $0"
+    echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ]"
+    echo "    [ -p package ]  [ -l logfile ] [ -x ( set x ) ]"
+    echo "    program.{c.F90}"
 }
 
 if [ $# -eq 0 ] ; then 
@@ -16,9 +19,12 @@ source ../failure.sh
 package=unknown
 compilelog=${package}.log
 mpi=
+modules=
 while [ $# -gt 1 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
+    elif [ $1 = "-d" ] ; then 
+	shift && modules=$1 && shift 
     elif [ $1 = "-m" ] ; then 
 	shift && mpi=1 
     elif [ $1 = "-x" ] ; then 
@@ -38,6 +44,12 @@ fi
 echo "cmake build and run: source=$source" >>${compilelog}
 
 retcode=0
+if [ ! -z "${modules}" ] ; then
+    echo " .. loading modules: ${modules}" >>${compilelog}
+    for m in $( echo ${modules} | tr ',' ' ' ) ; do
+	module load $m
+    done
+fi
 ../cmake_build_single.sh -p ${package} "${source}" >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "${executable} compilation"
 if [ -z $mpi ] ; then
