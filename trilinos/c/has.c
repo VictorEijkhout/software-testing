@@ -1,8 +1,4 @@
-#include "HYPRE_config.h"
-
-#ifndef HYPRE_RELEASE_NAME
-#error Hypre not defined
-#endif
+#include "Trilinos_version.h"
 
 int main() {
   return 0;

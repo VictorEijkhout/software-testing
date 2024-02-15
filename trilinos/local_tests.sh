@@ -1,7 +1,7 @@
 #!/bin/bash
 
-package=hypre
-version=2.30.0
+package=trilinos
+version=15.0.0
 
 ##
 ## test all programs for this package,
