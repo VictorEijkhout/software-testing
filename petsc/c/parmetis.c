@@ -1,9 +1,4 @@
 #include "petsc.h"
-#include "petscviewerhdf5.h"
-
-#ifndef PETSC_HAVE_HDF5
-#error Variable PETSC_HAVE_HDF5 not set
-#endif
 
 #undef __FUNCT__
 #define __FUNCT__ "main"
@@ -42,7 +37,7 @@ int main(int argc,char **args)
     IS              is;
     PetscCall(MatPartitioningCreate(comm, &part));
     PetscCall(MatPartitioningSetAdjacency(part, A));
-    PetscCall(MatPartitioningSetType(part, MATPARTITIONINGHIERARCH));
+    PetscCall(MatPartitioningSetType(part, MATPARTITIONINGPARMETIS));
     PetscCall(MatPartitioningHierarchicalSetNcoarseparts(part, 2));
     PetscCall(MatPartitioningHierarchicalSetNfineparts(part, 2));
     PetscCall(MatPartitioningSetFromOptions(part));
