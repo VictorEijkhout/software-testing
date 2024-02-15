@@ -12,5 +12,7 @@ function failure() {
 	    ( 11 ) echo "    (failure to compile)" ;;
 	    ( 12 ) echo "    (runtime failure)" ;;
 	esac
+    else
+	echo "---- $2"
     fi
 }
