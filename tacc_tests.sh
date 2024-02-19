@@ -40,8 +40,12 @@ for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
 	if [ ! -z "${mpi}" ] ; then
 	    module load impi >/dev/null
 	fi 
-	module load ${package}/${version} >/dev/null 2>&1
-	if [ $? -eq 0 ] ; then
+	if [ "${package}" = "none" ] ; then 
+	    retcode=0
+	else
+	    module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
+	fi
+	if [ $retcode -eq 0 ] ; then
 
 	    source ${package}_tests.sh
 

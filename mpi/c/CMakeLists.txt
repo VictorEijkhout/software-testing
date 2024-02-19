@@ -7,18 +7,18 @@ target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )
 find_package( MPI REQUIRED )
 
 target_include_directories(
-	${PROJECTNAME} PUBLIC ${FMTLIB_INCLUDE_DIRS}
+	${PROJECTNAME} PUBLIC 
 	)
 target_link_directories(
-	${PROJECTNAME} PUBLIC ${FMTLIB_LIBRARY_DIRS}
+	${PROJECTNAME} PUBLIC 
 	)
 target_link_libraries(
-	${PROJECTNAME} PUBLIC ${FMTLIB_LIBRARIES}
+	${PROJECTNAME} PUBLIC 
 	)
-set_target_properties(
-	${PROJECTNAME} PROPERTIES
-	BUILD_RPATH   "${FMTLIB_LIBRARY_DIRS}"
-	INSTALL_RPATH "${FMTLIB_LIBRARY_DIRS}"
-    )
+## set_target_properties(
+## 	${PROJECTNAME} PROPERTIES
+## 	BUILD_RPATH   "${FMTLIB_LIBRARY_DIRS}"
+## 	INSTALL_RPATH "${FMTLIB_LIBRARY_DIRS}"
+##     )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
