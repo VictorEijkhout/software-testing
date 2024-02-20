@@ -1,11 +1,12 @@
 module reset >/dev/null 2>&1
 echo "================"
-echo "==== Package: ${package}, version: ${version}"
 echo "==== Local modules"
+echo "==== Package: ${package}, version: ${version}"
 echo "================"
 
 compilelog=local_tests.log
 rm -f ${compilelog}
+echo "full reporting in ${compilelog}"
 for compiler in $( cat ../compilers.sh ) ; do
 
     config=$( echo $compiler | tr -d '/' )

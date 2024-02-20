@@ -44,9 +44,11 @@ echo "---- Test size of int"
 echo "---- Test presence of hdf5"
 ../cmake_test_driver.sh -d phdf5 -m -p ${package} -l ${compilelog} hdf5.c
 
-
 echo "---- Test presence of parmetis"
 ../cmake_test_driver.sh -m -p ${package} -l ${compilelog} parmetis.c
+
+echo "---- Test presence of ptscotch"
+../cmake_test_driver.sh -m -p ${package} -l ${compilelog} ptscotch.c
 
 
 echo && echo "See: ${compilelog}" && echo
