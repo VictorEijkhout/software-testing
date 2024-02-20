@@ -26,7 +26,7 @@ source ../options.sh
 module reset >/dev/null 2>&1
 echo "================"
 echo "==== TACC modules"
-echo "    testing ${package}/${version}"
+echo "==== Testing: ${package}/${version}"
 echo "================"
 echo 
 compilelog=tacc_tests.log
@@ -38,7 +38,11 @@ for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
     else
 	echo "==== Configuration: ${compiler}" | tee -a ${compilelog}
 	if [ ! -z "${mpi}" ] ; then
-	    module load impi >/dev/null
+	    module load impi >/dev/null 2>&1 || retcode=$?
+	    if [ $retcode -gt 0 ] ; then
+		echo "     No MPI available"
+		continue
+	    fi
 	fi 
 	if [ "${package}" = "none" ] ; then 
 	    retcode=0
@@ -50,7 +54,7 @@ for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
 	    source ${package}_tests.sh
 
 	else
-	    echo "WARNING could not load ${package}/${version}"
+	    echo "     WARNING could not load ${package}/${version}"
 	fi
     fi
 done

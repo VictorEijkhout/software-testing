@@ -13,6 +13,6 @@ function failure() {
 	    ( 12 ) echo "    (runtime failure)" ;;
 	esac
     else
-	echo "---- $2"
+	echo "     $2"
     fi
 }
