@@ -13,7 +13,7 @@ for compiler in $( cat ../compilers.sh ) ; do
     ( echo && echo "==== Configuration: ${config}" ) | tee -a ${compilelog}
     envfile=${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
     if [ ! -f "${envfile}" ] ; then
-	echo "    could not load configuration"
+	echo "    undefined configuration for system <<${TACC_SYSTEM}>>"
     else
 	source ${envfile}  >/dev/null 2>&1
 	module load ${package}/${version} >/dev/null 2>&1
