@@ -3,6 +3,8 @@ program hello_world
   use petscksp
   !!  use MPI ! F90 binding
   use mpi_f08 ! F08 binding
+
+  implicit none
   integer ierr, num_procs, rank, i
   integer count, src
 
