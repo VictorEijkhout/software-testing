@@ -1,27 +1,7 @@
 ##
-## this block should go:
-## we never call this with arguments
-##
-while [ $# -gt 0 ] ; do
-    if [ $1 = "-h" ] ; then
-	echo "Usage: $0 [ -h ]"
-	echo "    [ -m (load mpi) ]"
-	echo "    [ -p package (default: ${package}) ]"
-	echo "    [ -v version (default: ${version} ]"
-	exit 1
-    elif [ $1 = "-p" ] ; then
-	shift && package=$1 && shift
-    elif [ $1 = "-v" ] ; then 
-	shift && version=$1 && shift
-    fi
-done
-
-##
 ## test all programs for this package,
 ## looping over locally available modules
 ##
-
-source ../options.sh
 
 module reset >/dev/null 2>&1
 echo "================"
