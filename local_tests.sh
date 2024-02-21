@@ -1,3 +1,7 @@
+##
+## include file for all specific package tests
+##
+
 module reset >/dev/null 2>&1
 echo "================"
 echo "==== Local modules"
@@ -16,9 +20,9 @@ for compiler in $( cat ../compilers.sh ) ; do
 	echo "    undefined configuration for system <<${TACC_SYSTEM}>>"
     else
 	source ${envfile}  >/dev/null 2>&1
-	module load ${package}/${version} >${compilelog} 2>&1
+	module load ${package}/${version} >>${compilelog} 2>&1
 	if [ $? -gt 0 ] ; then
-	    echo "    WARNING missing module ${package}/${version}"
+	    echo "     WARNING missing module ${package}/${version}"
 	else
 	    source ${package}_tests.sh
 	fi
