@@ -28,15 +28,14 @@ echo "================"
 echo "==== TACC modules"
 echo "==== Testing: ${package}/${version}"
 echo "================"
-echo 
 compilelog=tacc_tests.log
 rm -f ${compilelog}
 for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
     retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
-	echo "==== Configuration  ${compiler}: unknown" | tee -a ${compilelog}
+	echo && echo "==== Configuration  ${compiler}: unknown" | tee -a ${compilelog}
     else
-	echo "==== Configuration: ${compiler}" | tee -a ${compilelog}
+	echo && echo "==== Configuration: ${compiler}" | tee -a ${compilelog}
 	if [ ! -z "${mpi}" ] ; then
 	    module load impi >/dev/null 2>&1 || retcode=$?
 	    if [ $retcode -gt 0 ] ; then
