@@ -16,7 +16,7 @@ for compiler in $( cat ../compilers.sh ) ; do
 	echo "    undefined configuration for system <<${TACC_SYSTEM}>>"
     else
 	source ${envfile}  >/dev/null 2>&1
-	module load ${package}/${version} >/dev/null 2>&1
+	module load ${package}/${version} >${compilelog} 2>&1
 	if [ $? -gt 0 ] ; then
 	    echo "    WARNING missing module ${package}/${version}"
 	else
