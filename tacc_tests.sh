@@ -31,14 +31,18 @@ for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
 	##
 	## load module and execute all tests
 	##
-	if [ "${package}" = "none" ] ; then 
-	    retcode=0
-	else
+	if [ "${package}" != "none" ] ; then 
 	    module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
-	fi
-	if [ $retcode -gt 0 ] ; then
-	    echo "     WARNING could not load ${package}/${version}" | tee -a ${compilelog}
-	    continue
+	    if [ $retcode -gt 0 ] ; then
+		echo "     WARNING could not load ${package}/${version}" | tee -a ${compilelog}
+		continue
+	    fi
+	    for m in ${modules} ; do
+		module load $m >/dev/null 2>&1 || retcode=$?
+		if [ $retcode -gt 0 ] ; then
+		    echo "     WARNING failed to load dependent module <<$m>>" | tee -a ${compilelog}
+		fi
+	    done
 	fi
 
 	source ${package}_tests.sh
