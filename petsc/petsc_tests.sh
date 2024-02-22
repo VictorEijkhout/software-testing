@@ -14,21 +14,21 @@ if [ -z "${TACC_PETSC_DIR}" ] ; then
 fi
 
 if [ -z "${compilelog}" ] ; then
+    locallog=1
     compilelog=${package}.log
+else
+    locallog=
 fi
 
 source ../failure.sh
 
+##
+## C tests
+##
+echo "C language"
+
 echo "---- Sanity test"
 ../cmake_test_driver.sh -m -p ${package} -l ${compilelog} sanity.c
-
-echo "---- Test if we can compile Fortran"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} fortran.F90
-
-echo "---- Test if we have python interfaces"
-retcode=0
-./petsc4py_test.sh >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "py interfaces"
 
 # echo "---- Test if we have amgx preconditioner"
 # retcode=0
@@ -51,5 +51,31 @@ echo "---- Test presence of ptscotch"
 ../cmake_test_driver.sh -m -p ${package} -l ${compilelog} ptscotch.c
 
 
-echo && echo "See: ${compilelog}" && echo
+##
+## Fortran tests
+##
+echo "Fortran language"
+
+echo "---- Test if we can compile Fortran"
+../cmake_test_driver.sh -m -p ${package} -l ${compilelog} fortran.F90
+
+echo "---- Test if we can compile Fortran1990"
+../cmake_test_driver.sh -m -p ${package} -l ${compilelog} fortran1990.F90
+
+echo "---- Test if we can compile Fortran2008"
+../cmake_test_driver.sh -m -p ${package} -l ${compilelog} fortran2008.F90
+
+##
+## Python tests
+##
+echo "Python language"
+
+echo "---- Test if we have python interfaces"
+retcode=0
+./petsc4py_test.sh >>${compilelog} 2>&1 || retcode=$?
+failure $retcode "py interfaces"
+
+if [ ! -z "${locallog}" ] ; then 
+    echo && echo "See: ${compilelog}" && echo
+fi
 
