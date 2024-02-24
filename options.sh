@@ -11,7 +11,7 @@ while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then
 	usage && exit 0
     elif [ "$1" = "-c" ] ; then
-	shift && compiler="$1" && shift
+	shift && matchcompiler="$1" && shift
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     fi
