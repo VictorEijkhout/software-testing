@@ -1,5 +1,6 @@
 ##
-## include file for all specific package tests
+## test all programs for this package,
+## looping over locally available modules
 ##
 
 module reset >/dev/null 2>&1
@@ -13,6 +14,10 @@ rm -f ${compilelog}
 echo "full reporting in ${compilelog}"
 for compiler in $( cat ../compilers.sh ) ; do
 
+    if [ ! -z "${matchcompiler}" ] ; then 
+	if [[ $compiler != *${matchcompiler}* ]] ; then continue ; fi
+    fi
+
     ##
     ## load local configuration
     ##
@@ -23,7 +28,6 @@ for compiler in $( cat ../compilers.sh ) ; do
 	echo "    undefined configuration for system <<${TACC_SYSTEM}>>"  | tee -a ${compilelog}
 	continue
     fi
-
     source ${envfile}  >/dev/null 2>&1
 
     ## 
@@ -32,9 +36,10 @@ for compiler in $( cat ../compilers.sh ) ; do
     module load ${package}/${version} >>${compilelog} 2>&1
     if [ $? -gt 0 ] ; then
 	echo "     WARNING missing module ${package}/${version}"
-    else
-	source ${package}_tests.sh
+	continue
     fi
+
+    source ${package}_tests.sh
 
 done
 echo && echo "See: ${compilelog}" && echo
