@@ -13,6 +13,10 @@ compilelog=tacc_tests_${package}-${version}.log
 rm -f ${compilelog}
 for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
 
+    if [ ! -z "${matchcompiler}" ] ; then 
+	if [[ $compiler != *${matchcompiler}* ]] ; then continue ; fi
+    fi
+
     ##
     ## load compiler and mpi if needed
     ##
