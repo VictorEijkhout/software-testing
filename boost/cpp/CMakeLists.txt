@@ -4,7 +4,7 @@ project( ${PROJECTNAME} VERSION 1.0 )
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.cpp )
 target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )
 
-find_package( Boost )
+find_package(Boost COMPONENTS filesystem system iostreams REQUIRED)
 
 message( "Found include dirs: ${Boost_INCLUDE_DIRS}" )
 target_include_directories(
@@ -14,8 +14,8 @@ message( "Found include dirs: ${Boost_LIBRARY_DIRS}" )
 target_link_directories(
     ${PROJECTNAME} PUBLIC ${Boost_LIBRARY_DIRS})
 
-message( "Found libraries: ${Boost_LIBRARIES}" )
 target_link_libraries(
-    ${PROJECTNAME} PUBLIC ${Boost_LIBRARIES})
+    ${PROJECT_NAME} PRIVATE 
+    Boost::boost Boost::filesystem Boost::system Boost::iostreams)
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
