@@ -57,10 +57,10 @@ fi
 failure $retcode "${executable} compilation"
 if [ -z $mpi ] ; then
     ./build/${executable} \
-	>run_${executable}.log 2>&1 || retcode=$?
+	>run_${executable}.log 2>err_${executable}.log || retcode=$?
 else
     ibrun -n 1 ./build/${executable} \
-	>run_${executable}.log 2>&1 || retcode=$?
+	>run_${executable}.log 2>err_${executable}.log || retcode=$?
 fi
 failure $retcode "${executable} test run"
 
