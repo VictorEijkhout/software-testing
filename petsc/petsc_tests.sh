@@ -20,6 +20,12 @@ else
     locallog=
 fi
 
+if [ ! -z "${noibrun}" ] ; then
+    mpiflag=
+else
+    mpiflag=-m
+fi
+
 source ../failure.sh
 
 ##
@@ -28,7 +34,7 @@ source ../failure.sh
 echo "C language"
 
 echo "---- Sanity test"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} sanity.c
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${compilelog} sanity.c
 
 # echo "---- Test if we have amgx preconditioner"
 # retcode=0
@@ -36,22 +42,22 @@ echo "---- Sanity test"
 # failure $retcode "amgx compilation"
 
 echo "---- Test size of scalar"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} scalar.c
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${compilelog} scalar.c
 
 echo "---- Test size of int"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} int.c
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${compilelog} int.c
 
 echo "---- Test presence of hdf5"
-../cmake_test_driver.sh -d phdf5 -m -p ${package} -l ${compilelog} hdf5.c
+../cmake_test_driver.sh -d phdf5 ${mpiflag} -p ${package} -l ${compilelog} hdf5.c
 
 echo "---- Test presence of mumpsi64"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} mumpsi64.c
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${compilelog} mumpsi64.c
 
 echo "---- Test presence of parmetis"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} parmetis.c
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${compilelog} parmetis.c
 
 echo "---- Test presence of ptscotch"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} ptscotch.c
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${compilelog} ptscotch.c
 
 
 ##
@@ -60,13 +66,13 @@ echo "---- Test presence of ptscotch"
 echo "Fortran language"
 
 echo "---- Test if we can compile Fortran"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} fortran.F90
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${compilelog} fortran.F90
 
 echo "---- Test if we can compile Fortran1990"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} fortran1990.F90
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${compilelog} fortran1990.F90
 
 echo "---- Test if we can compile Fortran2008"
-../cmake_test_driver.sh -m -p ${package} -l ${compilelog} fortran2008.F90
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${compilelog} fortran2008.F90
 
 ##
 ## Python tests

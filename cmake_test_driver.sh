@@ -6,7 +6,7 @@
 
 function usage() {
     echo "Usage: $0"
-    echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ]"
+    echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] [ -b (disable ibrun) ]"
     echo "    [ -p package ]  [ -l logfile ] [ -x ( set x ) ]"
     echo "    program.{c.F90}"
 }
@@ -20,9 +20,12 @@ package=unknown
 compilelog=${package}.log
 mpi=
 modules=
+noibrun=
 while [ $# -gt 1 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
+    elif [ "$1" = "-b" ] ; then
+	noibrun=1 && shift
     elif [ $1 = "-d" ] ; then 
 	shift && modules=$1 && shift 
     elif [ $1 = "-m" ] ; then 
