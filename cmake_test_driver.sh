@@ -48,9 +48,9 @@ echo "cmake build and run: source=$source" >>${compilelog}
 
 retcode=0
 if [ ! -z "${modules}" ] ; then
-    echo " .. loading modules: ${modules}" >>${compilelog}
+    echo " .. loading modules: ${modules}" >>${compilelog} 2>&1
     for m in $( echo ${modules} | tr ',' ' ' ) ; do
-	module load $m
+	module load $m >>${compilelog} 2>&1
     done
 fi
 ../cmake_build_single.sh -p ${package} "${source}" >>${compilelog} 2>&1 || retcode=$?

@@ -2,6 +2,7 @@
 
 ##
 ## Test a program C/F given externally loaded compiler/mpi
+## the output of this script is caught externally by cmake_test_driver.sh
 ##
 
 function usage() {
