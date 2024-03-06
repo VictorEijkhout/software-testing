@@ -10,7 +10,7 @@ function usage() {
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
     usage && exit 0
 fi
-compiler=
+matchcompiler=
 noibrun=
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then

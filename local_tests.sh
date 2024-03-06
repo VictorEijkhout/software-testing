@@ -14,15 +14,19 @@ rm -f ${compilelog}
 echo "full reporting in ${compilelog}"
 for compiler in $( cat ../compilers.sh ) ; do
 
+    echo | tee -a ${compilelog}
     if [ ! -z "${matchcompiler}" ] ; then 
-	if [[ $compiler != *${matchcompiler}* ]] ; then continue ; fi
+	if [[ $compiler != *${matchcompiler}* ]] ; then
+	    echo "==== Skipping non-matched compiler ${compiler}" | tee -a ${compilelog}
+	    continue
+	fi
     fi
 
     ##
     ## load local configuration
     ##
     config=$( echo $compiler | tr -d '/' )
-    ( echo && echo "==== Configuration: ${config}" ) | tee -a ${compilelog}
+    echo "==== Configuration: ${config}" | tee -a ${compilelog}
     envfile=${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
     if [ ! -f "${envfile}" ] ; then
 	echo "    undefined configuration for system <<${TACC_SYSTEM}>>"  | tee -a ${compilelog}
