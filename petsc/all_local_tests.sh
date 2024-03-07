@@ -35,14 +35,16 @@ while [ $# -gt 0 ] ; do
 done
 
 
+alllog=all_local_tests.log
 versions=$( module -t avail ${package} 2>&1 | sed -e '1d' )
 for version in ${versions} ; do
     version=${version##${package}/}
     if [[ ${version} = *${matchversion}* ]] ; then 
-	echo "Testing version <<$version>>"
+	echo "Testing package version <<$package/$version>>"
 	./local_tests.sh -v $version ${noibrun} \
 	    $( if [ ! -z "${compiler}" ] ; then echo "-c $compiler" ; fi )
     else
 	echo "Version skipped: <<$version>>"
     fi 
-done 2>&1 | tee all_local_tests.log
+done 2>&1 | tee ${alllog}
+echo && echo "See: ${alllog}" && echo 
