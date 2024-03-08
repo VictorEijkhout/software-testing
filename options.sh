@@ -18,7 +18,7 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-b" ] ; then
 	noibrun=1 && shift
     elif [ "$1" = "-c" ] ; then
-	shift && matchcompiler="$1" && shift
+	shift && matchcompiler=$( echo "$1" | tr -d '/' ) && shift
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     fi

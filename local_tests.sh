@@ -16,7 +16,7 @@ for compiler in $( cat ../compilers.sh ) ; do
 
     echo | tee -a ${compilelog}
     if [ ! -z "${matchcompiler}" ] ; then 
-	if [[ $compiler != *${matchcompiler}* ]] ; then
+	if [[ $( echo $compiler | tr -d '/' ) != *${matchcompiler}* ]] ; then
 	    echo "==== Skipping non-matched compiler ${compiler}" | tee -a ${compilelog}
 	    continue
 	fi
