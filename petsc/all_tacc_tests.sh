@@ -41,7 +41,7 @@ for version in ${versions} ; do
     version=${version##${package}/}
     if [[ ${version} = *${matchversion}* ]] ; then 
 	echo "Testing version <<$version>>"
-	./tacc_tests.sh -v $version \
+	./tacc_tests.sh -v $version ${noibrun} \
 	    $( if [ ! -z "${compiler}" ] ; then echo "-c $compiler" ; fi )
     else
 	echo "Version skipped: <<$version>>"
