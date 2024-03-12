@@ -44,7 +44,7 @@ extension=${source##*.}
 if [ ! -f "${extension}/${source}" ] ; then
     echo "ERROR: no file <<${extension}/${source}>>" && exit 0
 fi
-echo "cmake build and run: source=$source" >>${compilelog}
+echo "Test: cmake build and run, source=$source" >>${compilelog}
 
 retcode=0
 if [ ! -z "${modules}" ] ; then
