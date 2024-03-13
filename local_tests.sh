@@ -9,7 +9,7 @@ echo "==== Local modules"
 echo "==== Package: ${package}, version: ${version}"
 echo "================"
 
-compilelog=local_tests_${package}-${version}.log
+compilelog=local_tests_${package}-${version:-none}.log
 rm -f ${compilelog}
 echo "full reporting in ${compilelog}"
 for compiler in $( cat ../compilers.sh ) ; do
@@ -35,12 +35,14 @@ for compiler in $( cat ../compilers.sh ) ; do
     source ${envfile}  >/dev/null 2>&1
 
     ## 
-    ## load module and execute all tests
+    ## load module (if there is one) and execute all tests
     ##
-    module load ${package}/${version} >>${compilelog} 2>&1
-    if [ $? -gt 0 ] ; then
-	echo "     WARNING missing module ${package}/${version}"
-	continue
+    if [ "${package}" != "mpi" ] ; then 
+	module load ${package}/${version} >>${compilelog} 2>&1
+	if [ $? -gt 0 ] ; then
+	    echo "     WARNING missing module ${package}/${version}"
+	    continue
+	fi
     fi
 
     source ${package}_tests.sh

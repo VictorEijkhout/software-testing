@@ -1,6 +1,6 @@
 #!/bin/bash
 
-package=none
+package=mpi
 mpi=1
 
 source ../options.sh
