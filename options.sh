@@ -21,5 +21,7 @@ while [ $# -gt 0 ] ; do
 	shift && matchcompiler=$( echo "$1" | tr -d '/' ) && shift
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
+    else
+	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
 done
