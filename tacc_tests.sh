@@ -11,16 +11,26 @@ echo "================"
 
 compilelog=tacc_tests_${package}-${version}.log
 rm -f ${compilelog}
-for compiler in $( cat ../compilers.sh ); do 
 
+#
+# compiler names without slash
+#
+compilers="$( for c in $( cat ../compilers.sh ) ; do echo $c | tr -d '/' ; done )"
+for compiler in $compilers ; do 
+    
+    cname=${compiler%%[0-9]*}
+    cvers=${compiler##*[a-z]}
     if [ ! -z "${matchcompiler}" ] ; then 
-	if [[ $compiler != *${matchcompiler}* ]] ; then continue ; fi
+	if [[ $compiler != *${matchcompiler}* ]] ; then
+	    echo "==== Skip compiler: $compiler"
+	    continue
+	fi
     fi
 
     ##
     ## load compiler and mpi if needed
     ##
-    retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
+    retcode=0 && module load ${cname}/${cver} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
 	echo && echo "==== Configuration  ${compiler}: unknown" | tee -a ${compilelog}
 	continue
