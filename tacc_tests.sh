@@ -54,12 +54,14 @@ for compiler in $compilers ; do
 	    continue
 	fi
 	for m in ${modules} ; do
+	    if [ $m = "mkl" -a $cname = "intel" ] ; then continue ; fi
 	    module load $m >/dev/null 2>&1 || retcode=$?
 	    if [ $retcode -gt 0 ] ; then
 		echo "     WARNING failed to load dependent module <<$m>>" | tee -a ${compilelog}
 	    fi
 	done
     fi
+    echo "Running with modules: $( module -t list 2>&1 )" >${compilelog}
 
     source ${package}_tests.sh
 
