@@ -13,8 +13,9 @@ fi
 
 source ../failure.sh
 
-echo "---- Test if we can compile C"
-../cmake_test_driver.sh -p ${package} -l ${compilelog} has.c
+# echo "---- Test if we can compile C"
+# ../cmake_test_driver.sh -p ${package} -l ${compilelog} has.c
 
 echo "---- Test if we can compile Fortran"
-../cmake_test_driver.sh -p ${package} -l ${compilelog} fmod.F90
+../cmake_test_driver.sh -p ${package} -l ${compilelog} dssimp.f
+

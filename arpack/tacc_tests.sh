@@ -1,7 +1,8 @@
 #!/bin/bash
 
-package=hdf5
-version=1.14.3
+package=arpack
+version=3.9.1
+modules=mkl
 
 source ../options.sh
 source ../tacc_tests.sh
