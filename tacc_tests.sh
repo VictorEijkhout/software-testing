@@ -7,6 +7,7 @@ module reset >/dev/null 2>&1
 echo "================"
 echo "==== TACC modules"
 echo "==== Testing: ${package}/${version}"
+echo "==== available packages: $( module -t spider ${package}/${version} 2>&1 )"
 echo "================"
 
 compilelog=tacc_tests_${package}-${version}.log
@@ -19,7 +20,7 @@ compilers="$( for c in $( cat ../compilers.sh ) ; do echo $c | tr -d '/' ; done 
 for compiler in $compilers ; do 
     
     cname=${compiler%%[0-9]*}
-    cvers=${compiler##*[a-z]}
+    cversion=${compiler##*[a-z]}
     if [ ! -z "${matchcompiler}" ] ; then 
 	if [[ $compiler != *${matchcompiler}* ]] ; then
 	    echo "==== Skip compiler: $compiler"
@@ -30,7 +31,7 @@ for compiler in $compilers ; do
     ##
     ## load compiler and mpi if needed
     ##
-    retcode=0 && module load ${cname}/${cver} >/dev/null 2>&1 || retcode=$?
+    retcode=0 && module load ${cname}/${cversion} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
 	echo && echo "==== Configuration  ${compiler}: unknown" | tee -a ${compilelog}
 	continue
@@ -51,6 +52,7 @@ for compiler in $compilers ; do
 	module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -gt 0 ] ; then
 	    echo "     WARNING could not load ${package}/${version}" | tee -a ${compilelog}
+	    echo "Currently loaded: $( module -t list 2>&1 ) " >>${compilelog}
 	    continue
 	fi
 	for m in ${modules} ; do
