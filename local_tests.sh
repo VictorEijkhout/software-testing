@@ -11,13 +11,18 @@ echo "================"
 
 compilelog=local_tests_${package}-${version:-none}.log
 rm -f ${compilelog}
-echo "full reporting in ${compilelog}"
-for compiler in $( cat ../compilers.sh ) ; do
 
-    echo | tee -a ${compilelog}
+#
+# compiler names without slash
+#
+compilers="$( for c in $( cat ../compilers.sh ) ; do echo $c | tr -d '/' ; done )"
+for compiler in $compilers ; do 
+    
+    cname=${compiler%%[0-9]*}
+    cvers=${compiler##*[a-z]}
     if [ ! -z "${matchcompiler}" ] ; then 
-	if [[ $( echo $compiler | tr -d '/' ) != *${matchcompiler}* ]] ; then
-	    echo "==== Skipping non-matched compiler ${compiler}" | tee -a ${compilelog}
+	if [[ $compiler != *${matchcompiler}* ]] ; then
+	    echo "==== Skip compiler: $compiler"
 	    continue
 	fi
     fi
@@ -25,7 +30,7 @@ for compiler in $( cat ../compilers.sh ) ; do
     ##
     ## load local configuration
     ##
-    config=$( echo $compiler | tr -d '/' )
+    config=${cname}${cvers}
     echo "==== Configuration: ${config}" | tee -a ${compilelog}
     envfile=${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
     if [ ! -f "${envfile}" ] ; then
@@ -49,4 +54,3 @@ for compiler in $( cat ../compilers.sh ) ; do
 
 done
 echo && echo "See: ${compilelog}" && echo
-
