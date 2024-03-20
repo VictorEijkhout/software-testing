@@ -6,11 +6,14 @@
 ##
 
 function usage() {
-    echo "Usage: $0 [ -m moduleversion ] [ -p package ]  [ -v variant ] program.c/cxx/F90" 
+    echo "Usage: $0 [ -m moduleversion ] [ -p package ]  [ -v variant ] [ -x (set -x) ]"
+    echo "    [ --cmake cmake_flags ]"
+    echo "    program.c/cxx/F90" 
 }
 
 package=unknownpackage
 moduleversion="unknownversion"
+cmake=
 variant="default"
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
     usage && exit 0 
@@ -18,10 +21,15 @@ fi
 while [ $# -gt 1 ] ; do
     if [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
+    elif [ $1 = "--cmake" ] ; then
+	shift && cmake=$1 && shift
+	echo "Cmake flags: ${cmake}"
     elif [ $1 = "-m" ] ; then
 	shift && moduleversion=$1 && shift 
     elif [ $1 = "-v" ] ; then
 	shift && variant=$1 && shift 
+    elif [ $1 = "-x" ] ; then
+	shift && set -x
     fi
 done
 
@@ -47,7 +55,9 @@ export CC=mpicc
 export FC=mpif90
 export CXX=mpicxx
 retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
-    -D PROJECTNAME=${base} ../${variant} || retcode=$?
+    -D PROJECTNAME=${base} \
+    $( if [ ! -z "${cmake}" ] ; then echo ${cmake} | tr ',' ' ' ; fi ) \
+    ../${variant} || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
     echo
     echo "    ERROR CMake failed program=${program} and ${package}/${v}; exit ${retcode}"

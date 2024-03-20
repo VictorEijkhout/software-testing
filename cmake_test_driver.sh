@@ -8,6 +8,7 @@ function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] [ -b (disable ibrun) ]"
     echo "    [ -p package ]  [ -l logfile ] [ -x ( set x ) ]"
+    echo "    [ --cmake cmake_flags ]"
     echo "    program.{c.F90}"
 }
 
@@ -17,21 +18,28 @@ fi
 
 source ../failure.sh
 package=unknown
+cmake=
 compilelog=${package}.log
 mpi=
 modules=
 noibrun=
+x=
 while [ $# -gt 1 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
     elif [ "$1" = "-b" ] ; then
 	noibrun=1 && shift
+    elif [ $1 = "--cmake" ] ; then
+	shift && cmake=$1 && shift
+	#echo "Using extra cmake flags: ${cmake}"
     elif [ $1 = "-d" ] ; then 
-	shift && modules=$1 && shift 
+	shift && modules=$1 && shift
+	#echo "Using dependent modules: ${modules}"
     elif [ $1 = "-m" ] ; then 
-	shift && mpi=1 
+	shift && mpi=1
+	#echo "MPI mode"
     elif [ $1 = "-x" ] ; then 
-	shift && set -x
+	shift && set -x && x="-x"
     elif [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
     elif [ $1 = "-l" ] ; then 
@@ -39,6 +47,7 @@ while [ $# -gt 1 ] ; do
     fi
 done
 source=$1
+#echo "Source: $source"
 executable=${source%%.*}
 extension=${source##*.}
 if [ ! -f "${extension}/${source}" ] ; then
@@ -53,7 +62,10 @@ if [ ! -z "${modules}" ] ; then
 	module load $m >>${compilelog} 2>&1
     done
 fi
-../cmake_build_single.sh -p ${package} "${source}" >>${compilelog} 2>&1 || retcode=$?
+../cmake_build_single.sh -p ${package} ${x} \
+    $( if [ ! -z "${cmake}" ] ; then echo "--cmake ${cmake}" ; fi ) \
+    "${source}" \
+    >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "${executable} compilation"
 if [ -z $mpi ] ; then
     ./build/${executable} \
