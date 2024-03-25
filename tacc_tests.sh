@@ -63,7 +63,7 @@ for compiler in $compilers ; do
 	    fi
 	done
     fi
-    echo "Running with modules: $( module -t list 2>&1 )" >${compilelog}
+    echo "Running with modules: $( module -t list 2>&1 )" >>${compilelog}
 
     source ${package}_tests.sh
 
