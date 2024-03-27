@@ -4,10 +4,13 @@
 ## Driver for cmake_build_single.sh
 ##
 
+defaultp=$( pwd )
+defaultp=${defaultp##*/}
+
 function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] [ -b (disable ibrun) ]"
-    echo "    [ -p package ]  [ -l logfile ] [ -x ( set x ) ]"
+    echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
     echo "    [ --cmake cmake_flags ]"
     echo "    program.{c.F90}"
 }
@@ -46,6 +49,7 @@ while [ $# -gt 1 ] ; do
 	shift && set -x && x="-x"
     fi
 done
+if [ -z "${package}" ] ; then package=${defaultp} ; fi
 source=$1
 #echo "Source: $source"
 executable=${source%%.*}
