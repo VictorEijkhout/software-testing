@@ -12,14 +12,14 @@ function usage() {
     echo "    program.{c.F90}"
 }
 
-if [ $# -eq 0 ] ; then 
+if [ $# -eq 0 -o $1 = "-h" ] ; then 
     usage && exit 0
 fi
 
 source ../failure.sh
 package=unknown
 cmake=
-compilelog=${package}.log
+compilelog=
 mpi=
 modules=
 noibrun=
@@ -38,12 +38,12 @@ while [ $# -gt 1 ] ; do
     elif [ $1 = "-m" ] ; then 
 	shift && mpi=1
 	#echo "MPI mode"
-    elif [ $1 = "-x" ] ; then 
-	shift && set -x && x="-x"
-    elif [ $1 = "-p" ] ; then 
-	shift && package=$1 && shift
     elif [ $1 = "-l" ] ; then 
 	shift && compilelog=$1 && shift
+    elif [ $1 = "-p" ] ; then 
+	shift && package=$1 && shift
+    elif [ $1 = "-x" ] ; then 
+	shift && set -x && x="-x"
     fi
 done
 source=$1
@@ -52,6 +52,10 @@ executable=${source%%.*}
 extension=${source##*.}
 if [ ! -f "${extension}/${source}" ] ; then
     echo "ERROR: no file <<${extension}/${source}>>" && exit 0
+fi
+if [ -z "${compilelog}" ] ; then
+    compilelog=${executable}.log
+    rm -f ${compilelog}
 fi
 echo "Test: cmake build and run, source=$source" >>${compilelog}
 
@@ -84,3 +88,4 @@ if [ $retcode -eq 0 ] ; then
 	cat run_${executable}.log
     fi
 fi
+echo "See: ${compilelog}"
