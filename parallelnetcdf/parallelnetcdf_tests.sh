@@ -4,19 +4,38 @@
 ## run tests, given a loaded compiler
 ##
 
-if [ -z "${package}" ] ; then
-    echo "Error: supply package=..." && exit 1 
-fi
-if [ -z "${compilelog}" ] ; then
-    compilelog=compile.log
-fi
+# module reset >/dev/null 2>&1
+# echo "================"
+# echo "==== TACC modules"
+# echo "    testing ${package}/${version}"
+# echo "================"
+# echo 
+# logfile=tacc_tests.log
+# rm -f ${logfile}
+# for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
+#     retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
+#     if [ $retcode -gt 0 ] ; then 
+# 	echo ".... Unknown configuration ${compiler}" | tee -a ${logfile}
+#     else
+# 	echo "==== Configuration: ${compiler}" | tee -a ${logfile}
+# 	module load ${package}/${version} >>${logfile} 2>&1
+# 	if [ $? -eq 0 ] ; then
+
+# 	    source ${package}_tests.sh
+
+# 	else
+# 	    echo "WARNING could not load ${package}/${version}"
+# 	fi
+#     fi
+# done
+# echo && echo "See: ${logfile}" && echo
 
 source ../failure.sh
 
 echo "---- Test if we can compile"
 retcode=0
-../cmake_test_driver.sh -p ${package} -l ${compilelog} create_open.c
+../cmake_test_driver.sh -p ${package} -l ${logfile} create_open.c
 
-if [ "${compilelog}" = "compile.log" ] ; then
-    echo "See: ${compilelog}"
+if [ "${logfile}" = "compile.log" ] ; then
+    echo "See: ${logfile}"
 fi

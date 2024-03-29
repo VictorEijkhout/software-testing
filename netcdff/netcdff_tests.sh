@@ -4,18 +4,12 @@
 ## run tests, given a loaded compiler
 ##
 
-if [ -z "${package}" ] ; then
-    echo "Error: supply package=..." && exit 1 
-fi
-if [ -z "${compilelog}" ] ; then
-    compilelog=compile.log
-fi
-
+source ../test_options.sh
 source ../failure.sh
 
 echo "---- Test if we can compile"
-../cmake_test_driver.sh -p ${package} -l ${compilelog} has.F90
+../cmake_test_driver.sh -p ${package} -l ${logfile} has.F90
 
-if [ "${compilelog}" = "compile.log" ] ; then
-    echo "See: ${compilelog}"
+if [ "${logfile}" = "compile.log" ] ; then
+    echo "See: ${logfile}"
 fi

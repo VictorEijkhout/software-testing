@@ -3,6 +3,11 @@
 ## looping over locally available modules
 ##
 
+if [ -z "${package}" ] ; then
+    echo "You are calling the general local_tests.sh without setting package"
+    exit 1
+fi
+
 module reset >/dev/null 2>&1
 echo "================"
 echo "==== Local modules"

@@ -22,21 +22,21 @@ echo "==== Local modules"
 echo "    testing ${package}/${version}"
 echo "================"
 echo 
-compilelog=local_tests.log
-export compilelog=local_tests.log
-rm -f ${compilelog}
+logfile=local_tests.log
+export logfile=local_tests.log
+rm -f ${logfile}
 for compiler in $( cat ../compilers.sh ) ; do
 
     config=$( echo $compiler | tr -d '/' )
-    echo "==== Configuration: ${config}" | tee -a ${compilelog}
+    echo "==== Configuration: ${config}" | tee -a ${logfile}
     retcode=0
     source ${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
-	echo ".... Unknown configuration ${compiler}" | tee -a ${compilelog}
+	echo ".... Unknown configuration ${compiler}" | tee -a ${logfile}
     else
-	echo "==== Configuration: ${compiler}" | tee -a ${compilelog}
+	echo "==== Configuration: ${compiler}" | tee -a ${logfile}
 	module load ${package}/${version} >/dev/null 2>&1
-	( echo "Using prefix path:" && splitpath CMAKE_PREFIX_PATH ) >> ${compilelog}
+	( echo "Using prefix path:" && splitpath CMAKE_PREFIX_PATH ) >> ${logfile}
 	if [ $? -eq 0 ] ; then
 	    if [ -z "${TACC_CXX}" ] ; then
 		echo "ERROR set TACC_CXX" && exit 1
@@ -53,5 +53,5 @@ for compiler in $( cat ../compilers.sh ) ; do
 	fi
     fi
 done
-echo && echo "See: ${compilelog}" && echo
+echo && echo "See: ${logfile}" && echo
 

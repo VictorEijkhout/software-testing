@@ -1,7 +1,7 @@
 #!/bin/bash
 
 package=trilinos
-version=15.0.0
+version=15.1.0
 mpi=1
 
 source ../options.sh

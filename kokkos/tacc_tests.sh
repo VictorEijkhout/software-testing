@@ -22,15 +22,15 @@ echo "==== TACC modules"
 echo "    testing ${package}/${version}"
 echo "================"
 echo 
-compilelog=tacc_tests.log
-rm -f ${compilelog}
+logfile=tacc_tests.log
+rm -f ${logfile}
 for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
 
     retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
-	echo ".... Unknown configuration ${compiler}" | tee -a ${compilelog}
+	echo ".... Unknown configuration ${compiler}" | tee -a ${logfile}
     else
-	echo "==== Configuration: ${compiler}" | tee -a ${compilelog}
+	echo "==== Configuration: ${compiler}" | tee -a ${logfile}
 	module load ${package}/${version} >/dev/null 2>&1
 	#export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:${TACC_KOKKOS_DIR}
 	if [ $? -eq 0 ] ; then
@@ -46,5 +46,5 @@ for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
 	fi
     fi
 done
-echo && echo "See: ${compilelog}" && echo
+echo && echo "See: ${logfile}" && echo
 
