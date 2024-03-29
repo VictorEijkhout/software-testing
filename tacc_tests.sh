@@ -41,11 +41,11 @@ for compiler in $compilers ; do
     ##
     retcode=0 && module load ${cname}/${cversion} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
-	echo && echo "==== Configuration  ${compiler}: unknown" >>${fulllog}
+	( echo && echo "==== Configuration  ${compiler}: unknown" ) >>${fulllog}
 	continue
+    else
+	echo && echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
     fi
-
-    echo && echo "==== Configuration: ${compiler}" | tee -a ${compilelog}
     if [ ! -z "${mpi}" ] ; then
 	module load impi >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -gt 0 ] ; then
@@ -59,17 +59,15 @@ for compiler in $compilers ; do
     if [ "${package}" != "none" ] ; then 
 	module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -gt 0 ] ; then
-	    ( \
-	      echo "     WARNING could not load ${package}/${version}" \
-		  && echo "Currently loaded: $( module -t list 2>&1 ) " \
-		   ) >>${fulllog}
+	    echo "     could not load ${package}/${version}" | tee -a ${fulllog}
+	    echo "Currently loaded: $( module -t list 2>&1 ) " >>${fulllog}
 	    continue
 	fi
 	for m in ${modules} ; do
 	    if [ $m = "mkl" -a $cname = "intel" ] ; then continue ; fi
 	    module load $m >/dev/null 2>&1 || retcode=$?
 	    if [ $retcode -gt 0 ] ; then
-		echo "     WARNING failed to load dependent module <<$m>>" | tee -a ${compilelog}
+		echo "     WARNING failed to load dependent module <<$m>>"
 	    fi
 	done
     fi
