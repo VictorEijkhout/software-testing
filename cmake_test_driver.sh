@@ -92,4 +92,3 @@ if [ $retcode -eq 0 ] ; then
 	cat run_${executable}.log
     fi
 fi
-echo "See: ${compilelog}"
