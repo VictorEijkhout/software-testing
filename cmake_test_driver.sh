@@ -51,7 +51,8 @@ while [ $# -gt 1 ] ; do
 done
 if [ -z "${package}" ] ; then package=${defaultp} ; fi
 source=$1
-#echo "Source: $source"
+if [ -z "${source}" ] ; then 
+    echo "ERROR: no source file specified" && exit 1 ; fi
 executable=${source%%.*}
 extension=${source##*.}
 if [ ! -f "${extension}/${source}" ] ; then

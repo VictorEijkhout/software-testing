@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project( ${PROJECTNAME} VERSION 1.0 )
 
-add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
+add_executable( ${PROJECTNAME} ${PROJECTNAME}.cxx )
 target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )
 
 find_package(HDF5 COMPONENTS C HL REQUIRED)
