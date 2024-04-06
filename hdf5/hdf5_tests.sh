@@ -8,7 +8,10 @@ source ../test_options.sh
 source ../failure.sh
 
 echo "---- Test if we can compile C"
-../cmake_test_driver.sh -p ${package} -l ${logfile} has.c
+../cmake_test_driver.sh -l ${logfile} has.c
+
+echo "---- Test if we can compile C++"
+../cmake_test_driver.sh -l ${logfile} hasx.cxx
 
 echo "---- Test if we can compile Fortran"
-../cmake_test_driver.sh -p ${package} -l ${logfile} fmod.F90
+../cmake_test_driver.sh -l ${logfile} fmod.F90
