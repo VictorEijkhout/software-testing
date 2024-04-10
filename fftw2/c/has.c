@@ -1,4 +1,4 @@
-#include <fftw2.h>
+#include <fftw.h>
 
 int main() {
   fftw_complex *in, *out;

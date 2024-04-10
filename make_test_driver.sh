@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##
-## Driver for cmake_build_single.sh
+## Driver for make_build_single.sh
 ##
 
 defaultp=$( pwd )
@@ -11,7 +11,6 @@ function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] [ -b (disable ibrun) ]"
     echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
-    echo "    [ --cmake cmake_flags ]"
     echo "    program.{c.F90}"
 }
 
@@ -21,7 +20,6 @@ fi
 
 source ../failure.sh
 package=unknown
-cmake=
 compilelog=
 mpi=
 modules=
@@ -32,9 +30,6 @@ while [ $# -gt 1 ] ; do
 	usage && exit 0
     elif [ "$1" = "-b" ] ; then
 	noibrun=1 && shift
-    elif [ $1 = "--cmake" ] ; then
-	shift && cmake=$1 && shift
-	#echo "Using extra cmake flags: ${cmake}"
     elif [ $1 = "-d" ] ; then 
 	shift && modules=$1 && shift
 	#echo "Using dependent modules: ${modules}"
@@ -62,7 +57,7 @@ if [ -z "${compilelog}" ] ; then
     compilelog=${executable}.log
     rm -f ${compilelog}
 fi
-echo "Test: cmake build and run, source=$source" >>${compilelog}
+echo "Test: make build and run, source=$source" >>${compilelog}
 
 retcode=0
 if [ ! -z "${modules}" ] ; then

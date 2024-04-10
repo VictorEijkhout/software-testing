@@ -2,18 +2,16 @@
 
 ##
 ## Test a program C/F given externally loaded compiler/mpi
-## the output of this script is caught externally by cmake_test_driver.sh
+## the output of this script is caught externally by make_test_driver.sh
 ##
 
 function usage() {
     echo "Usage: $0 [ -m moduleversion ] [ -p package ]  [ -v variant ] [ -x (set -x) ]"
-    echo "    [ --cmake cmake_flags ]"
     echo "    program.c/cxx/F90" 
 }
 
 package=unknownpackage
 moduleversion="unknownversion"
-cmake=
 variant="default"
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
     usage && exit 0 
@@ -21,9 +19,6 @@ fi
 while [ $# -gt 1 ] ; do
     if [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
-    elif [ $1 = "--cmake" ] ; then
-	shift && cmake=$1 && shift
-	echo "Cmake flags: ${cmake}"
     elif [ $1 = "-m" ] ; then
 	shift && moduleversion=$1 && shift 
     elif [ $1 = "-v" ] ; then
@@ -51,11 +46,22 @@ fi
 echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null
 
-export CC=mpicc
-export FC=mpif90
-export CXX=mpicxx
-retcode=0 && ${compiler} -o ${base} ../${lang}/${base}.${lang} \
-			 -I$${TACC_${package}_INC}
+compiler=
+case "${lang}" in 
+    ( c ) compiler=${TACC_CC} ;;
+    ( cxx ) compiler=${TACC_CXX} ;;
+    ( F90 ) compiler=${TACC_FC} ;;
+esac
+if [ -z "${compiler}" ] ; then
+    echo "ERROR could not set compiler for extension <<${lang}>>"
+    exit 1
+fi
+incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
+eval incpath=\${${incpath}}
+cmdline="${compiler} -o ${base} ../${lang}/${base}.${lang} -I${incpath}"
+echo "cmdline=${cmdline}"
+retcode=0
+eval ${cmdline} || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
     echo
     echo "    ERROR compilation failed program=${program} and ${package}/${v}"
