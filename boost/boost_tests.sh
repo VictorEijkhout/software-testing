@@ -16,6 +16,14 @@ echo "---- Test file system"
 echo "---- Test graph viz"
 ../cmake_test_driver.sh -p ${package} -l ${logfile} graphviz.cpp
 
+echo "---- Test program_options"
+found=$( find $TACC_BOOST_DIR -name \*.cmake | grep program_options | wc -l )
+if [ ${found} -eq 0 ] ; then
+    echo "FAILED to find cmake files"
+else
+    echo "     found"
+fi
+
 if [ "${logfile}" = "compile.log" ] ; then
     echo "See: ${logfile}"
 fi
