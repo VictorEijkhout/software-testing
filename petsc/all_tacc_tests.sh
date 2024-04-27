@@ -1,7 +1,7 @@
 #!/bin/bash
 
 package=petsc
-matchversion=3.20
+matchversion=3.21
 
 ##
 ## cycle over all available versions

@@ -10,7 +10,7 @@ package=petsc
 ##
 ## maybe get custom version and compiler
 ##
-matchversion=3.20
+matchversion=3.21
 compiler=
 
 function usage() {

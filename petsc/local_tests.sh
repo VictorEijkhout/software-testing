@@ -1,7 +1,7 @@
 #!/bin/bash
 
 package=petsc
-version=3.20
+version=3.21
 modules=phdf5
 mpi=1
 
