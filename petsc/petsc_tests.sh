@@ -47,8 +47,16 @@ echo "---- Test size of scalar"
 echo "---- Test size of int"
 ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} int.c
 
+if [[ "${PETSC_ARCH}" = *complex* ]] ; then
+    echo "---- Test complex type"
+    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} complex.c
+fi
+
 echo "---- Test presence of hdf5"
 ../cmake_test_driver.sh -d phdf5 ${mpiflag} -p ${package} -l ${logfile} hdf5.c
+
+echo "---- Test presence of fftw3"
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} fftw3.c
 
 if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
     echo "---- Test presence of mumpsi64"
