@@ -2,6 +2,7 @@
 
 package=fmtlib
 version=10.1.1
+help_string="Loop over all compilers, testing one package version"
 
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then

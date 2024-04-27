@@ -2,6 +2,7 @@
 
 package=fftw3
 version=3.3.10
+help_string="Loop over all compilers, testing one package version"
 
 ##
 ## test all programs for this package,

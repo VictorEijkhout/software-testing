@@ -3,6 +3,8 @@
 ##
 
 function usage() {
+    if [ ! -z "${help_string}" ] ; then
+	echo && echo ${help_string} && echo ; fi 
     echo "Usage: $0 [ -v version (default=${version}) ]"
     echo "    [ -b (no ibrun) ] [ -c compiler ]"
     if [ ! -z "${extra_help}" ] ; then echo ${extra_help} ; fi
