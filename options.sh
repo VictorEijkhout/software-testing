@@ -14,6 +14,7 @@ if [ $# -eq 1 -a "$1" = "-h" ] ; then
 fi
 matchcompiler=
 noibrun=
+python=
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then
 	usage && exit 0
@@ -23,6 +24,8 @@ while [ $# -gt 0 ] ; do
 	shift && matchcompiler=$( echo "$1" | tr -d '/' ) && shift
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
+    elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
+	python=1
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi

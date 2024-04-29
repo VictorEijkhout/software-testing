@@ -5,27 +5,22 @@
 ##
 
 package=petsc
+help_string="Run tests given loaded compiler and petsc version"
+python_option=1
 
-if [ "$1" = "-h" ] ; then 
-    echo "Run tests given loaded compiler and petsc version" && exit 0
+source ../options.sh
+if [ ! -z "${noibrun}" ] ; then
+    mpiflag=
+else
+    mpiflag=-m
 fi
-if [ -z "${TACC_PETSC_DIR}" ] ; then 
-    echo "Please load module <<$package>>" && exit 1
-fi
-
 if [ -z "${logfile}" ] ; then
     locallog=1
     logfile=${package}.log
 else
     locallog=
 fi
-
-if [ ! -z "${noibrun}" ] ; then
-    mpiflag=
-else
-    mpiflag=-m
-fi
-
+python=1
 source ../failure.sh
 
 ##
@@ -93,13 +88,20 @@ fi
 ##
 ## Python tests
 ##
-if [ "${py}" = "1" ] ; then 
+if [ "${python}" = "1" ] ; then 
     echo "Python language"
 
     echo "---- Test if we have python interfaces"
-    retcode=0
-    ./petsc4py_test.sh >>${logfile} 2>&1 || retcode=$?
-    failure $retcode "py interfaces"
+    retcode=0 && ibrun python3 -c "import petsc4py,slepc4py" || retcode=$?
+    failure $retcode "python commandline import"
+
+    retcode=0 && ( cd p && ibrun python3 p4p.py ) | grep -v TACC: || retcode=$?
+    failure $retcode "python petsc init"
+
+    echo "---- Python allreduce"
+    retcode=0 && ( cd p && ibrun python3 allreduce.py ) | grep -v TACC: || retcode=$?
+    failure $retcode "python allreduce"
+
 fi
 
 if [ ! -z "${locallog}" ] ; then 
