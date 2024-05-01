@@ -33,7 +33,7 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
-	python=1
+	python=1 && shift
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
