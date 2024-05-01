@@ -17,12 +17,11 @@ target_include_directories(
 target_link_libraries(
         ${PROJECTNAME} PUBLIC
         ${MPI_C_LIBRARIES} 
-        ${PETSC_C_LIBRARIES}
 	)
 target_link_directories(
         ${PROJECTNAME} PUBLIC
 	${PETSC_LIBRARY_DIRS} )
 target_link_libraries(
-        ${PROJECTNAME} PUBLIC petsc )
+        ${PROJECTNAME} PUBLIC petsc m )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
