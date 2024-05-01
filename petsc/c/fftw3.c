@@ -14,14 +14,14 @@
 #include <stdio.h>
 #include <math.h>
 
-#if !defined(PETSC_HAVE_FFTW)
-#error Petsc was built without fftw3
-#endif
-
 static char help[] = "\nFFT example.\n\n";
 
 #include <petscmat.h>
 #include <petscvec.h>
+
+#if !defined(PETSC_HAVE_FFTW)
+#error Petsc was built without fftw3
+#endif
 
 int main(int argc,char **argv)
 {
