@@ -91,10 +91,11 @@ failure $retcode "${executable} test run"
 
 cat run_${executable}.log >> ${compilelog}
 if [ $retcode -eq 0 ] ; then
-    cat run_${executable}.log | grep -v TACC
-    if [ ! -z "${testvalue}" ] ; then
+    if [ -z "${testvalue}" ] ; then
+	cat run_${executable}.log | grep -v TACC
+    else
 	lastline=$( cat run_${executable}.log | grep -v TACC | tail -n 1 )
-	if [ "${lastline}" = "${testvalue}" ] ; then
+	if [[ "${lastline}" = *${testvalue}* ]] ; then
 	    echo "     correct output: ${lastline}"
 	else
 	    echo "     ERROR output: ${lastline} s/b ${testvalue}"
