@@ -2,7 +2,7 @@
 
 package=petsc
 version=3.21
-modules=phdf5
+modules=
 mpi=1
 help_string="Loop over all compilers, testing one package version"
 

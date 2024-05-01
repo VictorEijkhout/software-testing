@@ -11,6 +11,7 @@ function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] [ -b (disable ibrun) ]"
     echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
+    echo "    [ -t v : test value ]"
     echo "    [ --cmake cmake_flags ]"
     echo "    program.{c.F90}"
 }
@@ -26,6 +27,7 @@ compilelog=
 mpi=
 modules=
 noibrun=
+testvalue=
 x=
 while [ $# -gt 1 ] ; do
     if [ $1 = "-h" ] ; then
@@ -45,6 +47,8 @@ while [ $# -gt 1 ] ; do
 	shift && compilelog=$1 && shift
     elif [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
+    elif [ $1 = "-t" ] ; then 
+	shift && testvalue=$1 && shift
     elif [ $1 = "-x" ] ; then 
 	shift && set -x && x="-x"
     fi
@@ -87,9 +91,13 @@ failure $retcode "${executable} test run"
 
 cat run_${executable}.log >> ${compilelog}
 if [ $retcode -eq 0 ] ; then
-    if [ ! -z ${mpi} ] ; then
-	cat run_${executable}.log | grep -v TACC
-    else
-	cat run_${executable}.log
+    cat run_${executable}.log | grep -v TACC
+    if [ ! -z "${testvalue}" ] ; then
+	lastline=$( cat run_${executable}.log | grep -v TACC | tail -n 1 )
+	if [ "${lastline}" = "${testvalue}" ] ; then
+	    echo "     correct output: ${lastline}"
+	else
+	    echo "     ERROR output: ${lastline} s/b ${testvalue}"
+	fi
     fi
 fi

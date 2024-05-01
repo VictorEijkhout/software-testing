@@ -6,9 +6,7 @@
 
 package=petsc
 help_string="Run tests given loaded compiler and petsc version"
-python_option=1
 
-source ../options.sh
 if [ ! -z "${noibrun}" ] ; then
     mpiflag=
 else
@@ -20,7 +18,6 @@ if [ -z "${logfile}" ] ; then
 else
     locallog=
 fi
-python=1
 source ../failure.sh
 
 ##
@@ -37,10 +34,20 @@ echo "---- Sanity test"
 # failure $retcode "amgx compilation"
 
 echo "---- Test size of scalar"
-../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} scalar.c
+if [[ "${PETSC_ARCH}" = *single* ]] ; then
+    realsize=4 ; else realsize=8 ; fi
+if [[ "${PETSC_ARCH}" = *complex* ]] ; then
+    realsize=$(( realsize * 2 )) ; fi
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} \
+			-t ${realsize} \
+			scalar.c
 
 echo "---- Test size of int"
-../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} int.c
+if [[ "${PETSC_ARCH}" = *i64* ]] ; then
+    intsize=8 ; else intsize=4 ; fi
+../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} \
+			-t ${intsize} \
+			int.c
 
 if [[ "${PETSC_ARCH}" = *complex* ]] ; then
     echo "---- Test complex type"
