@@ -8,7 +8,7 @@ function usage() {
     echo "Usage: $0 [ -v version (default=${version}) ]"
     echo "    [ -b (no ibrun) ] [ -c compiler ]"
     if [ "${python_option}" = "1" ] ; then
-	echo "    [ -p : do python tests ]"
+	echo "    [ -p : python tests only ]"
     fi
     if [ ! -z "${extra_help}" ] ; then
 	echo ${extra_help}
@@ -33,6 +33,7 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
+	# echo "(including python tests)"
 	python=1 && shift
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1

@@ -73,7 +73,7 @@ for compiler in $compilers ; do
     fi
     echo "Running with modules: $( module -t list 2>&1 )" >>${fulllog}
 
-    ./${package}_tests.sh -l ${fulllog}
+    ./${package}_tests.sh -l ${fulllog} $( if [ "${python}" = "1" ] ; then echo -p ; fi )
 
 done | tee ${testlog}
 

@@ -55,7 +55,7 @@ for compiler in $compilers ; do
 	fi
     fi
 
-    source ${package}_tests.sh
+    ./${package}_tests.sh -l ${fulllog} $( if [ "${python}" = "1" ] ; then echo -p ; fi )
 
 done
 echo && echo "See: ${compilelog}" && echo
