@@ -84,7 +84,12 @@ echo "Fortran language"
 
 if [[ "${PETSC_ARCH}" != *f08* ]] ; then 
     echo "---- Test if we can compile Fortran1990"
-    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} fortran1990.F90
+    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} \
+	fortran1990.F90
+
+    echo "---- Test vector insertion"
+    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} \
+	-r vec.F90
 else echo ".... skip f90 test"
 fi
 

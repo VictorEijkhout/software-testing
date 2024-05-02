@@ -11,7 +11,7 @@ function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] [ -b (disable ibrun) ]"
     echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
-    echo "    [ -t v : test value ]"
+    echo "    [ -r : skip run ] [ -t v : test value ]"
     echo "    [ --cmake cmake_flags ]"
     echo "    program.{c.F90}"
 }
@@ -27,6 +27,7 @@ compilelog=
 mpi=
 modules=
 noibrun=
+norun=
 testvalue=
 x=
 while [ $# -gt 1 ] ; do
@@ -47,6 +48,8 @@ while [ $# -gt 1 ] ; do
 	shift && compilelog=$1 && shift
     elif [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
+    elif [ $1 = "-r" ] ; then 
+	shift && norun=1
     elif [ $1 = "-t" ] ; then 
 	shift && testvalue=$1 && shift
     elif [ $1 = "-x" ] ; then 
@@ -80,6 +83,11 @@ fi
     "${source}" \
     >>${compilelog} 2>&1 || retcode=$?
 failure $retcode "${executable} compilation"
+
+##
+## Run test
+##
+if [ ! -z "${norun}" ] ; then exit 0 ; fi 
 if [ -z $mpi ] ; then
     ./build/${executable} \
 	>run_${executable}.log 2>err_${executable}.log || retcode=$?
