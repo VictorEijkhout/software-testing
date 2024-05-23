@@ -16,9 +16,13 @@ echo "==== Testing: ${package}/${version}"
 echo "==== available packages: $( module -t spider ${package}/${version} 2>&1 )"
 echo "================"
 
-testlog=tacc_tests_${package}-${version}.log
-fulllog=tacc_tests_${package}-${version}_full.log
-rm -f ${testlog} ${fulllog}
+logdir=tacc_logs
+fulllog=${logdir}/full.log
+shortlog=tacc_tests.log
+mkdir -p ${logdir}
+rm -f ${fulllog}
+touch ${fulllog}
+touch ${shortlog}
 
 #
 # loop through compiler names without slash
@@ -39,9 +43,10 @@ for compiler in $compilers ; do
     ##
     ## load compiler and mpi if needed
     ##
+    echo "Loading compiler: ${cname}/${cversion}" 
     retcode=0 && module load ${cname}/${cversion} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
-	( echo && echo "==== Configuration  ${compiler}: unknown" ) >>${fulllog}
+	( echo && echo "==== Configuration  ${compiler}: unknown" )  >>${fulllog}
 	continue
     else
 	echo && echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
@@ -57,6 +62,7 @@ for compiler in $compilers ; do
     ## load module and execute all tests
     ##
     if [ "${package}" != "none" ] ; then 
+	echo "Loading package:  ${package}/${version}" >>${fulllog}
 	module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -gt 0 ] ; then
 	    echo "     could not load ${package}/${version}" | tee -a ${fulllog}
@@ -73,9 +79,9 @@ for compiler in $compilers ; do
     fi
     echo "Running with modules: $( module -t list 2>&1 )" >>${fulllog}
 
-    ./${package}_tests.sh -l ${fulllog} $( if [ "${python}" = "1" ] ; then echo -p ; fi )
+    ./${package}_tests.sh -l ${fulllog}
 
-done | tee ${testlog}
+done | tee ${shortlog}
 
-echo && echo "See: ${testlog} and ${fulllog}" && echo
+echo && echo "See: ${shortlog} and ${fulllog}" && echo
 

@@ -16,6 +16,7 @@ function usage() {
     echo "    program.{c.F90}"
 }
 
+## echo "Invocation: $*"
 if [ $# -eq 0 -o $1 = "-h" ] ; then 
     usage && exit 0
 fi
@@ -23,7 +24,7 @@ fi
 source ../failure.sh
 package=unknown
 cmake=
-compilelog=
+fulllog=
 mpi=
 modules=
 noibrun=
@@ -45,7 +46,7 @@ while [ $# -gt 1 ] ; do
 	shift && mpi=1
 	#echo "MPI mode"
     elif [ $1 = "-l" ] ; then 
-	shift && compilelog=$1 && shift
+	shift && fulllog=$1 && shift
     elif [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
     elif [ $1 = "-r" ] ; then 
@@ -65,24 +66,32 @@ extension=${source##*.}
 if [ ! -f "${extension}/${source}" ] ; then
     echo "ERROR: no file <<${extension}/${source}>>" && exit 0
 fi
-if [ -z "${compilelog}" ] ; then
-    compilelog=${executable}.log
-    rm -f ${compilelog}
+if [ -z "${fulllog}" ] ; then
+    fulllog=${executable}.log
+    rm -f ${fulllog}
 fi
-echo "Test: cmake build and run, source=$source" >>${compilelog}
+logdir=${fulllog} && logdir=${fulllog%%/*}
+if [ -z "${logdir}" ] ; then logdir="." ; fi
+if [ ! -d "${logdir}" ] ; then
+    echo "INTERNAL ERROR null logdir in log: ${fulllog}" && exit 1
+fi
+testlog="${logdir}/${source}.log"
+rm -rf ${testlog} && touch ${testlog}
+
+echo "Test: cmake build and run, source=$source" >>${testlog}
 
 retcode=0
 if [ ! -z "${modules}" ] ; then
-    echo " .. loading modules: ${modules}" >>${compilelog} 2>&1
+    echo " .. loading modules: ${modules}" >>${testlog} 2>&1
     for m in $( echo ${modules} | tr ',' ' ' ) ; do
-	module load $m >>${compilelog} 2>&1
+	module load $m >>${testlog} 2>&1
     done
 fi
 ../cmake_build_single.sh -p ${package} ${x} \
     $( if [ ! -z "${cmake}" ] ; then echo "--cmake ${cmake}" ; fi ) \
     "${source}" \
-    >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "${executable} compilation"
+    >>${testlog} 2>&1 || retcode=$?
+failure $retcode "${executable} compilation" | tee -a ${testlog}
 
 ##
 ## Run test
@@ -90,23 +99,22 @@ failure $retcode "${executable} compilation"
 if [ ! -z "${norun}" ] ; then exit 0 ; fi 
 if [ -z $mpi ] ; then
     ./build/${executable} \
-	>run_${executable}.log 2>err_${executable}.log || retcode=$?
+        >>${testlog} 2>&1 || retcode=$?
 else
     ibrun -n 1 ./build/${executable} \
-	>run_${executable}.log 2>err_${executable}.log || retcode=$?
+        >>${testlog} 2>&1 || retcode=$?
 fi
-failure $retcode "${executable} test run"
+failure $retcode "${executable} test run" | tee -a ${testlog}
 
-cat run_${executable}.log >> ${compilelog}
 if [ $retcode -eq 0 ] ; then
-    if [ -z "${testvalue}" ] ; then
-	cat run_${executable}.log | grep -v TACC
-    else
-	lastline=$( cat run_${executable}.log | grep -v TACC | tail -n 1 )
+    if [ ! -z "${testvalue}" ] ; then
+	lastline=$( cat ${testlog} | grep -v TACC | tail -n 1 )
 	if [[ "${lastline}" = *${testvalue}* ]] ; then
 	    echo "     correct output: ${lastline}"
 	else
 	    echo "     ERROR output: ${lastline} s/b ${testvalue}"
 	fi
     fi
-fi
+fi | tee -a ${testlog}
+
+cat ${testlog} >> ${fulllog}
