@@ -14,11 +14,16 @@ echo "==== Local modules"
 echo "==== Package: ${package}, version: ${version}"
 echo "================"
 
-compilelog=local_tests_${package}-${version:-none}.log
-rm -f ${compilelog}
+logdir=tacc_logs
+fulllog=${logdir}/full.log
+shortlog=tacc_tests.log
+mkdir -p ${logdir}
+rm -f ${fulllog}
+touch ${fulllog}
+touch ${shortlog}
 
 #
-# compiler names without slash
+# loop through compiler names without slash
 #
 compilers="$( for c in $( cat ../compilers.sh ) ; do echo $c | tr -d '/' ; done )"
 for compiler in $compilers ; do 
@@ -27,7 +32,7 @@ for compiler in $compilers ; do
     cvers=${compiler##*[a-z]}
     if [ ! -z "${matchcompiler}" ] ; then 
 	if [[ $compiler != *${matchcompiler}* ]] ; then
-	    echo "==== Skip compiler: $compiler"
+	    echo "==== Skip compiler: $compiler" >>${fulllog}
 	    continue
 	fi
     fi
@@ -36,11 +41,12 @@ for compiler in $compilers ; do
     ## load local configuration
     ##
     config=${cname}${cvers}
-    echo "==== Configuration: ${config}" | tee -a ${compilelog}
     envfile=${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
     if [ ! -f "${envfile}" ] ; then
-	echo "    undefined configuration for system <<${TACC_SYSTEM}>>"  | tee -a ${compilelog}
+	echo "    undefined configuration for system <<${TACC_SYSTEM}>>" >>${fulllog}
 	continue
+    else
+	echo "==== Configuration: ${config}" | tee -a ${fulllog}
     fi
     source ${envfile}  >/dev/null 2>&1
 
@@ -48,14 +54,19 @@ for compiler in $compilers ; do
     ## load module (if there is one) and execute all tests
     ##
     if [ "${package}" != "mpi" ] ; then 
-	module load ${package}/${version} >>${compilelog} 2>&1
-	if [ $? -gt 0 ] ; then
-	    echo "     WARNING missing module ${package}/${version}"
+	echo "Loading package:  ${package}/${version}" >>${fulllog}
+	retcode=0
+	module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
+	if [ $retcode -gt 0 ] ; then
+	    echo "     could not load ${package}/${version}" | tee -a ${fulllog}
+	    echo "Currently loaded: $( module -t list 2>&1 ) " >>${fulllog}
 	    continue
 	fi
     fi
+    echo "Running with modules: $( module -t list 2>&1 )" >>${fulllog}
 
-    ./${package}_tests.sh -l ${fulllog} $( if [ "${python}" = "1" ] ; then echo -p ; fi )
+    ./${package}_tests.sh -l ${fulllog} 
 
-done
-echo && echo "See: ${compilelog}" && echo
+done | tee ${shortlog}
+
+echo && echo "See: ${shortlog} and ${fulllog}" && echo

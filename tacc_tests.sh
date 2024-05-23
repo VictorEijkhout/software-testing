@@ -84,4 +84,3 @@ for compiler in $compilers ; do
 done | tee ${shortlog}
 
 echo && echo "See: ${shortlog} and ${fulllog}" && echo
-
