@@ -23,8 +23,5 @@ target_link_directories(
         ${PROJECTNAME} PUBLIC
 	${Trilinos_LIBRARY_DIRS}
 	)
-target_link_libraries(
-        ${PROJECTNAME} PUBLIC trilinos
-	)
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
