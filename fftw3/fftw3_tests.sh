@@ -4,6 +4,8 @@
 ## run tests, given a loaded compiler
 ##
 
+package=$(pwd) && package=${package##*/}
+
 source ../options.sh
 source ../failure.sh
 
