@@ -49,6 +49,10 @@ for compiler in $compilers ; do
 	echo "==== Configuration: ${config}" | tee -a ${fulllog}
     fi
     source ${envfile}  >/dev/null 2>&1
+    for m in ${modules} ; do
+	echo "Loading dependent module: $m" >>${fulllog}
+	module load $m
+    done
 
     ## 
     ## load module (if there is one) and execute all tests
