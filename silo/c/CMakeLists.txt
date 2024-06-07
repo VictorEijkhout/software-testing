@@ -1,16 +1,29 @@
-cmake_minimum_required( VERSION 3.12 )
+cmake_minimum_required( VERSION 3.20 )
 project( ${PROJECTNAME} VERSION 1.0 )
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
-target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )
-
-find_package( PkgConfig REQUIRED )
-pkg_check_modules( HDF REQUIRED hdf5 )
-message( STATUS "Hdf5 includes: ${HDF_INCLUDE_DIRS}" )
 
 target_include_directories(
-        ${PROJECTNAME} PUBLIC
-        ${HDF_INCLUDE_DIRS}
-	)
+  ${PROJECTNAME} PUBLIC
+  ${SILO_INC}
+)
+
+target_link_libraries(
+  ${PROJECTNAME} PUBLIC
+  ${SILO_LIB}/libsiloh5.so libm.so
+)
+
+find_package( PkgConfig REQUIRED )
+pkg_check_modules( HDF5 REQUIRED hdf5 )
+target_link_libraries(
+    ${PROJECTNAME} PUBLIC
+    ${HDF5_C_LIBRARIES} ${HDF5_HL_LIBRARIES}
+    )
+  
+# find_library( SILO REQUIRED )
+# target_link_libraries(
+#   ${PROJECTNAME} PUBLIC
+#   SILO
+#   )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )

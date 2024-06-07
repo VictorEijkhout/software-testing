@@ -2,6 +2,7 @@
 
 package=silo
 version=git
+modules=hdf5/1.14
 
 source ../options.sh
 

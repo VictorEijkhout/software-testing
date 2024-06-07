@@ -1,3 +1,3 @@
-TESTS = fmod_tacc fmod_work
-TEST = fmod_tacc
+TESTS = 
+TEST = 
 include ../Make.common
