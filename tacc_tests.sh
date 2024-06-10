@@ -43,13 +43,13 @@ for compiler in $compilers ; do
     ##
     ## load compiler and mpi if needed
     ##
-    echo "Loading compiler: ${cname}/${cversion}" 
+    echo "Loading compiler: ${cname}/${cversion}"  >>${fulllog}
     retcode=0 && module load ${cname}/${cversion} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
-	( echo && echo "==== Configuration  ${compiler}: unknown" )  >>${fulllog}
+	echo ".... unknown configuration on this machine: ${compiler}" | tee -a ${fulllog}
 	continue
     else
-	echo && echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
+	echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
     fi
     if [ ! -z "${mpi}" ] ; then
 	module load impi >/dev/null 2>&1 || retcode=$?
