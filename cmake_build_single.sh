@@ -7,7 +7,7 @@
 
 function usage() {
     echo "Usage: $0 [ -m moduleversion ] [ -p package ]  [ -v variant ] [ -x (set -x) ]"
-    echo "    [ --cmake cmake_flags ]"
+    echo "    [ --cmake cmake options separated by commas ]"
     echo "    program.c/cxx/F90" 
 }
 

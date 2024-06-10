@@ -12,7 +12,7 @@ function usage() {
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] [ -b (disable ibrun) ]"
     echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
     echo "    [ -r : skip run ] [ -t v : test value ]"
-    echo "    [ --cmake cmake_flags ]"
+    echo "    [ --cmake cmake options separated by commas ]"
     echo "    program.{c.F90}"
 }
 
@@ -34,7 +34,7 @@ x=
 while [ $# -gt 1 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
-    elif [ "$1" = "-b" ] ; then
+    elif [ $1 = "-b" ] ; then
 	noibrun=1 && shift
     elif [ $1 = "--cmake" ] ; then
 	shift && cmake=$1 && shift
@@ -55,9 +55,14 @@ while [ $# -gt 1 ] ; do
 	shift && testvalue=$1 && shift
     elif [ $1 = "-x" ] ; then 
 	shift && set -x && x="-x"
+    else
+	break
     fi
 done
-if [ -z "${package}" ] ; then package=${defaultp} ; fi
+
+##
+## the leftover argument is the program
+##
 source=$1
 if [ -z "${source}" ] ; then 
     echo "ERROR: no source file specified" && exit 1 ; fi
@@ -66,6 +71,17 @@ extension=${source##*.}
 if [ ! -f "${extension}/${source}" ] ; then
     echo "ERROR: no file <<${extension}/${source}>>" && exit 0
 fi
+
+##
+## parameter handling
+#
+if [ -z "${package}" ] ; then
+    package=${defaultp}
+fi
+
+##
+## log file handling
+##
 if [ -z "${fulllog}" ] ; then
     fulllog=${executable}.log
     rm -f ${fulllog}
