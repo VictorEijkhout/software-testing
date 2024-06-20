@@ -9,8 +9,10 @@ pkg_check_modules( HDF REQUIRED hdf5 )
 message( STATUS "Hdf5 includes: ${HDF_INCLUDE_DIRS}" )
 
 target_include_directories(
-        ${PROJECTNAME} PUBLIC
-        ${HDF_INCLUDE_DIRS}
-	)
+    ${PROJECTNAME} PUBLIC ${HDF_INCLUDE_DIRS} )
+target_link_directories(
+    ${PROJECTNAME} PUBLIC ${HDF_LIBRARY_DIRS} )
+target_link_libraries(
+    ${PROJECTNAME} PUBLIC ${HDF_LIBRARIES} )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
