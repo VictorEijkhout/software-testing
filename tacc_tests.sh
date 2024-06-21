@@ -58,6 +58,11 @@ for compiler in $compilers ; do
 	    continue
 	fi
     fi 
+    for m in ${modules} ; do
+	echo "Loading dependent module: $m" >>${fulllog}
+	module load $m
+    done
+
     ##
     ## load module and execute all tests
     ##
