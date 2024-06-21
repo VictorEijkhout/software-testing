@@ -12,6 +12,9 @@ source ../failure.sh
 echo "---- Test if we can compile C"
 ../cmake_test_driver.sh -l ${logfile} has.c
 
+echo "---- Test if we can run C"
+../cmake_test_driver.sh -l ${logfile} dataset.c
+
 echo "---- Test if we can compile C++"
 ../cmake_test_driver.sh -l ${logfile} hasx.cxx
 
