@@ -66,6 +66,9 @@ if [ "${python}" != "1" ] ; then
 	-t accuracy \
 	fftw3.c
 
+    echo "---- Test presence of mumps"
+    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} mumps.c
+
     if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
 	echo "---- Test presence of mumpsi64"
 	../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} mumpsi64.c
