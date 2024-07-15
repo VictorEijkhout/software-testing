@@ -14,9 +14,6 @@ source ../options.sh
 if [ ! -z "${mpi}" ] ; then
     mpiflag=-m
 fi
-if [ -z "${run}" ] ; then
-    run=
-fi
 
 if [ -z "${logfile}" ] ; then
     locallog=1
