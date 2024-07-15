@@ -9,9 +9,9 @@ defaultp=${defaultp##*/}
 
 function usage() {
     echo "Usage: $0"
-    echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] [ -b (disable ibrun) ]"
+    echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] "
     echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
-    echo "    [ -r : skip run ] [ -t v : test value ]"
+    echo "    [ -m : mpi mode ] [ -r : skip run ] [ -t v : test value ]"
     echo "    [ --cmake cmake options separated by commas ]"
     echo "    program.{c.F90}"
 }
@@ -28,7 +28,7 @@ fulllog=
 mpi=
 modules=
 noibrun=
-norun=
+run=1
 testvalue=
 x=
 while [ $# -gt 1 ] ; do
@@ -50,7 +50,7 @@ while [ $# -gt 1 ] ; do
     elif [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
     elif [ $1 = "-r" ] ; then 
-	shift && norun=1
+	shift && run=
     elif [ $1 = "-t" ] ; then 
 	shift && testvalue=$1 && shift
     elif [ $1 = "-x" ] ; then 
@@ -95,6 +95,8 @@ testlog="${logdir}/${source}.log"
 rm -rf ${testlog} && touch ${testlog}
 
 echo "Test: cmake build and run, source=$source" >>${testlog}
+echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
+     >${testlog}
 
 retcode=0
 if [ ! -z "${modules}" ] ; then
@@ -112,7 +114,7 @@ failure $retcode "${executable} compilation" | tee -a ${testlog}
 ##
 ## Run test
 ##
-if [ ! -z "${norun}" ] ; then exit 0 ; fi 
+if [ -z "${run}" ] ; then exit 0 ; fi 
 if [ -z $mpi ] ; then
     ./build/${executable} \
         >>${testlog} 2>&1 || retcode=$?

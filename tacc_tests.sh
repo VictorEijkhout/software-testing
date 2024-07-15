@@ -83,8 +83,14 @@ for compiler in $compilers ; do
 	done
     fi
     echo "Running with modules: $( module -t list 2>&1 )" >>${fulllog}
+    echo "$( module -t list 2>&1 | awk '{m=m FS $1} END {print m}' )"
+    echo "----------------"
 
-    ./${package}_tests.sh -l ${fulllog}
+    ./${package}_tests.sh \
+      -e \
+      $( if [ ! -z "${mpi}" ] ; then echo -m ; fi ) \
+      $( if [ -z "${run}" ] ; then echo -r ; fi ) \
+      -l ${fulllog} 
 
 done | tee ${shortlog}
 

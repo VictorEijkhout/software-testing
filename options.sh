@@ -6,7 +6,7 @@ function usage() {
     if [ ! -z "${help_string}" ] ; then
 	echo && echo ${help_string} && echo ; fi 
     echo "Usage: $0 [ -v version (default=${version}) ]"
-    echo "    [ -b (no ibrun) ] [ -c compiler ]"
+    echo "    [ -c compiler ] [ -m (mpi mode) ] [ -r (no run} ] "
     if [ "${python_option}" = "1" ] ; then
 	echo "    [ -p : python tests only ]"
     fi
@@ -19,17 +19,23 @@ if [ $# -eq 1 -a "$1" = "-h" ] ; then
 fi
 logfile=
 matchcompiler=
-noibrun=
+## mpi= this is set in the tacc/local_tests.sh top level file
+run=1
 python=
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then
 	usage && exit 0
-    elif [ "$1" = "-b" ] ; then
-	noibrun=1 && shift
     elif [ "$1" = "-c" ] ; then
 	shift && matchcompiler=$( echo "$1" | tr -d '/' ) && shift
+    elif [ "$1" = "-e" ] ; then
+	echo=1  && shift
     elif [ "$1" = "-l" ] ; then
 	shift && logfile="$1" && shift
+    elif [ "$1" = "-m" ] ; then
+	## in embedded calls this is set on the commandline
+	mpi=1 && shift
+    elif [ "$1" = "-r" ] ; then
+	run= && shift
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
@@ -39,3 +45,9 @@ while [ $# -gt 0 ] ; do
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
 done
+
+if [ ! -z "${echo}" ] ; then
+    echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
+	 >${logfile}
+fi
+

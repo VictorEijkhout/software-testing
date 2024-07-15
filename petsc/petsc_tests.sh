@@ -10,11 +10,13 @@ help_string="Run tests given loaded compiler and petsc version"
 python_option=1
 source ../options.sh
 
-if [ ! -z "${noibrun}" ] ; then
-    mpiflag=
-else
+if [ ! -z "${mpi}" ] ; then
     mpiflag=-m
 fi
+if [ -z "${run}" ] ; then
+    run=
+fi
+
 if [ -z "${logfile}" ] ; then
     locallog=1
     logfile=${package}.log
