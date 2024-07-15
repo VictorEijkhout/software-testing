@@ -7,6 +7,7 @@
 package=petsc
 help_string="Run tests given loaded compiler and petsc version"
 
+command_args=$*
 python_option=1
 source ../options.sh
 
@@ -23,6 +24,7 @@ if [ -z "${logfile}" ] ; then
 else
     locallog=
 fi
+echo "Invoking ${package} tests: ${command_args}" >> ${logfile}
 source ../failure.sh
 
 ##

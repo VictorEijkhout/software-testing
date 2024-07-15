@@ -3,6 +3,8 @@
 ## test all programs for this package,
 ## looping over tacc available modules
 ##
+## options have been set by options.sh at top level
+##
 
 if [ -z "${package}" ] ; then
     echo "You are calling the general tacc_tests.sh without setting package"
@@ -43,13 +45,12 @@ for compiler in $compilers ; do
     ##
     ## load compiler and mpi if needed
     ##
+    echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
     echo "Loading compiler: ${cname}/${cversion}"  >>${fulllog}
     retcode=0 && module load ${cname}/${cversion} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
-	echo ".... unknown configuration on this machine: ${compiler}" | tee -a ${fulllog}
+	echo ".... unknown configuration on this machine" | tee -a ${fulllog}
 	continue
-    else
-	echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
     fi
     if [ ! -z "${mpi}" ] ; then
 	module load impi >/dev/null 2>&1 || retcode=$?

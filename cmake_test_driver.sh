@@ -113,26 +113,32 @@ failure $retcode "${executable} compilation" | tee -a ${testlog}
 
 ##
 ## Run test
+## if compilation successful, and not skipping runs
 ##
-if [ -z "${run}" ] ; then exit 0 ; fi 
-if [ -z $mpi ] ; then
-    ./build/${executable} \
-        >>${testlog} 2>&1 || retcode=$?
-else
-    ibrun -n 1 ./build/${executable} \
-        >>${testlog} 2>&1 || retcode=$?
-fi
-failure $retcode "${executable} test run" | tee -a ${testlog}
+if [ $retcode -eq 0 -a ! -z "${run}" ] ; then
 
-if [ $retcode -eq 0 ] ; then
-    if [ ! -z "${testvalue}" ] ; then
-	lastline=$( cat ${testlog} | grep -v TACC | tail -n 1 )
-	if [[ "${lastline}" = *${testvalue}* ]] ; then
-	    echo "     correct output: ${lastline}"
-	else
-	    echo "     ERROR output: ${lastline} s/b ${testvalue}"
-	fi
+    if [ -z $mpi ] ; then
+	./build/${executable} \
+		>>${testlog} 2>&1 || retcode=$?
+    else
+	ibrun -n 1 ./build/${executable} \
+              >>${testlog} 2>&1 || retcode=$?
     fi
-fi | tee -a ${testlog}
+    failure $retcode "${executable} test run" | tee -a ${testlog}
+
+    if [ $retcode -eq 0 ] ; then
+	if [ ! -z "${testvalue}" ] ; then
+	    lastline=$( cat ${testlog} | grep -v TACC | tail -n 1 )
+	    if [[ "${lastline}" = *${testvalue}* ]] ; then
+		echo "     correct output: ${lastline}"
+	    else
+		echo "     ERROR output: ${lastline} s/b ${testvalue}"
+	    fi
+	fi
+    fi | tee -a ${testlog}
+
+else
+    echo " .. skipping run after unsuccessful compilation" >>${testlog}
+fi
 
 cat ${testlog} >> ${fulllog}
