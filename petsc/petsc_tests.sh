@@ -28,7 +28,7 @@ source ../failure.sh
 ##
 ## C tests
 ##
-if [ "${python}" != "1" ] ; then
+if [ "${skipc}" != "1" ] ; then
     echo "C language"
 
     echo "---- Sanity test"
@@ -86,7 +86,7 @@ fi
 ##
 ## Fortran tests
 ##
-if [ "${python}" != "1" ] ; then
+if [ "${skipf}" != "1" ] ; then
     echo "Fortran language"
 
     # echo "---- Test if we can compile Fortran"
@@ -113,7 +113,7 @@ fi
 ##
 ## Python tests
 ##
-#if [ "${python}" = "1" ] ; then 
+if [ "${skippy}" != "1" ] ; then 
     echo "Python language"
 
     set -o pipefail
@@ -132,8 +132,7 @@ fi
     retcode=0 && ( cd p && ibrun -n 2 python3 allreduce.py ) \
 	| grep -v TACC: || retcode=$?
     failure $retcode "python allreduce"
-
-#fi
+fi
 
 if [ ! -z "${locallog}" ] ; then 
     echo && echo "See: ${logfile}" && echo

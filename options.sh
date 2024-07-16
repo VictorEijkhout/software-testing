@@ -7,10 +7,11 @@ function usage() {
 	echo && echo ${help_string} && echo ; fi 
     echo "Usage: $0 [ -v version (default=${version}) ]"
     echo "    [ -c compiler ] [ -l logfile ] "
-    echo "    [ -r (skip running) ] [ -x (set -x) ]"
+    echo "    [ -r (skip running) ] [ -4 (skip 4py tests) ] "
     if [ "${python_option}" = "1" ] ; then
 	echo "    [ -p : python tests only ]"
     fi
+    echo "    [ -x (set -x) ]"
     if [ ! -z "${extra_help}" ] ; then
 	echo ${extra_help}
     fi
@@ -42,6 +43,8 @@ while [ $# -gt 0 ] ; do
 	shift && version="$1" && shift
     elif [ "$1" = "-x" ] ; then
 	set -x && xflag=-x && shift 
+    elif [ "$1" = "-4" ] ; then
+	p4pflag=-4 && skippy=1 && shift
     elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
 	# echo "(including python tests)"
 	python=1 && shift

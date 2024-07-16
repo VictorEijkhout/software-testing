@@ -91,7 +91,7 @@ for compiler in $compilers ; do
 
     ./${package}_tests.sh \
       -e \
-      ${mpiflag} ${runflag} ${xflag} \
+      ${mpiflag} ${runflag} ${p4pflag} ${xflag} \
       -l ${configlog}
     cat ${configlog} >>${fulllog} 
 
