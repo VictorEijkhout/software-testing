@@ -10,6 +10,9 @@ help_string="Run tests given loaded compiler and petsc version"
 command_args=$*
 python_option=1
 source ../options.sh
+if [ "${run}" != "1" ] ; then
+    runflag=-r
+fi
 
 if [ ! -z "${mpi}" ] ; then
     mpiflag=-m
@@ -18,8 +21,6 @@ fi
 if [ -z "${logfile}" ] ; then
     locallog=1
     logfile=${package}.log
-else
-    locallog=
 fi
 echo "Invoking ${package} tests: ${command_args}" >> ${logfile}
 source ../failure.sh
@@ -31,7 +32,7 @@ if [ "${python}" != "1" ] ; then
     echo "C language"
 
     echo "---- Sanity test"
-    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} sanity.c
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} sanity.c
 
     # echo "---- Test if we have amgx preconditioner"
     # retcode=0
@@ -43,43 +44,43 @@ if [ "${python}" != "1" ] ; then
 	realsize=4 ; else realsize=8 ; fi
     if [[ "${PETSC_ARCH}" = *complex* ]] ; then
 	realsize=$(( realsize * 2 )) ; fi
-    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} \
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 	-t ${realsize} \
 	scalar.c
 
     echo "---- Test size of int"
     if [[ "${PETSC_ARCH}" = *i64* ]] ; then
 	intsize=8 ; else intsize=4 ; fi
-    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} \
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 	-t ${intsize} \
 	int.c
 
     if [[ "${PETSC_ARCH}" = *complex* ]] ; then
 	echo "---- Test complex type"
-	../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} complex.c
+	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} complex.c
     fi
 
     echo "---- Test presence of hdf5"
-    ../cmake_test_driver.sh -d phdf5 ${mpiflag} -p ${package} -l ${logfile} hdf5.c
+    ../cmake_test_driver.sh -d phdf5 ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} hdf5.c
 
     echo "---- Test presence of fftw3"
-    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} \
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 	-t accuracy \
 	fftw3.c
 
     echo "---- Test presence of mumps"
-    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} mumps.c
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} mumps.c
 
     if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
 	echo "---- Test presence of mumpsi64"
-	../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} mumpsi64.c
+	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} mumpsi64.c
     fi
 
     echo "---- Test presence of parmetis"
-    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} parmetis.c
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} parmetis.c
 
     echo "---- Test presence of ptscotch"
-    ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} ptscotch.c
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} ptscotch.c
 fi
 
 ##
@@ -89,22 +90,22 @@ if [ "${python}" != "1" ] ; then
     echo "Fortran language"
 
     # echo "---- Test if we can compile Fortran"
-    # ../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} fortran.F90
+    # ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} fortran.F90
 
     if [[ "${PETSC_ARCH}" != *f08* ]] ; then 
 	echo "---- Test if we can compile Fortran1990"
-	../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 	    fortran1990.F90
 
 	echo "---- Test vector insertion"
-	../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 	    -r vec.F90
     else echo ".... skip f90 test"
     fi
 
     if [[ "${PETSC_ARCH}" = *f08* ]] ; then 
 	echo "---- Test if we can compile Fortran2008"
-	../cmake_test_driver.sh ${mpiflag} -p ${package} -l ${logfile} fortran2008.F90
+	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} fortran2008.F90
     else echo ".... skip f08 test"
     fi
 fi

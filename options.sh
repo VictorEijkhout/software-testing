@@ -6,7 +6,8 @@ function usage() {
     if [ ! -z "${help_string}" ] ; then
 	echo && echo ${help_string} && echo ; fi 
     echo "Usage: $0 [ -v version (default=${version}) ]"
-    echo "    [ -c compiler ] [ -r (skip running) ] "
+    echo "    [ -c compiler ] [ -l logfile ] "
+    echo "    [ -r (skip running) ] [ -x (set -x) ]"
     if [ "${python_option}" = "1" ] ; then
 	echo "    [ -p : python tests only ]"
     fi
@@ -34,11 +35,13 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-m" ] ; then
 	## top level this is set in *_tests.sh
 	## in embedded calls this is set on the commandline
-	mpi=1 && shift
+	mpi=1 && mpiflag=-m && shift
     elif [ "$1" = "-r" ] ; then
-	run= && shift
+	run=0 && runflag=-r && shift
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
+    elif [ "$1" = "-x" ] ; then
+	set -x && xflag=-x && shift 
     elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
 	# echo "(including python tests)"
 	python=1 && shift
