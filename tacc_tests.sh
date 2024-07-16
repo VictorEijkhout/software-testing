@@ -48,7 +48,7 @@ for compiler in $compilers ; do
     ##
     ## load compiler and mpi if needed
     ##
-    echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
+    ( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${fulllog}
     echo "Loading compiler: ${cname}/${cversion}"  >>${fulllog}
     retcode=0 && module load ${cname}/${cversion} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
