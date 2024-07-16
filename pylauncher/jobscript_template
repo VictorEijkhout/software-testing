@@ -22,4 +22,5 @@ fi
 
 ## for local testing:
 #export PYTHONPATH=..:${PYTHONPATH}
+echo "PYTHONPATH: ${PYTHONPATH}"
 SSH RUN EXECUTABLE.py
