@@ -117,18 +117,20 @@ failure $retcode "${executable} compilation" | tee -a ${testlog}
 ##
 if [ $retcode -eq 0 -a ! -z "${run}" ] ; then
 
+    runlog=${logdir}/${executable}_run.log
+    rm -f ${runlog}
     if [ -z $mpi ] ; then
 	./build/${executable} \
-		>>${testlog} 2>&1 || retcode=$?
+		>>${runlog} 2>&1 || retcode=$?
     else
 	ibrun -n 1 ./build/${executable} \
-              >>${testlog} 2>&1 || retcode=$?
+              >>${runlog} 2>&1 || retcode=$?
     fi
     failure $retcode "${executable} test run" | tee -a ${testlog}
 
     if [ $retcode -eq 0 ] ; then
 	if [ ! -z "${testvalue}" ] ; then
-	    lastline=$( cat ${testlog} | grep -v TACC | tail -n 1 )
+	    lastline=$( cat ${runlog} | grep -v TACC | tail -n 1 )
 	    if [[ "${lastline}" = *${testvalue}* ]] ; then
 		echo "     correct output: ${lastline}"
 	    else
@@ -136,6 +138,7 @@ if [ $retcode -eq 0 -a ! -z "${run}" ] ; then
 	    fi
 	fi
     fi | tee -a ${testlog}
+    ( echo ">>>> runlog:" && cat ${runlog} && echo ".... runlog" ) >>${testlog}
 
 else
     echo " .. skipping run after unsuccessful compilation" >>${testlog}
