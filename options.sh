@@ -36,7 +36,7 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-m" ] ; then
 	## top level this is set in *_tests.sh
 	## in embedded calls this is set on the commandline
-	mpi=1 && mpiflag=-m && shift
+	mpi=1 && shift
     elif [ "$1" = "-r" ] ; then
 	run=0 && runflag=-r && shift
     elif [ "$1" = "-v" ] ; then
@@ -52,7 +52,11 @@ while [ $# -gt 0 ] ; do
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
 done
-
+if [ "${mpi}" = "1" ] ; then 
+    ## this can have been set by commandline option
+    ## or in the *_tests.sh file at top level
+    mpiflag=-m
+fi
 if [ ! -z "${echo}" ] ; then
     echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
 	 >${logfile}
