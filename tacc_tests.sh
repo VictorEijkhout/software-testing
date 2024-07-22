@@ -55,6 +55,10 @@ for compiler in $compilers ; do
 	echo ".... unknown configuration on this machine" | tee -a ${fulllog}
 	continue
     fi
+    if [ ! -z "${mkl}" ] ; then
+	## mkl loading is allowed to fail for intel
+	module load mkl >/dev/null 2>&1
+    fi
     if [ ! -z "${mpi}" ] ; then
 	module load impi >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -gt 0 ] ; then
