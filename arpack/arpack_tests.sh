@@ -13,5 +13,6 @@ source ../failure.sh
 # ../cmake_test_driver.sh -p ${package} -l ${logfile} has.c
 
 echo "---- Test if we can compile Fortran"
-../cmake_test_driver.sh -p ${package} -l ${logfile} dssimp.f
+../cmake_test_driver.sh -p ${package} -l ${logfile} \
+			dssimp.f
 

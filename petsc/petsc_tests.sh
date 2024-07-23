@@ -31,56 +31,73 @@ source ../failure.sh
 if [ "${skipc}" != "1" ] ; then
     echo "C language"
 
-    echo "---- Sanity test"
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} sanity.c
+    ##echo "---- Sanity test"
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --title "Sanity test" \
+			    sanity.c
 
     # echo "---- Test if we have amgx preconditioner"
     # retcode=0
     # ../cmake_build_single.sh -m -p ${package} amgx.c >>${logfile} 2>&1 || retcode=$?
     # failure $retcode "amgx compilation"
 
-    echo "---- Test size of scalar"
+    ##echo "---- Test size of scalar" | tee -a ${logfile}
     if [[ "${PETSC_ARCH}" = *single* ]] ; then
 	realsize=4 ; else realsize=8 ; fi
     if [[ "${PETSC_ARCH}" = *complex* ]] ; then
 	realsize=$(( realsize * 2 )) ; fi
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --title "size of scalar" \
 	-t ${realsize} \
 	scalar.c
 
-    echo "---- Test size of int"
+    ##echo "---- Test size of int" | tee -a ${logfile}
     if [[ "${PETSC_ARCH}" = *i64* ]] ; then
 	intsize=8 ; else intsize=4 ; fi
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --title "size of int" \
 	-t ${intsize} \
 	int.c
 
     if [[ "${PETSC_ARCH}" = *complex* ]] ; then
-	echo "---- Test complex type"
-	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} complex.c
+	##echo "---- Test complex type" | tee -a ${logfile}
+	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+				--title "complex type" \
+				complex.c
     fi
 
-    echo "---- Test presence of hdf5"
-    ../cmake_test_driver.sh -d phdf5 ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} hdf5.c
+    ##echo "---- Test presence of hdf5" | tee -a ${logfile}
+    ../cmake_test_driver.sh -d phdf5 ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --title "presence of hdf5" \
+			    hdf5.c
 
-    echo "---- Test presence of fftw3"
+    ##echo "---- Test presence of fftw3" | tee -a ${logfile}
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --title "presence of fftw3" \
 	-t accuracy \
 	fftw3.c
 
-    echo "---- Test presence of mumps"
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} mumps.c
+    ##echo "---- Test presence of mumps" | tee -a ${logfile}
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --title "presence of mumps" \
+			    mumps.c
 
     if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
-	echo "---- Test presence of mumpsi64"
-	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} mumpsi64.c
+	##echo "---- Test presence of mumpsi64"
+	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+				--title "presence of mumpsi64" \
+				mumpsi64.c
     fi
 
-    echo "---- Test presence of parmetis"
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} parmetis.c
+    ##echo "---- Test presence of parmetis" | tee -a ${logfile}
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --title "presence of parmetis" \
+			    parmetis.c
 
-    echo "---- Test presence of ptscotch"
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} ptscotch.c
+    ##echo "---- Test presence of ptscotch" | tee -a ${logfile}
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --title "presence of ptscotch" \
+			    ptscotch.c
 fi
 
 ##
@@ -93,19 +110,23 @@ if [ "${skipf}" != "1" ] ; then
     # ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} fortran.F90
 
     if [[ "${PETSC_ARCH}" != *f08* ]] ; then 
-	echo "---- Test if we can compile Fortran1990"
+	##echo "---- Test if we can compile Fortran1990" | tee -a ${logfile}
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+				--title "if we can compile Fortran1990" \
 	    fortran1990.F90
 
-	echo "---- Test vector insertion"
+	##echo "Test F90 vector insertion" | tee -a ${logfile}
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+				--title "F90 vector insertion" \
 	    -r vec.F90
     else echo ".... skip f90 test"
     fi
 
     if [[ "${PETSC_ARCH}" = *f08* ]] ; then 
-	echo "---- Test if we can compile Fortran2008"
-	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} fortran2008.F90
+	##echo "---- Test if we can compile Fortran2008" | tee -a ${logfile}
+	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+				--title "if we can compile Fortran2008" \
+				fortran2008.F90
     else echo ".... skip f08 test"
     fi
 fi
@@ -118,17 +139,17 @@ if [ "${skippy}" != "1" ] ; then
 
     set -o pipefail
 
-    echo "---- Test if we have python interfaces"
+    echo "---- Test if we have python interfaces" | tee -a ${logfile}
     retcode=0 && ( cd p && ibrun -n 2 python3 -c "import petsc4py,slepc4py; print(1)" ) \
 	| grep -v TACC: || retcode=$?
     failure $retcode "python commandline import"
 
-    echo "---- Test init from argv"
+    echo "---- Test init from argv" | tee -a ${logfile}
     retcode=0 && ( cd p && ibrun -n 2 python3 p4p.py 2>../err_petsc4py.log ) \
     	| grep -v TACC: || retcode=$?
     failure $retcode "python petsc init"
 
-    echo "---- Python allreduce"
+    echo "---- Python allreduce" | tee -a ${logfile}
     retcode=0 && ( cd p && ibrun -n 2 python3 allreduce.py ) \
 	| grep -v TACC: || retcode=$?
     failure $retcode "python allreduce"

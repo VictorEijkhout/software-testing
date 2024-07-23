@@ -10,9 +10,12 @@ if [ -z "${package}" ] ; then
     echo "You are calling the general tacc_tests.sh without setting package"
     exit 1
 fi
+if [ -z "${version}" ] ; then
+    version=default
+fi
 
-logdir=tacc_logs
-fulllog=${logdir}/full.log
+logdir=${package}_logs
+fulllog=${logdir}/${version}.log
 shortlog=tacc_tests.log
 mkdir -p ${logdir}
 rm -f ${fulllog}

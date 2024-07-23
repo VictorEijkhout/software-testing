@@ -13,6 +13,7 @@ function usage() {
     echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
     echo "    [ -m : mpi mode ] [ -r : skip run ] [ -t v : test value ]"
     echo "    [ --cmake cmake options separated by commas ]"
+    echo "    [ --title test caption ]"
     echo "    program.{c.F90}"
 }
 
@@ -29,6 +30,7 @@ mpi=
 modules=
 noibrun=
 run=1
+testcaption=
 testvalue=
 x=
 while [ $# -gt 1 ] ; do
@@ -53,6 +55,8 @@ while [ $# -gt 1 ] ; do
 	shift && run=
     elif [ $1 = "-t" ] ; then 
 	shift && testvalue=$1 && shift
+    elif [ $1 = "--title" ] ; then
+	shift && testcaption=$1 && shift
     elif [ $1 = "-x" ] ; then 
 	shift && set -x && x="-x"
     else
@@ -94,7 +98,10 @@ fi
 testlog="${logdir}/${source}.log"
 rm -rf ${testlog} && touch ${testlog}
 
-echo "Test: cmake build and run, source=$source" >>${testlog}
+if [ ! -z "${testcaption}" ] ; then
+    echo "---- Test: ${testcaption}" | tee -a ${testlog}
+fi
+echo "Do: cmake build and run, source=$source" >>${testlog}
 echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
      >${testlog}
 
