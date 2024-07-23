@@ -9,9 +9,11 @@ package=$(pwd) && package=${package##*/}
 source ../test_options.sh
 source ../failure.sh
 
-echo "---- Test if we can compile"
+##echo "---- Test if we can compile"
 retcode=0
-../cmake_test_driver.sh -p ${package} -l ${logfile} sanity.c
+../cmake_test_driver.sh -p ${package} -l ${logfile} \
+			--title "---- if we can compile" \
+			sanity.c
 
 if [ "${logfile}" = "compile.log" ] ; then
     echo "See: ${logfile}"
