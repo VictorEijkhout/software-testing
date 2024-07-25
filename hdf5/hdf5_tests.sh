@@ -6,7 +6,7 @@
 
 package=$(pwd) && package=${package##*/}
 
-source ../test_options.sh
+source ../options.sh
 source ../failure.sh
 
 echo "---- Test if we can compile C"
