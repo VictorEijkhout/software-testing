@@ -14,7 +14,7 @@ echo "==== Local modules"
 echo "==== Package: ${package}, version: ${version}"
 echo "================"
 
-logdir=tacc_logs
+logdir=${package}_logs
 fulllog=${logdir}/full.log
 shortlog=tacc_tests.log
 mkdir -p ${logdir}
