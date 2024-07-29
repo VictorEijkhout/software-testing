@@ -5,7 +5,7 @@ using std::cin, std::cout;
 
 int main(int argc,char **argv) {
 
-  cout << "package\n";
+  cout << "module\n";
 
   return 0;
 }
