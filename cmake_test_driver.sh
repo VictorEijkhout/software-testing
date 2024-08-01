@@ -34,30 +34,30 @@ testcaption=
 testvalue=
 x=
 while [ $# -gt 1 ] ; do
-    if [ $1 = "-h" ] ; then
+    if [ "$1" = "-h" ] ; then
 	usage && exit 0
-    elif [ $1 = "-b" ] ; then
+    elif [ "$1" = "-b" ] ; then
 	noibrun=1 && shift
-    elif [ $1 = "--cmake" ] ; then
-	shift && cmake=$1 && shift
+    elif [ "$1" = "--cmake" ] ; then
+	shift && cmake="$1" && shift
 	#echo "Using extra cmake flags: ${cmake}"
-    elif [ $1 = "-d" ] ; then 
-	shift && modules=$1 && shift
+    elif [ "$1" = "-d" ] ; then 
+	shift && modules="$1" && shift
 	#echo "Using dependent modules: ${modules}"
-    elif [ $1 = "-m" ] ; then 
+    elif [ "$1" = "-m" ] ; then 
 	shift && mpi=1
 	#echo "MPI mode"
-    elif [ $1 = "-l" ] ; then 
-	shift && fulllog=$1 && shift
-    elif [ $1 = "-p" ] ; then 
-	shift && package=$1 && shift
-    elif [ $1 = "-r" ] ; then 
+    elif [ "$1" = "-l" ] ; then 
+	shift && fulllog="$1" && shift
+    elif [ "$1" = "-p" ] ; then 
+	shift && package="$1" && shift
+    elif [ "$1" = "-r" ] ; then 
 	shift && run=
-    elif [ $1 = "-t" ] ; then 
-	shift && testvalue=$1 && shift
-    elif [ $1 = "--title" ] ; then
-	shift && testcaption=$1 && shift
-    elif [ $1 = "-x" ] ; then 
+    elif [ "$1" = "-t" ] ; then 
+	shift && testvalue="$1" && shift
+    elif [ "$1" = "--title" ] ; then
+	shift && testcaption="$1" && shift
+    elif [ "$1" = "-x" ] ; then 
 	shift && set -x && x="-x"
     else
 	break
