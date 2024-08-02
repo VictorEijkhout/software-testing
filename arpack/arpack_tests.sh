@@ -9,11 +9,11 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
-# echo "---- Test if we can compile C"
+# echo "Test if we can compile C"
 # ../cmake_test_driver.sh -p ${package} -l ${logfile} has.c
 
-##echo "---- if we can compile Fortran"
+##echo "if we can compile Fortran"
 ../cmake_test_driver.sh -p ${package} -l ${logfile} \
-			--title "---- if we can compile Fortran" \
+			--title "if we can compile Fortran" \
 			dssimp.f
 

@@ -9,7 +9,7 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
-##echo "---- Test if we can compile"
+##echo "Test if we can compile"
 ../cmake_test_driver.sh -m -p ${package} -l ${logfile} \
-			--title "---- if we can compile" \
+			--title "if we can compile" \
 			has.c

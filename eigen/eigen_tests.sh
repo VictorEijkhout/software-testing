@@ -22,7 +22,7 @@ retcode=0
 			has.cpp
 
 testcaption="contents of INC dir"
-echo "---- Test: ${testcaption}"
+echo "Test: ${testcaption}"
 if [ -d "${TACC_EIGEN_INC}/Eigen" ] ; then
     echo "     has"
 else

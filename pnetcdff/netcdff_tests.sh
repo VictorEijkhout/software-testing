@@ -7,7 +7,7 @@
 
 source ../failure.sh
 
-echo "---- Test if we can compile"
+echo "Test if we can compile"
 retcode=0
 ../cmake_test_driver.sh -m -p ${package} -l ${logfile} \
 			has.F90
