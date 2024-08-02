@@ -8,11 +8,6 @@ package=$(pwd) && package=${package##*/}
 
 source ../options.sh
 source ../failure.sh
-if [ -z "${logfile}" ] ; then
-    logdir=${package}_logs
-    mkdir -p ${logdir}
-    logfile=${logdir}/${package}.log
-fi
 
 ##echo "--- Test if we can compile and run"
 ../cmake_test_driver.sh -p ${package} -l ${logfile} \

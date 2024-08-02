@@ -94,10 +94,13 @@ if [ "${skipc}" != "1" ] ; then
 			    --title "presence of parmetis" \
 			    parmetis.c
 
-    ##echo "Test presence of ptscotch" | tee -a ${logfile}
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 			    --title "presence of ptscotch" \
 			    ptscotch.c
+
+    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --title "presence of slepc" \
+			    slepc.c
 fi
 
 ##
