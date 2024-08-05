@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#SBATCH -J myjob           # Job name
+#SBATCH -o pylauncher_out.%j
+#SBATCH -e pylauncher_err.%j
+#SBATCH -p skx             # Queue (partition) name
+#SBATCH -N 1               # Total # of nodes (must be 1 for serial)
+#SBATCH --ntasks-per-node 48
+#SBATCH -t TIME        # Run time (hh:mm:ss)
+##SBATCH --mail-user=username@tacc.utexas.edu
+##SBATCH --mail-type=all    # Send email at begin and end of job
+#SBATCH -A A-ccsc
+
+python3 example_LAUNCHER_launcher.py
