@@ -6,7 +6,7 @@
 ##
 
 function usage() {
-    echo "Usage: $0 [ -m moduleversion ] [ -p package ]  [ -v variant ] [ -x (set -x) ]"
+    echo "Usage: $0 [ -m (use mpi) ] [ -p package ]  [ -v variant ] [ -x (set -x) ]"
     echo "    [ --cmake cmake options separated by commas ]"
     echo "    program.c/cxx/F90" 
 }
@@ -14,6 +14,7 @@ function usage() {
 package=unknownpackage
 moduleversion="unknownversion"
 cmake=
+mpi=
 variant="default"
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
     usage && exit 0 
@@ -25,7 +26,7 @@ while [ $# -gt 1 ] ; do
 	shift && cmake=$1 && shift
 	echo "Cmake flags: ${cmake}"
     elif [ $1 = "-m" ] ; then
-	shift && moduleversion=$1 && shift 
+	shift && mpi=1
     elif [ $1 = "-v" ] ; then
 	shift && variant=$1 && shift 
     elif [ $1 = "-x" ] ; then
@@ -51,9 +52,16 @@ fi
 echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null
 
-export CC=mpicc
-export FC=mpif90
-export CXX=mpicxx
+if [ ! -z "${mpi}" ] ; then 
+    export CC=mpicc
+    export FC=mpif90
+    export CXX=mpicxx
+else
+    export CC=${TACC_CC}
+    export CXX=${TACC_CXX}
+    export FC=${TACC_FC}
+fi
+cmake --version
 retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} \
     $( if [ ! -z "${cmake}" ] ; then echo ${cmake} | tr ',' ' ' ; fi ) \

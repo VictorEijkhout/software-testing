@@ -113,6 +113,7 @@ if [ ! -z "${modules}" ] ; then
     done
 fi
 ../cmake_build_single.sh -p ${package} ${x} \
+    $( if [ ! -z "${mpi}" ] ; then echo "-m" ; fi ) \
     $( if [ ! -z "${cmake}" ] ; then echo "--cmake ${cmake}" ; fi ) \
     "${source}" \
     >>${testlog} 2>&1 || retcode=$?
@@ -126,7 +127,7 @@ if [ $retcode -eq 0 -a ! -z "${run}" ] ; then
 
     runlog=${logdir}/${executable}_run.log
     rm -f ${runlog}
-    if [ -z $mpi ] ; then
+    if [ -z "${mpi}" ] ; then
 	./build/${executable} \
 		>>${runlog} 2>&1 || retcode=$?
     else
