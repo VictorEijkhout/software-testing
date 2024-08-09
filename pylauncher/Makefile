@@ -37,6 +37,15 @@ NAME =
 script :
 	@export HOSTNAME=`hostname -f | awk -F "." '{print $$2}'` \
 	 && echo "generating script for ${EXECUTABLE} on $$HOSTNAME" \
+	 \
+	 && retcode=0 && which ${RUN} || retcode=$$? \
+	 && if [ $${retcode} -gt 0 ] ; then \
+	      echo "Could not find python executable <<${RUN}>>" && exit 1 \
+	    ; fi \
+	 && if [ -z "${TACC_PYLAUNCHER_DIR}" ] ; then \
+	      echo "No pylauncher module loaded" && exit 1 \
+	    ; fi \
+	 \
 	 && template="jobscript_template" && generated="jobscript_generated" \
 	 && cat $${template} | sed -e "s/SSH/${SSH}/" -e "s/RUN/${RUN}/" \
 	        -e "s/EXECUTABLE/${EXECUTABLE}/" -e "s/NODES/${NODES}/" \
