@@ -63,10 +63,15 @@ for compiler in $compilers ; do
 	module load mkl >/dev/null 2>&1
     fi
     if [ ! -z "${mpi}" ] ; then
+	retcode=0
 	module load impi >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -gt 0 ] ; then
-	    echo "     No MPI available" >>${fulllog}
-	    continue
+	    retcode=0
+	    module load openmpi >/dev/null 2>&1 || retcode=$?
+	    if [ $retcode -gt 0 ] ; then
+		echo "     No MPI available" | tee -a ${fulllog}
+		continue
+	    fi
 	fi
     fi 
     for m in ${modules} ; do
