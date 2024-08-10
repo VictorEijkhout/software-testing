@@ -1,7 +1,7 @@
 #!/bin/bash
 
 package=phdf5
-version=1.14.3
+version=1.14.4
 mpi=1
 help_string="Loop over all compilers, testing one package version"
 
