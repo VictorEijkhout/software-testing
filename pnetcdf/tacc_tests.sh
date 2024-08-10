@@ -1,7 +1,7 @@
 #!/bin/bash
 
 package=pnetcdf
-version=4.9.2
+version=1.13.0
 
 source ../options.sh
 source ../tacc_tests.sh
