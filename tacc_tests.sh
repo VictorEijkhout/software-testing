@@ -101,10 +101,12 @@ for compiler in $compilers ; do
     echo "$( module -t list 2>&1 | awk '{m=m FS $1} END {print m}' )"
     echo "----------------"
 
-    ./${package}_tests.sh \
+    cmdline="./${package}_tests.sh \
       -e \
       ${mpiflag} ${runflag} ${p4pflag} ${xflag} \
-      -l ${configlog}
+      -l ${configlog}"
+    echo "cmdline=$cmdline" >>${fulllog}
+    eval $cmdline
     cat ${configlog} >>${fulllog} 
 
 done | tee ${shortlog}
