@@ -52,10 +52,10 @@ for compiler in $compilers ; do
     ## load compiler and mpi if needed
     ##
     ( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${fulllog}
-    echo "For compiler: ${compiler} loading module: ${cname}/${cversion}"  >>${fulllog}
+    echo "Loading compiler: ${cname}/${cversion}"  >>${fulllog}
     retcode=0 && module load ${cname}/${cversion} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 
-	echo ".... can not load ${cname}/${cversion} for compiler ${compiler}" | tee -a ${fulllog}
+	echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${fulllog}
 	continue
     fi
     if [ ! -z "${mkl}" ] ; then
