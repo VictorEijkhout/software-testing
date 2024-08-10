@@ -8,6 +8,7 @@ package=petsc
 help_string="Run tests given loaded compiler and petsc version"
 
 command_args=$*
+mpi=1
 python_option=1
 source ../options.sh
 if [ "${run}" != "1" ] ; then
