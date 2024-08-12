@@ -21,5 +21,5 @@ import pylauncher
 pylauncher.ClassicLauncher\
     ("commalines",
      # optional spec of output dir:
-     # workdir=f"pylauncher_out{os.environ['SLURM_JOBID']}",
+     workdir=f"pylauncher_tmp_comma",
      debug="ssh+host+exec+task+job")

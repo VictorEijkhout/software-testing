@@ -59,18 +59,21 @@ submit :
 
 example_shifted_ibrun_dependencies = parallel
 
-CPROGRAMS = parallel randomaction randomsleep randomcomma
+CPROGRAMS = parallel randomaction randomsleep randomcomma corecount
 info ::
 	@echo 
 	@echo "make PROGRAM"
 	@echo "    with C programs: ${CPROGRAMS}"
 	@echo "    compiled with WAIT=SLURM_NPROCS"
 .SECONDEXPANSION:
-parallel randomaction :
+parallel randomaction corecount :
 	@slurm=${SLURM_NPROCS} && slurm=$${slurm:=40} \
 	&& wait=${WAIT} && wait=$${wait:=$${slurm}} \
 	&& echo "compile $@ with wait=$$wait" \
-	&& mpicc -o $@ $@.c -DWAIT=$${wait:=20}
+	&& cmdline="mpicc -qopenmp -o $@ $@.c -DWAIT=$${wait:=20}" \
+	&& echo $${cmdline} && eval $${cmdline}
+clean :: 
+	@rm -rf pylauncher_corecount
 randomsleep randomcomma : $$@.c
 	mpicc -g -O2 -o $@ $@.c 
 CUPROGRAMS = gpusleep
