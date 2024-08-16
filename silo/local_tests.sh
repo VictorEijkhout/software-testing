@@ -1,8 +1,8 @@
 #!/bin/bash
 
 package=silo
-version=git2024
-modules=hdf5/1.14
+version=4.11.1
+modules=hdf5
 
 source ../options.sh
 

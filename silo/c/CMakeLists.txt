@@ -10,7 +10,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECTNAME} PUBLIC
-  ${SILO_LIB}/libsiloh5.so libm.so
+  ${SILO_LIB}/libsilo.so libm.so
 )
 
 find_package( PkgConfig REQUIRED )
