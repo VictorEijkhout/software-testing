@@ -74,9 +74,26 @@ for compiler in $compilers ; do
 	    fi
 	fi
     fi 
+
     for m in ${modules} ; do
-	echo "Loading dependent module: $m" >>${fulllog}
-	module load $m
+	if [ $m = "mkl" ] ; then
+	    if [ "${TACC_SYSTEM}" = "vista" ] ; then
+		echo "Loading mkl substitute nvpl for vista system" >>${fulllog}
+		module load nvpl
+	    elif [ $cname = "intel" ] ; then
+		echo "Ignoring mkl load for intel compiler" >>${fulllog}
+		continue
+	    else
+		echo "Loading mkl" >>${fulllog}
+		module load mkl
+	    fi
+	else
+	    echo "Loading dependent module: $m" >>${fulllog}
+	    module load $m >/dev/null 2>&1 || retcode=$?
+	    if [ $retcode -gt 0 ] ; then
+		echo "     WARNING failed to load dependent module <<$m>>"
+	    fi
+	fi
     done
 
     ##
@@ -89,13 +106,6 @@ for compiler in $compilers ; do
 	    echo "     could not load ${package}/${version}" | tee -a ${fulllog}
 	    continue
 	fi
-	for m in ${modules} ; do
-	    if [ $m = "mkl" -a $cname = "intel" ] ; then continue ; fi
-	    module load $m >/dev/null 2>&1 || retcode=$?
-	    if [ $retcode -gt 0 ] ; then
-		echo "     WARNING failed to load dependent module <<$m>>"
-	    fi
-	done
     fi
     echo "Running with modules: $( module -t list 2>&1 )" >>${fulllog}
     echo "$( module -t list 2>&1 | awk '{m=m FS $1} END {print m}' )"
