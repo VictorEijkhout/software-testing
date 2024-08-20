@@ -14,6 +14,6 @@ set -x
 ../cmake_test_driver.sh \
     --title "point functions" \
     --cmake -DSILO_INC=${TACC_SILO_INC},-DSILO_LIB=${TACC_SILO_LIB} \
-    -l ${logfile} \
+    -l ${logfile} ${runflag} \
     point.c
 

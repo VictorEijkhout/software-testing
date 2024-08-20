@@ -11,7 +11,7 @@ source ../failure.sh
 
 ##echo "Test if we can compile and run"
 retcode=0
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			--title "if we can compile and run" \
 			has.cxx 
 

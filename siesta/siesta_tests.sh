@@ -16,7 +16,7 @@ else
 fi
 
 
-# ../cmake_test_driver.sh -p ${package} -l ${logfile} \
+# ../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 # 			--title "can we compile and run" \
 # 			has.c 
 

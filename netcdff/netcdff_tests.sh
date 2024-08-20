@@ -10,7 +10,7 @@ source ../options.sh
 source ../failure.sh
 
 echo "Test if we can compile"
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			has.F90
 
 if [ "${logfile}" = "compile.log" ] ; then

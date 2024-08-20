@@ -10,10 +10,11 @@ source ../options.sh
 source ../failure.sh
 
 # echo "Test if we can compile C"
-# ../cmake_test_driver.sh -p ${package} -l ${logfile} has.c
+    # ../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+	has.c
 
 ##echo "if we can compile Fortran"
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			--title "if we can compile Fortran" \
 			dssimp.f
 
