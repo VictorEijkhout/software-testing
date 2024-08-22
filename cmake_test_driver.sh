@@ -129,12 +129,12 @@ if [ $retcode -eq 0 -a ! -z "${run}" ] ; then
     runlog=${logdir}/${executable}_run.log
     rm -f ${runlog}
     if [ -z "${mpi}" ] ; then
-	./build/${executable} \
-		>>${runlog} 2>&1 || retcode=$?
+	cmdline="./build/${executable}"
     else
-	ibrun -n 1 ./build/${executable} \
-              >>${runlog} 2>&1 || retcode=$?
+	cmdline="ibrun -np 1 ./build/${executable}"
     fi
+    echo "Running: $cmdline" >>${testlog}
+    eval $cmdline  >>${runlog} 2>&1 || retcode=$?
     failure $retcode "${executable} test run" | tee -a ${testlog}
 
     if [ $retcode -eq 0 ] ; then
