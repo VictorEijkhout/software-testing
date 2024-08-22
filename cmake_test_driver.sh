@@ -103,7 +103,7 @@ if [ ! -z "${testcaption}" ] ; then
 fi
 echo "Do: cmake build and run, source=$source" >>${testlog}
 echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
-     >${testlog}
+     >>${testlog}
 
 retcode=0
 if [ ! -z "${modules}" ] ; then
@@ -111,8 +111,10 @@ if [ ! -z "${modules}" ] ; then
     for m in $( echo ${modules} | tr ',' ' ' ) ; do
 	module load $m >>${testlog} 2>&1
     done
+    ( echo "modules loaded:" && module -t list 2>&1 ) >>${testlog}
 fi
 ../cmake_build_single.sh -p ${package} ${x} \
+    $( if [ ! -z "${mpi}" ] ; then echo "-m" ; fi ) \
     $( if [ ! -z "${cmake}" ] ; then echo "--cmake ${cmake}" ; fi ) \
     "${source}" \
     >>${testlog} 2>&1 || retcode=$?
@@ -126,13 +128,13 @@ if [ $retcode -eq 0 -a ! -z "${run}" ] ; then
 
     runlog=${logdir}/${executable}_run.log
     rm -f ${runlog}
-    if [ -z $mpi ] ; then
-	./build/${executable} \
-		>>${runlog} 2>&1 || retcode=$?
+    if [ -z "${mpi}" ] ; then
+	cmdline="./build/${executable}"
     else
-	ibrun -n 1 ./build/${executable} \
-              >>${runlog} 2>&1 || retcode=$?
+	cmdline="ibrun -np 1 ./build/${executable}"
     fi
+    echo "Running: $cmdline" >>${testlog}
+    eval $cmdline  >>${runlog} 2>&1 || retcode=$?
     failure $retcode "${executable} test run" | tee -a ${testlog}
 
     if [ $retcode -eq 0 ] ; then

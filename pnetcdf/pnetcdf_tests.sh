@@ -9,12 +9,15 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
-##echo "Test if we can compile"
-retcode=0
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
-			--title "if we can compile" \
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+			--title "severly insufficient compile test" \
 			sanity.c
 
-if [ "${logfile}" = "compile.log" ] ; then
-    echo "See: ${logfile}"
-fi
+../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+		     --title "C header" \
+		     -d inc pnetcdf.h
+
+../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+		     --title "fortran module" \
+		     -d inc pnetcdf.mod
+

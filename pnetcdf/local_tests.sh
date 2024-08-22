@@ -1,7 +1,7 @@
 #!/bin/bash
 
 package=pnetcdf
-version=4.9.2
+version=1.13.0
 
 ##
 ## test all programs for this package,
@@ -9,5 +9,4 @@ version=4.9.2
 ##
 
 source ../options.sh
-
 source ../local_tests.sh

@@ -9,29 +9,33 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
+##
+## double precision
+##
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			--title "can we compile and run" \
 			has.c 
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
+../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+		     --title "double precision header" \
+		     -d inc fftw3.h
+
+../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+		     --title "double precision library" \
+		     -d lib libfftw3.so
+
+##
+## single precision
+##
+../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+		     --title "single precision header" \
+		     -d inc fftw3f.h
+
+../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+		     --title "single precision library" \
+		     -d lib libfftw3f.so
+
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			--title "can we single precision" \
 			single.c 
 
-if [ ! -f ${TACC_FFTW3_LIB}/libfftw3.so ] ; then
-    failure 1 "No double precision library"
-fi
-
-if [ ! -f ${TACC_FFTW3_LIB}/libfftw3f.so ] ; then
-    failure 1 "No single precision library"
-fi
-
-##echo "--- Test if we can compile and run"
-# doesn't work yet
-# ../cmake_test_driver.sh -p ${package} -l ${logfile} \
-# 			--title "cmake module" \
-# 			has.cxx
-
-
-if [ "${logfile}" = "compile.log" ] ; then
-    echo "See: ${logfile}"
-fi

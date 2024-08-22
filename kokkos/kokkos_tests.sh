@@ -12,7 +12,7 @@ source ../failure.sh
 program=enabled-omp
 
 ##echo "testing ${program}"
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			--title "testing ${program}" \
 			${program}.cxx
 

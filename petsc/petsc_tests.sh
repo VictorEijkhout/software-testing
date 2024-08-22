@@ -8,6 +8,7 @@ package=petsc
 help_string="Run tests given loaded compiler and petsc version"
 
 command_args=$*
+mpi=1
 python_option=1
 source ../options.sh
 if [ "${run}" != "1" ] ; then
@@ -66,10 +67,11 @@ if [ "${skipc}" != "1" ] ; then
 				complex.c
     fi
 
-    ##echo "Test presence of hdf5" | tee -a ${logfile}
+    if [ "${TACC_SYSTEM}" != "vista" ] ; then 
     ../cmake_test_driver.sh -d phdf5 ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 			    --title "presence of hdf5" \
 			    hdf5.c
+    fi
 
     ##echo "Test presence of fftw3" | tee -a ${logfile}
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
