@@ -24,7 +24,7 @@ source ../failure.sh
 			--title "graph viz" \
 			graphviz.cpp
 
-echo "Test program_options"
+echo "---- Test program_options"
 found=$( find $TACC_BOOST_DIR -name \*.cmake | grep program_options | wc -l )
 if [ ${found} -eq 0 ] ; then
     echo "FAILED to find cmake files"
