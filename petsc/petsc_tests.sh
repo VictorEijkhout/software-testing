@@ -102,7 +102,7 @@ if [ "${skipc}" != "1" ] ; then
 
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 			    --title "presence of slepc" \
-			    slepc.c
+			    slepceps.c
 fi
 
 ##

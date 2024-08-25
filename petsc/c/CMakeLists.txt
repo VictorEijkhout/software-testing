@@ -22,6 +22,6 @@ target_link_directories(
         ${PROJECTNAME} PUBLIC
 	${PETSC_LIBRARY_DIRS} )
 target_link_libraries(
-        ${PROJECTNAME} PUBLIC petsc m )
+        ${PROJECTNAME} PUBLIC slepc petsc m )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
