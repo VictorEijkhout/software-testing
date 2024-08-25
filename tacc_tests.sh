@@ -28,6 +28,7 @@ module reset >/dev/null 2>&1
  && echo "==== Testing: ${package}/${version}" \
  && echo "==== available packages: $( module -t spider ${package}/${version} 2>&1 )" \
  && echo "================" \
+ && echo \
  ) | tee -a ${fulllog}
 
 #
@@ -51,10 +52,14 @@ for compiler in $compilers ; do
     ##
     ## load compiler and mpi if needed
     ##
-    ( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${fulllog}
-    echo "Loading compiler: ${cname}/${cversion}"  >>${fulllog}
-    retcode=0 && module load ${cname}/${cversion} >/dev/null 2>&1 || retcode=$?
-    if [ $retcode -gt 0 ] ; then 
+    echo >>${fulllog}
+    retcode=0 && module load ${cname}/${cversion} >>${fulllog} 2>&1 || retcode=$?
+    if [ $retcode -eq 0 ] ; then 
+	## successful load needs to be visually offset
+	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${fulllog}
+	echo "Loaded compiler: ${cname}/${cversion}"  >>${fulllog}
+    else
+	echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
 	echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${fulllog}
 	continue
     fi

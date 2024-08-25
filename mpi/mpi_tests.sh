@@ -20,8 +20,12 @@ source ../failure.sh
 ##
 ## this comes from the hdf5 test suite
 ##
+# ../cmake_test_driver.sh -m -p ${package} -l ${logfile} ${runflag} \
+# 			--title "overloaded allreduce" \
+# 			-d hdf5 --cmake -DUSEHDF5=ON \
+# 			hdf5async.F90
 ../cmake_test_driver.sh -m -p ${package} -l ${logfile} ${runflag} \
 			--title "overloaded allreduce" \
 			-d hdf5 --cmake -DUSEHDF5=ON \
-			hdf5async.F90
+			allreduce.F90
 

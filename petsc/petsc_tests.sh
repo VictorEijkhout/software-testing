@@ -111,16 +111,15 @@ fi
 if [ "${skipf}" != "1" ] ; then
     echo "Fortran language"
 
-    # echo "Test if we can compile Fortran"
-    # ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} fortran.F90
+	# ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	    # --title "can we compile fortran"
+	    # fortran.F90
 
     if [[ "${PETSC_ARCH}" != *f08* ]] ; then 
-	##echo "Test if we can compile Fortran1990" | tee -a ${logfile}
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
-				--title "if we can compile Fortran1990" \
+				--title "can we compile Fortran1990" \
 	    fortran1990.F90
 
-	##echo "Test F90 vector insertion" | tee -a ${logfile}
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 				--title "F90 vector insertion" \
 	    -r vec.F90
@@ -128,9 +127,8 @@ if [ "${skipf}" != "1" ] ; then
     fi
 
     if [[ "${PETSC_ARCH}" = *f08* ]] ; then 
-	##echo "Test if we can compile Fortran2008" | tee -a ${logfile}
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
-				--title "if we can compile Fortran2008" \
+				--title "can we compile Fortran2008" \
 				fortran2008.F90
     else echo ".... skip f08 test"
     fi
