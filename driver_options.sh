@@ -6,7 +6,9 @@ function usage() {
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] "
     echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
     echo "    [ -m : mpi mode ] [ -r : skip run ] [ -t v : test value ]"
-    echo "    [ --cmake cmake options separated by commas ]"
+    if [ "${buildsystem}" = "cmake" ] ; then 
+	echo "    [ --cmake cmake options separated by commas ]"
+    fi
     echo "    [ --title test caption ]"
     echo "    program.{c.F90}"
 }
@@ -16,7 +18,6 @@ if [ $# -eq 0 -o $1 = "-h" ] ; then
     usage && exit 0
 fi
 
-source ../failure.sh
 package=unknown
 cmake=
 fulllog=
@@ -34,10 +35,8 @@ while [ $# -gt 1 ] ; do
 	noibrun=1 && shift
     elif [ "$1" = "--cmake" ] ; then
 	shift && cmake="$1" && shift
-	#echo "Using extra cmake flags: ${cmake}"
     elif [ "$1" = "-d" ] ; then 
 	shift && modules="$1" && shift
-	#echo "Using dependent modules: ${modules}"
     elif [ "$1" = "-m" ] ; then 
 	shift && mpi=1
 	#echo "MPI mode"
