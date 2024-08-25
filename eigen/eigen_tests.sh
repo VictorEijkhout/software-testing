@@ -19,6 +19,6 @@ source ../failure.sh
 			-t "module" \
 			has.cpp
 
-../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "core header" \
 		     -d inc Eigen/Core

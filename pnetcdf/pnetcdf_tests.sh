@@ -13,11 +13,11 @@ source ../failure.sh
 			--title "severly insufficient compile test" \
 			sanity.c
 
-../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "C header" \
 		     -d inc pnetcdf.h
 
-../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "fortran module" \
 		     -d inc pnetcdf.mod
 

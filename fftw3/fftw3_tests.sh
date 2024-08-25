@@ -16,22 +16,22 @@ source ../failure.sh
 			--title "can we compile and run" \
 			has.c 
 
-../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "double precision header" \
 		     -d inc fftw3.h
 
-../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "double precision library" \
 		     -d lib libfftw3.so
 
 ##
 ## single precision
 ##
-../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "single precision header" \
 		     -d inc fftw3f.h
 
-../existence_test.sh -p ${package} -l ${logfile} ${runflag} \
+../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "single precision library" \
 		     -d lib libfftw3f.so
 

@@ -10,8 +10,8 @@ source ../options.sh
 source ../failure.sh
 
 ## echo "--- Test if we can compile and run"
-../make_test_driver.sh -p ${package} -l ${logfile} \
-		       --title "--- if we can compile and run" \
+../make_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+		       --title "compile and run" \
 		       has.c 
 
 if [ "${logfile}" = "compile.log" ] ; then
