@@ -23,6 +23,14 @@ touch ${fulllog}
 touch ${shortlog}
 
 module reset >/dev/null 2>&1
+module -t spider ${package}/${version} 2>/dev/null
+if [ $? -gt 0 ] ; then
+    echo "================"
+    echo "==== Package ${package}/${version} not installed here"
+    echo "================"
+    echo
+    exit 0
+fi
 ( echo "================" \
  && echo "==== TACC modules" \
  && echo "==== Testing: ${package}/${version}" \
@@ -59,8 +67,8 @@ for compiler in $compilers ; do
 	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${fulllog}
 	echo "Loaded compiler: ${cname}/${cversion}"  >>${fulllog}
     else
-	echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
-	echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${fulllog}
+	# echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
+	# echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${fulllog}
 	continue
     fi
     if [ ! -z "${mkl}" ] ; then
@@ -105,10 +113,11 @@ for compiler in $compilers ; do
     ## load module and execute all tests
     ##
     if [ "${package}" != "none" ] ; then 
-	echo "Loading package:  ${package}/${version}" >>${fulllog}
 	module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
-	if [ $retcode -gt 0 ] ; then
-	    echo "     could not load ${package}/${version}" | tee -a ${fulllog}
+	if [ $retcode -eq 0 ] ; then
+	    echo "Loaded package:  ${package}/${version}" >>${fulllog}
+	else 
+	    echo "     could not load ${package}/${version}" >>${fulllog}
 	    continue
 	fi
     fi
