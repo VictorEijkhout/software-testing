@@ -8,13 +8,15 @@ target_include_directories(
   ${SILO_INC}
 )
 
+# it's silo5 on s3 & vista
 target_link_libraries(
   ${PROJECTNAME} PUBLIC
-  ${SILO_LIB}/libsiloh5.so libm.so
+  ${SILO_LIB}/libsilo5.so libm.so
 )
 
 find_package( PkgConfig REQUIRED )
 pkg_check_modules( HDF5 REQUIRED hdf5 )
+message( STATUS "Hdf5 includes: ${HDF_INCLUDE_DIRS}" )
 target_link_libraries(
     ${PROJECTNAME} PUBLIC
     ${HDF5_C_LIBRARIES} ${HDF5_HL_LIBRARIES}

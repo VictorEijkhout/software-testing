@@ -9,11 +9,11 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
-##echo "---- Test point functions"
-set -x
+##echo "Test point functions"
+#set -x
 ../cmake_test_driver.sh \
-    --title "---- point functions" \
+    --title "point functions" \
     --cmake -DSILO_INC=${TACC_SILO_INC},-DSILO_LIB=${TACC_SILO_LIB} \
-    -l ${logfile} \
+    -l ${logfile} ${runflag} \
     point.c
 

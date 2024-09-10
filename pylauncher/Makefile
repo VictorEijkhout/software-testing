@@ -37,6 +37,15 @@ NAME =
 script :
 	@export HOSTNAME=`hostname -f | awk -F "." '{print $$2}'` \
 	 && echo "generating script for ${EXECUTABLE} on $$HOSTNAME" \
+	 \
+	 && retcode=0 && which ${RUN} || retcode=$$? \
+	 && if [ $${retcode} -gt 0 ] ; then \
+	      echo "Could not find python executable <<${RUN}>>" && exit 1 \
+	    ; fi \
+	 && if [ -z "${TACC_PYLAUNCHER_DIR}" ] ; then \
+	      echo "No pylauncher module loaded" && exit 1 \
+	    ; fi \
+	 \
 	 && template="jobscript_template" && generated="jobscript_generated" \
 	 && if [ -f "example_${EXECUTABLE}_launcher.py" ] ; then \
 	      EXECUTABLE=example_${EXECUTABLE}_launcher \
@@ -62,19 +71,22 @@ submit :
 
 example_shifted_ibrun_dependencies = parallel
 
-CPROGRAMS = parallel randomaction randomsleep
+CPROGRAMS = parallel randomaction randomsleep randomcomma corecount
 info ::
 	@echo 
 	@echo "make PROGRAM"
 	@echo "    with C programs: ${CPROGRAMS}"
 	@echo "    compiled with WAIT=SLURM_NPROCS"
 .SECONDEXPANSION:
-parallel randomaction :
+parallel randomaction corecount :
 	@slurm=${SLURM_NPROCS} && slurm=$${slurm:=40} \
 	&& wait=${WAIT} && wait=$${wait:=$${slurm}} \
 	&& echo "compile $@ with wait=$$wait" \
-	&& mpicc -o $@ $@.c -DWAIT=$${wait:=20}
-randomsleep : $$@.c
+	&& cmdline="mpicc -qopenmp -o $@ $@.c -DWAIT=$${wait:=20}" \
+	&& echo $${cmdline} && eval $${cmdline}
+clean :: 
+	@rm -rf pylauncher_corecount
+randomsleep randomcomma : $$@.c
 	mpicc -g -O2 -o $@ $@.c 
 CUPROGRAMS = gpusleep
 gpusleep : $$@.cu

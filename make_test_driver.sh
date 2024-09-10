@@ -4,72 +4,29 @@
 ## Driver for make_build_single.sh
 ##
 
-defaultp=$( pwd )
-defaultp=${defaultp##*/}
-
-function usage() {
-    echo "Usage: $0"
-    echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] [ -b (disable ibrun) ]"
-    echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
-    echo "    program.{c.F90}"
-}
-
-if [ $# -eq 0 -o $1 = "-h" ] ; then 
-    usage && exit 0
-fi
-
+buildsystem=make
+source ../driver_options.sh
 source ../failure.sh
-package=unknown
-compilelog=
-mpi=
-modules=
-noibrun=
-x=
-while [ $# -gt 1 ] ; do
-    if [ $1 = "-h" ] ; then
-	usage && exit 0
-    elif [ "$1" = "-b" ] ; then
-	noibrun=1 && shift
-    elif [ $1 = "-d" ] ; then 
-	shift && modules=$1 && shift
-	#echo "Using dependent modules: ${modules}"
-    elif [ $1 = "-m" ] ; then 
-	shift && mpi=1
-	#echo "MPI mode"
-    elif [ $1 = "-l" ] ; then 
-	shift && compilelog=$1 && shift
-    elif [ $1 = "-p" ] ; then 
-	shift && package=$1 && shift
-    elif [ $1 = "-x" ] ; then 
-	shift && set -x && x="-x"
-    fi
-done
-if [ -z "${package}" ] ; then package=${defaultp} ; fi
-source=$1
-if [ -z "${source}" ] ; then 
-    echo "ERROR: no source file specified" && exit 1 ; fi
-executable=${source%%.*}
-extension=${source##*.}
-if [ ! -f "${extension}/${source}" ] ; then
-    echo "ERROR: no file <<${extension}/${source}>>" && exit 0
-fi
-if [ -z "${compilelog}" ] ; then
-    compilelog=${executable}.log
-    rm -f ${compilelog}
-fi
-echo "Test: make build and run, source=$source" >>${compilelog}
+
+echo "Test: make build and run, source=$source" >>${testlog}
+echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
+     >>${testlog}
 
 retcode=0
 if [ ! -z "${modules}" ] ; then
-    echo " .. loading modules: ${modules}" >>${compilelog} 2>&1
+    echo " .. loading modules: ${modules}" >>${testlog} 2>&1
     for m in $( echo ${modules} | tr ',' ' ' ) ; do
-	module load $m >>${compilelog} 2>&1
+	module load $m >>${testlog} 2>&1
     done
 fi
+
 ../make_build_single.sh -p ${package} ${x} \
+    $( if [ ! -z "${mpi}" ] ; then echo "-m" ; fi ) \
+    $( if [ ! -z "${cmake}" ] ; then echo "--cmake ${cmake}" ; fi ) \
     "${source}" \
-    >>${compilelog} 2>&1 || retcode=$?
-failure $retcode "${executable} compilation"
+    >>${testlog} 2>&1 || retcode=$?
+failure $retcode "${executable} compilation" | tee -a ${testlog}
+
 if [ -z $mpi ] ; then
     ./build/${executable} \
 	>run_${executable}.log 2>err_${executable}.log || retcode=$?
@@ -79,7 +36,7 @@ else
 fi
 failure $retcode "${executable} test run"
 
-cat run_${executable}.log >> ${compilelog}
+cat run_${executable}.log >> ${testlog}
 if [ $retcode -eq 0 ] ; then
     if [ ! -z ${mpi} ] ; then
 	cat run_${executable}.log | grep -v TACC

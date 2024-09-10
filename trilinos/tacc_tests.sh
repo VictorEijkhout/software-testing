@@ -1,7 +1,7 @@
 #!/bin/bash
 
 package=trilinos
-version=15.1.0
+version=16.0.0
 mpi=1
 help_string="Loop over all compilers, testing one package version"
 

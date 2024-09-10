@@ -2,8 +2,7 @@
 
 package=arpack
 version=3.9.1
-modules=mkl
-help_string="Loop over all compilers, testing one package version"
+modules="hdf5 mkl"
 
 source ../options.sh
 source ../tacc_tests.sh

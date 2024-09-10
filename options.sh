@@ -52,11 +52,25 @@ while [ $# -gt 0 ] ; do
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
 done
+
+##
+## flag to pass to cmake driver
+##
 if [ "${mpi}" = "1" ] ; then 
     ## this can have been set by commandline option
     ## or in the *_tests.sh file at top level
     mpiflag=-m
 fi
+
+##
+## set log file for the case where we run package_tests.sh by itself
+##
+if [ -z "${logfile}" ] ; then
+    logdir=${package}_logs
+    mkdir -p ${logdir}
+    logfile=${logdir}/${package}.log
+fi
+
 if [ ! -z "${echo}" ] ; then
     echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
 	 >${logfile}

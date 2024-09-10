@@ -11,9 +11,9 @@ source ../failure.sh
 
 program=enabled-omp
 
-##echo "---- testing ${program}"
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
-			--title "---- testing ${program}" \
+##echo "testing ${program}"
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+			--title "testing ${program}" \
 			${program}.cxx
 
 # ${TACC_CXX} -I${TACC_KOKKOS_INC} -O2 -g  -std=c++17 -fopenmp -c ${program}.cxx \

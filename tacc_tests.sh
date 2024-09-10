@@ -23,11 +23,20 @@ touch ${fulllog}
 touch ${shortlog}
 
 module reset >/dev/null 2>&1
+module -t spider ${package}/${version} 2>/dev/null
+if [ $? -gt 0 ] ; then
+    echo "================"
+    echo "==== Package ${package}/${version} not installed here"
+    echo "================"
+    echo
+    exit 0
+fi
 ( echo "================" \
  && echo "==== TACC modules" \
  && echo "==== Testing: ${package}/${version}" \
  && echo "==== available packages: $( module -t spider ${package}/${version} 2>&1 )" \
  && echo "================" \
+ && echo \
  ) | tee -a ${fulllog}
 
 #
@@ -51,11 +60,15 @@ for compiler in $compilers ; do
     ##
     ## load compiler and mpi if needed
     ##
-    ( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${fulllog}
-    echo "Loading compiler: ${cname}/${cversion}"  >>${fulllog}
-    retcode=0 && module load ${cname}/${cversion} >/dev/null 2>&1 || retcode=$?
-    if [ $retcode -gt 0 ] ; then 
-	echo ".... unknown configuration on this machine" | tee -a ${fulllog}
+    echo >>${fulllog}
+    retcode=0 && module load ${cname}/${cversion} >>${fulllog} 2>&1 || retcode=$?
+    if [ $retcode -eq 0 ] ; then 
+	## successful load needs to be visually offset
+	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${fulllog}
+	echo "Loaded compiler: ${cname}/${cversion}"  >>${fulllog}
+    else
+	# echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
+	# echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${fulllog}
 	continue
     fi
     if [ ! -z "${mkl}" ] ; then
@@ -63,43 +76,61 @@ for compiler in $compilers ; do
 	module load mkl >/dev/null 2>&1
     fi
     if [ ! -z "${mpi}" ] ; then
+	retcode=0
 	module load impi >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -gt 0 ] ; then
-	    echo "     No MPI available" >>${fulllog}
-	    continue
+	    retcode=0
+	    module load openmpi >/dev/null 2>&1 || retcode=$?
+	    if [ $retcode -gt 0 ] ; then
+		echo "     No MPI available" | tee -a ${fulllog}
+		continue
+	    fi
 	fi
     fi 
+
     for m in ${modules} ; do
-	echo "Loading dependent module: $m" >>${fulllog}
-	module load $m
+	if [ $m = "mkl" ] ; then
+	    if [ "${TACC_SYSTEM}" = "vista" ] ; then
+		echo "Loading mkl substitute nvpl for vista system" >>${fulllog}
+		module load nvpl
+	    elif [ $cname = "intel" ] ; then
+		echo "Ignoring mkl load for intel compiler" >>${fulllog}
+		continue
+	    else
+		echo "Loading mkl" >>${fulllog}
+		module load mkl
+	    fi
+	else
+	    echo "Loading dependent module: $m" >>${fulllog}
+	    module load $m >/dev/null 2>&1 || retcode=$?
+	    if [ $retcode -gt 0 ] ; then
+		echo "     WARNING failed to load dependent module <<$m>>"
+	    fi
+	fi
     done
 
     ##
     ## load module and execute all tests
     ##
     if [ "${package}" != "none" ] ; then 
-	echo "Loading package:  ${package}/${version}" >>${fulllog}
 	module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
-	if [ $retcode -gt 0 ] ; then
-	    echo "     could not load ${package}/${version}" | tee -a ${fulllog}
+	if [ $retcode -eq 0 ] ; then
+	    echo "Loaded package:  ${package}/${version}" >>${fulllog}
+	else 
+	    echo "     could not load ${package}/${version}" >>${fulllog}
 	    continue
 	fi
-	for m in ${modules} ; do
-	    if [ $m = "mkl" -a $cname = "intel" ] ; then continue ; fi
-	    module load $m >/dev/null 2>&1 || retcode=$?
-	    if [ $retcode -gt 0 ] ; then
-		echo "     WARNING failed to load dependent module <<$m>>"
-	    fi
-	done
     fi
     echo "Running with modules: $( module -t list 2>&1 )" >>${fulllog}
     echo "$( module -t list 2>&1 | awk '{m=m FS $1} END {print m}' )"
     echo "----------------"
 
-    ./${package}_tests.sh \
+    cmdline="./${package}_tests.sh \
       -e \
       ${mpiflag} ${runflag} ${p4pflag} ${xflag} \
-      -l ${configlog}
+      -l ${configlog}"
+    echo "cmdline=$cmdline" >>${fulllog}
+    eval $cmdline
     cat ${configlog} >>${fulllog} 
 
 done | tee ${shortlog}

@@ -9,9 +9,9 @@ package=$(pwd) && package=${package##*/}
 source ../options/sh
 source ../failure.sh
 
-echo "---- Test if we can compile"
+echo "Test if we can compile"
 retcode=0
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			create_open.c
 
 if [ "${logfile}" = "compile.log" ] ; then

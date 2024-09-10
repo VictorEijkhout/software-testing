@@ -9,19 +9,19 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
-##echo "---- Test if we can compile and run"
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
-			--title "---- if we can compile and run" \
+##echo "Test if we can compile and run"
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+			--title "if we can compile and run" \
 			has.cpp
 
-##echo "---- Test file system"
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
-			--title "---- file system" \
+##echo "Test file system"
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+			--title "file system" \
 			system.cpp
 
-##echo "---- Test graph viz"
-../cmake_test_driver.sh -p ${package} -l ${logfile} \
-			--title "---- graph viz" \
+##echo "Test graph viz"
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+			--title "graph viz" \
 			graphviz.cpp
 
 echo "---- Test program_options"

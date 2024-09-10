@@ -1,8 +1,7 @@
 #!/bin/bash
 
 package=hdf5
-version=1.14.3
-help_string="Loop over all compilers, testing one package version"
+version=1.14.4
 
 source ../options.sh
 source ../tacc_tests.sh
