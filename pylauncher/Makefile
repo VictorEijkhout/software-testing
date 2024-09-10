@@ -13,7 +13,7 @@ info ::
 	@echo 
 	@echo "Available make rules:"
 
-EXECUTABLE = example_classic_launcher
+EXECUTABLE = classic
 SSH =
 RUN = python3
 NODES = 3
@@ -38,10 +38,22 @@ script :
 	@export HOSTNAME=`hostname -f | awk -F "." '{print $$2}'` \
 	 && echo "generating script for ${EXECUTABLE} on $$HOSTNAME" \
 	 && template="jobscript_template" && generated="jobscript_generated" \
+	 && if [ -f "example_${EXECUTABLE}_launcher.py" ] ; then \
+	      EXECUTABLE=example_${EXECUTABLE}_launcher \
+	    ; else \
+	      EXECUTABLE=${EXECUTABLE} \
+	    ; fi \
+	 && if [ "$$( hostname )" = "staff.vista.tacc.utexas.edu" ] ; then \
+	      QUEUE=gg \
+	    ; elif [ "$$( hostname )" = "staff.stampede3.tacc.utexas.edu" ] ; then \
+	      QUEUE=skx-dev \
+	    ; else \
+	      QUEUE=${QUEUE} \
+	    ; fi \
 	 && cat $${template} | sed -e "s/SSH/${SSH}/" -e "s/RUN/${RUN}/" \
-	        -e "s/EXECUTABLE/${EXECUTABLE}/" -e "s/NODES/${NODES}/" \
+	        -e "s/EXECUTABLE/$${EXECUTABLE}/" -e "s/NODES/${NODES}/" \
 	        -e "s/NAME/${NAME}/" \
-	        -e "s/CORESPERNODE/${CORESPERNODE}/" -e "s/QUEUE/${QUEUE}/" \
+	        -e "s/CORESPERNODE/${CORESPERNODE}/" -e "s/QUEUE/$${QUEUE}/" \
 	        -e "s/MINUTES/${MINUTES}/" \
 	        -e "/####/d" \
 	        > $${generated}
