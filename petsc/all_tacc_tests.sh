@@ -39,4 +39,6 @@ for variant in \
 	/^---- / { $1="" ; test=$0 } \
 	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
 	'
-done
+done 2>&1 | tee all_tacc_tests.log
+echo && echo "See: all_tacc_tests.log" && echo
+

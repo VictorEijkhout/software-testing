@@ -63,10 +63,14 @@ for compiler in $compilers ; do
 	echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${fulllog}
 	continue
     fi
-    if [ ! -z "${mkl}" ] ; then
-	## mkl loading is allowed to fail for intel
-	module load mkl >/dev/null 2>&1
-    fi
+    # if [ ! -z "${mkl}" ] ; then
+    # 	if [ "${TACC_SYSTEM}" = "vista" ] ; then
+    # 	    module load nvpl
+    # 	elif [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then 
+    # 	    ## mkl loading is allowed to fail for intel
+    # 	    module load mkl >/dev/null 2>&1
+    # 	fi
+    # fi
     if [ ! -z "${mpi}" ] ; then
 	retcode=0
 	module load impi >/dev/null 2>&1 || retcode=$?
