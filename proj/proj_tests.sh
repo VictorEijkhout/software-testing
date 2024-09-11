@@ -15,7 +15,7 @@ source ../failure.sh
 
 testlog="${logdir}/${source}.log"
 rm -f ${testlog} && touch ${testlog}
-echo "Running bin/proj" | tee -a ${testlog}
+print_test_caption "Running bin/proj" "${testlog}"
 ${TACC_PROJ_DIR}/bin/proj >binrun.log 2>&1
 success=$( cat binrun.log | grep usage | wc -l )
 if [ $success -eq 1 ] ; then 

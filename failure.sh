@@ -16,3 +16,15 @@ function failure() {
 	echo "     $2"
     fi
 }
+
+function print_test_caption() {
+    caption=$1
+    log=$2
+    if [ ! -z "${caption}" ] ; then
+	if [ ! -f "${log}" ] ; then 
+	    echo "ERROR in print_test_caption: logfile <<${log}>> does not exist"
+	else
+	    echo "---- Test: ${caption}" | tee -a ${log}
+	fi
+    fi
+}
