@@ -3,13 +3,14 @@
 function usage () {
     echo "Usage: $0 [ -h ]"
     echo "    [ -c compiler (default: all compilers) ]"
-    echo "    [ -r : skip runs ]"
+    echo "    [ -r : skip runs ] [ -t trace ]"
 echo "    [ -v baseversion (default: ${base}) ]"
 }
 
 base=3.21
 compiler=
 runflag=
+trace=
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
@@ -17,8 +18,12 @@ while [ $# -gt 0 ] ; do
 	shift && compiler=$1 && shift
     elif [ $1 = "-r" ] ; then
 	shift && runflag=-r
+    elif [ $1 = "-t" ] ; then
+	shift && trace=1
     elif [ $1 = "-v" ] ; then
 	shift && base=$1 && shift
+    else
+	echo "ERROR unknown option <<$1>>" && exit 1
     fi
 done
 
@@ -31,12 +36,24 @@ for variant in \
         version=${base}-${variant}
     fi
     echo "==== Testing version ${version}"
-    ./tacc_tests.sh -v ${version} \
-		    -4 ${runflag} \
-		    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
-        | awk -v version=${version} '\
+    if [ ! -z "${trace}" ] ; then 
+	./tacc_tests.sh -v ${version} \
+	    -4 ${runflag} \
+	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
+	    | tee ${variant}_trace.log \
+            | awk -v version=${version} '\
         /Configuration/ { configuration=$3 } \
 	/^---- / { $1="" ; test=$0 } \
 	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
 	'
+    else
+	./tacc_tests.sh -v ${version} \
+	    -4 ${runflag} \
+	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
+            | awk -v version=${version} '\
+        /Configuration/ { configuration=$3 } \
+	/^---- / { $1="" ; test=$0 } \
+	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
+	'
+    fi
 done
