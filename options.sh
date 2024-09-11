@@ -67,9 +67,12 @@ fi
 ## set log file for the case where we run package_tests.sh by itself
 ##
 if [ -z "${logfile}" ] ; then
-    logdir=${package}_logs
+    export logdir=${package}_logs
+    echo "Logging to: ${logdir}"
     mkdir -p ${logdir}
     logfile=${logdir}/${package}.log
+else
+    echo "Using logfile: ${logfile}"
 fi
 
 if [ ! -z "${echo}" ] ; then

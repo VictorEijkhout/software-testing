@@ -11,15 +11,13 @@
 ####
 ################################################################
 
-import os
-import pylauncher
+import pylauncher as launcher
 
 ##
 ## Emulate the classic launcher, using a one liner
 ##
 
-pylauncher.ClassicLauncher\
-    ("commalines",
-     # optional spec of output dir:
-     workdir=f"pylauncher_tmp_comma",
-     debug="host+exec+task+job")
+launcher.ClassicLauncher("commandlines",
+                            cores=12,
+                            debug="job+host+exec",
+                            )

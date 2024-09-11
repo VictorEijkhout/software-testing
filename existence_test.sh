@@ -68,9 +68,7 @@ fi
 testlog="${logdir}/${source}.log"
 rm -rf ${testlog} && touch ${testlog}
 
-if [ ! -z "${testcaption}" ] ; then
-    echo "---- Test: ${testcaption}" | tee -a ${testlog}
-fi
+print_test_caption "${testcaption}" "${testlog}"
 
 pathmacro=TACC_$( echo ${package} | tr a-z A-Z )_$( echo ${dir} | tr a-z A-Z )
 ##echo "path macro: $pathmacro"
