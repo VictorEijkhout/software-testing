@@ -27,5 +27,5 @@ pylauncher.ClassicLauncher\
     ("corelines",
      # optional spec of output dir:
      workdir=f"pylauncher_tmp_node_{ os.environ['SLURM_JOBID'] }",
-     cores=os.environ['SLURM_CPUS_ON_NODE'],
+     cores="node",
      debug="host+exec+task+job")
