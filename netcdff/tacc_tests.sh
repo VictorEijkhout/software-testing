@@ -12,6 +12,7 @@ version=4.6.1
 modules=
 loadpackage=netcdf
 loadversion=4.9.2
+cmakeversion=3.29
 
 source ../options.sh
 source ../tacc_tests.sh

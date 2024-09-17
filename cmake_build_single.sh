@@ -61,7 +61,8 @@ else
     export CXX=${TACC_CXX}
     export FC=${TACC_FC}
 fi
-cmake --version
+echo "Using cmake: $( cmake --version | head -n 1 ) with CC=${CC}, CXX=${CXX}, FC=${FC}"
+
 retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} \
     $( if [ ! -z "${cmake}" ] ; then echo ${cmake} | tr ',' ' ' ; fi ) \

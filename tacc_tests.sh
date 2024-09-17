@@ -23,6 +23,7 @@ touch ${fulllog}
 touch ${shortlog}
 
 module reset >/dev/null 2>&1
+module load cmake$( if [ ! -z ${cmakeversion} ] ; then echo "/${cmakeversion}" ; fi ) 2>/dev/null
 module -t spider ${loadpackage}/${loadversion} 2>/dev/null
 if [ $? -gt 0 ] ; then
     echo "================"
@@ -38,7 +39,7 @@ fi
     ; else \
      echo "==== Testing: ${package}/${version} from ${loadpackage}/${loadversion}" \
     ; fi \
- && echo "==== available packages: $( module -t spider ${package}/${version} 2>&1 )" \
+ && echo "==== available packages: $( module -t spider ${loadpackage}/${loadversion} 2>&1 )" \
  && echo "================" \
  && echo \
  ) | tee -a ${fulllog}
@@ -121,11 +122,11 @@ for compiler in $compilers ; do
     ## load module and execute all tests
     ##
     if [ "${loadpackage}" != "none" ] ; then 
-	module load ${loadpackage}/${version} >/dev/null 2>&1 || retcode=$?
+	module load ${loadpackage}/${loadversion} >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -eq 0 ] ; then
-	    echo "Loaded package:  ${loadpackage}/${version}" >>${fulllog}
+	    echo "Loaded package:  ${loadpackage}/${loadversion}" >>${fulllog}
 	else 
-	    echo "     could not load ${loadpackage}/${version}" >>${fulllog}
+	    echo "     could not load ${loadpackage}/${loadversion}" >>${fulllog}
 	    continue
 	fi
     fi
