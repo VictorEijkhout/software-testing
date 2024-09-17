@@ -1,5 +1,5 @@
 #include <iostream>
-#include <boost/log.hpp>
+#include <boost/log/core.hpp>
 
 int main() {
 
