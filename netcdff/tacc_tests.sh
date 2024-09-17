@@ -10,7 +10,8 @@
 package=netcdff
 version=4.6.1
 modules=
-loadpackage=netcdf/4.9.2
+loadpackage=netcdf
+loadversion=4.9.2
 
 source ../options.sh
 source ../tacc_tests.sh

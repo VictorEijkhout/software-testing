@@ -23,17 +23,21 @@ touch ${fulllog}
 touch ${shortlog}
 
 module reset >/dev/null 2>&1
-module -t spider ${package}/${version} 2>/dev/null
+module -t spider ${loadpackage}/${loadversion} 2>/dev/null
 if [ $? -gt 0 ] ; then
     echo "================"
-    echo "==== Package ${package}/${version} not installed here"
+    echo "==== Package ${loadpackage}/${loadversion} not installed here"
     echo "================"
     echo
     exit 0
 fi
 ( echo "================" \
  && echo "==== TACC modules" \
- && echo "==== Testing: ${package}/${version}" \
+ && if [ "${package}" = "${loadpackage}" ] ; then \
+     echo "==== Testing: ${package}/${version}" \
+    ; else \
+     echo "==== Testing: ${package}/${version} from ${loadpackage}/${loadversion}" \
+    ; fi \
  && echo "==== available packages: $( module -t spider ${package}/${version} 2>&1 )" \
  && echo "================" \
  && echo \

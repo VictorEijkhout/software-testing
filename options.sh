@@ -60,6 +60,7 @@ done
 ##
 if [ -z "${loadpackage}" ] ; then
     export loadpackage=${package}
+    export loadversion=${version}
 fi
 
 ##
