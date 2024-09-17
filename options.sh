@@ -55,6 +55,14 @@ while [ $# -gt 0 ] ; do
 done
 
 ##
+## actually loaded package name
+## (this is mostly for netcdff/netcdf
+##
+if [ -z "${loadpackage}" ] ; then
+    export loadpackage=${package}
+fi
+
+##
 ## flag to pass to cmake driver
 ##
 if [ "${mpi}" = "1" ] ; then 

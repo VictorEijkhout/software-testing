@@ -2,7 +2,8 @@
 
 package=netcdff
 version=4.6.1
-help_string="Loop over all compilers, testing one package version"
+modules=netcdf/4.9.2
+loadpackage=${package}
 
 source ../options.sh
 source ../tacc_tests.sh

@@ -57,12 +57,12 @@ for compiler in $compilers ; do
     ## 
     ## load module (if there is one) and execute all tests
     ##
-    if [ "${package}" != "mpi" ] ; then 
-	echo "Loading package:  ${package}/${version}" >>${fulllog}
+    if [ "${loadpackage}" != "mpi" ] ; then 
+	echo "Loading package:  ${loadpackage}/${version}" >>${fulllog}
 	retcode=0
-	module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
+	module load ${loadpackage}/${version} >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -gt 0 ] ; then
-	    echo "     could not load ${package}/${version}" | tee -a ${fulllog}
+	    echo "     could not load ${loadpackage}/${version}" | tee -a ${fulllog}
 	    echo "Currently loaded: $( module -t list 2>&1 ) " >>${fulllog}
 	    continue
 	fi

@@ -116,12 +116,12 @@ for compiler in $compilers ; do
     ##
     ## load module and execute all tests
     ##
-    if [ "${package}" != "none" ] ; then 
-	module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
+    if [ "${loadpackage}" != "none" ] ; then 
+	module load ${loadpackage}/${version} >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -eq 0 ] ; then
-	    echo "Loaded package:  ${package}/${version}" >>${fulllog}
+	    echo "Loaded package:  ${loadpackage}/${version}" >>${fulllog}
 	else 
-	    echo "     could not load ${package}/${version}" >>${fulllog}
+	    echo "     could not load ${loadpackage}/${version}" >>${fulllog}
 	    continue
 	fi
     fi
