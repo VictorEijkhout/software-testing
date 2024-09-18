@@ -11,13 +11,14 @@
 ####
 ################################################################
 
-import pylauncher as launcher
+import pylauncher
 
 ##
 ## Emulate the classic launcher, using a one liner
 ##
 
-launcher.ClassicLauncher("commandlines",
+print( f"ClassicLauncher 11 core test run on pylauncher version {pylauncher.pylauncher_version}" )
+pylauncher.ClassicLauncher("commandlines",
                             cores=11,
                             debug="job+host+exec",
                             )

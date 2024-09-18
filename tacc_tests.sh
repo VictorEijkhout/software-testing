@@ -24,13 +24,18 @@ touch ${shortlog}
 
 module reset >/dev/null 2>&1
 module load cmake$( if [ ! -z ${cmakeversion} ] ; then echo "/${cmakeversion}" ; fi ) 2>/dev/null
-module -t spider ${loadpackage}/${loadversion} 2>/dev/null
-if [ $? -gt 0 ] ; then
-    echo "================"
-    echo "==== Package ${loadpackage}/${loadversion} not installed here"
-    echo "================"
-    echo
-    exit 0
+##
+## spider this package unless we're testing some environment like mpi
+##
+if [ "${loadpackage}" != "none" ] ; then 
+    module -t spider ${loadpackage}/${loadversion} 2>/dev/null
+    if [ $? -gt 0 ] ; then
+	echo "================"
+	echo "==== Package ${loadpackage}/${loadversion} not installed here"
+	echo "================"
+	echo
+	exit 0
+    fi
 fi
 ( echo "================" \
  && echo "==== TACC modules" \
@@ -39,7 +44,9 @@ fi
     ; else \
      echo "==== Testing: ${package}/${version} from ${loadpackage}/${loadversion}" \
     ; fi \
- && echo "==== available packages: $( module -t spider ${loadpackage}/${loadversion} 2>&1 )" \
+ && if [ "${loadpackage}" != "none" ] ; then \
+     echo "==== available packages: $( module -t spider ${loadpackage}/${loadversion} 2>&1 )" \
+     ; fi \
  && echo "================" \
  && echo \
  ) | tee -a ${fulllog}

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-package=none
+package=mpi
+loadpackage=none
+loadversion=0
 mpi=1
 help_string="Loop over all compilers, testing one package version"
 

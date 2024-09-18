@@ -18,6 +18,7 @@ import pylauncher
 ## Emulate the classic launcher, using a one liner
 ##
 
+print( f"ClassicLauncher comma test run on pylauncher version {pylauncher.pylauncher_version}" )
 pylauncher.ClassicLauncher\
     ("commalines",
      # optional spec of output dir:

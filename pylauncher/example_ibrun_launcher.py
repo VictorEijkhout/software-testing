@@ -19,6 +19,7 @@ import pylauncher
 ## spawn a bunch of MPI parallel jobs, with a core count
 ## that is constant, specified here.
 ##
+print( f"IbrunLauncher run on pylauncher version {pylauncher.pylauncher_version}" )
 pylauncher.IbrunLauncher\
     ("parallellines",cores=3,
      workdir=f"pylauncher_tmp_ibrun",

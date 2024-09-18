@@ -23,6 +23,7 @@ import pylauncher
 # SLURM_JOB_CPUS_PER_NODE=56
 # SLURM_CPUS_ON_NODE
 
+print( f"ClassicLauncher cores=node run on pylauncher version {pylauncher.pylauncher_version}" )
 pylauncher.ClassicLauncher\
     ("corelines",
      # optional spec of output dir:
