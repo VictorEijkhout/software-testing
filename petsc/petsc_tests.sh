@@ -32,7 +32,6 @@ source ../failure.sh
 if [ "${skipc}" != "1" ] ; then
     echo "C language"
 
-    ##echo "Sanity test"
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 			    --title "Sanity test" \
 			    sanity.c
@@ -42,7 +41,6 @@ if [ "${skipc}" != "1" ] ; then
     # ../cmake_build_single.sh -m -p ${package} amgx.c >>${logfile} 2>&1 || retcode=$?
     # failure $retcode "amgx compilation"
 
-    ##echo "Test size of scalar" | tee -a ${logfile}
     if [[ "${PETSC_ARCH}" = *single* ]] ; then
 	realsize=4 ; else realsize=8 ; fi
     if [[ "${PETSC_ARCH}" = *complex* ]] ; then
@@ -52,7 +50,6 @@ if [ "${skipc}" != "1" ] ; then
 	-t ${realsize} \
 	scalar.c
 
-    ##echo "Test size of int" | tee -a ${logfile}
     if [[ "${PETSC_ARCH}" = *i64* ]] ; then
 	intsize=8 ; else intsize=4 ; fi
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
@@ -61,7 +58,6 @@ if [ "${skipc}" != "1" ] ; then
 	int.c
 
     if [[ "${PETSC_ARCH}" = *complex* ]] ; then
-	##echo "Test complex type" | tee -a ${logfile}
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 				--title "complex type" \
 				complex.c
@@ -73,25 +69,21 @@ if [ "${skipc}" != "1" ] ; then
 			    hdf5.c
     fi
 
-    ##echo "Test presence of fftw3" | tee -a ${logfile}
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 			    --title "presence of fftw3" \
 	-t accuracy \
 	fftw3.c
 
-    ##echo "Test presence of mumps" | tee -a ${logfile}
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 			    --title "presence of mumps" \
 			    mumps.c
 
     if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
-	##echo "Test presence of mumpsi64"
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 				--title "presence of mumpsi64" \
 				mumpsi64.c
     fi
 
-    ##echo "Test presence of parmetis" | tee -a ${logfile}
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 			    --title "presence of parmetis" \
 			    parmetis.c
