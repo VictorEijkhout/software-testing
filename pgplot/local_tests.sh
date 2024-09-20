@@ -1,7 +1,7 @@
 #!/bin/bash
 
-package=proj
-version=9.3.1
+package=pgplot
+version=5.2
 
 ##
 ## test all programs for this package,
