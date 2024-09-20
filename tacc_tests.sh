@@ -23,18 +23,23 @@ touch ${fulllog}
 touch ${shortlog}
 
 module reset >/dev/null 2>&1
-module -t spider ${package}/${version} 2>/dev/null
+module load cmake$( if [ ! -z ${cmakeversion} ] ; then echo "/${cmakeversion}" ; fi ) 2>/dev/null
+module -t spider ${loadpackage}/${loadversion} 2>/dev/null
 if [ $? -gt 0 ] ; then
     echo "================"
-    echo "==== Package ${package}/${version} not installed here"
+    echo "==== Package ${loadpackage}/${loadversion} not installed here"
     echo "================"
     echo
     exit 0
 fi
 ( echo "================" \
  && echo "==== TACC modules" \
- && echo "==== Testing: ${package}/${version}" \
- && echo "==== available packages: $( module -t spider ${package}/${version} 2>&1 )" \
+ && if [ "${package}" = "${loadpackage}" ] ; then \
+     echo "==== Testing: ${package}/${version}" \
+    ; else \
+     echo "==== Testing: ${package}/${version} from ${loadpackage}/${loadversion}" \
+    ; fi \
+ && echo "==== available packages: $( module -t spider ${loadpackage}/${loadversion} 2>&1 )" \
  && echo "================" \
  && echo \
  ) | tee -a ${fulllog}
@@ -71,10 +76,14 @@ for compiler in $compilers ; do
 	# echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${fulllog}
 	continue
     fi
-    if [ ! -z "${mkl}" ] ; then
-	## mkl loading is allowed to fail for intel
-	module load mkl >/dev/null 2>&1
-    fi
+    # if [ ! -z "${mkl}" ] ; then
+    # 	if [ "${TACC_SYSTEM}" = "vista" ] ; then
+    # 	    module load nvpl
+    # 	elif [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then 
+    # 	    ## mkl loading is allowed to fail for intel
+    # 	    module load mkl >/dev/null 2>&1
+    # 	fi
+    # fi
     if [ ! -z "${mpi}" ] ; then
 	retcode=0
 	module load impi >/dev/null 2>&1 || retcode=$?
@@ -112,12 +121,12 @@ for compiler in $compilers ; do
     ##
     ## load module and execute all tests
     ##
-    if [ "${package}" != "none" ] ; then 
-	module load ${package}/${version} >/dev/null 2>&1 || retcode=$?
+    if [ "${loadpackage}" != "none" ] ; then 
+	module load ${loadpackage}/${loadversion} >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -eq 0 ] ; then
-	    echo "Loaded package:  ${package}/${version}" >>${fulllog}
+	    echo "Loaded package:  ${loadpackage}/${loadversion}" >>${fulllog}
 	else 
-	    echo "     could not load ${package}/${version}" >>${fulllog}
+	    echo "     could not load ${loadpackage}/${loadversion}" >>${fulllog}
 	    continue
 	fi
     fi

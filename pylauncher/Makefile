@@ -21,6 +21,14 @@ CORESPERNODE = 16
 MINUTES = 20
 QUEUE = development
 info ::
+	@echo "================ big test"
+	@echo "make launch"
+.PHONY: launch
+launch :
+	@for x in classic core comma node ibrun ; do \
+	    make script submit EXECUTABLE=$$x \
+	 ; done 
+info ::
 	@echo "================ script submission"
 	@echo "make script submit"
 	@echo "    [EXECUTABLE=... (default: ${EXECUTABLE})]"
@@ -38,7 +46,7 @@ script :
 	@export HOSTNAME=`hostname -f | awk -F "." '{print $$2}'` \
 	 && echo "generating script for ${EXECUTABLE} on $$HOSTNAME" \
 	 \
-	 && retcode=0 && which ${RUN} || retcode=$$? \
+	 && retcode=0 && which ${RUN} 1>/dev/null || retcode=$$? \
 	 && if [ $${retcode} -gt 0 ] ; then \
 	      echo "Could not find python executable <<${RUN}>>" && exit 1 \
 	    ; fi \
@@ -48,20 +56,21 @@ script :
 	 \
 	 && template="jobscript_template" && generated="jobscript_generated" \
 	 && if [ -f "example_${EXECUTABLE}_launcher.py" ] ; then \
-	      EXECUTABLE=example_${EXECUTABLE}_launcher \
+	      NAME=${EXECUTABLE} \
+	       && EXECUTABLE=example_${EXECUTABLE}_launcher \
 	    ; else \
-	      EXECUTABLE=${EXECUTABLE} \
+	      NAME=${EXECUTABLE##example_} && NAME=$${NAME%%_*} \
+	       && EXECUTABLE=${EXECUTABLE} \
 	    ; fi \
-	 && if [ "$$( hostname )" = "staff.vista.tacc.utexas.edu" ] ; then \
-	      QUEUE=gg \
-	    ; elif [ "$$( hostname )" = "staff.stampede3.tacc.utexas.edu" ] ; then \
-	      QUEUE=skx-dev \
-	    ; else \
-	      QUEUE=${QUEUE} \
-	    ; fi \
+	 && case $$( hostname ) in \
+	      ( *vista* )     QUEUE=gg          ;; \
+	      ( *stampede3* ) QUEUE=skx-dev     ;; \
+	      ( *ls6* )       QUEUE=normal      ;; \
+	      ( * )           QUEUE=development ;; \
+	    esac \
 	 && cat $${template} | sed -e "s/SSH/${SSH}/" -e "s/RUN/${RUN}/" \
 	        -e "s/EXECUTABLE/$${EXECUTABLE}/" -e "s/NODES/${NODES}/" \
-	        -e "s/NAME/${NAME}/" \
+	        -e "s/NAME/$${NAME}/" \
 	        -e "s/CORESPERNODE/${CORESPERNODE}/" -e "s/QUEUE/$${QUEUE}/" \
 	        -e "s/MINUTES/${MINUTES}/" \
 	        -e "/####/d" \
@@ -71,13 +80,16 @@ submit :
 
 example_shifted_ibrun_dependencies = parallel
 
-CPROGRAMS = parallel randomaction randomsleep randomcomma corecount
 info ::
 	@echo 
+	@echo "make programs"
 	@echo "make PROGRAM"
 	@echo "    with C programs: ${CPROGRAMS}"
 	@echo "    compiled with WAIT=SLURM_NPROCS"
 .SECONDEXPANSION:
+.PHONY: programs ${CPROGRAMS}
+CPROGRAMS = parallel randomaction randomsleep randomcomma corecount
+programs : ${CPROGRAMS}
 parallel randomaction corecount :
 	@slurm=${SLURM_NPROCS} && slurm=$${slurm:=40} \
 	&& wait=${WAIT} && wait=$${wait:=$${slurm}} \

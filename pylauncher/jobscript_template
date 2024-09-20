@@ -7,10 +7,10 @@
 ####
 
 #SBATCH   -p QUEUE
-#SBATCH   -J pylaunchertestNAME
+#SBATCH   -J pylNAME
 #SBATCH   -o pylaunchertestNAME.o%j
 #SBATCH   -e pylaunchertestNAME.o%j
-#SBATCH   --ntasks-per-node CORESPERNODE
+#SBATCH   --ntasks-per-node 1
 #SBATCH   -N NODES
 #SBATCH   -t 0:40:00
 #SBATCH -A A-ccsc                  # replace by your own project
@@ -23,4 +23,6 @@ fi
 ## for local testing:
 #export PYTHONPATH=..:${PYTHONPATH}
 echo "PYTHONPATH: ${PYTHONPATH}"
+echo "Running EXECUTABLE on queue=QUEUE"
+
 SSH RUN EXECUTABLE.py

@@ -101,6 +101,7 @@ if [ "${skipc}" != "1" ] ; then
 			    ptscotch.c
 
     ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+			    --cmake "-DUSESLEPC=ON" \
 			    --title "presence of slepc" \
 			    slepceps.c
 fi
@@ -118,11 +119,11 @@ if [ "${skipf}" != "1" ] ; then
     if [[ "${PETSC_ARCH}" != *f08* ]] ; then 
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 				--title "can we compile Fortran1990" \
-	    fortran1990.F90
+				fortran1990.F90
 
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 				--title "F90 vector insertion" \
-	    -r vec.F90
+				vec.F90
     else echo ".... skip f90 test"
     fi
 

@@ -7,6 +7,7 @@ target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )
 find_package(Boost COMPONENTS 
     filesystem
     iostreams
+    log
     serialization
     system
     REQUIRED)
