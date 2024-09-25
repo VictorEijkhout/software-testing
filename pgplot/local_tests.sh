@@ -1,9 +1,7 @@
 #!/bin/bash
 
-package=netcdff
-version=4.6.1
-modules=netcdf/4.9.2
-loadpackage=${package}
+package=pgplot
+version=5.2
 
 ##
 ## test all programs for this package,

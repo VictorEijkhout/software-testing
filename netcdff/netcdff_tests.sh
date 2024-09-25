@@ -9,8 +9,8 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
-echo "Test if we can compile"
 ../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+			--title "locate Fortran module" \
 			has.F90
 
 if [ "${logfile}" = "compile.log" ] ; then

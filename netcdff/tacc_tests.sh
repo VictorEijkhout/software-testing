@@ -1,8 +1,18 @@
 #!/bin/bash
+################################################################
+####
+#### Tests for the Fortran interface to Netcdf
+#### In the local install these are separate package, but
+#### in the final TACC modules they are merged
+####
+################################################################
 
 package=netcdff
 version=4.6.1
-help_string="Loop over all compilers, testing one package version"
+modules=
+loadpackage=netcdf
+loadversion=4.9.2
+cmakeversion=3.29
 
 source ../options.sh
 source ../tacc_tests.sh
