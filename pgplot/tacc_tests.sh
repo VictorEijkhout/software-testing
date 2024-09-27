@@ -1,7 +1,7 @@
 #!/bin/bash
 
-package=netcdf
-version=4.9.2
+package=pgplot
+version=5.2
 
 source ../options.sh
 source ../tacc_tests.sh

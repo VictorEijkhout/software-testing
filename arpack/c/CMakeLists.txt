@@ -13,4 +13,26 @@ target_include_directories(
         ${HDF_INCLUDE_DIRS}
 	)
 
+set( BLA_VENDOR "Intel10_64lp_seq" )
+find_package( BLAS REQUIRED )      
+
+# set( MKL_ARCH "intel64" )
+# set( MKL_THREADING "sequential" )
+# set( MKL_INTERFACE "lp64" )
+# find_package( MKL CONFIG REQUIRED PATHS $ENV{MKLROOT} )
+
+# find_package( MKL CONFIG REQUIRED )
+
+target_compile_options(
+        ${PROJECTNAME} PUBLIC
+        $<TARGET_PROPERTY:MKL::MKL,INTERFACE_COMPILE_OPTIONS> )
+target_include_directories(
+        ${PROJECTNAME} PUBLIC
+        $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES> )
+target_link_libraries(
+        ${PROJECTNAME} PUBLIC
+        $<LINK_ONLY:MKL::MKL>)
+
+## find_package( OpenMP REQUIRED )
+
 install( TARGETS ${PROJECTNAME} DESTINATION . )

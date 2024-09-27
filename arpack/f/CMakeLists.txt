@@ -8,6 +8,10 @@ if( DEFINED ENV{TACC_NVPL_DIR} )
   find_package( NVPL REQUIRED )
   target_link_libraries( ${PROJECTNAME} PUBLIC nvpl::blas_lp64_seq )
 elseif( DEFINED ENV{TACC_MKL_DIR} )
+
+  set( MKL_ARCH "intel64" )
+  set( MKL_THREADING "sequential" )
+  set( MKL_INTERFACE "lp64" )
   find_package( MKL CONFIG REQUIRED )
   target_compile_options(
 	  ${PROJECTNAME} PUBLIC

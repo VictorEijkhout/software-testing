@@ -9,22 +9,18 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
-##echo "Test if we can compile C"
 ../cmake_test_driver.sh -l ${logfile} ${runflag} \
-			--title "if we can compile C" \
+			--title "can we compile C" \
 			has.c
 
-##echo "Test if we can run C"
 ../cmake_test_driver.sh -l ${logfile} ${runflag} \
-			--title "if we can run C" \
+			--title "can we run C" \
 			dataset.c
 
-##echo "Test if we can compile C++"
 ../cmake_test_driver.sh -l ${logfile} ${runflag} \
-			--title "if we can compile C++" \
+			--title "can we compile C++" \
 			hasx.cxx
 
-##echo "Test if we can compile Fortran"
 ../cmake_test_driver.sh -l ${logfile} ${runflag} \
-			--title "if we can compile Fortran" \
+			--title "can we compile Fortran" \
 			fmod.F90
