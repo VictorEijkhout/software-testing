@@ -27,9 +27,11 @@ source ../failure.sh
 ##
 ## single precision
 ##
-../existence_test.sh -p ${package} -l ${logfile} \
-		     --title "single precision header" \
-		     -d inc fftw3f.h
+
+# does not seem to be a separate header
+# ../existence_test.sh -p ${package} -l ${logfile} \
+# 		     --title "single precision header" \
+# 		     -d inc fftw3f.h
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "single precision library" \
@@ -37,5 +39,5 @@ source ../failure.sh
 
 ../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			--title "can we single precision" \
-			single.c 
-
+			single.c
+# should this give output 4? it seems to give 0
