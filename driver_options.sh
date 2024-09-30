@@ -9,6 +9,7 @@ function usage() {
     if [ "${buildsystem}" = "cmake" ] ; then 
 	echo "    [ --cmake cmake options separated by commas ]"
     fi
+    echo "    [ --in-build-run ]"
     echo "    [ --title test caption ]"
     echo "    program.{c.F90}"
 }
@@ -21,6 +22,7 @@ fi
 package=unknown
 cmake=
 fulllog=
+inbuildrun=
 mpi=
 modules=
 noibrun=
@@ -37,6 +39,8 @@ while [ $# -gt 1 ] ; do
 	shift && cmake="$1" && shift
     elif [ "$1" = "-d" ] ; then 
 	shift && modules="$1" && shift
+    elif [ "$1" = "--in-build-run" ] ; then
+	shift && inbuildrun=1
     elif [ "$1" = "-m" ] ; then 
 	shift && mpi=1
 	#echo "MPI mode"

@@ -46,7 +46,7 @@ for compiler in $compilers ; do
 	echo "    undefined configuration for system <<${TACC_SYSTEM}>>" >>${fulllog}
 	continue
     else
-	echo "==== Configuration: ${config}" | tee -a ${fulllog}
+	( echo && echo "==== Configuration: ${config}" ) | tee -a ${fulllog}
     fi
     source ${envfile}  >/dev/null 2>&1
     for m in ${modules} ; do
