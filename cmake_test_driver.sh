@@ -37,7 +37,11 @@ if [ $retcode -eq 0 -a ! -z "${run}" ] ; then
     runlog=${logdir}/${executable}_run.log
     rm -f ${runlog}
     if [ -z "${mpi}" ] ; then
-	cmdline="./build/${executable}"
+	if [ ! -z "${inbuildrun}" ] ; then 
+	    cmdline="( cd build && ./${executable} )"
+	else
+	    cmdline="./build/${executable}"
+	fi
     else
 	cmdline="ibrun -np 1 ./build/${executable}"
     fi

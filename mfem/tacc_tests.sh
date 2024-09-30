@@ -1,11 +1,8 @@
 #!/bin/bash
 
-package=mpi
-loadpackage=none
-loadversion=0
+package=mfem
+version=4.7
 mpi=1
-#cmakeversion=3.30
 
 source ../options.sh
 source ../tacc_tests.sh
-
