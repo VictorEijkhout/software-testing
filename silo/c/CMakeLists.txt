@@ -9,9 +9,11 @@ target_include_directories(
 )
 
 # it's silo5 on s3 & vista
+# and now it's siloh5 on s3...
 target_link_libraries(
   ${PROJECTNAME} PUBLIC
-  ${SILO_LIB}/libsilo5.so libm.so
+  ##  ${SILO_LIB}/libsilo5.so libm.so
+  ${SILO_LIB}/libsiloh5.so libm.so
 )
 
 find_package( PkgConfig REQUIRED )
