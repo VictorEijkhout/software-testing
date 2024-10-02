@@ -9,8 +9,12 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
+../existence_test.sh -p ${package} -l ${logfile} \
+		     --title "fortran module" \
+		     -d inc netcdf.mod
+
 ../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
-			--title "locate Fortran module" \
+			--title "compile with Fortran module" \
 			has.F90
 
 if [ "${logfile}" = "compile.log" ] ; then
