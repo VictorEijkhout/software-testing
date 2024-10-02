@@ -142,7 +142,7 @@ for compiler in $compilers ; do
     echo "----------------"
 
     cmdline="./${package}_tests.sh \
-      -e \
+      -e -P ${loadpackage} \
       ${mpiflag} ${runflag} ${p4pflag} ${xflag} \
       -l ${configlog}"
     echo "cmdline=$cmdline" >>${fulllog}

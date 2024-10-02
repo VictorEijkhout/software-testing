@@ -68,17 +68,21 @@ fi
 testlog="${logdir}/${source}.log"
 rm -rf ${testlog} && touch ${testlog}
 
+echo "Testing existence of file <<$file>> in section <<${dir}>>" >>${fulllog}
 print_test_caption "${testcaption}" "${testlog}"
 
 pathmacro=TACC_$( echo ${package} | tr a-z A-Z )_$( echo ${dir} | tr a-z A-Z )
-##echo "path macro: $pathmacro"
-eval filename=\${${pathmacro}}/${file}
+echo "path macro=${pathmacro}" >>${testlog}
+eval export fullpath=\${${pathmacro}}
+echo "full path=${fullpath}"   >>${testlog}
+export filename=${fullpath}/${file}
 
 ##echo "test file: <<${filename}>>"
 if [ -f "${filename}" ] ; then
     failure 0 "found file <<$file>> in section <<$dir>>" | tee -a ${testlog}
 else
     failure 1 "file <<$file>> in section <<$dir>>" | tee -a ${testlog}
+    ( echo "dir contents of <<${fullpath}>>:" && ls -d ${fullpath}/* ) >>${fulllog}
 fi
 
 cat ${testlog} >> ${fulllog}
