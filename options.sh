@@ -25,6 +25,10 @@ matchcompiler=
 run=1
 skippy=1
 python=
+if [ -z "${loadpackage}" ] ; then
+    loadpackage=${package}
+fi
+
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then
 	usage && exit 0
@@ -38,6 +42,8 @@ while [ $# -gt 0 ] ; do
 	## top level this is set in *_tests.sh
 	## in embedded calls this is set on the commandline
 	mpi=1 && shift
+    elif [ "$1" = "-P" ] ; then
+       shift && loadpackage=$1 && shift
     elif [ "$1" = "-r" ] ; then
 	run=0 && runflag=-r && shift
     elif [ "$1" = "-v" ] ; then

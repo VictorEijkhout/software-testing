@@ -9,6 +9,7 @@ packages="\
     trilinos udunits zlib \
     "
 logdir=$(pwd)/all_logs
+logfile=${logdir}/all.log
 rm -rf ${logdir}
 mkdir -p ${logdir}
 for p in ${packages} ; do
@@ -22,14 +23,7 @@ for p in ${packages} ; do
     else
 	echo "================" && echo "No such tester: $p" 
     fi
-done 2>&1 | tee ${logdir}/all.log
+done 2>&1 | tee ${logfile}
 
-echo && echo "See ${logdir}/*.log" && echo
+echo && echo "See ${logfile} and ${logdir}/*.log" && echo
 
-	    # | awk '\
-	    #   	    {print} \
-	    # 	    c!="" && !/can not load/ { c="" ; print c ; print; s=1 } \
-	    #   	    /Configuration/ { c=$0; s=1 } \
-	    # 	    s!=1 { print } \
-	    # 	    s==1 { s==0 } \
-	    # 	    '

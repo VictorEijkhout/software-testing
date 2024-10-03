@@ -7,7 +7,7 @@
 ####
 ################################################################
 
-package=netcdff
+package=netcdffortran
 version=4.6.1
 modules=
 loadpackage=netcdf
