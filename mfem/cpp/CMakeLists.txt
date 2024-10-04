@@ -12,7 +12,7 @@ message( STATUS "Mfem libraries: ${MFEM_LIBRARY_DIRS}" )
 target_include_directories(
         ${PROJECTNAME} PUBLIC
         ${MPI_C_INCLUDE_DIRS} 
-        ${MFEM_INCLUDE_DIRS}
+##        ${MFEM_INCLUDE_DIRS}
       )
 # target_link_directories(
 #         ${PROJECTNAME} PUBLIC

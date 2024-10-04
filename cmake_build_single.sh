@@ -56,10 +56,15 @@ if [ ! -z "${mpi}" ] ; then
     export CC=mpicc
     export FC=mpif90
     export CXX=mpicxx
-else
+elif [ ! -z "${TACC_CCC}" ] ; then 
     export CC=${TACC_CC}
     export CXX=${TACC_CXX}
     export FC=${TACC_FC}
+else
+    case ${TACC_FAMILY_COMPILER} in
+	( gcc ) export CC=gcc && export CXX=g++ && export FC=gfortran ;;
+	( intel ) export CC=icc && export CXX=icpc && export FC=ifort ;;
+    esac
 fi
 echo "Using cmake: $( cmake --version | head -n 1 ) with CC=${CC}, CXX=${CXX}, FC=${FC}"
 

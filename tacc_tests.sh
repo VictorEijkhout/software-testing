@@ -83,14 +83,10 @@ for compiler in $compilers ; do
 	# echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${fulllog}
 	continue
     fi
-    # if [ ! -z "${mkl}" ] ; then
-    # 	if [ "${TACC_SYSTEM}" = "vista" ] ; then
-    # 	    module load nvpl
-    # 	elif [ "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then 
-    # 	    ## mkl loading is allowed to fail for intel
-    # 	    module load mkl >/dev/null 2>&1
-    # 	fi
-    # fi
+
+    ##
+    ## Load the default mpi for this compiler
+    ##
     if [ ! -z "${mpi}" ] ; then
 	retcode=0
 	module load impi >/dev/null 2>&1 || retcode=$?
@@ -104,6 +100,9 @@ for compiler in $compilers ; do
 	fi
     fi 
 
+    ##
+    ## Load prereq modules
+    ##
     for m in ${modules} ; do
 	if [ $m = "mkl" ] ; then
 	    if [ "${TACC_SYSTEM}" = "vista" ] ; then
@@ -126,7 +125,7 @@ for compiler in $compilers ; do
     done
 
     ##
-    ## load module and execute all tests
+    ## Load actual module and execute all tests
     ##
     if [ "${loadpackage}" != "none" ] ; then 
 	module load ${loadpackage}/${loadversion} >/dev/null 2>&1 || retcode=$?
@@ -137,9 +136,11 @@ for compiler in $compilers ; do
 	    continue
 	fi
     fi
-    echo "Running with modules: $( module -t list 2>&1 )" >>${fulllog}
-    echo "$( module -t list 2>&1 | awk '{m=m FS $1} END {print m}' )"
-    echo "----------------"
+    ( \
+      echo "Running with modules: " \
+	  && echo "$( module -t list 2>&1 | sort | awk '{m=m FS $1} END {print m}' )" \
+	  && echo "----------------" \
+      ) | tee -a ${fulllog}
 
     cmdline="./${package}_tests.sh \
       -e -P ${loadpackage} \
