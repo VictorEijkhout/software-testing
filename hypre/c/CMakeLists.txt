@@ -5,7 +5,7 @@ add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
 
 find_package( MPI )
 # find_package( PkgConfig REQUIRED )
-# find_package( HYPRE REQUIRED )
+find_package( HYPRE REQUIRED )
 
 message( STATUS "Hypre includes: ${HYPRE_INCLUDE_DIRS}" )
 message( STATUS "Hypre library dires: ${HYPRE_LIBRARY_DIRS}" )
