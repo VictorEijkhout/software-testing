@@ -63,7 +63,14 @@ elif [ ! -z "${TACC_CCC}" ] ; then
 else
     case ${TACC_FAMILY_COMPILER} in
 	( gcc ) export CC=gcc && export CXX=g++ && export FC=gfortran ;;
-	( intel ) export CC=icc && export CXX=icpc && export FC=ifort ;;
+	( intel ) v=${TACC_FAMILY_COMPILER_VERSION}
+	          v=${v%%.*}
+	          if [ ${v} -gt 20 ] ; then
+	            export CC=icx && export CXX=icpx && export FC=ifx 
+	          else 
+	            export CC=icc && export CXX=icpc && export FC=ifort 
+                  fi ;; 
+	( * ) echo "ERROR unhandled compiler family: <<${TACC_FAMILY_COMPILER}>>" && exit 1 ;; 
     esac
 fi
 echo "Using cmake: $( cmake --version | head -n 1 ) with CC=${CC}, CXX=${CXX}, FC=${FC}"
