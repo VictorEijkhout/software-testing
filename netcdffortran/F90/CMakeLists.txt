@@ -5,20 +5,19 @@ enable_language( Fortran )
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.F90 )
 
 find_package( PkgConfig REQUIRED )
-pkg_check_modules( NETCDFF REQUIRED netcdf-fortran )
 pkg_check_modules( NETCDF REQUIRED netcdf )
 
 target_include_directories(
         ${PROJECTNAME} PUBLIC
-        ${NETCDFF_INCLUDE_DIRS}
+        ${NETCDF_INCLUDE_DIRS}
 	)
 target_link_libraries(
         ${PROJECTNAME} PUBLIC
-        ${NETCDFF_LIBRARIES} ${NETCDF_LIBRARIES}
+        ${NETCDF_LIBRARIES}
 	)
 target_link_directories(
         ${PROJECTNAME} PUBLIC
-	${NETCDFF_LIBRARY_DIRS}	${NETCDF_LIBRARY_DIRS}
+	${NETCDF_LIBRARY_DIRS}
 	)
 target_link_libraries(
         ${PROJECTNAME} PUBLIC netcdf )
