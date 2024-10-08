@@ -28,9 +28,11 @@ fi
 failure $retcode "${executable} compilation" | tee -a ${testlog}
 
 if [ -z $mpi ] ; then
+    echo " .. running non-mpi executable: ${executable}" >>${testlog}
     ./build/${executable} \
 	>run_${executable}.log 2>err_${executable}.log || retcode=$?
 else
+    echo " .. running mpi executable on one node: ${executable}" >>${testlog}
     ibrun -n 1 ./build/${executable} \
 	>run_${executable}.log 2>err_${executable}.log || retcode=$?
 fi
