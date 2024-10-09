@@ -70,6 +70,7 @@ else
 	          else 
 	            export CC=icc && export CXX=icpc && export FC=ifort 
                   fi ;; 
+	( nvidia ) export CC=nvc && export CXX=nvc++ && export FC=nvfortran ;;
 	( * ) echo "ERROR unhandled compiler family: <<${TACC_FAMILY_COMPILER}>>" && exit 1 ;; 
     esac
 fi
