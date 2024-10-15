@@ -15,6 +15,11 @@ retcode=0
 			--title "if we can compile" \
 			sanity.c
 
+../existence_test.sh -p ${package} -l ${logfile} \
+		     --title "config program" \
+		     -d bin nc-config
+
+
 if [ "${logfile}" = "compile.log" ] ; then
     echo "See: ${logfile}"
 fi

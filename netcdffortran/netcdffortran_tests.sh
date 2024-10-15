@@ -17,6 +17,10 @@ source ../failure.sh
 			--title "compile with Fortran module" \
 			has.F90
 
+../existence_test.sh -p ${loadpackage} -l ${logfile} \
+		     --title "config program" \
+		     -d bin nc-config
+
 if [ "${logfile}" = "compile.log" ] ; then
     echo "See: ${logfile}"
 fi
