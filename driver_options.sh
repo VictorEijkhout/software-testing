@@ -1,6 +1,8 @@
 defaultp=$( pwd )
 defaultp=${defaultp##*/}
 
+source ../functions.sh
+
 function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] "
@@ -21,6 +23,7 @@ fi
 
 package=unknown
 cmake=
+dir=dir
 fulllog=
 inbuildrun=
 mpi=
@@ -39,6 +42,8 @@ while [ $# -gt 1 ] ; do
 	shift && cmake="$1" && shift
     elif [ "$1" = "-d" ] ; then 
 	shift && modules="$1" && shift
+    elif [ "$1" == "--dir" ] ; then 
+	shift && dir=$1 && shift
     elif [ "$1" = "--in-build-run" ] ; then
 	shift && inbuildrun=1
     elif [ "$1" = "-m" ] ; then 
@@ -62,16 +67,22 @@ while [ $# -gt 1 ] ; do
 done
 
 ##
+## Print caption before everything else
+## makes it easier to see what causes an error
+##
+if [ ! -z "${testcaption}" ] ; then
+    echo "---- Test: ${testcaption}" | tee -a ${fulllog}
+fi
+
+##
 ## the leftover argument is the program
+## in case of existence test this can not be directly tested
 ##
 source=$1
 if [ -z "${source}" ] ; then 
     echo "ERROR: no source file specified" && exit 1 ; fi
 executable=${source%%.*}
 extension=${source##*.}
-if [ ! -f "${extension}/${source}" ] ; then
-    echo "ERROR: no file <<${extension}/${source}>>" && exit 0
-fi
 
 ##
 ## parameter handling
@@ -83,18 +94,11 @@ fi
 ##
 ## log file handling
 ##
-if [ -z "${fulllog}" ] ; then
-    fulllog=${executable}.log
-    rm -f ${fulllog}
-fi
-logdir=${fulllog} && logdir=${fulllog%%/*}
+enforceexisting fulllog ""
+logdir=${fulllog%%/*}
 if [ -z "${logdir}" ] ; then logdir="." ; fi
 if [ ! -d "${logdir}" ] ; then
     echo "INTERNAL ERROR null logdir in log: ${fulllog}" && exit 1
 fi
 testlog="${logdir}/${source}.log"
 rm -rf ${testlog} && touch ${testlog}
-
-if [ ! -z "${testcaption}" ] ; then
-    echo "---- Test: ${testcaption}" | tee -a ${testlog}
-fi

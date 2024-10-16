@@ -5,6 +5,7 @@
 ##
 
 buildsystem=cmake
+source ../functions.sh
 source ../driver_options.sh
 source ../failure.sh
 
@@ -65,4 +66,5 @@ else
     echo " .. skipping run after unsuccessful compilation" >>${testlog}
 fi
 
+echo " .. include testlog <<${testlog}>> into full log: <<${fulllog}>>" >>${fulllog}
 cat ${testlog} >> ${fulllog}

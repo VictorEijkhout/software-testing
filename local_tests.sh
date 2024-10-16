@@ -4,7 +4,7 @@
 ##
 
 if [ -z "${package}" ] ; then
-    echo "You are calling the general local_tests.sh without setting package"
+    echo "You are calling ../local_tests.sh without setting package"
     exit 1
 fi
 
@@ -14,12 +14,7 @@ echo "==== Local modules"
 echo "==== Package: ${package}, version: ${version}"
 echo "================"
 
-logdir=${package}_logs
-fulllog=${logdir}/full.log
-shortlog=tacc_tests.log
-mkdir -p ${logdir}
-rm -f ${fulllog}
-touch ${fulllog}
+shortlog=local_tests.log
 touch ${shortlog}
 
 #
