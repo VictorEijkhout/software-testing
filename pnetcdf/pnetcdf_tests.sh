@@ -15,9 +15,9 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "C header" \
-		     -d inc pnetcdf.h
+		     --dir inc pnetcdf.h
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "fortran module" \
-		     -d inc pnetcdf.mod
+		     --dir inc pnetcdf.mod
 

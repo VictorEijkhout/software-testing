@@ -11,12 +11,12 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "header" \
-		     -d inc adios2.h
+		     --dir inc adios2.h
 
 ## the bin variable is not set
 # ../existence_test.sh -p ${package} -l ${logfile} \
 # 		     --title "config program" \
-# 		     -d bin adios2-config
+# 		     --dir bin adios2-config
 
 
 

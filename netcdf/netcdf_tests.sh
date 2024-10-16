@@ -17,7 +17,7 @@ retcode=0
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "config program" \
-		     -d bin nc-config
+		     --dir bin nc-config
 
 
 if [ "${logfile}" = "compile.log" ] ; then

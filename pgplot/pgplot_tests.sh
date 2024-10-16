@@ -11,4 +11,4 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "shared lib" \
-		     -d lib libpgplot.so
+		     --dir lib libpgplot.so

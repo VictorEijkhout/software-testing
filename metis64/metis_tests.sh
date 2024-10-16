@@ -9,11 +9,11 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "header" \
-		     -d inc metis.h
+		     --dir inc metis.h
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "library" \
-		     -d lib libmetis.so
+		     --dir lib libmetis.so
 
 ../cmake_test_driver.sh -m -p ${package} -l ${logfile} ${runflag} \
                         -t 1 \

@@ -11,7 +11,7 @@ source ../failure.sh
 
 ../existence_test.sh -p ${loadpackage} -l ${logfile} \
 		     --title "fortran module" \
-		     -d inc netcdf.mod
+		     --dir inc netcdf.mod
 
 ../cmake_test_driver.sh -p ${loadpackage} -l ${logfile} ${runflag} \
 			--title "compile with Fortran module" \
@@ -19,7 +19,7 @@ source ../failure.sh
 
 ../existence_test.sh -p ${loadpackage} -l ${logfile} \
 		     --title "config program" \
-		     -d bin nc-config
+		     --dir bin nc-config
 
 if [ "${logfile}" = "compile.log" ] ; then
     echo "See: ${logfile}"

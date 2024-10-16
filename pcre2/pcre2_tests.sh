@@ -11,7 +11,7 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "core header" \
-		     -d lib libpcre2-8.so
+		     --dir lib libpcre2-8.so
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "core header" \
