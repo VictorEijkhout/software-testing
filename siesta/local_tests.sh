@@ -1,8 +1,5 @@
 #!/bin/bash
 
-package=siesta
-version=5.0.1
-mpi=1
-
+source ./package.sh
 source ../options.sh
 source ../local_tests.sh
