@@ -19,6 +19,19 @@ retcode=0
 		     --title "config program" \
 		     -d bin nc-config
 
+echo "---- Test: nc-config libdir"
+if [ -d $( nc-config --libdir ) ] ; then
+    echo "     nc-config correctly reports lib"
+else
+    echo "ERROR nc-config libdir does not exist"
+fi
+
+echo "---- Test: nc-config includedir"
+if [ -d $( nc-config --includedir ) ] ; then
+    echo "     nc-config correctly reports include"
+else
+    echo "ERROR nc-config includedir does not exist"
+fi
 
 if [ "${logfile}" = "compile.log" ] ; then
     echo "See: ${logfile}"
