@@ -11,6 +11,6 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "program" \
-		     -d bin udunits2
+		     --dir bin udunits2
 
 

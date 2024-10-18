@@ -17,7 +17,7 @@ retcode=0
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "config program" \
-		     -d bin nc-config
+		     --dir bin nc-config
 
 echo "---- Test: nc-config libdir"
 if [ -d $( nc-config --libdir ) ] ; then

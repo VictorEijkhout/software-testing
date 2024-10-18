@@ -11,5 +11,5 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "random executable" \
-		     -d bin gdalinfo
+		     --dir bin gdalinfo
 

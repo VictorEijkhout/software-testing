@@ -1,6 +1,9 @@
 ##
 ## include file for top level both tacc/local tests
+## also loaded in ${package}_tests.sh
 ##
+
+source ../functions.sh
 
 function usage() {
     if [ ! -z "${help_string}" ] ; then
@@ -19,15 +22,17 @@ function usage() {
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
     usage && exit 0
 fi
+
+#
+# logfile is null in tacc/local_tests, but pass in package_tests
+#
 logfile=
+
 matchcompiler=
 ## mpi= this is set in the tacc/local_tests.sh top level file
 run=1
 skippy=1
 python=
-if [ -z "${loadpackage}" ] ; then
-    loadpackage=${package}
-fi
 
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then
@@ -42,6 +47,8 @@ while [ $# -gt 0 ] ; do
 	## top level this is set in *_tests.sh
 	## in embedded calls this is set on the commandline
 	mpi=1 && shift
+    elif [ "$1" = "-p" ] ; then
+       shift && package=$1 && shift
     elif [ "$1" = "-P" ] ; then
        shift && loadpackage=$1 && shift
     elif [ "$1" = "-r" ] ; then
@@ -52,17 +59,23 @@ while [ $# -gt 0 ] ; do
 	set -x && xflag=-x && shift 
     elif [ "$1" = "-4" ] ; then
 	p4pflag=-4 && skippy=0 && shift
-    elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
-	# echo "(including python tests)"
-	python=1 && shift
+    # elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
+    # 	# echo "(including python tests)"
+    # 	python=1 && shift
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
 done
 
 ##
+## Package is set by package.sh at top level,
+## or through the "-p" option in package_tests.sh
+##
+enforcenonzero package "${logfile}"
+
+##
 ## actually loaded package name
-## (this is mostly for netcdff/netcdf
+## (this is mostly for netcdff/netcdf)
 ##
 if [ -z "${loadpackage}" ] ; then
     export loadpackage=${package}
@@ -78,20 +91,23 @@ if [ "${mpi}" = "1" ] ; then
     mpiflag=-m
 fi
 
-##
-## set log file for the case where we run package_tests.sh by itself
-##
-if [ -z "${logfile}" ] ; then
-    export logdir=${package}_logs
-    echo "Logging to: ${logdir}"
+#
+# logfile is null in tacc/local_tests, but pass in package_tests
+#
+if [ -z "${logfile}" ] ; then 
+    logdir=${package}_logs
     mkdir -p ${logdir}
-    logfile=${logdir}/${package}.log
-else
+    logfile=${logdir}/full.log
+    rm -f ${logfile}
+    touch ${logfile}
     echo "Using logfile: ${logfile}"
+fi
+if [ ! -f "${logfile}" ] ; then 
+    echo "ERROR could not find logfile <<${logfile}>>" && exit 1
 fi
 
 if [ ! -z "${echo}" ] ; then
     echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
-	 >${logfile}
+	>>${logfile}
 fi
 

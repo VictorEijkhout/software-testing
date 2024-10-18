@@ -11,7 +11,7 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "core header" \
-		     -d lib libproj.so
+		     --dir lib libproj.so
 
 testlog="${logdir}/${source}.log"
 rm -f ${testlog} && touch ${testlog}

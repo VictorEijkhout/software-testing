@@ -21,4 +21,4 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "core header" \
-		     -d inc Eigen/Core
+		     --dir inc Eigen/Core

@@ -11,13 +11,13 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "header" \
-		     -d inc zlib.h
+		     --dir inc zlib.h
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "static library" \
-		     -d lib libz.a
+		     --dir lib libz.a
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "shared library" \
-		     -d lib libz.so
+		     --dir lib libz.so
 

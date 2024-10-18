@@ -7,20 +7,12 @@
 ##
 
 if [ -z "${package}" ] ; then
-    echo "You are calling the general tacc_tests.sh without setting package"
+    echo "You are calling ../tacc_tests.sh without setting package"
     exit 1
 fi
 if [ -z "${version}" ] ; then
     version=default
 fi
-
-logdir=${package}_logs
-fulllog=${logdir}/${version}.log
-shortlog=tacc_tests.log
-mkdir -p ${logdir}
-rm -f ${fulllog}
-touch ${fulllog}
-touch ${shortlog}
 
 module reset >/dev/null 2>&1
 module load cmake$( if [ ! -z ${cmakeversion} ] ; then echo "/${cmakeversion}" ; fi ) 2>/dev/null
@@ -49,7 +41,7 @@ fi
      ; fi \
  && echo "================" \
  && echo \
- ) | tee -a ${fulllog}
+ ) | tee -a ${logfile}
 
 #
 # loop through compiler names without slash
@@ -58,13 +50,15 @@ compilers="$( for c in $( cat ../compilers.sh ) ; do echo $c | tr -d '/' ; done 
 for compiler in $compilers ; do 
     
     configlog=${logdir}/${compiler}.log
+    rm -f ${configlog}
+    touch ${configlog}
 
     # split into name and version
     cname=${compiler%%[0-9]*}
     cversion=${compiler##*[a-z]}
     if [ ! -z "${matchcompiler}" ] ; then 
 	if [[ $compiler != *${matchcompiler}* ]] ; then
-	    echo "==== Skip compiler: $compiler" >>${fulllog}
+	    echo "==== Skip compiler: $compiler" >>${logfile}
 	    continue
 	fi
     fi
@@ -72,15 +66,15 @@ for compiler in $compilers ; do
     ##
     ## load compiler and mpi if needed
     ##
-    echo >>${fulllog}
-    retcode=0 && module load ${cname}/${cversion} >>${fulllog} 2>&1 || retcode=$?
+    echo >>${logfile}
+    retcode=0 && module load ${cname}/${cversion} >>${logfile} 2>&1 || retcode=$?
     if [ $retcode -eq 0 ] ; then 
 	## successful load needs to be visually offset
-	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${fulllog}
-	echo "Loaded compiler: ${cname}/${cversion}"  >>${fulllog}
+	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${logfile}
+	echo "Loaded compiler: ${cname}/${cversion}"  >>${logfile}
     else
-	# echo "==== Configuration: ${compiler}" | tee -a ${fulllog}
-	# echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${fulllog}
+	# echo "==== Configuration: ${compiler}" | tee -a ${logfile}
+	# echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${logfile}
 	continue
     fi
 
@@ -94,7 +88,7 @@ for compiler in $compilers ; do
 	    retcode=0
 	    module load openmpi >/dev/null 2>&1 || retcode=$?
 	    if [ $retcode -gt 0 ] ; then
-		echo "     No MPI available" | tee -a ${fulllog}
+		echo "     No MPI available" | tee -a ${logfile}
 		continue
 	    fi
 	fi
@@ -106,17 +100,17 @@ for compiler in $compilers ; do
     for m in ${modules} ; do
 	if [ $m = "mkl" ] ; then
 	    if [ "${TACC_SYSTEM}" = "vista" ] ; then
-		echo "Loading mkl substitute nvpl for vista system" >>${fulllog}
+		echo "Loading mkl substitute nvpl for vista system" >>${logfile}
 		module load nvpl
 	    elif [ $cname = "intel" ] ; then
-		echo "Ignoring mkl load for intel compiler" >>${fulllog}
+		echo "Ignoring mkl load for intel compiler" >>${logfile}
 		continue
 	    else
-		echo "Loading mkl" >>${fulllog}
+		echo "Loading mkl" >>${logfile}
 		module load mkl
 	    fi
 	else
-	    echo "Loading dependent module: $m" >>${fulllog}
+	    echo "Loading dependent module: $m" >>${logfile}
 	    module load $m >/dev/null 2>&1 || retcode=$?
 	    if [ $retcode -gt 0 ] ; then
 		echo "     WARNING failed to load dependent module <<$m>>"
@@ -130,9 +124,9 @@ for compiler in $compilers ; do
     if [ "${loadpackage}" != "none" ] ; then 
 	module load ${loadpackage}/${loadversion} >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -eq 0 ] ; then
-	    echo "Loaded package:  ${loadpackage}/${loadversion}" >>${fulllog}
+	    echo "Loaded package:  ${loadpackage}/${loadversion}" >>${logfile}
 	else 
-	    echo "     could not load ${loadpackage}/${loadversion}" >>${fulllog}
+	    echo "     could not load ${loadpackage}/${loadversion}" >>${logfile}
 	    continue
 	fi
     fi
@@ -140,16 +134,16 @@ for compiler in $compilers ; do
       echo "Running with modules: " \
 	  && echo "$( module -t list 2>&1 | sort | awk '{m=m FS $1} END {print m}' )" \
 	  && echo "----------------" \
-      ) | tee -a ${fulllog}
+      ) | tee -a ${logfile}
 
     cmdline="./${package}_tests.sh \
-      -e -P ${loadpackage} \
+      -p ${package} \
       ${mpiflag} ${runflag} ${p4pflag} ${xflag} \
       -l ${configlog}"
-    echo "cmdline=$cmdline" >>${fulllog}
+    echo "cmdline=$cmdline" >>${logfile}
     eval $cmdline
-    cat ${configlog} >>${fulllog} 
+    cat ${configlog} >>${logfile} 
 
-done | tee ${shortlog}
+done
 
-echo && echo "See: ${shortlog} and ${fulllog}" && echo
+echo && echo "See: ${logfile}" && echo

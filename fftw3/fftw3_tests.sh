@@ -18,11 +18,11 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "double precision header" \
-		     -d inc fftw3.h
+		     --dir inc fftw3.h
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "double precision library" \
-		     -d lib libfftw3.so
+		     --dir lib libfftw3.so
 
 ##
 ## single precision
@@ -31,11 +31,11 @@ source ../failure.sh
 # does not seem to be a separate header
 # ../existence_test.sh -p ${package} -l ${logfile} \
 # 		     --title "single precision header" \
-# 		     -d inc fftw3f.h
+# 		     --dir inc fftw3f.h
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "single precision library" \
-		     -d lib libfftw3f.so
+		     --dir lib libfftw3f.so
 
 ../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			--title "can we single precision" \
