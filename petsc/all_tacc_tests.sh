@@ -29,9 +29,9 @@ while [ $# -gt 0 ] ; do
 done
 
 for variant in \
-    "" debug complex i64 complexi64 complexsingle f08 single nohdf5 \
+    $( cat test_versions.txt ) \
     ; do
-    if [ -z "${variant}" ] ; then
+    if [ "${variant}" = "vanilla" ] ; then
         version=${base}
     else
         version=${base}-${variant}

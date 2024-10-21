@@ -25,7 +25,7 @@ done
 #
 fulllog=all_local_tests.log
 for variant in \
-    $( cat ../../Software/petsc/test_versions.txt ) \
+    $( cat test_versions.txt ) \
     ; do
     if [ "${variant}" = "vanilla" ] ; then
         version=${base}
