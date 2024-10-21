@@ -28,16 +28,16 @@ for compiler in $compilers ; do
     touch ${configlog}
 
     # split into name and version
-    name_and_version
+    compiler_name_and_version
 
     ##
     ## load local configuration
     ## which includes MPI
     ##
-    config=${cname}${cvers}
+    config=${cname}${cversion}
     envfile=${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
     if [ ! -f "${envfile}" ] ; then
-	echo "    undefined configuration for system <<${TACC_SYSTEM}>>" >>${logfile}
+	( echo && echo "==== Configuration: ${config} undefined for system ${TACC_SYSTEM}" ) | tee -a ${logfile}
 	continue
     else
 	( echo && echo "==== Configuration: ${config}" ) | tee -a ${logfile}

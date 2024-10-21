@@ -55,7 +55,7 @@ function argument () {
 # parse compiler name and version;
 # this is used in both tacc & local tests
 #
-function name_and_version () {
+function compiler_name_and_version () {
     cname=${compiler%%[0-9]*}
     cversion=${compiler##*[a-z]}
     if [ ! -z "${matchcompiler}" ] ; then 

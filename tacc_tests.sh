@@ -54,7 +54,7 @@ for compiler in $compilers ; do
     touch ${configlog}
 
     # split into name and version
-    name_and_version
+    compiler_name_and_version
 
     ##
     ## load compiler by version
