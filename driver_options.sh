@@ -1,8 +1,6 @@
 defaultp=$( pwd )
 defaultp=${defaultp##*/}
 
-source ../functions.sh
-
 function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] "
@@ -43,22 +41,25 @@ while [ $# -gt 1 ] ; do
     elif [ "$1" = "-d" ] ; then 
 	shift && modules="$1" && shift
     elif [ "$1" == "--dir" ] ; then 
-	shift && dir=$1 && shift
+	shift && dir=$( argument $1 ) && shift
     elif [ "$1" = "--in-build-run" ] ; then
 	shift && inbuildrun=1
     elif [ "$1" = "-m" ] ; then 
 	shift && mpi=1
 	#echo "MPI mode"
     elif [ "$1" = "-l" ] ; then 
-	shift && fulllog="$1" && shift
+	shift && fulllog="$( argument $1 )" && shift
+	if [ ! -f "${fulllog}" ] ; then 
+	    echo "WARNING full log <<${fulllog}>> does not exist"
+	fi
     elif [ "$1" = "-p" ] ; then 
-	shift && package="$1" && shift
+	shift && package="$( argument $1 )" && shift
     elif [ "$1" = "-r" ] ; then 
 	shift && run=
     elif [ "$1" = "-t" ] ; then 
 	shift && testvalue="$1" && shift
     elif [ "$1" = "--title" ] ; then
-	shift && testcaption="$1" && shift
+	shift && testcaption="$( argument $1 )" && shift
     elif [ "$1" = "-x" ] ; then 
 	shift && set -x && x="-x"
     else
@@ -100,5 +101,5 @@ if [ -z "${logdir}" ] ; then logdir="." ; fi
 if [ ! -d "${logdir}" ] ; then
     echo "INTERNAL ERROR null logdir in log: ${fulllog}" && exit 1
 fi
-testlog="${logdir}/${source}.log"
+testlog="${logdir}/$( echo ${source} | tr '/' '-' ).log"
 rm -rf ${testlog} && touch ${testlog}

@@ -8,7 +8,7 @@ echo "    [ -v baseversion (default: ${base}) ]"
 }
 
 set -x
-base=3.21
+base=$( make --no-print-directory version )
 compiler=
 runflag=
 trace=

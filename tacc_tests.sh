@@ -37,7 +37,7 @@ fi
      echo "==== Testing: ${package}/${version} from ${loadpackage}/${loadversion}" \
     ; fi \
  && if [ "${loadpackage}" != "none" ] ; then \
-     echo "==== available packages: $( module -t spider ${loadpackage}/${loadversion} 2>&1 )" \
+     echo "==== available configuations: $( module -t spider ${loadpackage}/${loadversion} 2>&1 )" \
      ; fi \
  && echo "================" \
  && echo \
@@ -54,17 +54,10 @@ for compiler in $compilers ; do
     touch ${configlog}
 
     # split into name and version
-    cname=${compiler%%[0-9]*}
-    cversion=${compiler##*[a-z]}
-    if [ ! -z "${matchcompiler}" ] ; then 
-	if [[ $compiler != *${matchcompiler}* ]] ; then
-	    echo "==== Skip compiler: $compiler" >>${logfile}
-	    continue
-	fi
-    fi
+    name_and_version
 
     ##
-    ## load compiler and mpi if needed
+    ## load compiler by version
     ##
     echo >>${logfile}
     retcode=0 && module load ${cname}/${cversion} >>${logfile} 2>&1 || retcode=$?
@@ -73,8 +66,7 @@ for compiler in $compilers ; do
 	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${logfile}
 	echo "Loaded compiler: ${cname}/${cversion}"  >>${logfile}
     else
-	# echo "==== Configuration: ${compiler}" | tee -a ${logfile}
-	# echo ".... can not load compiler ${cname}/${cversion}" | tee -a ${logfile}
+	echo "Failed to load compiler: ${cname}/${cversion}"  >>${logfile}
 	continue
     fi
 
@@ -97,51 +89,13 @@ for compiler in $compilers ; do
     ##
     ## Load prereq modules
     ##
-    for m in ${modules} ; do
-	if [ $m = "mkl" ] ; then
-	    if [ "${TACC_SYSTEM}" = "vista" ] ; then
-		echo "Loading mkl substitute nvpl for vista system" >>${logfile}
-		module load nvpl
-	    elif [ $cname = "intel" ] ; then
-		echo "Ignoring mkl load for intel compiler" >>${logfile}
-		continue
-	    else
-		echo "Loading mkl" >>${logfile}
-		module load mkl
-	    fi
-	else
-	    echo "Loading dependent module: $m" >>${logfile}
-	    module load $m >/dev/null 2>&1 || retcode=$?
-	    if [ $retcode -gt 0 ] ; then
-		echo "     WARNING failed to load dependent module <<$m>>"
-	    fi
-	fi
-    done
+    load_dependencies
 
+    ## 
+    ## load module (if there is one) and execute all tests
     ##
-    ## Load actual module and execute all tests
-    ##
-    if [ "${loadpackage}" != "none" ] ; then 
-	module load ${loadpackage}/${loadversion} >/dev/null 2>&1 || retcode=$?
-	if [ $retcode -eq 0 ] ; then
-	    echo "Loaded package:  ${loadpackage}/${loadversion}" >>${logfile}
-	else 
-	    echo "     could not load ${loadpackage}/${loadversion}" >>${logfile}
-	    continue
-	fi
-    fi
-    ( \
-      echo "Running with modules: " \
-	  && echo "$( module -t list 2>&1 | sort | awk '{m=m FS $1} END {print m}' )" \
-	  && echo "----------------" \
-      ) | tee -a ${logfile}
+    source ../load_and_test.sh
 
-    cmdline="./${package}_tests.sh \
-      -p ${package} \
-      ${mpiflag} ${runflag} ${p4pflag} ${xflag} \
-      -l ${configlog}"
-    echo "cmdline=$cmdline" >>${logfile}
-    eval $cmdline
     cat ${configlog} >>${logfile} 
 
 done

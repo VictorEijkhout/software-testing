@@ -129,14 +129,14 @@ if [ "${skipf}" != "1" ] ; then
                             ${p4pflag} \
 				--title "F90 vector insertion" \
 				vec.F90
-    else echo ".... skip f90 test"
+    else echo ".... skip f90 test" | tee -a ${logfile}
     fi
 
     if [[ "${PETSC_ARCH}" = *f08* ]] ; then 
 	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
 				--title "can we compile Fortran2008" \
 				fortran2008.F90
-    else echo ".... skip f08 test"
+    else echo ".... skip f08 test" | tee -a ${logfile}
     fi
 fi
 
@@ -144,7 +144,7 @@ fi
 ## Python tests
 ##
 if [ "${skippy}" != "1" ] ; then 
-    echo "Python language"
+    echo "Python language" | tee -a ${logfile}
 
     set -o pipefail
 
@@ -162,9 +162,10 @@ if [ "${skippy}" != "1" ] ; then
     retcode=0 && ( cd p && ibrun -n 2 python3 allreduce.py ) \
 	| grep -v TACC: || retcode=$?
     failure $retcode "python allreduce"
+else echo ".... skipping python tests" | tee -a ${logfile}
 fi
 
 if [ ! -z "${locallog}" ] ; then 
     echo && echo "See: ${logfile}" && echo
-fi
+fi | tee -a ${logfile}
 

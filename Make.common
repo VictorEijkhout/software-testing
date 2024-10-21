@@ -1,9 +1,17 @@
 # -*- makefile -*-
-.PHONY : info clean
+.PHONY : info 
 info ::
 	@echo "make test TEST=..."
 	@echo "    from tests: ${TESTS}"
 	@echo "make tests localtests"
+
+.PHONY: version
+version :
+	@if [ -f package.sh ] ; then \
+	  cat package.sh | grep "version=" | cut -d '=' -f 2 \
+	; else \
+	  echo "ERROR no package.sh found" \
+	; fi
 
 .PHONY: test tests localtests
 test :
@@ -18,6 +26,11 @@ test :
 	    ; fi \
 	    2>&1 | tee ${TEST}.log \
 	 && echo && echo "See: ${TEST}.log" && echo
+
+#
+# Clean
+#
+.PHONY : clean
 clean ::
 	@rm -f *.log
 

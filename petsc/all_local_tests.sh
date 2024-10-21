@@ -7,7 +7,7 @@ function usage () {
 echo "    [ -v baseversion (default: ${base}) ]"
 }
 
-base=3.21
+base=$( make --no-print-directory version )
 compiler=
 runflag=
 while [ $# -gt 0 ] ; do
@@ -22,6 +22,7 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
+fulllog=all_local_tests.log
 for variant in \
     "" debug complex i64 complexi64 complexsingle f08 single nohdf5 \
     ; do

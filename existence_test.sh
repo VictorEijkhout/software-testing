@@ -14,6 +14,9 @@ source ../failure.sh
 ##
 source=$1
 
+if [ ! -f "${testlog}" ] ; then 
+    echo "WARNING test log <<${testlog}>> does not exist in existencetest"
+fi
 echo "Testing existence of file <<$source>> in section <<${dir}>>" >>${testlog}
 print_test_caption "${testcaption}" "${testlog}"
 
