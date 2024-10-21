@@ -39,7 +39,7 @@ for variant in \
     echo "==== Testing version ${version}"
     if [ ! -z "${trace}" ] ; then 
 	./tacc_tests.sh -v ${version} \
-	    -4 ${runflag} \
+	    ${runflag} \
 	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
 	    | tee ${variant}_trace.log \
             | awk -v version=${version} '\

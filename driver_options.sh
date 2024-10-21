@@ -40,7 +40,7 @@ while [ $# -gt 1 ] ; do
 	shift && cmake="$1" && shift
     elif [ "$1" = "-d" ] ; then 
 	shift && modules="$1" && shift
-    elif [ "$1" == "--dir" ] ; then 
+    elif [ "$1" = "--dir" ] ; then 
 	shift && dir=$( argument $1 ) && shift
     elif [ "$1" = "--in-build-run" ] ; then
 	shift && inbuildrun=1
@@ -72,16 +72,21 @@ done
 ## makes it easier to see what causes an error
 ##
 if [ ! -z "${testcaption}" ] ; then
-    echo "---- Test: ${testcaption}" | tee -a ${fulllog}
+    print_test_caption "${testcaption}" "${fulllog}"
+    #echo "---- Test: ${testcaption}" | tee -a ${fulllog}
 fi
 
 ##
 ## the leftover argument is the program
 ## in case of existence test this can not be directly tested
 ##
-source=$1
-if [ -z "${source}" ] ; then 
-    echo "ERROR: no source file specified" && exit 1 ; fi
+if [ $# -gt 1 ] ; then 
+    echo "ERROR: unprocessed arguments more than just source: $*" && exit 1
+elif [ $# -lt 1 ] ; then 
+    echo "ERROR: no source file specified" && exit 1
+else 
+    source=$1
+fi
 executable=${source%%.*}
 extension=${source##*.}
 

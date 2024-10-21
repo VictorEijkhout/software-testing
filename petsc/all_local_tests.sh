@@ -21,19 +21,20 @@ while [ $# -gt 0 ] ; do
 	shift && base=$1 && shift
     fi
 done
-
+# "" debug complex i64 complexi64 complexsingle f08 single nohdf5 \
+#
 fulllog=all_local_tests.log
 for variant in \
-    "" debug complex i64 complexi64 complexsingle f08 single nohdf5 \
+    $( cat ../../Software/petsc/test_versions.txt ) \
     ; do
-    if [ -z "${variant}" ] ; then
+    if [ "${variant}" = "vanilla" ] ; then
         version=${base}
     else
         version=${base}-${variant}
     fi
     echo "==== Testing version ${version}"
     ./local_tests.sh -v ${version} \
-		    -4 ${runflag} \
+		    ${runflag} \
 		    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
         | awk -v version=${version} '\
         /Configuration/ { configuration=$3 } \
