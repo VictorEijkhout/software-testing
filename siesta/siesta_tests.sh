@@ -11,3 +11,4 @@ source ../failure.sh
 		     --title "have main program" \
 		     --dir bin siesta
 
+( cd data && siesta < input.fdf )
