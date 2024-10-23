@@ -7,7 +7,6 @@ function usage () {
 echo "    [ -v baseversion (default: ${base}) ]"
 }
 
-set -x
 base=$( make --no-print-directory version )
 compiler=
 runflag=
@@ -49,7 +48,7 @@ for variant in \
 	'
     else
 	./tacc_tests.sh -v ${version} \
-	    -4 ${runflag} \
+	    ${runflag} \
 	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
             | awk -v version=${version} '\
         /Configuration/ { configuration=$3 } \
