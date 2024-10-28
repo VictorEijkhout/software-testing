@@ -8,7 +8,7 @@
 function usage() {
     echo "Usage: $0 [ -m (use mpi) ] [ -p package ]  [ -v variant ] [ -x (set -x) ]"
     echo "    [ --cmake cmake options separated by commas ]"
-    echo "    program.c/cxx/F90" 
+    echo "    program.c/cxx/cu/F90" 
 }
 
 package=unknownpackage

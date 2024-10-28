@@ -4,13 +4,17 @@
 ## run tests, given a loaded compiler & petsc version
 ##
 
-package=petsc
-help_string="Run tests given loaded compiler and petsc version"
+source ./package.sh
 
 command_args=$*
-mpi=1
 python_option=1
 source ../options.sh
+
+if [ "${skipcu}" != "1" ] ; then
+    echo " .. skipping C / F / Py because of CUDA"
+    skipc=1 && skipf=1 && skippy=1
+fi
+
 if [ "${run}" != "1" ] ; then
     runflag=-r
 fi
@@ -26,13 +30,15 @@ fi
 echo "Invoking ${package} tests: ${command_args}" >> ${logfile}
 source ../failure.sh
 
+standardflags="${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile}"
+
 ##
 ## C tests
 ##
 if [ "${skipc}" != "1" ] ; then
     echo "C language"
 
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+    ../cmake_test_driver.sh ${standardflags} \
                             ${p4pflag} \
 			    --title "Sanity test" \
 			    sanity.c
@@ -138,6 +144,15 @@ if [ "${skipf}" != "1" ] ; then
 				fortran2008.F90
     else echo ".... skip f08 test" | tee -a ${logfile}
     fi
+fi
+
+##
+## CUDA tests
+##
+if [ "${skipcu}" != "1" ] ; then
+    ../cmake_test_driver.sh ${standardflags} \
+			    --title "cu example 47" \
+			    ex47cu.cu
 fi
 
 ##

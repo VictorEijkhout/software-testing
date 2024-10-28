@@ -9,8 +9,8 @@ function usage() {
     if [ ! -z "${help_string}" ] ; then
 	echo && echo ${help_string} && echo ; fi 
     echo "Usage: $0 [ -v version (default=${version}) ]"
-    echo "    [ -c compiler ] [ -l logfile ] "
-    echo "    [ -r (skip running) ] [ -4 (do 4py tests) ] "
+    echo "    [ -c compiler ] [ -l logfile ] [ -r (skip running) ] "
+    echo "    [ -4 (do 4py tests) ] [ -u (do cuda tests) ]"
     if [ "${python_option}" = "1" ] ; then
 	echo "    [ -p : python tests only ]"
     fi
@@ -31,6 +31,7 @@ logfile=
 matchcompiler=
 ## mpi= this is set in the tacc/local_tests.sh top level file
 run=1
+skipcu=1
 skippy=1
 python=
 
@@ -53,6 +54,8 @@ while [ $# -gt 0 ] ; do
        shift && loadpackage=$1 && shift
     elif [ "$1" = "-r" ] ; then
 	run=0 && runflag=-r && shift
+    elif [ "$1" = "-u" ] ; then
+	shift && skipcu=0 && cuflag=-u
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     elif [ "$1" = "-x" ] ; then
