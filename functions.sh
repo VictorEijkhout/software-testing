@@ -93,6 +93,49 @@ function load_dependencies () {
 }
 
 #
+# options for the build_sing.sh
+#
+function parse_build_options () {
+
+    if [ $# -eq 1 -a "$1" = "-h" ] ; then
+	build_usage && exit 0 
+    fi
+
+    cmd_args="$*"
+    while [ $# -gt 1 ] ; do
+	if [ $1 = "-p" ] ; then 
+	    shift && package=$1 && shift
+	elif [ $1 = "--cmake" ] ; then
+	    shift && cmake=$1 && shift
+	    echo "Cmake flags: ${cmake}"
+	elif [ $1 = "-m" ] ; then
+	    shift && mpi=1
+	elif [ $1 = "-v" ] ; then
+	    shift && variant=$1 && shift 
+	elif [ $1 = "-x" ] ; then
+	    shift && set -x
+	fi
+    done
+
+    if [ $# -eq 0 ] ; then
+	echo "Erroneous invocation: $0 ${cmd_args}"
+	build_usage && exit 1
+    fi
+
+    program=$1
+    base=${program%.*}
+    lang=${program#*.}
+    if [ "${variant}" = "default" ] ; then
+	variant=${lang}
+    fi
+
+    if [ ! -d "${variant}" ] ; then
+	echo "ERROR no language directory <<${variant}>>" && return 1
+    fi
+
+}
+
+#
 # compilers
 #
 function set_compilers () {
@@ -158,4 +201,22 @@ function run_executable () {
     fi | tee -a ${testlog}
     ( echo ">>>> runlog:" && cat ${runlog} && echo ".... runlog" ) >>${testlog}
 
+}
+
+function build_usage () {
+    echo "Usage: $0 [ -m moduleversion ] [ -p package ]  [ -v variant ] [ -x (set -x) ]"
+    if [ "${buildsystem}" = "cmake" ] ; then 
+	echo "    [ --cmake cmake options separated by commas ]"
+    fi
+    echo "    program.c/cxx/cu/F90" 
+}
+
+function build_final_report () {
+    if [ ${retcode} -ne 0 ] ; then 
+	echo
+	echo "    ERROR compilation failed program=${program} and ${package}/${v}"
+	echo
+	exit ${retcode}
+    fi
+    echo "    SUCCESS"
 }

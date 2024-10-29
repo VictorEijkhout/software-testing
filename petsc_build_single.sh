@@ -1,6 +1,6 @@
 #!/bin/bash
 
-buildsystem=make
+buildsystem=petsc
 source ../functions.sh
 
 ##
