@@ -150,9 +150,12 @@ fi
 ## CUDA tests
 ##
 if [ "${skipcu}" != "1" ] ; then
-    ../cmake_test_driver.sh ${standardflags} \
-			    --title "cu example 47" \
-			    ex47cu.cu
+    # ../cmake_test_driver.sh ${standardflags} \
+    # 			    --title "cu example 47" \
+    # 			    ex47cu.cu
+    ../make_test_driver.sh ${standardflags} \
+			   --title "cu example 47" \
+			   ex47cu.cu
 fi
 
 ##

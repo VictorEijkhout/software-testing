@@ -108,3 +108,12 @@ if [ ! -d "${logdir}" ] ; then
 fi
 testlog="${logdir}/$( echo ${source} | tr '/' '-' ).log"
 rm -rf ${testlog} && touch ${testlog}
+
+##
+## Info message
+##
+
+echo "Test: buildsystem=<<$buildsystem>>, build and run, source=$source" >>${testlog}
+echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
+     >>${testlog}
+
