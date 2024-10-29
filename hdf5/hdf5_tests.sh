@@ -4,23 +4,30 @@
 ## run tests, given a loaded compiler
 ##
 
-package=$(pwd) && package=${package##*/}
+source ./package.sh
 
+command_args=$*
 source ../options.sh
+
+set_flags
+
 source ../failure.sh
 
-../cmake_test_driver.sh -l ${logfile} ${runflag} \
+##
+## Tests
+##
+../cmake_test_driver.sh ${standardflags} \
 			--title "can we compile C" \
 			has.c
 
-../cmake_test_driver.sh -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "can we run C" \
 			dataset.c
 
-../cmake_test_driver.sh -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "can we compile C++" \
 			hasx.cxx
 
-../cmake_test_driver.sh -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "can we compile Fortran" \
 			fmod.F90

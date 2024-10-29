@@ -14,7 +14,8 @@ variant="default"
 cmake=
 mpi=
 
-parse_build_options
+cmd_args="$*"
+parse_build_options $*
 
 echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null

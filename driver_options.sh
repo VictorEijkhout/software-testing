@@ -1,3 +1,5 @@
+cmd_args=$*
+
 defaultp=$( pwd )
 defaultp=${defaultp##*/}
 
@@ -14,7 +16,6 @@ function usage() {
     echo "    program.{c.F90}"
 }
 
-## echo "Invocation: $*"
 if [ $# -eq 0 -o $1 = "-h" ] ; then 
     usage && exit 0
 fi
@@ -74,6 +75,13 @@ done
 if [ ! -z "${testcaption}" ] ; then
     print_test_caption "${testcaption}" "${fulllog}"
     #echo "---- Test: ${testcaption}" | tee -a ${fulllog}
+fi
+
+##
+## we need a package argument
+##
+if [ "${package}" = "unknown" ] ; then 
+    echo "ERROR erroneous invocation: $0 ${cmd_args}" && exit 1
 fi
 
 ##

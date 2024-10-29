@@ -114,3 +114,21 @@ if [ ! -z "${echo}" ] ; then
 	>>${logfile}
 fi
 
+function set_flags () {
+    if [ "${run}" != "1" ] ; then
+	runflag=-r
+    fi
+
+    if [ ! -z "${mpi}" ] ; then
+	mpiflag=-m
+    fi
+
+    if [ -z "${logfile}" ] ; then
+	locallog=1
+	logfile=${package}.log
+    fi
+    # command_args have been set in the calling environment
+    echo "Invoking ${package} tests: ${command_args}" >> ${logfile}
+    standardflags="${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile}"
+
+}

@@ -101,8 +101,8 @@ function parse_build_options () {
 	build_usage && exit 0 
     fi
 
-    cmd_args="$*"
     while [ $# -gt 1 ] ; do
+	echo " .. parse option <<$1>>"
 	if [ $1 = "-p" ] ; then 
 	    shift && package=$1 && shift
 	elif [ $1 = "--cmake" ] ; then
@@ -114,6 +114,8 @@ function parse_build_options () {
 	    shift && variant=$1 && shift 
 	elif [ $1 = "-x" ] ; then
 	    shift && set -x
+	else
+	    echo "ERROR unknown option <<$1>>" && exit 1
 	fi
     done
 

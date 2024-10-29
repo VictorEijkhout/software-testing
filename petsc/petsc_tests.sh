@@ -10,27 +10,13 @@ command_args=$*
 python_option=1
 source ../options.sh
 
+set_flags
 if [ "${skipcu}" != "1" ] ; then
     echo " .. skipping C / F / Py because of CUDA"
     skipc=1 && skipf=1 && skippy=1
 fi
 
-if [ "${run}" != "1" ] ; then
-    runflag=-r
-fi
-
-if [ ! -z "${mpi}" ] ; then
-    mpiflag=-m
-fi
-
-if [ -z "${logfile}" ] ; then
-    locallog=1
-    logfile=${package}.log
-fi
-echo "Invoking ${package} tests: ${command_args}" >> ${logfile}
 source ../failure.sh
-
-standardflags="${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile}"
 
 ##
 ## C tests
