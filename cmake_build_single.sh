@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ../functions.sh
+
 ##
 ## Test a program C/F given externally loaded compiler/mpi
 ## the output of this script is caught externally by cmake_test_driver.sh
@@ -13,12 +15,15 @@ function usage() {
 
 package=unknownpackage
 moduleversion="unknownversion"
+variant="default"
 cmake=
 mpi=
-variant="default"
+
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
     usage && exit 0 
 fi
+
+cmd_args="$*"
 while [ $# -gt 1 ] ; do
     if [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
@@ -35,6 +40,7 @@ while [ $# -gt 1 ] ; do
 done
 
 if [ $# -eq 0 ] ; then
+    echo "Erroneous invocation: $0 ${cmd_args}"
     usage && exit 1
 fi
 
@@ -52,28 +58,7 @@ fi
 echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null
 
-if [ ! -z "${mpi}" ] ; then 
-    export CC=mpicc
-    export FC=mpif90
-    export CXX=mpicxx
-elif [ ! -z "${TACC_CCC}" ] ; then 
-    export CC=${TACC_CC}
-    export CXX=${TACC_CXX}
-    export FC=${TACC_FC}
-else
-    case ${TACC_FAMILY_COMPILER} in
-	( gcc ) export CC=gcc && export CXX=g++ && export FC=gfortran ;;
-	( intel ) v=${TACC_FAMILY_COMPILER_VERSION}
-	          v=${v%%.*}
-	          if [ ${v} -gt 20 ] ; then
-	            export CC=icx && export CXX=icpx && export FC=ifx 
-	          else 
-	            export CC=icc && export CXX=icpc && export FC=ifort 
-                  fi ;; 
-	( nvidia ) export CC=nvc && export CXX=nvc++ && export FC=nvfortran ;;
-	( * ) echo "ERROR unhandled compiler family: <<${TACC_FAMILY_COMPILER}>>" && exit 1 ;; 
-    esac
-fi
+set_compilers
 echo "Using cmake: $( cmake --version | head -n 1 ) with CC=${CC}, CXX=${CXX}, FC=${FC}"
 
 retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \

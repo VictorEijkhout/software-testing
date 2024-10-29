@@ -93,6 +93,40 @@ function load_dependencies () {
 }
 
 #
+# compilers
+#
+function set_compilers () {
+    if [ ! -z "${mpi}" ] ; then 
+	export CC=mpicc
+	export FC=mpif90
+	export CXX=mpicxx
+    elif [ ! -z "${TACC_CCC}" ] ; then 
+	export CC=${TACC_CC}
+	export CXX=${TACC_CXX}
+	export FC=${TACC_FC}
+    else
+	case ${TACC_FAMILY_COMPILER} in
+	    ( gcc ) export CC=gcc && export CXX=g++ && export FC=gfortran ;;
+	    ( intel ) v=${TACC_FAMILY_COMPILER_VERSION}
+	    v=${v%%.*}
+	    if [ ${v} -gt 20 ] ; then
+	        export CC=icx && export CXX=icpx && export FC=ifx 
+	    else 
+	        export CC=icc && export CXX=icpc && export FC=ifort 
+            fi ;; 
+	    ( nvidia ) export CC=nvc && export CXX=nvc++ && export FC=nvfortran ;;
+	    ( * ) echo "ERROR unhandled compiler family: <<${TACC_FAMILY_COMPILER}>>" && exit 1 ;; 
+	esac
+    fi
+    case ${lang} in
+	( c ) export compiler=${CC} ;;
+	( cu ) export compiler=${CC} ;;
+	( cxx ) export compiler=${CXX} ;;
+	( F90 ) export compiler=${FC} ;;
+    esac
+}    
+
+#
 # run
 #
 function run_executable () {

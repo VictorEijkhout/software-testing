@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ../functions.sh
+
 ##
 ## Test a program C/F given externally loaded compiler/mpi
 ## the output of this script is caught externally by make_test_driver.sh
@@ -7,20 +9,24 @@
 
 function usage() {
     echo "Usage: $0 [ -m moduleversion ] [ -p package ]  [ -v variant ] [ -x (set -x) ]"
-    echo "    program.c/cxx/F90" 
+    echo "    program.c/cxx/cu/F90" 
 }
 
 package=unknownpackage
 moduleversion="unknownversion"
 variant="default"
+mpi=
+
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
     usage && exit 0 
 fi
+
+cmd_args="$*"
 while [ $# -gt 1 ] ; do
     if [ $1 = "-p" ] ; then 
 	shift && package=$1 && shift
     elif [ $1 = "-m" ] ; then
-	shift && moduleversion=$1 && shift 
+	shift && mpi=1
     elif [ $1 = "-v" ] ; then
 	shift && variant=$1 && shift 
     elif [ $1 = "-x" ] ; then
@@ -29,6 +35,7 @@ while [ $# -gt 1 ] ; do
 done
 
 if [ $# -eq 0 ] ; then
+    echo "Erroneous invocation: $0 ${cmd_args}"
     usage && exit 1
 fi
 
@@ -46,16 +53,8 @@ fi
 echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null
 
-compiler=
-case "${lang}" in 
-    ( c ) compiler=${TACC_CC} ;;
-    ( cxx ) compiler=${TACC_CXX} ;;
-    ( F90 ) compiler=${TACC_FC} ;;
-esac
-if [ -z "${compiler}" ] ; then
-    echo "ERROR could not set compiler for extension <<${lang}>>"
-    exit 1
-fi
+set_compilers
+
 incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
 eval incpath=\${${incpath}}
 cmdline="${compiler} -o ${base} ../${lang}/${base}.${lang} -I${incpath}"
