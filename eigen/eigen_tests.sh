@@ -4,17 +4,21 @@
 ## run tests, given a loaded environment
 ##
 
-package=$(pwd) && package=${package##*/}
-
+source ./package.sh
+command_args=$*
 source ../options.sh
 source ../failure.sh
+set_flags
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+##
+## Tests
+##
+../cmake_test_driver.sh ${standardflags} \
 			--title "compile and run with pkgconfig" \
 			-t "package" \
 			has.cxx 
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "compile and run with find_package" \
 			-t "module" \
 			has.cpp
