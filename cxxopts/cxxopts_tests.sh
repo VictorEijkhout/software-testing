@@ -4,15 +4,17 @@
 ## run tests, given a loaded compiler
 ##
 
-package=$(pwd) && package=${package##*/}
-
+source ./package.sh
+command_args=$*
 source ../options.sh
 source ../failure.sh
+set_flags
 
-##echo "Test if we can compile and run"
-retcode=0
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
-			--title "if we can compile and run" \
+##
+## Tests
+##
+../cmake_test_driver.sh ${standardflags} \
+			--title "can we compile and run" \
 			has.cxx 
 
 if [ "${logfile}" = "compile.log" ] ; then
