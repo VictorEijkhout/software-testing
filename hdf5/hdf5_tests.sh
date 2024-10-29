@@ -5,13 +5,10 @@
 ##
 
 source ./package.sh
-
 command_args=$*
 source ../options.sh
-
-set_flags
-
 source ../failure.sh
+set_flags
 
 ##
 ## Tests

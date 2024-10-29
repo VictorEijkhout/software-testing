@@ -1,7 +1,5 @@
 #!/bin/bash
 
-package=adios2
-version=2.9.1
-
+source ./package.sh
 source ../options.sh
 source ../local_tests.sh

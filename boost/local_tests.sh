@@ -1,7 +1,5 @@
 #!/bin/bash
 
-package=boost
-version=1.86.0
-
+source ./package.sh
 source ../options.sh
 source ../local_tests.sh

@@ -4,24 +4,25 @@
 ## run tests, given a loaded compiler
 ##
 
-package=$(pwd) && package=${package##*/}
-
+source ./package.sh
+command_args=$*
 source ../options.sh
 source ../failure.sh
+set_flags
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "can we compile and run" \
 			has.cpp
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "file system" \
 			system.cpp
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "graph viz" \
 			graphviz.cpp
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "log" \
 			log.cpp
 

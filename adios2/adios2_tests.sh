@@ -4,11 +4,18 @@
 ## run tests, given a loaded environment
 ##
 
-package=$(pwd) && package=${package##*/}
+source ./package.sh
 
+command_args=$*
 source ../options.sh
+
+set_flags
+
 source ../failure.sh
 
+##
+## Tests
+##
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "header" \
 		     --dir inc adios2.h

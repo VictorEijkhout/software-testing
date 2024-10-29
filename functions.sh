@@ -102,7 +102,7 @@ function parse_build_options () {
     fi
 
     while [ $# -gt 1 ] ; do
-	echo " .. parse option <<$1>>"
+	#echo " .. parse option <<$1>>"
 	if [ $1 = "-p" ] ; then 
 	    shift && package=$1 && shift
 	elif [ $1 = "--cmake" ] ; then
