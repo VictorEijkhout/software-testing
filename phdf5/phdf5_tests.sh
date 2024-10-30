@@ -5,17 +5,22 @@
 ##
 
 source ./package.sh
+command_args=$*
 source ../options.sh
 source ../failure.sh
+set_flags
 
-../cmake_test_driver.sh -m -p ${package} -l ${logfile} ${runflag} \
+##
+## Tests
+##
+../cmake_test_driver.sh ${standardflags} \
 			--title "can we compile C" \
 			has.c
 
-../cmake_test_driver.sh -m -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "can we compile Fortran" \
 			fmod.F90
 
-../cmake_test_driver.sh -m -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} \
 			--title "Fortran 2008 compatibility" \
 			ph5example.F90
