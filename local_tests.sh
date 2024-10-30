@@ -21,6 +21,7 @@ touch ${shortlog}
 # loop through compiler names without slash
 #
 compilers="$( for c in $( cat ../compilers.sh ) ; do echo $c | tr -d '/' ; done )"
+failed=
 for compiler in $compilers ; do 
     
     configlog=${logdir}/${compiler}.log
@@ -37,10 +38,15 @@ for compiler in $compilers ; do
     config=${cname}${cversion}
     envfile=${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
     if [ ! -f "${envfile}" ] ; then
-	( echo && echo "==== Configuration: ${config} undefined for system ${TACC_SYSTEM}" ) | tee -a ${logfile}
+	if [ -z "${failed}" ] ; then 
+	    echo | tee -a ${logfile}
+	fi
+	echo "==== Configuration: ${config} undefined for system ${TACC_SYSTEM}" | tee -a ${logfile}
+	failed=1
 	continue
     else
 	( echo && echo "==== Configuration: ${config}" ) | tee -a ${logfile}
+	failed=
     fi
     source ${envfile}  >/dev/null 2>&1
 
