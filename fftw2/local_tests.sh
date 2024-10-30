@@ -1,13 +1,5 @@
 #!/bin/bash
 
-package=fftw2
-version=2.1.5
-
-##
-## test all programs for this package,
-## looping over locally available modules
-##
-
+source ./package.sh
 source ../options.sh
-
 source ../local_tests.sh

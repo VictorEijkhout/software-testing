@@ -4,13 +4,16 @@
 ## run tests, given a loaded compiler
 ##
 
-package=$(pwd) && package=${package##*/}
-
+source ./package.sh
+command_args=$*
 source ../options.sh
 source ../failure.sh
+set_flags
 
-## echo "--- Test if we can compile and run"
-../make_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+##
+## Tests
+##
+../make_test_driver.sh ${standardflags} \
 		       --title "compile and run" \
 		       has.c 
 
