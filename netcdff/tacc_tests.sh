@@ -7,14 +7,9 @@
 ####
 ################################################################
 
-package=netcdffortran
-version=4.6.1
-modules=
+source ./package.sh
 loadpackage=netcdf
 loadversion=4.9.2
-# why 3.29? Frontera needs the rpath fix
-cmakeversion=3.24
-
 source ../options.sh
 source ../tacc_tests.sh
 

@@ -54,7 +54,9 @@ for compiler in $compilers ; do
     touch ${configlog}
 
     # split into name and version
+    found=1
     compiler_name_and_version
+    if [ $found -eq 0 ] ; then continue ; fi
 
     ##
     ## load compiler by version
