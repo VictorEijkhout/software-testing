@@ -5,7 +5,7 @@ enable_language( Fortran )
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.F90 )
 
 find_package( PkgConfig REQUIRED )
-pkg_check_modules( NETCDF REQUIRED netcdff )
+pkg_check_modules( NETCDF REQUIRED netcdf-fortran )
 
 target_include_directories(
         ${PROJECTNAME} PUBLIC
