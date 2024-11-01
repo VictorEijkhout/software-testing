@@ -86,6 +86,9 @@ fi
 if [ "${package}" = "unknown" ] ; then 
     echo "ERROR erroneous invocation: $0 ${cmd_args}" && exit 1
 fi
+if [ "${loadpackage}" = "unknown" ] ; then 
+    export loadpackage=${package}
+fi
 
 ##
 ## the leftover argument is the program
