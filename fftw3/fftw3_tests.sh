@@ -25,7 +25,7 @@ set_flags
 		     --title "double precision header" \
 		     --dir inc fftw3.h
 
-../existence_test.sh -p ${package} -l ${logfile} \
+../existence_test.sh ${standardflags} \
 		     --title "double precision library" \
 		     --dir lib libfftw3.so
 

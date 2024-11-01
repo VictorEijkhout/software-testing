@@ -21,6 +21,7 @@ if [ $# -eq 0 -o $1 = "-h" ] ; then
 fi
 
 package=unknown
+loadpackage=unknown
 cmake=
 dir=dir
 fulllog=
@@ -55,6 +56,8 @@ while [ $# -gt 1 ] ; do
 	fi
     elif [ "$1" = "-p" ] ; then 
 	shift && package="$( argument $1 )" && shift
+    elif [ "$1" = "-P" ] ; then 
+	shift && loadpackage="$( argument $1 )" && shift
     elif [ "$1" = "-r" ] ; then 
 	shift && run=
     elif [ "$1" = "-t" ] ; then 
