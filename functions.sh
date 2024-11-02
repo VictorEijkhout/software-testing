@@ -61,7 +61,7 @@ function compiler_name_and_version () {
     if [ ! -z "${matchcompiler}" ] ; then 
 	if [[ $compiler != *${matchcompiler}* ]] ; then
 	    echo "==== Skip compiler: $compiler" >>${logfile}
-	    continue
+	    found=0
 	fi
     fi
 }
@@ -84,6 +84,7 @@ function load_dependencies () {
 	    fi
 	else
 	    echo "Loading dependent module: $m" >>${logfile}
+	    retcode=0
 	    module load $m >/dev/null 2>&1 || retcode=$?
 	    if [ $retcode -gt 0 ] ; then
 		echo "     WARNING failed to load dependent module <<$m>>"

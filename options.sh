@@ -129,6 +129,6 @@ function set_flags () {
     fi
     # command_args have been set in the calling environment
     echo "Invoking ${package} tests: ${command_args}" >> ${logfile}
-    standardflags="${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile}"
+    standardflags="${mpiflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -l ${logfile}"
 
 }

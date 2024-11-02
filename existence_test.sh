@@ -19,7 +19,7 @@ if [ ! -f "${testlog}" ] ; then
 fi
 echo "Testing existence of file <<$source>> in section <<${dir}>>" >>${testlog}
 
-pathmacro=TACC_$( echo ${package} | tr a-z A-Z )_$( echo ${dir} | tr a-z A-Z )
+pathmacro=TACC_$( echo ${loadpackage} | tr a-z A-Z )_$( echo ${dir} | tr a-z A-Z )
 echo "path macro=${pathmacro}" >>${testlog}
 eval export fullpath=\${${pathmacro}}
 echo "full path=${fullpath}"   >>${testlog}
