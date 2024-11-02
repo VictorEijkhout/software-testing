@@ -5,7 +5,7 @@ enable_language( Fortran )
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.F90 )
 
-find_package( MPI )
+find_package( MPI REQUIRED COMPONENTS Fortran )
 ## find_package( PkgConfig REQUIRED )
 ## pkg_check_modules( HDF REQUIRED hdf5 )
 ## message( STATUS "Hdf5 includes: ${HDF_INCLUDE_DIRS}" )
