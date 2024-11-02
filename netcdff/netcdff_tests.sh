@@ -26,6 +26,19 @@ set_flags
 		     --title "config program" \
 		     --dir bin nf-config
 
+print_test_caption "nf-config libs option" "${logfile}"
+export libline=$( nf-config | grep flibs | sed -e 's/^ *//' | sed -e 's/[ \t]+/ /g' )
+echo "nf-config libline: <<$libline>>" >>${logfile}
+export libdir=$( echo ${libline} | awk '{print $3}' | sed -e 's/-L//' )
+echo "libdir: <<${libdir}>>" >>${logfile}
+if [ ! -d ${libdir} ] ; then
+    failure 1 "find nf-config lib dir <<${libdir}>>"
+fi
+nlibs=$( ls ${libdir}/.so 2>/dev/null | wc -l )
+if [ $nlibs -eq 0 ] ; then
+    failure 1 "find libs in libdir <<${libdir}>>"
+fi
+
 if [ "${logfile}" = "compile.log" ] ; then
     echo "See: ${logfile}"
 fi
