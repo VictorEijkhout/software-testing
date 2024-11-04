@@ -27,9 +27,9 @@ set_flags
 		     --dir bin nf-config
 
 print_test_caption "nf-config libs option" "${logfile}"
-export libline=$( nf-config | grep flibs | sed -e 's/^ *//' | sed -e 's/[ \t]+/ /g' )
+export libline=$( nf-config --flibs | sed -e 's/^ *//' | sed -e 's/[ \t]+/ /g' )
 echo "nf-config libline: <<$libline>>" >>${logfile}
-export libdir=$( echo ${libline} | awk '{print $3}' | sed -e 's/-L//' )
+export libdir=$( echo ${libline} | awk '{print $1}' | sed -e 's/-L//' )
 echo "libdir: <<${libdir}>>" >>${logfile}
 if [ ! -d ${libdir} ] ; then
     failure 1 "find nf-config lib dir <<${libdir}>>"
