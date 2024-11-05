@@ -23,12 +23,16 @@ set_compilers
 
 incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
 eval incpath=\${${incpath}}
-cmdline="${compiler} -o ${base} ../${lang}/${base}.${lang} -I${incpath}"
+srcfile=../${lang}/${base}.${lang}
+## cmdline="${compiler} -o ${base} ${srcfile} -I${incpath}"
+cp ${srcfile} .
+cmdline="make --no-print-directory -f ../cu/makefile ${base}"
 echo "cmdline=${cmdline}"
 retcode=0
 eval ${cmdline} || retcode=$?
 
 build_final_report
 
+# leave build directory
 popd >/dev/null
 
