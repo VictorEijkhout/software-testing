@@ -13,6 +13,10 @@ source ../failure.sh
 			--title "severly insufficient compile test" \
 			sanity.c
 
+../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+			--title "compile create_open" \
+			create_open.c
+
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "C header" \
 		     --dir inc pnetcdf.h
