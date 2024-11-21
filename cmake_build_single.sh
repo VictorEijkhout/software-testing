@@ -23,10 +23,12 @@ rm -rf build && mkdir build && pushd build >/dev/null
 set_compilers
 echo "Using cmake: $( cmake --version | head -n 1 ) with CC=${CC}, CXX=${CXX}, FC=${FC}"
 
-retcode=0 && cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
+cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} \
-    $( if [ ! -z "${cmake}" ] ; then echo ${cmake} | tr ',' ' ' ; fi ) \
-    ../${variant} || retcode=$?
+    $( if [ ! -z ${cmake} ] ; then echo ${cmake} | tr ',' ' ' ; fi ) \
+    ../${variant}"
+echo "cmake cmdline: ${cmdline}"
+retcode=0 && eval $cmdline || retcode=$?
 if [ ${retcode} -ne 0 ] ; then 
     echo
     echo "    ERROR CMake failed program=${program} and ${package}/${v}; exit ${retcode}"
