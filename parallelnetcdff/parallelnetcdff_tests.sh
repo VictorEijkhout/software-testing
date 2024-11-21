@@ -11,10 +11,5 @@ source ../failure.sh
 set_flags
 
 ../cmake_test_driver.sh ${standardflags} \
-			--title "can we compile parallel C" \
-			parallel_vara.c
-
-../existence_test.sh -p ${package} -l ${logfile} \
-		     --title "config program" \
-		     --dir bin nc-config
-
+			--title "can we compile parallel F" \
+			simple_xy_par.F90

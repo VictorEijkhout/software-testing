@@ -4,13 +4,12 @@
 ## run tests, given a loaded compiler
 ##
 
-package=$(pwd) && package=${package##*/}
-
+source ./package.sh
+command_args=$*
 source ../options.sh
 source ../failure.sh
+set_flags
 
-##echo "Test if we can compile"
-retcode=0
 ../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
 			--title "if we can compile" \
 			sanity.c
