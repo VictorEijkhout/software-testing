@@ -13,3 +13,7 @@ source ../failure.sh
 			--in-build-run \
 			--title "can we compile and run" \
 			ex0.cpp
+
+../ldd_test.sh -p ${loadpackage} -l ${logfile} ${runflag} \
+	       --title "ldd on libmfem.so" \
+	       libmfem.so 
