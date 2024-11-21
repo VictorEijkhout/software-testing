@@ -3,20 +3,19 @@ project( ${PROJECTNAME} VERSION 1.0 )
 enable_language( Fortran )
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.F90 )
-## target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )
 
 find_package( MPI REQUIRED )
 
 target_include_directories(
 	${PROJECTNAME} PUBLIC 
-	${MPI_C_INCLUDE_DIRS}
+	${MPI_Fortran_INCLUDE_DIRS}
 	)
 target_link_directories(
 	${PROJECTNAME} PUBLIC 
 	)
 target_link_libraries(
 	${PROJECTNAME} PUBLIC
-	${MPI_C_LIBRARIES} 
+	${MPI_Fortran_LIBRARIES} 
 	)
 
 if( "${USEHDF5}" STREQUAL "ON" ) 

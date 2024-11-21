@@ -11,5 +11,5 @@ source ../failure.sh
 set_flags
 
 ../cmake_test_driver.sh ${standardflags} \
-			--title "can we compile parallel C" \
-			parallel_vara.c
+			--title "can we compile parallel F" \
+			simple_xy_par.F90
