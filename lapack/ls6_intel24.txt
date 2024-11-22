@@ -1,0 +1,11 @@
+[staff lapack:1047] find /scratch/projects/compilers/intel24.1/ -name lapack\*.mod
+/scratch/projects/compilers/intel24.1/oneapi/mkl/2024.1/include/mkl/ia32/lapack95.mod
+/scratch/projects/compilers/intel24.1/oneapi/mkl/2024.1/include/mkl/intel64/ilp64/lapack95.mod
+/scratch/projects/compilers/intel24.1/oneapi/mkl/2024.1/include/mkl/intel64/lp64/lapack95.mod
+/scratch/projects/compilers/intel24.1/oneapi/2024.1/include/mkl/ia32/lapack95.mod
+/scratch/projects/compilers/intel24.1/oneapi/2024.1/include/mkl/intel64/ilp64/lapack95.mod
+/scratch/projects/compilers/intel24.1/oneapi/2024.1/include/mkl/intel64/lp64/lapack95.mod
+
+fix by
+
+export CPATH=${CPATH}:/scratch/projects/compilers/intel24.1/oneapi/2024.1/include/mkl/intel64/ilp64
