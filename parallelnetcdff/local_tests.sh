@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source ./package.sh
-## local installation has separate C & F modules
-modules=parallelnetcdf
+loadpackage=parallel-netcdff
+loadversion=4.6.1
 source ../options.sh
 source ../local_tests.sh

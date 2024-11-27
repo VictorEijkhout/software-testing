@@ -20,6 +20,6 @@ target_link_directories(
 	${NETCDF_LIBRARY_DIRS}
 	)
 target_link_libraries(
-        ${PROJECTNAME} PUBLIC netcdf )
+        ${PROJECTNAME} PUBLIC ${NETCDF_Libraries} )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )

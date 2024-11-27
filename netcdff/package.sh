@@ -1,3 +1,9 @@
+################################################################
+####
+#### Package definition for sequential netcdf, Fortran version
+####
+################################################################
+
 package=netcdff
 version=4.6.1
 modules=netcdf/4.9.2
