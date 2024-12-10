@@ -4,16 +4,20 @@
 ## run tests, given a loaded compiler
 ##
 
-package=$(pwd) && package=${package##*/}
-
+source ./package.sh
+command_args=$*
 source ../options.sh
 source ../failure.sh
+set_flags
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
-			--in-build-run \
-			--title "can we compile and run" \
-			ex0.cpp
+##
+## Tests
+##
+../existence_test.sh -p ${package} -l ${logfile} \
+		     --title "header" \
+		     --dir inc mpfr.h
 
-../ldd_test.sh -p ${loadpackage} -l ${logfile} ${runflag} \
-	       --title "ldd on libmfem.so" \
-	       libmfem.so 
+../existence_test.sh -p ${package} -l ${logfile} \
+		     --title "lib" \
+		     --dir lib libmpfr.so
+
