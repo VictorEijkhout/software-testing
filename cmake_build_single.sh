@@ -22,6 +22,8 @@ rm -rf build && mkdir build && pushd build >/dev/null
 
 set_compilers
 echo "Using cmake: $( cmake --version | head -n 1 ) with CC=${CC}, CXX=${CXX}, FC=${FC}"
+echo " .. with PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
+echo " .. with CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
 
 cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} \
