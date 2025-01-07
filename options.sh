@@ -53,7 +53,7 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-P" ] ; then
        shift && loadpackage=$1 && shift
     elif [ "$1" = "-r" ] ; then
-	run=0 && runflag=-r && shift
+	run= && runflag=-r && shift
     elif [ "$1" = "-u" ] ; then
 	shift && skipcu=0 && cuflag=-u
     elif [ "$1" = "-v" ] ; then
