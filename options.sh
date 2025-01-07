@@ -63,9 +63,6 @@ while [ $# -gt 0 ] ; do
 	set -x && xflag=-x && shift 
     elif [ "$1" = "-4" ] ; then
 	p4pflag=-4 && skippy=0 && shift
-    # elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
-    # 	# echo "(including python tests)"
-    # 	python=1 && shift
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
