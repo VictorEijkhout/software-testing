@@ -31,7 +31,7 @@ logfile=
 matchcompiler=
 ## mpi= this is set in the tacc/local_tests.sh top level file
 run=1
-skipcu=1
+skipcuda=1
 skippy=1
 python=
 
@@ -55,7 +55,8 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-r" ] ; then
 	run=0 && runflag=-r && shift
     elif [ "$1" = "-u" ] ; then
-	shift && skipcu=0 && cuflag=-u
+	echo " .. including CUDA tests"
+	shift && skipcuda=0 && cudaflag=-u
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     elif [ "$1" = "-x" ] ; then
@@ -114,6 +115,7 @@ if [ ! -z "${echo}" ] ; then
 	>>${logfile}
 fi
 
+export standardflags
 function set_flags () {
     if [ "${run}" != "1" ] ; then
 	runflag=-r
@@ -129,6 +131,6 @@ function set_flags () {
     fi
     # command_args have been set in the calling environment
     echo "Invoking ${package} tests: ${command_args}" >> ${logfile}
-    standardflags="${mpiflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -l ${logfile}"
-
+    standardflags="${mpiflag} ${cudaflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -l ${logfile}"
+    echo " .. running with standardflags=<<${standardflags}>>"
 }
