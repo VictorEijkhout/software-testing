@@ -11,7 +11,7 @@ python_option=1
 source ../options.sh
 
 set_flags
-if [ "${skipcu}" != "1" ] ; then
+if [ "${skipcuda}" != "1" ] ; then
     echo " .. skipping C / F / Py because of CUDA"
     skipc=1 && skipf=1 && skippy=1
 fi
@@ -135,10 +135,11 @@ fi
 ##
 ## CUDA tests
 ##
-if [ "${skipcu}" != "1" ] ; then
-    # ../cmake_test_driver.sh ${standardflags} \
-    # 			    --title "cu example 47" \
-    # 			    ex47cu.cu
+if [ "${skipcuda}" != "1" ] ; then
+    echo "CUDA language"
+    ../cmake_test_driver.sh ${standardflags} \
+			    --title "cu example 47" \
+			    ex47cu.cu
     ../petsc_test_driver.sh ${standardflags} \
 			   --title "cu example 47" \
 			   ex47cu.cu
