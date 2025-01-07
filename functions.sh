@@ -45,7 +45,7 @@ function print_test_caption() {
 }
 
 function argument () {
-    case $1 in 
+    case "$1" in 
 	( -* ) echo "WARNING option argument <<$1> start with hyphen" ;;
     esac
     echo $*
@@ -91,6 +91,10 @@ function load_dependencies () {
 	    fi
 	fi
     done
+    if [ ! -z "${docuda}" ] ; then
+	echo "Loading CUDA" >>${logfile}
+	module load cuda
+    fi
 }
 
 #
@@ -121,7 +125,7 @@ function parse_build_options () {
     done
 
     if [ $# -eq 0 ] ; then
-	echo "Erroneous invocation: $0 ${cmd_args}"
+	echo "Source file missing from invocation: $0 ${cmd_args}"
 	build_usage && exit 1
     fi
 

@@ -5,18 +5,16 @@
 ##
 
 source ./package.sh
-
 command_args=$*
 python_option=1
 source ../options.sh
-
+source ../failure.sh
 set_flags
-if [ "${skipcuda}" != "1" ] ; then
+if [ ! -z "${docuda}" ] ; then
     echo " .. skipping C / F / Py because of CUDA"
     skipc=1 && skipf=1 && skippy=1
 fi
 
-source ../failure.sh
 
 ##
 ## C tests
@@ -135,20 +133,11 @@ fi
 ##
 ## CUDA tests
 ##
-if [ "${skipcuda}" != "1" ] ; then
+if [ ! -z "${docuda}" ] ; then
     echo "CUDA language"
-    ../cmake_test_driver.sh ${standardflags} \
-			    --title "cu example 47" \
-			    ex47cu.cu
     ../petsc_test_driver.sh ${standardflags} \
 			   --title "cu example 47" \
 			   ex47cu.cu
-    # PETSC_CUCOMPILE_SINGLE  = ${CUDAC} -o $*.o -c $(MPICXX_INCLUDES) ${CUDAC_FLAGS} ${CUDAFLAGS} ${CUDAC_HOSTFLAGS} ${CUDACPPFLAGS} --compiler-options="${CXXCPPFLAGS}"
-    # generated compile line:
-    # nvcc -o ex47cu.o -c -I/opt/apps/nvidia24/openmpi/5.0.5_nvc249/include  -ccbin mpicxx -std=c++20 -Xcompiler -fPIC -Xcompiler -fvisibility=hidden -Xcompiler -fvisibility=hidden -g -lineinfo -arch=sm_70      --compiler-options="-I/work/00434/eijkhout/petsc/installation-petsc-3.22.0-vista-nvidia24.9-openmpi5.0.5_nvc249-3.22.0-cuda/3.22.0-cuda/include -I/home1/apps/nvidia/Linux_aarch64/24.9/cuda/include -I/home1/apps/nvidia/Linux_aarch64/24.9/math_libs/include   " ex47cu.cu
-    # mpicc -O2 -fPIC   -Wl,-export-dynamic ex47cu.o  -Wl,-rpath,/work/00434/eijkhout/petsc/installation-petsc-3.22.0-vista-nvidia24.9-openmpi5.0.5_nvc249-3.22.0-cuda/3.22.0-cuda/lib -L/work/00434/eijkhout/petsc/installation-petsc-3.22.0-vista-nvidia24.9-openmpi5.0.5_nvc249-3.22.0-cuda/3.22.0-cuda/lib -Wl,-rpath,/home1/apps/nvidia/Linux_aarch64/24.7/math_libs/nvpl/lib -L/home1/apps/nvidia/Linux_aarch64/24.7/math_libs/nvpl/lib -Wl,-rpath,/work/00434/eijkhout/petsc/installation-petsc-3.22.0-vista-nvidia24.9-openmpi5.0.5_nvc249-3.22.0-cuda/3.22.0-cuda/lib -L/work/00434/eijkhout/petsc/installation-petsc-3.22.0-vista-nvidia24.9-openmpi5.0.5_nvc249-3.22.0-cuda/3.22.0-cuda/lib -Wl,-rpath,/home1/apps/nvidia/Linux_aarch64/24.9/math_libs/lib64 -L/home1/apps/nvidia/Linux_aarch64/24.9/math_libs/lib64 -Wl,-rpath,/home1/apps/nvidia/Linux_aarch64/24.9/cuda/lib64 -L/home1/apps/nvidia/Linux_aarch64/24.9/cuda/lib64 -L/home1/apps/nvidia/Linux_aarch64/24.9/cuda/lib64/stubs -lpetsc -lnvpl_lapack_lp64_seq -lnvpl_lapack_core -lnvpl_blas_lp64_seq -lnvpl_blas_core -lchaco -lcufft -lcublas -lcusparse -lcusolver -lcurand -lcudart -lnvToolsExt -lcuda -lX11 -lstdc++ -o ex47cu
-
-    
 fi
 
 ##

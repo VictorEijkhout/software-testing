@@ -1,7 +1,7 @@
 cmake_minimum_required( VERSION 3.20 )
 project( ${PROJECTNAME} VERSION 1.0 )
 
-add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
+add_executable( ${PROJECTNAME} ${PROJECTNAME}.cxx )
 
 target_include_directories(
   ${PROJECTNAME} PUBLIC
@@ -10,12 +10,10 @@ target_include_directories(
 
 # it's silo5 on s3 & vista
 # and now it's siloh5 on s3...
-#
-# libstdc++ was added for ls6. always needed for C?
-#
 target_link_libraries(
   ${PROJECTNAME} PUBLIC
-  ${SILO_LIB}/libsiloh5.so libstdc++.so libm.so
+  ##  ${SILO_LIB}/libsilo5.so libm.so
+  ${SILO_LIB}/libsiloh5.so libm.so
 )
 
 find_package( PkgConfig REQUIRED )

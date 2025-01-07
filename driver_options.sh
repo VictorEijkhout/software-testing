@@ -27,6 +27,7 @@ dir=dir
 fulllog=
 inbuildrun=
 mpi=
+docuda=
 modules=
 noibrun=
 run=1
@@ -34,6 +35,7 @@ testcaption=
 testvalue=
 x=
 while [ $# -gt 1 ] ; do
+    #echo "option: <<$1>>"
     if [ "$1" = "-h" ] ; then
 	usage && exit 0
     elif [ "$1" = "-b" ] ; then
@@ -48,7 +50,6 @@ while [ $# -gt 1 ] ; do
 	shift && inbuildrun=1
     elif [ "$1" = "-m" ] ; then 
 	shift && mpi=1
-	#echo "MPI mode"
     elif [ "$1" = "-l" ] ; then 
 	shift && fulllog="$( argument $1 )" && shift
 	if [ ! -f "${fulllog}" ] ; then 
@@ -64,10 +65,12 @@ while [ $# -gt 1 ] ; do
 	shift && testvalue="$1" && shift
     elif [ "$1" = "--title" ] ; then
 	shift && testcaption="$( argument $1 )" && shift
+    elif [ "$1" = "-u" ] ; then
+	shift && docuda=1
     elif [ "$1" = "-x" ] ; then 
 	shift && set -x && x="-x"
     else
-	break
+	echo "Unknown option <<$1>>" && break
     fi
 done
 
@@ -84,7 +87,7 @@ fi
 ## we need a package argument
 ##
 if [ "${package}" = "unknown" ] ; then 
-    echo "ERROR erroneous invocation: $0 ${cmd_args}" && exit 1
+    echo "ERROR package unknown in invocation: $0 ${cmd_args}" && exit 1
 fi
 if [ "${loadpackage}" = "unknown" ] ; then 
     export loadpackage=${package}
