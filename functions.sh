@@ -91,6 +91,10 @@ function load_dependencies () {
 	    fi
 	fi
     done
+    if [ ! -z "${docuda}" ] ; then
+	echo "Loading CUDA" >>${logfile}
+	module load cuda
+    fi
 }
 
 #
