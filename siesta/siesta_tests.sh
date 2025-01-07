@@ -11,4 +11,6 @@ source ../failure.sh
 		     --title "have main program" \
 		     --dir bin siesta
 
-( cd data/work && siesta < ../input.fdf )
+if [ ! -z "${run}" ] ; then
+    ( cd data/work && siesta < ../input.fdf )
+fi
