@@ -31,6 +31,7 @@ logfile=
 matchcompiler=
 ## mpi= this is set in the tacc/local_tests.sh top level file
 run=1
+docuda=
 skipcu=1
 skippy=1
 python=
@@ -55,16 +56,13 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-r" ] ; then
 	run= && runflag=-r && shift
     elif [ "$1" = "-u" ] ; then
-	shift && skipcu=0 && cuflag=-u
+	shift && docuda=1 && skipcu=0 && cudaflag=-u
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     elif [ "$1" = "-x" ] ; then
 	set -x && xflag=-x && shift 
     elif [ "$1" = "-4" ] ; then
 	p4pflag=-4 && skippy=0 && shift
-    # elif [ "${python_option}" = "1" -a "$1" = "-p" ] ; then
-    # 	# echo "(including python tests)"
-    # 	python=1 && shift
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
@@ -129,6 +127,6 @@ function set_flags () {
     fi
     # command_args have been set in the calling environment
     echo "Invoking ${package} tests: ${command_args}" >> ${logfile}
-    standardflags="${mpiflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -l ${logfile}"
+    standardflags="${mpiflag} ${cudaflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -l ${logfile}"
 
 }
