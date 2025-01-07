@@ -23,8 +23,9 @@ fi
     ) | tee -a ${logfile}
 
 cmdline="./${package}_tests.sh \
-      -p ${package} -P ${loadpackage} \
-      ${mpiflag} ${runflag} ${p4pflag} ${xflag} \
-      -l ${configlog}"
+      ${standardflags} \
+      "
+      ## -p ${package} -P ${loadpackage} \
+      ##      ${mpiflag} ${runflag} ${p4pflag} ${xflag} -l ${configlog}"
 echo "cmdline=$cmdline" >>${logfile}
 eval $cmdline
