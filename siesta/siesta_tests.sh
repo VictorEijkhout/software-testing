@@ -12,5 +12,9 @@ source ../failure.sh
 		     --dir bin siesta
 
 if [ ! -z "${run}" ] ; then
-    ( cd data/work && siesta < ../input.fdf )
+    runtimeerror=
+    ( cd data/work && siesta < ../input.fdf >/dev/null 2>&1 ) || runtimeerror=1
+    if [ ! -z "${runtimeerror}" ] ; then
+	echo "ERROR runtime error"
+    fi
 fi
