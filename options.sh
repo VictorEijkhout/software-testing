@@ -107,10 +107,8 @@ if [ ! -f "${logfile}" ] ; then
     echo "ERROR could not find logfile <<${logfile}>>" && exit 1
 fi
 
-if [ ! -z "${echo}" ] ; then
-    echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
-	>>${logfile}
-fi
+echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
+     >>${logfile}
 
 export standardflags
 function set_flags () {
