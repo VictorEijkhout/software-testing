@@ -4,7 +4,7 @@
 #### This file is part of the `pylauncher' package
 #### for parametric job launching
 ####
-#### Copyright Victor Eijkhout 2010-2022
+#### Copyright Victor Eijkhout 2010-2025
 #### eijkhout@tacc.utexas.edu
 ####
 #### https://github.com/TACC/pylauncher
@@ -19,8 +19,11 @@ import pylauncher
 ## spawn a bunch of MPI parallel jobs, with a core count
 ## that is constant, specified here.
 ##
-print( f"IbrunLauncher run on pylauncher version {pylauncher.pylauncher_version}" )
+example="ibrun"
+print( f"Script: ${example}_launcher\n .. running: IbrunLauncher" )
+print( " .. input: parallellines\n" )
+
 pylauncher.IbrunLauncher\
     ("parallellines",cores=3,
-     workdir=f"pylauncher_tmp_ibrun",
+     workdir=f"pylauncher_tmp_${example}_{ os.environ['SLURM_JOBID'] }",
      debug="job+host+task+exec")

@@ -77,8 +77,9 @@ script :
 	        -e "s/MINUTES/${MINUTES}/" \
 	        -e "/####/d" \
 	        > $${generated}
+#PYTHONPATH=../src/pylauncher:${PYTHONPATH}
 submit :
-	PYTHONPATH=../src/pylauncher:${PYTHONPATH} sbatch jobscript_generated
+	sbatch jobscript_generated
 
 example_shifted_ibrun_dependencies = parallel
 
