@@ -62,12 +62,14 @@ script :
 	      NAME=${EXECUTABLE##example_} && NAME=$${NAME%%_*} \
 	       && EXECUTABLE=${EXECUTABLE} \
 	    ; fi \
-	 && case $$( hostname ) in \
-	      ( *vista* )     QUEUE=gg          ;; \
-	      ( *stampede3* ) QUEUE=skx-dev     ;; \
-	      ( *ls6* )       QUEUE=normal      ;; \
-	      ( * )           QUEUE=development ;; \
+	 && if [ -z "${QUEUE}" ] ; then \
+	      case $$( hostname ) in \
+	        ( *vista* )     QUEUE=gg          ;; \
+	        ( *stampede3* ) QUEUE=skx-dev     ;; \
+	        ( *ls6* )       QUEUE=normal      ;; \
+	        ( * )           QUEUE=development ;; \
 	    esac \
+	    ; else QUEUE=${QUEUE} ; fi \
 	 && cat $${template} | sed -e "s/SSH/${SSH}/" -e "s/RUN/${RUN}/" \
 	        -e "s/EXECUTABLE/$${EXECUTABLE}/" -e "s/NODES/${NODES}/" \
 	        -e "s/NAME/$${NAME}/" \
