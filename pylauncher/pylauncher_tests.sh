@@ -1,5 +1,20 @@
 #!/bin/bash
 
+examples="classic comma ibrun node"
+if [ "$1" = "-h" ] ; then
+    echo "Usage: $0 [ -h ] [ -e ex1,ex2,ex3,... ]"
+    echo " where examples: ${examples}"
+    exit 0
+fi
+
+while [ $# -gt 0 ] ; do
+    if [ "$1" = "-e" ] ; then
+	shift && examples=$1 && shift
+    else
+	echo "Unknown option: $1" && exit 1
+    fi
+done
+
 QUEUE_frontera=small # 2 nodes
 QUEUE_ls6=normal
 QUEUE_stampede3=skx
@@ -15,7 +30,7 @@ echo "Using ${cores_per_node} cores per node"
 
 make clean 
 # 
-for e in classic comma ibrun node ; do 
+for e in $( echo ${examples} | tr ',' ' ' ) ; do 
     echo "Running example: $e"
     make --no-print-directory script submit \
 	 NAME=${e} \

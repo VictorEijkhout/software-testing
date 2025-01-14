@@ -11,6 +11,7 @@
 ####
 ################################################################
 
+import os
 import pylauncher
 
 ##
@@ -18,12 +19,12 @@ import pylauncher
 ##
 
 example="core"
-print( f"Script: ${example}_launcher\n .. running: ClassicLauncher" )
+print( f"Script: {example}_launcher\n .. running: ClassicLauncher" )
 print( " .. input: commandlines\n" )
 
 pylauncher.ClassicLauncher
     ("commandlines",
      cores=11,
-     workdir=f"pylauncher_tmp_${example}_{ os.environ['SLURM_JOBID'] }",
+     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
      debug="job+host+exec",
      )

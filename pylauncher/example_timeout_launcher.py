@@ -19,13 +19,13 @@ import pylauncher as launcher
 ##
 
 example="timeout"
-print( f"Script: ${example}_launcher\n  running: ClassicLauncher" )
+print( f"Script: {example}_launcher\n  running: ClassicLauncher" )
 print( " .. input: commandlines\n" )
 
 launcher.ClassicLauncher\
     ("commandlines",
      # optional spec of output dir:
-     workdir=f"pylauncher_tmp_${example}_{ os.environ['SLURM_JOBID'] }",
+     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
      queuestate="queuestate314",
      debug="host+exec+job")
 

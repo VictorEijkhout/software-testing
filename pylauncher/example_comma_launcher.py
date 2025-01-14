@@ -25,5 +25,5 @@ print( " .. input: commalines\n" )
 pylauncher.ClassicLauncher\
     ("commalines",
      # optional spec of output dir:
-     workdir=f"pylauncher_tmp_${example}_{ os.environ['SLURM_JOBID'] }",
+     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
      debug="host+exec+task+job")

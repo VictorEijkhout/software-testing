@@ -19,12 +19,11 @@ import pylauncher
 ##
 
 example="node"
-print( f"Script: ${example}_launcher\n .. running: ClassicLauncher" )
+print( f"Script: {example}_launcher\n .. running: ClassicLauncher" )
 print( " .. input: corelines\n" )
 
 pylauncher.ClassicLauncher\
     ("corelines",
-     # optional spec of output dir:
-     workdir=f"pylauncher_tmp_${example}_{ os.environ['SLURM_JOBID'] }",
+     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
      cores="node",
      debug="host+exec+task+job")

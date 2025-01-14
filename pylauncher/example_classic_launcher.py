@@ -19,11 +19,17 @@ import pylauncher
 ##
 
 example="classic"
-print( f"Script: ${example}_launcher\n .. running: ClassicLauncher" )
+print( f"Script: {example}_launcher\n .. running: ClassicLauncher" )
 print( " .. input: commandlines\n" )
 
+with open("commandlines", 'r') as file1:
+    content = file1.read()
+commandlinefile = f"commandlines_{example}"
+with open( commandlinefile, 'w') as file2:
+    file2.write( content.replace("_output",f"_output_{example}") )
+
 pylauncher.ClassicLauncher\
-    ("commandlines",
+    ( commandlinefile,
      # optional spec of output dir:
-     workdir=f"pylauncher_tmp_${example}_{ os.environ['SLURM_JOBID'] }",
+     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
      debug="host+exec+job")

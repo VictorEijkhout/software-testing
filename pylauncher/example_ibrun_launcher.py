@@ -13,6 +13,7 @@
 ####
 ################################################################
 
+import os
 import pylauncher 
 
 ##
@@ -20,10 +21,10 @@ import pylauncher
 ## that is constant, specified here.
 ##
 example="ibrun"
-print( f"Script: ${example}_launcher\n .. running: IbrunLauncher" )
+print( f"Script: {example}_launcher\n .. running: IbrunLauncher" )
 print( " .. input: parallellines\n" )
 
 pylauncher.IbrunLauncher\
     ("parallellines",cores=3,
-     workdir=f"pylauncher_tmp_${example}_{ os.environ['SLURM_JOBID'] }",
+     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
      debug="job+host+task+exec")
