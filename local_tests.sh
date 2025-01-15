@@ -60,24 +60,8 @@ for compiler in $compilers ; do
     ## 
     ## load module (if there is one) and execute all tests
     ##
-    if [ "${loadpackage}" != "mpi" ] ; then 
-	echo "Loading package:  ${loadpackage}/${version}" >>${logfile}
-	retcode=0
-	module load ${loadpackage}/${version} >/dev/null 2>&1 || retcode=$?
-	if [ $retcode -gt 0 ] ; then
-	    echo "     could not load ${loadpackage}/${version}" | tee -a ${logfile}
-	    echo "Currently loaded: $( module -t list 2>&1 ) " >>${logfile}
-	    continue
-	fi
-    fi
-    echo "Running with modules: $( module -t list 2>&1 )" >>${logfile}
+    source ../load_and_test.sh
 
-    cmdline="./${package}_tests.sh \
-      -p ${package} \
-      ${mpiflag} ${cudaflag} ${runflag} ${p4pflag} ${xflag} \
-	-l ${configlog}"
-    echo "cmdline=$cmdline" >>${logfile}
-    eval $cmdline
     cat ${configlog} >>${logfile} 
 
 done
