@@ -13,6 +13,7 @@ set_flags
 cd c
 make clean RM_F="rm -f"
 rm -f *.x *.o *~
+set -x
 make 00obj_basic.o TEST_BINS=00obj_basic.x \
     ENABLE_VERBOSE=yes RM_F="rm -f" CC=${TACC_CC} \
     BLIS_INSTALL_PATH=${TACC_BLIS_DIR} \
