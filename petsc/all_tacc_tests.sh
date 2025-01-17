@@ -9,6 +9,7 @@ echo "    [ -v baseversion (default: ${base}) ]"
 
 base=$( make --no-print-directory version )
 compiler=
+docuda=
 runflag=
 trace=
 while [ $# -gt 0 ] ; do
@@ -18,6 +19,8 @@ while [ $# -gt 0 ] ; do
 	shift && compiler=$1 && shift
     elif [ $1 = "-r" ] ; then
 	shift && runflag=-r
+    elif [ $1 = "-u" ] ; then
+	shift && docuda=1
     elif [ $1 = "-t" ] ; then
 	shift && trace=1
     elif [ $1 = "-v" ] ; then
@@ -40,8 +43,9 @@ for variant in \
 	./tacc_tests.sh -v ${version} \
 	    ${runflag} \
 	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
-	    | tee ${variant}_trace.log \
-            | awk -v version=${version} '\
+	    $( if [ ! -z "${docuda}" ] ; then echo "-u" ; fi ) \
+	  | tee ${variant}_trace.log \
+          | awk -v version=${version} '\
         /Configuration/ { configuration=$3 } \
 	/^---- / { $1="" ; test=$0 } \
 	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
@@ -49,8 +53,9 @@ for variant in \
     else
 	./tacc_tests.sh -v ${version} \
 	    ${runflag} \
+	    $( if [ ! -z "${docuda}" ] ; then echo "-u" ; fi ) \
 	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
-            | awk -v version=${version} '\
+          | awk -v version=${version} '\
         /Configuration/ { configuration=$3 } \
 	/^---- / { $1="" ; test=$0 } \
 	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
