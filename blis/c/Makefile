@@ -56,8 +56,6 @@
 # - DIST_PATH is assumed to not exist if BLIS_INSTALL_PATH is given.
 # - We must use recursively expanded assignment for LIB_PATH and INC_PATH in
 #   the second case because CONFIG_NAME is not yet set.
-$(info install path)
-$(info $(BLIS_INSTALL_PATH))
 ifneq ($(strip $(BLIS_INSTALL_PATH)),)
 LIB_PATH   := $(BLIS_INSTALL_PATH)/lib
 INC_PATH   := $(BLIS_INSTALL_PATH)/include/blis
@@ -88,9 +86,7 @@ endif
 #
 
 # Include the common makefile fragment.
-$(info before shared path $(SHARE_PATH))
 include $(SHARE_PATH)/common.mk
-$(info after)
 
 
 #

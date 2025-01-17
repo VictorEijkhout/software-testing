@@ -25,19 +25,19 @@ set_flags
 		     --title "shared lib" \
 		     --dir lib libblis.so
 
-exit 0
 ##
 ## this needs to be cleaned up; also the tests fail
 ##
 cd c
-make clean RM_F="rm -f"
+make clean \
+    BLIS_INSTALL_PATH=${TACC_BLIS_DIR}
 rm -f *.x *.o *~
 set -x
 make 00obj_basic.o TEST_BINS=00obj_basic.x \
-    ENABLE_VERBOSE=yes RM_F="rm -f" CC=${TACC_CC} \
+    ENABLE_VERBOSE=yes CC=${TACC_CC} \
     BLIS_INSTALL_PATH=${TACC_BLIS_DIR} \
     LIBBLIS_LINK="-L${TACC_BLIS_LIB} -lblis"
 make 00obj_basic.x TEST_BINS=00obj_basic.x \
-    ENABLE_VERBOSE=yes RM_F="rm -f" CC=${TACC_CC} \
+    ENABLE_VERBOSE=yes CC=${TACC_CC} \
     BLIS_INSTALL_PATH=${TACC_BLIS_DIR} \
     LIBBLIS_LINK="-L${TACC_BLIS_LIB} -lblis"
