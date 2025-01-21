@@ -20,10 +20,10 @@ source ../failure.sh
 		     --title "header" \
 		     --dir inc adios2.h
 
-## the bin variable is not set
-# ../existence_test.sh -p ${package} -l ${logfile} \
-# 		     --title "config program" \
-# 		     --dir bin adios2-config
+../existence_test.sh -p ${package} -l ${logfile} \
+		     --title "config program" \
+		     --dir bin adios2-config
 
-
-
+../cmake_test_driver.sh ${standardflags} \
+			--title "can we compile and run" \
+			valuesWrite.cpp 
