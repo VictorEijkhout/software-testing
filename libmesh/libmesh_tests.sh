@@ -16,6 +16,7 @@ set_flags
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "header in libmesh subdir" \
 		     --dir inc libmesh/libmesh.h
+
 ../cmake_test_driver.sh ${standardflags} \
 			--title "compile ex1" \
 			introduction_ex1.cxx
