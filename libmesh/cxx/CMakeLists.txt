@@ -9,6 +9,9 @@ pkg_check_modules( LIBMESH REQUIRED libmesh )
 message( STATUS "Libmesh includes: ${LIBMESH_INCLUDE_DIRS}" )
 message( STATUS "Libmesh library dirs: ${LIBMESH_LIBRARY_DIRS}" )
 message( STATUS "Libmesh libraries: ${LIBMESH_LIBRARIES}" )
+# other dependencies
+pkg_check_modules( HDF REQUIRED hdf5 )
+pkg_check_modules( PETSC REQUIRED petsc )
 
 target_include_directories(
         ${PROJECTNAME} PUBLIC
@@ -16,12 +19,18 @@ target_include_directories(
 	)
 
 target_link_directories(
-    ${PROJECTNAME} PUBLIC ${LIBMESH_LIBRARY_DIRS} )
+  ${PROJECTNAME} PUBLIC
+  ${LIBMESH_LIBRARY_DIRS}
+  ${HDF_LIBRARY_DIRS}
+  ${PETSC_LIBRARY_DIRS}
+  )
 
 target_link_libraries(
-        ${PROJECTNAME} PUBLIC
-        ${LIBMESH_LIBRARIES}
-	)
+  ${PROJECTNAME} PUBLIC
+  ${LIBMESH_LIBRARIES}
+  ${HDF_LIBRARIES}
+  ${PETSC_LIBRARIES}
+  )
 	  
 add_custom_command(
   TARGET ${PROJECTNAME}
