@@ -16,6 +16,8 @@ target_include_directories(
 set( BLA_VENDOR "Intel10_64lp_seq" )
 find_package( BLAS REQUIRED )      
 
+find_package( OpenMP )
+
 # set( MKL_ARCH "intel64" )
 # set( MKL_THREADING "sequential" )
 # set( MKL_INTERFACE "lp64" )
@@ -25,13 +27,17 @@ find_package( BLAS REQUIRED )
 
 target_compile_options(
         ${PROJECTNAME} PUBLIC
-        $<TARGET_PROPERTY:MKL::MKL,INTERFACE_COMPILE_OPTIONS> )
+        $<TARGET_PROPERTY:MKL::MKL,INTERFACE_COMPILE_OPTIONS>
+	)
 target_include_directories(
         ${PROJECTNAME} PUBLIC
-        $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES> )
+        $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES>
+	)
 target_link_libraries(
         ${PROJECTNAME} PUBLIC
-        $<LINK_ONLY:MKL::MKL>)
+        $<LINK_ONLY:MKL::MKL>
+	OpenMP::OpenMP_C
+	)
 
 ## find_package( OpenMP REQUIRED )
 

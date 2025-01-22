@@ -12,6 +12,7 @@ message( STATUS "Libmesh libraries: ${LIBMESH_LIBRARIES}" )
 # other dependencies
 pkg_check_modules( HDF REQUIRED hdf5 )
 pkg_check_modules( PETSC REQUIRED petsc )
+find_package( OpenMP )
 
 target_include_directories(
         ${PROJECTNAME} PUBLIC
@@ -30,6 +31,7 @@ target_link_libraries(
   ${LIBMESH_LIBRARIES}
   ${HDF_LIBRARIES}
   ${PETSC_LIBRARIES}
+  OpenMP::OpenMP_CXX
   )
 	  
 add_custom_command(
