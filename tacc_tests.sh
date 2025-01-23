@@ -65,7 +65,7 @@ for compiler in $compilers ; do
     ## load compiler by version
     ##
     echo >>${logfile}
-    retcode=0 && module load ${cname}/${cversion} >>${logfile} 2>&1 || retcode=$?
+    retcode=0 && module -t load ${cname}/${cversion} >>${logfile} 2>&1 || retcode=$?
     if [ $retcode -eq 0 ] ; then 
 	## successful load needs to be visually offset
 	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${logfile}

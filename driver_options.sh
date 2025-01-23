@@ -30,6 +30,7 @@ mpi=
 docuda=
 modules=
 noibrun=
+pkgconfig=
 run=1
 testcaption=
 testvalue=
@@ -59,6 +60,8 @@ while [ $# -gt 1 ] ; do
 	shift && package="$( argument $1 )" && shift
     elif [ "$1" = "-P" ] ; then 
 	shift && loadpackage="$( argument $1 )" && shift
+    elif [ "$1" = "--pkg-config" ] ; then
+	shift && pkgconfig="$1" && shift
     elif [ "$1" = "-r" ] ; then 
 	shift && run=
     elif [ "$1" = "-t" ] ; then 
@@ -81,6 +84,8 @@ done
 if [ ! -z "${testcaption}" ] ; then
     print_test_caption "${testcaption}" "${fulllog}"
     #echo "---- Test: ${testcaption}" | tee -a ${fulllog}
+else 
+    print_test_caption "Test:" "${fulllog}"
 fi
 
 ##
@@ -131,6 +136,14 @@ rm -rf ${testlog} && touch ${testlog}
 ##
 
 echo "Test: buildsystem=<<$buildsystem>>, build and run, source=$source" >>${testlog}
-echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
+echo " .. log=$testlog mpi=$mpi run=$run version=$version" \
      >>${testlog}
 
+if [ ! -z "${pkgconfig}" ] ; then 
+    for p in ${pkgconfig} ; do 
+	echo " .. pkg config dir for ${p}: $( echo ${PKG_CONFIG_PATH} | tr ':' '\n' | grep ${p} )" \
+	    >>${testlog}
+	echo " .. has: $( echo ${PKG_CONFIG_PATH} | tr ':' '\n' | grep ${p} | xargs ls )" \
+	    >>${testlog}
+    done
+fi
