@@ -9,9 +9,10 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "have main program" \
-		     --dir bin siesta
+		     --ldd --dir bin siesta
 
 if [ ! -z "${run}" ] ; then
+    ../run_test.sh --dir bin siesta
     runtimeerror=
     ( cd data/work && siesta < ../input.fdf >/dev/null 2>&1 ) || runtimeerror=1
     if [ ! -z "${runtimeerror}" ] ; then

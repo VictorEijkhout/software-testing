@@ -12,11 +12,12 @@ function usage() {
 	echo "    [ --cmake cmake options separated by commas ]"
     fi
     echo "    [ --in-build-run ]"
+    echo "    [ --ldd ]"
     echo "    [ --title test caption ]"
     echo "    program.{c.F90}"
 }
 
-if [ $# -eq 0 -o $1 = "-h" ] ; then 
+if [ $# -eq 0 -o "$1" = "-h" ] ; then 
     usage && exit 0
 fi
 
@@ -28,6 +29,7 @@ fulllog=
 inbuildrun=
 mpi=
 docuda=
+ldd=
 modules=
 noibrun=
 pkgconfig=
@@ -49,6 +51,8 @@ while [ $# -gt 1 ] ; do
 	shift && dir=$( argument $1 ) && shift
     elif [ "$1" = "--in-build-run" ] ; then
 	shift && inbuildrun=1
+    elif [ "$1" = "--ldd" ] ; then
+	shift && ldd=1
     elif [ "$1" = "-m" ] ; then 
 	shift && mpi=1
     elif [ "$1" = "-l" ] ; then 

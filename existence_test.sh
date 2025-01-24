@@ -17,22 +17,27 @@ source=$1
 if [ ! -f "${testlog}" ] ; then 
     echo "WARNING test log <<${testlog}>> does not exist in existencetest"
 fi
-echo "Testing existence of file <<$source>> in section <<${dir}>>" >>${testlog}
+echo "Testing existence of file <<$source>> in section <<${dir}>>" >>"${testlog}"
 
 pathmacro=TACC_$( echo ${loadpackage} | tr a-z A-Z )_$( echo ${dir} | tr a-z A-Z )
-echo "path macro=${pathmacro}" >>${testlog}
+echo "path macro=${pathmacro}" >>"${testlog}"
 eval export fullpath=\${${pathmacro}}
-echo "full path=${fullpath}"   >>${testlog}
+echo "full path=${fullpath}"   >>"${testlog}"
 export filename=${fullpath}/${source}
 
 echo "test file: <<${filename}>> from <<${pathmacro}=${fullpath}>> / ${source}" \
-    >>${testlog}
+    >>"${testlog}"
 if [ -f "${filename}" ] ; then
-    failure 0 "file <<$source>> in section <<$dir>>" | tee -a ${testlog}
+    failure 0 "file <<$source>> in section <<$dir>>" | tee -a "${testlog}"
+    if [ ! -z "${ldd}" ] ; then
+	( echo "ldd on <<${filename}>>:" && ldd "${filename}" ) >>"${fulllog}"
+	unresolved=$( ldd "${filename}" | grep -i "not found" | wc -l )
+	failure ${unresolved} "resolving shared libraries" | tee -a "${testlog}"
+    fi
 else
-    failure 1 "file <<$source>> in section <<$dir>>" | tee -a ${testlog}
-    ( echo "dir contents of <<${fullpath}>>:" && ls -d ${fullpath}/* ) >>${fulllog}
+    failure 1 "file <<$source>> in section <<$dir>>" | tee -a "${testlog}"
+    ( echo "dir contents of <<${fullpath}>>:" && ls -d ${fullpath}/* ) >>"${fulllog}"
 fi
 
-echo " .. include testlog <<${testlog}>> into full log: <<${fulllog}>>" >>${fulllog}
-cat ${testlog} >> ${fulllog}
+echo " .. include testlog <<${testlog}>> into full log: <<${fulllog}>>" >>"${fulllog}"
+cat "${testlog}" >> "${fulllog}"
