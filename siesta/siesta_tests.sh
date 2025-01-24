@@ -12,7 +12,6 @@ source ../failure.sh
 		     --ldd --dir bin siesta
 
 if [ ! -z "${run}" ] ; then
-    ../run_test.sh --dir bin siesta
     runtimeerror=
     ( cd data/work && siesta < ../input.fdf >/dev/null 2>&1 ) || runtimeerror=1
     if [ ! -z "${runtimeerror}" ] ; then
