@@ -30,7 +30,7 @@ for compiler in $compilers ; do
 
     # split into name and version
     found=1
-    compiler_name_and_version
+    compiler_name_and_version >>${logfile}
     if [ $found -eq 0 ] ; then continue ; fi
 
     ##

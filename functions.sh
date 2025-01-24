@@ -60,7 +60,7 @@ function compiler_name_and_version () {
     cversion=${compiler##*[a-z]}
     if [ ! -z "${matchcompiler}" ] ; then 
 	if [[ $compiler != *${matchcompiler}* ]] ; then
-	    echo "==== Skip compiler: $compiler" >>${logfile}
+	    echo "==== Skip compiler: $compiler" 
 	    found=0
 	fi
     fi

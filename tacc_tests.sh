@@ -56,9 +56,10 @@ for compiler in $compilers ; do
     rm -f ${configlog}
     touch ${configlog}
 
-    # split into name and version
+    # split into name and version; 
+    # report if skipped
     found=1
-    compiler_name_and_version
+    compiler_name_and_version >>${logfile}
     if [ $found -eq 0 ] ; then continue ; fi
 
     ##
@@ -71,7 +72,7 @@ for compiler in $compilers ; do
 	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${logfile}
 	echo "Loaded compiler: ${cname}/${cversion}"  >>${logfile}
     else
-	echo "Failed to load compiler: ${cname}/${cversion}"  >>${logfile}
+	echo "==== Configuration failed to load: ${cname}/${cversion}" | tee -a ${logfile}
 	continue
     fi
 
@@ -100,6 +101,7 @@ for compiler in $compilers ; do
     ## load module (if there is one) and execute all tests
     ##
     source ../load_and_test.sh
+    echo # blank line between successful configuration
 
     cat ${configlog} >>${logfile} 
 
