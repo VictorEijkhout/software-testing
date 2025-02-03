@@ -54,15 +54,15 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-P" ] ; then
        shift && loadpackage=$1 && shift
     elif [ "$1" = "-r" ] ; then
-	run= && runflag=-r && shift
+	run= && shift
     elif [ "$1" = "-u" ] ; then
-	shift && docuda=1 && skipcu=0 && cudaflag=-u
+	shift && docuda=1 && skipcu=0 && cudaflag="-u"
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     elif [ "$1" = "-x" ] ; then
-	set -x && xflag=-x && shift 
+	set -x && xflag="-x" && shift 
     elif [ "$1" = "-4" ] ; then
-	p4pflag=-4 && skippy=0 && shift
+	p4pflag="-4" && skippy=0 && shift
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
@@ -81,15 +81,6 @@ enforcenonzero package "${logfile}"
 if [ -z "${loadpackage}" ] ; then
     export loadpackage=${package}
     export loadversion=${version}
-fi
-
-##
-## flag to pass to cmake driver
-##
-if [ "${mpi}" = "1" ] ; then 
-    ## this can have been set by commandline option
-    ## or in the *_tests.sh file at top level
-    mpiflag=-m
 fi
 
 #

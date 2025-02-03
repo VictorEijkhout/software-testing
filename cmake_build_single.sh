@@ -24,7 +24,7 @@ set_compilers
 echo "Using cmake: $( cmake --version | head -n 1 )"
 
 echo
-echo " .. using compilers for mode ${MODE}:"
+echo " .. using compilers for mpi=${mpi}:"
 echo " .. CC=${CC}"
 echo "      where ${CC}=$( which ${CC} )"
 echo "      and CFLAGS=${CFLAGS}"
@@ -35,9 +35,10 @@ echo " .. FC=${FC}"
 echo "      where ${FC}=$( which ${FC} )"
 echo "      and FFLAGS=${FFLAGS}"
 
-if [ "${mode}" = "mpi" ] ; then \
-    echo "  where:" \
-	 testcompiler=$( mpicc -show )
+if [ ! -z "${mpi}" ] ; then
+    echo 
+    echo "  where:"
+    testcompiler=$( mpicc -show )
     echo "    mpicc=$( which mpicc )"
     echo "    show: ${testcompiler}"
     basecompiler=$( echo ${testcompiler} | cut -f 1 -d " " )
