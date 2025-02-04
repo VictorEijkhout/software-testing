@@ -1,14 +1,6 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded compiler
-##
-
-source ./package.sh
-command_args=$*
-source ../options.sh
-source ../failure.sh
-set_flags
+source ../test_setup.sh
 
 ##
 ## Tests
@@ -17,7 +9,7 @@ set_flags
 ##
 ## double precision
 ##
-../cmake_test_driver.sh ${standardflags} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile and run" \
 			has.c 
 
@@ -25,7 +17,7 @@ set_flags
 		     --title "double precision header" \
 		     --dir inc fftw3.h
 
-../existence_test.sh ${standardflags} \
+../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "double precision library" \
 		     --dir lib libfftw3.so
 
@@ -42,7 +34,7 @@ set_flags
 		     --title "single precision library" \
 		     --dir lib libfftw3f.so
 
-../cmake_test_driver.sh ${standardflags} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we single precision" \
 			single.c
 # should this give output 4? it seems to give 0

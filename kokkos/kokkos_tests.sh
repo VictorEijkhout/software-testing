@@ -1,18 +1,13 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded compiler
-##
+source ../test_setup.sh
 
-package=$(pwd) && package=${package##*/}
-
-source ../options.sh
-source ../failure.sh
+##
+## Tests
+##
 
 program=enabled-omp
-
-##echo "testing ${program}"
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "testing ${program}" \
 			${program}.cxx
 

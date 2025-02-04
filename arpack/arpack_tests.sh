@@ -1,15 +1,16 @@
 #!/bin/bash
 
-package=$(pwd) && package=${package##*/}
+source ../test_setup.sh
 
-source ../options.sh
-source ../failure.sh
+##
+## Tests
+##
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "header in arpack subdir" \
 		     --dir inc arpack/arpack.h
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile Fortran" \
 			dssimp.f
 

@@ -1,28 +1,24 @@
 #!/bin/bash
 
+source ../test_setup.sh
+
 ##
-## run tests, given a loaded compiler
+## Tests
 ##
 
-source ./package.sh
-command_args=$*
-source ../options.sh
-source ../failure.sh
-set_flags
-
-../cmake_test_driver.sh ${standardflags} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile and run" \
 			has.cpp
 
-../cmake_test_driver.sh ${standardflags} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "file system" \
 			system.cpp
 
-../cmake_test_driver.sh ${standardflags} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "graph viz" \
 			graphviz.cpp
 
-../cmake_test_driver.sh ${standardflags} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "log" \
 			log.cpp
 

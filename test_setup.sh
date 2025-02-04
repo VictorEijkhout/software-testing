@@ -1,6 +1,5 @@
-#!/bin/bash
-
+command_args=$*
 source ./package.sh
 source ../options.sh
-source ../tacc_tests.sh
+source ../failure.sh
 
