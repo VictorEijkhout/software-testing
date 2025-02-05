@@ -1,19 +1,16 @@
 #!/bin/bash
 
+source ../test_setup.sh
+
 ##
-## run tests, given a loaded compiler
+## Tests
 ##
 
-package=$(pwd) && package=${package##*/}
-
-source ../options.sh
-source ../failure.sh
-
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "severly insufficient compile test" \
 			sanity.c
 
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "compile create_open" \
 			create_open.c
 
