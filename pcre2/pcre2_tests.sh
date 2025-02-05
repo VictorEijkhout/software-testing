@@ -1,13 +1,10 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded environment
-##
+source ../test_setup.sh
 
-package=$(pwd) && package=${package##*/}
-
-source ../options.sh
-source ../failure.sh
+##
+## Tests
+##
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "core header" \
@@ -16,3 +13,5 @@ source ../failure.sh
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "core header" \
 		     cmake/pcre2-config.cmake
+
+## ../cmake_test_driver.sh ${standardflags} -l ${logfile}

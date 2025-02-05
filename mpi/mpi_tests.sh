@@ -1,13 +1,10 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded compiler
-##
+source ../test_setup.sh
 
-command_args="$*"
-source ./package.sh
-source ../options.sh
-source ../failure.sh
+##
+## Tests
+##
 
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "compile f90" \

@@ -1,16 +1,12 @@
 #!/bin/bash
 
+source ../test_setup.sh
+
 ##
-## run tests, given a loaded compiler
+## Tests
 ##
 
-source ./package.sh
-command_args=$*
-source ../options.sh
-source ../failure.sh
-set_flags
-
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "if we can compile" \
 			sanity.c
 
