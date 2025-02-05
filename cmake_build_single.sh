@@ -21,7 +21,42 @@ echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null
 
 set_compilers
-echo "Using cmake: $( cmake --version | head -n 1 ) with CC=${CC}, CXX=${CXX}, FC=${FC}"
+echo "Using cmake: $( cmake --version | head -n 1 )"
+
+echo
+echo " .. using compilers for mpi=${mpi}:"
+echo " .. CC=${CC}"
+echo "      where ${CC}=$( which ${CC} )"
+echo "      and CFLAGS=${CFLAGS}"
+echo " .. CXX=${CXX}"
+echo "      where ${CXX}=$( which ${CXX} )"
+echo "      and CXXFLAGS=${CXXFLAGS}"
+echo " .. FC=${FC}"
+echo "      where ${FC}=$( which ${FC} )"
+echo "      and FFLAGS=${FFLAGS}"
+
+if [ ! -z "${mpi}" ] ; then
+    echo 
+    echo "  where:"
+    testcompiler=$( mpicc -show )
+    echo "    mpicc=$( which mpicc )"
+    echo "    show: ${testcompiler}"
+    basecompiler=$( echo ${testcompiler} | cut -f 1 -d " " )
+    echo "    where ${basecompiler}=$( which ${basecompiler} )"
+
+    testcompiler=$( mpicxx -show )
+    echo "    mpicxx=$( which mpicxx )"
+    echo "    show:  ${testcompiler}"
+    basecompiler=$( echo ${testcompiler} | cut -f 1 -d " " )
+    echo "    where ${basecompiler}=$( which ${basecompiler} )"
+    testcompiler=$( mpif90 -show )
+    echo "    mpif90=$( which mpif90 )"
+    echo "    show:  ${testcompiler}"
+    basecompiler=$( echo ${testcompiler} | cut -f 1 -d " " )
+    echo "    where ${basecompiler}=$( which ${basecompiler} )"
+fi
+
+echo
 echo " .. with PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
 echo " .. with CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
 

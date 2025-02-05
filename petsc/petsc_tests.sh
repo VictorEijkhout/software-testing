@@ -1,15 +1,7 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded compiler & petsc version
-##
-
-source ./package.sh
-command_args=$*
+source ../test_setup.sh
 python_option=1
-source ../options.sh
-source ../failure.sh
-set_flags
 if [ ! -z "${docuda}" ] ; then
     echo " .. skipping C / F / Py because of CUDA"
     skipc=1 && skipf=1 && skippy=1
@@ -22,7 +14,7 @@ fi
 if [ "${skipc}" != "1" ] ; then
     echo "C language"
 
-    ../cmake_test_driver.sh ${standardflags} \
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 			    --title "Sanity test" \
 			    sanity.c
@@ -36,7 +28,7 @@ if [ "${skipc}" != "1" ] ; then
 	realsize=4 ; else realsize=8 ; fi
     if [[ "${PETSC_ARCH}" = *complex* ]] ; then
 	realsize=$(( realsize * 2 )) ; fi
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 			    --title "size of scalar" \
 	-t ${realsize} \
@@ -44,55 +36,56 @@ if [ "${skipc}" != "1" ] ; then
 
     if [[ "${PETSC_ARCH}" = *i64* ]] ; then
 	intsize=8 ; else intsize=4 ; fi
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 			    --title "size of int" \
 	-t ${intsize} \
 	int.c
 
     if [[ "${PETSC_ARCH}" = *complex* ]] ; then
-	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 				--title "complex type" \
 				complex.c
     fi
 
     if [ "${TACC_SYSTEM}" != "vista" ] ; then 
-    ../cmake_test_driver.sh -d phdf5 ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+	    -d phdf5 \
                             ${p4pflag} \
 			    --title "presence of hdf5" \
 			    hdf5.c
     fi
 
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 			    --title "presence of fftw3" \
 	-t accuracy \
 	fftw3.c
 
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 			    --title "presence of mumps" \
 			    mumps.c
 
     if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
-	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 				--title "presence of mumpsi64" \
 				mumpsi64.c
     fi
 
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 			    --title "presence of parmetis" \
 			    parmetis.c
 
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 			    --title "presence of ptscotch" \
 			    ptscotch.c
 
-    ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 			    --cmake "-DUSESLEPC=ON" \
 			    --title "presence of slepc" \
@@ -110,12 +103,12 @@ if [ "${skipf}" != "1" ] ; then
 	    # fortran.F90
 
     if [[ "${PETSC_ARCH}" != *f08* ]] ; then 
-	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 				--title "can we compile Fortran1990" \
 				fortran1990.F90
 
-	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 				--title "F90 vector insertion" \
 				vec.F90
@@ -123,7 +116,7 @@ if [ "${skipf}" != "1" ] ; then
     fi
 
     if [[ "${PETSC_ARCH}" = *f08* ]] ; then 
-	../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 				--title "can we compile Fortran2008" \
 				fortran2008.F90
     else echo ".... skip f08 test" | tee -a ${logfile}
@@ -135,7 +128,7 @@ fi
 ##
 if [ ! -z "${docuda}" ] ; then
     echo "CUDA language"
-    ../petsc_test_driver.sh ${standardflags} \
+    ../petsc_test_driver.sh ${standardflags} -l ${logfile} \
 			   --title "cu example 47" \
 			   --run_args "-dm_vec_type cuda -da_grid_x 3000000" \
 			   ex47cu.cu

@@ -36,6 +36,7 @@ skipcu=1
 skippy=1
 python=
 
+## echo "parse command args <<$*>>"
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then
 	usage && exit 0
@@ -54,15 +55,15 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-P" ] ; then
        shift && loadpackage=$1 && shift
     elif [ "$1" = "-r" ] ; then
-	run= && runflag=-r && shift
+	run="" && shift
     elif [ "$1" = "-u" ] ; then
-	shift && docuda=1 && skipcu=0 && cudaflag=-u
+	shift && docuda=1 && skipcu=0 && cudaflag="-u"
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
     elif [ "$1" = "-x" ] ; then
-	set -x && xflag=-x && shift 
+	set -x && xflag="-x" && shift 
     elif [ "$1" = "-4" ] ; then
-	p4pflag=-4 && skippy=0 && shift
+	p4pflag="-4" && skippy=0 && shift
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
@@ -81,15 +82,6 @@ enforcenonzero package "${logfile}"
 if [ -z "${loadpackage}" ] ; then
     export loadpackage=${package}
     export loadversion=${version}
-fi
-
-##
-## flag to pass to cmake driver
-##
-if [ "${mpi}" = "1" ] ; then 
-    ## this can have been set by commandline option
-    ## or in the *_tests.sh file at top level
-    mpiflag=-m
 fi
 
 #
@@ -112,12 +104,12 @@ echo "compiler=$matchcompiler log=$logfile mpi=$mpi run=$run version=$version" \
 
 export standardflags
 function set_flags () {
-    if [ "${run}" != "1" ] ; then
-	runflag=-r
+    if [ -z "${run}" ] ; then
+	runflag="-r"
     fi
 
     if [ ! -z "${mpi}" ] ; then
-	mpiflag=-m
+	mpiflag="-m"
     fi
 
     if [ -z "${logfile}" ] ; then
@@ -125,7 +117,9 @@ function set_flags () {
 	logfile=${package}.log
     fi
     # command_args have been set in the calling environment
-    echo "Invoking ${package} tests: ${command_args}" >> ${logfile}
-    standardflags="${mpiflag} ${cudaflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -l ${logfile}"
-    #echo " .. running with standardflags=<<${standardflags}>>"
+    echo "Invoking package=${package} tests: ${command_args}" >> ${logfile}
+    standardflags="${mpiflag} ${cudaflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage}"
+    #### -l ${logfile}
+    echo " .. running with standardflags=<<${standardflags}>>" >> ${logfile}
 }
+set_flags

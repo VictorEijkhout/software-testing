@@ -1,8 +1,5 @@
 #!/bin/bash
 
-package=pcre2
-version=10.43
-
+source ./package.sh
 source ../options.sh
-
 source ../local_tests.sh

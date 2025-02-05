@@ -14,5 +14,5 @@ work :
 	echo "ERROR rule unimplemented"
 
 clean ::
-	@rm -f viewhdf5.dat
+	@rm -f petsc_tacc_test.{e,o}* viewhdf5.dat
 

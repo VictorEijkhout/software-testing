@@ -1,24 +1,17 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded environment
-##
-
-source ./package.sh
-command_args=$*
-source ../options.sh
-source ../failure.sh
-set_flags
+source ../test_setup.sh
 
 ##
 ## Tests
 ##
-../cmake_test_driver.sh ${standardflags} \
+
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "compile and run with pkgconfig" \
 			-t "package" \
 			has.cxx 
 
-../cmake_test_driver.sh ${standardflags} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "compile and run with find_package" \
 			-t "module" \
 			has.cpp

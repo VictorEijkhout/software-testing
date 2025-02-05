@@ -27,9 +27,12 @@ fi
     && echo "----------------" \
     ) | tee -a ${logfile}
 
-cmdline="./${package}_tests.sh \
-      -p ${package} -P ${loadpackage} \
-      ${mpiflag} ${cudaflag} ${runflag} ${p4pflag} ${xflag} \
+cmdline="./${package}_tests.sh ${standardflags} \
       -l ${configlog}"
 echo "cmdline=$cmdline" >>${logfile}
 eval $cmdline
+
+      # -p ${package} -P ${loadpackage} \
+      # ${mpiflag} ${cudaflag} ${runflag} ${p4pflag} ${xflag} 
+
+      

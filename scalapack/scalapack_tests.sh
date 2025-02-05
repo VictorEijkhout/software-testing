@@ -1,16 +1,13 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded compiler
-##
+source ../test_setup.sh
 
-package=$(pwd) && package=${package##*/}
-
-source ../options.sh
-source ../failure.sh
+##
+## Tests
+##
 
 # do not run this example
-../cmake_test_driver.sh -m -p ${package} -l ${logfile} -r \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} -r \
 			--title "compile F scalapack" \
 			gridinit.F90
 

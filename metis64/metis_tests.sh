@@ -1,11 +1,10 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded compiler
-##
+source ../test_setup.sh
 
-source ../options.sh
-source ../failure.sh
+##
+## Tests
+##
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "header" \
@@ -15,7 +14,7 @@ source ../failure.sh
 		     --title "library" \
 		     --dir lib libmetis.so
 
-../cmake_test_driver.sh -m -p ${package} -l ${logfile} ${runflag} \
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                         -t 1 \
 			--title "can we compile C" \
 			has.c

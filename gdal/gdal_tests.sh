@@ -1,13 +1,10 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded environment
-##
+source ../test_setup.sh
 
-package=$(pwd) && package=${package##*/}
-
-source ../options.sh
-source ../failure.sh
+##
+## Tests
+##
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "random executable" \

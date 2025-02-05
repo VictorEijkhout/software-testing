@@ -1,19 +1,12 @@
 #!/bin/bash
 
-##
-## run tests, given a loaded compiler
-##
-
-source ./package.sh
-command_args=$*
-source ../options.sh
-source ../failure.sh
-set_flags
+source ../test_setup.sh
 
 ##
 ## Tests
 ##
-../cmake_test_driver.sh ${standardflags} \
+
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile and run" \
 			has.cxx 
 

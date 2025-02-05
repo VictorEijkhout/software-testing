@@ -1,17 +1,12 @@
 #!/bin/bash
 
+source ../test_setup.sh
+
 ##
-## run tests, given a loaded compiler
+## Tests
 ##
 
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+    --title "can we compile fortran" \
+    has.F90
 
-source ../failure.sh
-
-echo "Test if we can compile"
-retcode=0
-../cmake_test_driver.sh -p ${package} -l ${logfile} ${runflag} \
-			has.F90
-
-if [ "${logfile}" = "compile.log" ] ; then
-    echo "See: ${logfile}"
-fi
