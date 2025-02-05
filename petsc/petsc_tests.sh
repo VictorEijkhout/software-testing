@@ -137,6 +137,7 @@ if [ ! -z "${docuda}" ] ; then
     echo "CUDA language"
     ../petsc_test_driver.sh ${standardflags} \
 			   --title "cu example 47" \
+			   --run_args "-dm_vec_type cuda -da_grid_x 3000000" \
 			   ex47cu.cu
 fi
 
