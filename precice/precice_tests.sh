@@ -10,3 +10,9 @@ source ../test_setup.sh
 		     --title "header in include subdir" \
 		     --dir inc precice/precice.hpp
 
+../existence_test.sh -p ${package} -l ${logfile} \
+		     --title "so library" \
+		     --ldd \
+		     --dir lib libprecice.so
+
+
