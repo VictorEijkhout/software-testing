@@ -13,14 +13,17 @@ message( STATUS "Libmesh libraries: ${LIBMESH_LIBRARIES}" )
 pkg_check_modules( HDF REQUIRED hdf5 )
 pkg_check_modules( PETSC REQUIRED petsc )
 find_package( OpenMP )
+find_package( Boost )
 
 target_include_directories(
         ${PROJECTNAME} PUBLIC
+	${Boost_INCLUDE_DIRS}
         ${LIBMESH_INCLUDE_DIRS}
 	)
 
 target_link_directories(
   ${PROJECTNAME} PUBLIC
+  ${Boost_LIBRARY_DIRS}
   ${LIBMESH_LIBRARY_DIRS}
   ${HDF_LIBRARY_DIRS}
   ${PETSC_LIBRARY_DIRS}
@@ -28,6 +31,7 @@ target_link_directories(
 
 target_link_libraries(
   ${PROJECTNAME} PUBLIC
+  Boost::boost 
   ${LIBMESH_LIBRARIES}
   ${HDF_LIBRARIES}
   ${PETSC_LIBRARIES}
