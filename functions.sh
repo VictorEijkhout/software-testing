@@ -192,6 +192,7 @@ function run_executable () {
     else
 	cmdline="ibrun -np 1 ./build/${executable}"
     fi
+    cmdline="${cmdline} ${runargs}"
     echo "Running: $cmdline" >>${testlog}
     eval $cmdline  >>${runlog} 2>&1 || retcode=$?
     failure $retcode "${executable} test run" | tee -a ${testlog}

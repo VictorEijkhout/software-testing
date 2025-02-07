@@ -14,6 +14,7 @@ function usage() {
     echo "    [ --in-build-run ]"
     echo "    [ --ldd ]"
     echo "    [ --title test caption ]"
+    echo "    [ --run_args \"arg1 arg2 arg3\" ]"
     echo "    program.{c.F90}"
 }
 
@@ -34,6 +35,7 @@ modules=
 noibrun=
 pkgconfig=
 run=1
+runargs=
 testcaption=
 testvalue=
 x=
@@ -68,6 +70,8 @@ while [ $# -gt 1 ] ; do
 	shift && pkgconfig="$1" && shift
     elif [ "$1" = "-r" ] ; then 
 	shift && run=
+    elif [ "$1" = "--run_args" ] ; then
+	shift && runargs="$1" && shift
     elif [ "$1" = "-t" ] ; then 
 	shift && testvalue="$1" && shift
     elif [ "$1" = "--title" ] ; then
