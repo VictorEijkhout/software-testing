@@ -14,7 +14,7 @@ if [ "${loadpackage}" != "none" ] ; then
 	if [ $retcode -eq 0 ] ; then
 	    echo "Loaded package:  ${loadpackage}/${loadversion}" >>${logfile}
 	else 
-	    echo "     could not load ${loadpackage}/${loadversion}" >>${logfile}
+	    echo "     could not load ${loadpackage}/${loadversion}" | tee -a ${logfile}
 	    echo "     currently loaded: $( module -t list 2>&1 ) " >>${logfile}
 	    continue
 	fi
@@ -35,4 +35,4 @@ eval $cmdline
       # -p ${package} -P ${loadpackage} \
       # ${mpiflag} ${cudaflag} ${runflag} ${p4pflag} ${xflag} 
 
-      
+echo # blank line between successful configuration

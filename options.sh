@@ -33,7 +33,8 @@ matchcompiler=
 run=1
 docuda=
 skipcu=1
-skippy=1
+# by default don't do python tests
+dopy=
 python=
 
 ## echo "parse command args <<$*>>"
@@ -63,7 +64,7 @@ while [ $# -gt 0 ] ; do
     elif [ "$1" = "-x" ] ; then
 	set -x && xflag="-x" && shift 
     elif [ "$1" = "-4" ] ; then
-	p4pflag="-4" && skippy=0 && shift
+	p4pflag="-4" && dopy=1 && shift
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
@@ -118,8 +119,7 @@ function set_flags () {
     fi
     # command_args have been set in the calling environment
     echo "Invoking package=${package} tests: ${command_args}" >> ${logfile}
-    standardflags="${mpiflag} ${cudaflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage}"
-    #### -l ${logfile}
+    standardflags="${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage}"
     echo " .. running with standardflags=<<${standardflags}>>" >> ${logfile}
 }
 set_flags

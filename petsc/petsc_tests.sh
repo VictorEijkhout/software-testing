@@ -4,7 +4,7 @@ source ../test_setup.sh
 python_option=1
 if [ ! -z "${docuda}" ] ; then
     echo " .. skipping C / F / Py because of CUDA"
-    skipc=1 && skipf=1 && skippy=1
+    skipc=1 && skipf=1 && dopy=""
 fi
 
 
@@ -137,7 +137,7 @@ fi
 ##
 ## Python tests
 ##
-if [ "${skippy}" != "1" ] ; then 
+if [ ! -z "${dopy}" ] ; then 
     echo "Python language" | tee -a ${logfile}
 
     set -o pipefail

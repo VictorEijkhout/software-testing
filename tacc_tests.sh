@@ -101,7 +101,6 @@ for compiler in $compilers ; do
     ## load module (if there is one) and execute all tests
     ##
     source ../load_and_test.sh
-    echo # blank line between successful configuration
 
     cat ${configlog} >>${logfile} 
 
