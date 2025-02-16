@@ -7,7 +7,7 @@ function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] "
     echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
-    echo "    [ -m : mpi mode ] [ -r : skip run ] [ -t v : test value ]"
+    echo "    [ -m : mpi mode ] [ -r : skip run ] [ -4 : do python tests ] [ -t v : test value ]"
     if [ "${buildsystem}" = "cmake" ] ; then 
 	echo "    [ --cmake cmake options separated by commas ]"
     fi
@@ -26,6 +26,7 @@ package=unknown
 loadpackage=unknown
 cmake=
 dir=dir
+dopy=
 fulllog=
 inbuildrun=
 mpi=
@@ -78,6 +79,8 @@ while [ $# -gt 1 ] ; do
 	shift && testcaption="$( argument $1 )" && shift
     elif [ "$1" = "-u" ] ; then
 	shift && docuda=1
+    elif [ "$1" = "-4" ] ; then 
+	shift && dopy=1
     elif [ "$1" = "-x" ] ; then 
 	shift && set -x && x="-x"
     else

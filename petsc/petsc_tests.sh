@@ -4,7 +4,7 @@ source ../test_setup.sh
 python_option=1
 if [ ! -z "${docuda}" ] ; then
     echo " .. skipping C / F / Py because of CUDA"
-    skipc=1 && skipf=1 && skippy=1
+    skipc=1 && skipf=1 && dopy=""
 fi
 
 
@@ -137,25 +137,22 @@ fi
 ##
 ## Python tests
 ##
-if [ "${skippy}" != "1" ] ; then 
+if [ ! -z "${dopy}" ] ; then 
     echo "Python language" | tee -a ${logfile}
+    module load python3 && module list 2>/dev/null
 
-    set -o pipefail
+    ../python_test_driver.sh -p ${package} -l ${logfile} \
+	--title "import 4py modules" \
+	import.py
 
-    echo "Test if we have python interfaces" | tee -a ${logfile}
-    retcode=0 && ( cd p && ibrun -n 2 python3 -c "import petsc4py,slepc4py; print(1)" ) \
-	| grep -v TACC: || retcode=$?
-    failure $retcode "python commandline import"
+    ../python_test_driver.sh -p ${package} -l ${logfile} \
+	--title "Test init from argv" \
+	p4p.py 
 
-    echo "Test init from argv" | tee -a ${logfile}
-    retcode=0 && ( cd p && ibrun -n 2 python3 p4p.py 2>../err_petsc4py.log ) \
-    	| grep -v TACC: || retcode=$?
-    failure $retcode "python petsc init"
+    ../python_test_driver.sh -p ${package} -l ${logfile} \
+	--title "Python allreduce" \
+        allreduce.py
 
-    echo "Python allreduce" | tee -a ${logfile}
-    retcode=0 && ( cd p && ibrun -n 2 python3 allreduce.py ) \
-	| grep -v TACC: || retcode=$?
-    failure $retcode "python allreduce"
 else echo ".... skipping python tests" | tee -a ${logfile}
 fi
 
