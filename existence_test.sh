@@ -33,6 +33,14 @@ if [ -f "${filename}" ] ; then
 	( echo "ldd on <<${filename}>>:" && ldd "${filename}" ) >>"${fulllog}"
 	unresolved=$( ldd "${filename}" | grep -i "not found" | wc -l )
 	failure ${unresolved} "resolving shared libraries" | tee -a "${testlog}"
+	if [ ${unresolved} -eq 0 ] ; then
+	    retcode=$( \
+		        echo "running <<${filename}>>:" >>"${fulllog}" \
+		         && retcode=0 \
+		         && ${filename} >>"${fulllog}" 2>&1 || retcode=$? \
+		         && echo ${retcode} )
+	    failure ${retcode} "actually running" | tee -a "${testlog}"
+	fi
     fi
 else
     failure 1 "file <<$source>> in section <<$dir>>" | tee -a "${testlog}"
