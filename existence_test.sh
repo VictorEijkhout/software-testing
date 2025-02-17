@@ -34,10 +34,12 @@ if [ -f "${filename}" ] ; then
 	unresolved=$( ldd "${filename}" | grep -i "not found" | wc -l )
 	failure ${unresolved} "resolving shared libraries" | tee -a "${testlog}"
 	if [ ${unresolved} -eq 0 -a ! -z "${run}" ] ; then
+	    export cmdline="${filename} ${runargs}"
+	    ## echo "running <<${filename}>>: <<${cmdline}>>" 
 	    retcode=$( \
 		        echo "running <<${filename}>>:" >>"${fulllog}" \
 		         && retcode=0 \
-		         && ${filename} >>"${fulllog}" 2>&1 || retcode=$? \
+		         && ${cmdline} >>"${fulllog}" 2>&1 || retcode=$? \
 		         && echo ${retcode} )
 	    failure ${retcode} "actually running" | tee -a "${testlog}"
 	fi
