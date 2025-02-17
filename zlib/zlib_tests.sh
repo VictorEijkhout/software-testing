@@ -12,9 +12,11 @@ source ../test_setup.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "static library" \
-		     --dir lib libz.a
+		     --dir lib -r libz.a
 
-../existence_test.sh -p ${package} -l ${logfile} \
-		     --title "shared library" \
-		     --dir lib libz.so
+../existence_test.sh \
+    -p ${package} -l ${logfile} \
+    --title "shared library" \
+    --ldd -r \
+    --dir lib libz.so
 

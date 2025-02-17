@@ -12,7 +12,7 @@ source ../test_setup.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "so library" \
-		     --ldd \
+		     --ldd -r \
 		     --dir lib libprecice.so
 
 

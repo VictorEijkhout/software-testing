@@ -7,11 +7,11 @@ source ../test_setup.sh
 ##
 
 ../existence_test.sh -p ${package} -l ${logfile} \
-		     --title "core header" \
-		     --dir lib libpcre2-8.so
+    --title "core header" \
+    --ldd -r \
+    --dir lib libpcre2-8.so
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "core header" \
 		     cmake/pcre2-config.cmake
 
-## ../cmake_test_driver.sh ${standardflags} -l ${logfile}

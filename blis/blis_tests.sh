@@ -15,8 +15,9 @@ source ../test_setup.sh
 		     --dir lib libblis.a
 
 ../existence_test.sh -p ${package} -l ${logfile} \
-		     --title "shared lib" \
-		     --dir lib libblis.so
+    --title "shared lib" \
+    --ldd -r \
+    --dir lib libblis.so
 
 ##
 cd c
