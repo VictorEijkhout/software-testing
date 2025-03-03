@@ -22,7 +22,7 @@ example="core"
 print( f"Script: {example}_launcher\n .. running: ClassicLauncher" )
 print( " .. input: commandlines\n" )
 
-pylauncher.ClassicLauncher
+pylauncher.ClassicLauncher\
     ("commandlines",
      cores=11,
      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",

@@ -19,7 +19,7 @@ RUN = python3
 NODES = 3
 CORESPERNODE = 16
 MINUTES = 20
-QUEUE = development
+QUEUE = 
 info ::
 	@echo "================ big test"
 	@echo "make launch"
@@ -67,7 +67,8 @@ script :
 	        ( *vista* )     QUEUE=gg          ;; \
 	        ( *stampede3* ) QUEUE=skx-dev     ;; \
 	        ( *ls6* )       QUEUE=normal      ;; \
-	        ( * )           QUEUE=development ;; \
+	        ( *frontera* )  QUEUE=development ;; \
+	        ( * )           QUEUE=nosuchqueue ;; \
 	    esac \
 	    ; else QUEUE=${QUEUE} ; fi \
 	 && cat $${template} | sed -e "s/SSH/${SSH}/" -e "s/RUN/${RUN}/" \
