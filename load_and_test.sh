@@ -9,10 +9,14 @@
 ##
 if [ "${loadpackage}" != "none" ] ; then 
     if [ "${loadpackage}" != "mpi" ] ; then 
+	( echo " .. available:" \
+	      && module -t avail ${loadpackage}/${loadversion} 2>&1 \
+	    ) >>${logfile}
 	retcode=0
 	module load ${loadpackage}/${loadversion} >/dev/null 2>&1 || retcode=$?
 	if [ $retcode -eq 0 ] ; then
 	    echo "Loaded package:  ${loadpackage}/${loadversion}" >>${logfile}
+	    echo " .. $( module -t show ${loadpackage}/${loadversion} 2>&1 )" >>${logfile}
 	else 
 	    echo "     could not load ${loadpackage}/${loadversion}" | tee -a ${logfile}
 	    echo "     currently loaded: $( module -t list 2>&1 ) " >>${logfile}

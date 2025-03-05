@@ -2,6 +2,8 @@
 ## test all programs for this package,
 ## looping over locally available modules
 ##
+## this file is textually included
+##
 
 if [ -z "${package}" ] ; then
     echo "You are calling ../local_tests.sh without setting package"
@@ -9,10 +11,11 @@ if [ -z "${package}" ] ; then
 fi
 
 module reset >/dev/null 2>&1
-echo "================"
-echo "==== Local modules"
-echo "==== Package: ${package}, version: ${version}"
-echo "================"
+( echo "================" \
+ && echo "==== Local modules" \
+ && echo "==== Package: ${package}, version: ${version}" \
+ && echo "================" \
+ ) | tee -a ${logfile}
 
 shortlog=local_tests.log
 touch ${shortlog}
@@ -48,6 +51,7 @@ for compiler in $compilers ; do
 	continue
     else
 	( echo && echo "==== Configuration: ${config}" ) | tee -a ${logfile}
+	echo " .. loaded from ${envfile}" >>${logfile}
 	failed=
     fi
     source ${envfile}  >/dev/null 2>&1

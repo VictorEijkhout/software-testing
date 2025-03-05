@@ -63,11 +63,6 @@ if [ "${skipc}" != "1" ] ; then
 	-t accuracy \
 	fftw3.c
 
-	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-                            ${p4pflag} \
-			    --title "presence of mumps" \
-			    mumps.c
-
     if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
@@ -75,15 +70,12 @@ if [ "${skipc}" != "1" ] ; then
 				mumpsi64.c
     fi
 
+    for package in mumps parmetis ptscotch strumpack superlu superlu_dist ; do
 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
-			    --title "presence of parmetis" \
-			    parmetis.c
-
-	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-                            ${p4pflag} \
-			    --title "presence of ptscotch" \
-			    ptscotch.c
+			    --title "presence of ${package}" \
+			    ${package}.c
+    done
 
 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \

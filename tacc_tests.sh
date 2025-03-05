@@ -5,6 +5,8 @@
 ##
 ## options have been set by options.sh at top level
 ##
+## this file is textually included
+##
 
 if [ -z "${package}" ] ; then
     echo "You are calling ../tacc_tests.sh without setting package"
