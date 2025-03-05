@@ -22,6 +22,7 @@ fi
 
 ## for local testing:
 #export PYTHONPATH=..:${PYTHONPATH}
+export NGPUS=NGPUS
 echo "PYTHONPATH: ${PYTHONPATH}"
 echo "Running EXECUTABLE on queue=QUEUE"
 

@@ -18,13 +18,11 @@ import pylauncher
 ## Emulate the classic launcher, using a one liner
 ##
 
-example="core"
-print( f"Script: {example}_launcher\n .. running: ClassicLauncher" )
-print( " .. input: commandlines\n" )
-
-pylauncher.ClassicLauncher\
-    ("commandlines",
-     cores=11,
+example = "GPULauncher"
+pylauncher.GPULauncher\
+    ("gpucommandlines",
+     gpuspernode=os.environ['NGPUS'],
+     # optional spec of output dir:
      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
-     debug="job+host+exec",
-     )
+     debug="ssh+host+exec+job")
+

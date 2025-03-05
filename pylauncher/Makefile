@@ -19,7 +19,7 @@ RUN = python3
 NODES = 3
 CORESPERNODE = 16
 MINUTES = 20
-QUEUE = development
+QUEUE = 
 info ::
 	@echo "================ big test"
 	@echo "make launch"
@@ -64,15 +64,19 @@ script :
 	    ; fi \
 	 && if [ -z "${QUEUE}" ] ; then \
 	      case $$( hostname ) in \
-	        ( *vista* )     QUEUE=gg          ;; \
+	        ( *frontera* )  QUEUE=development ; export NGPUS=2 ;; \
+	        ( *ls6* )       QUEUE=normal      ; export NGPUS=3 ;; \
 	        ( *stampede3* ) QUEUE=skx-dev     ;; \
-	        ( *ls6* )       QUEUE=normal      ;; \
-	        ( * )           QUEUE=development ;; \
+	        ( *vista* )     \
+	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
+	                        QUEUE=gh-dev      ; export NGPUS=2 ; \
+	            else        QUEUE=gg     ; fi ;; \
+	        ( * )           QUEUE=nosuchqueue ;; \
 	    esac \
 	    ; else QUEUE=${QUEUE} ; fi \
 	 && cat $${template} | sed -e "s/SSH/${SSH}/" -e "s/RUN/${RUN}/" \
 	        -e "s/EXECUTABLE/$${EXECUTABLE}/" -e "s/NODES/${NODES}/" \
-	        -e "s/NAME/$${NAME}/" \
+	        -e "s/NAME/$${NAME}/" -e "s/NGPUS=NGPUS/NGPUS=$${NGPUS}/" \
 	        -e "s/CORESPERNODE/${CORESPERNODE}/" -e "s/QUEUE/$${QUEUE}/" \
 	        -e "s/MINUTES/${MINUTES}/" \
 	        -e "/####/d" \
@@ -105,7 +109,7 @@ randomsleep randomcomma : $$@.c
 	mpicc -g -O2 -o $@ $@.c 
 CUPROGRAMS = gpusleep
 gpusleep : $$@.cu
-	nvcc -g -O2 -o $@ $@.cu
+	nvcc -allow-unsupported-compiler -g -O2 -o $@ $@.cu
 totalclean ::
 	@rm -f ${CPROGRAMS} ${CUPROGRAMS}
 
