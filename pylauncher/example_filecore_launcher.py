@@ -26,4 +26,4 @@ pylauncher.ClassicLauncher\
     ( "filecorelines",cores="file",
      # optional spec of output dir:
      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
-     debug="host+exec+job")
+     debug="host+exec+job+command")
