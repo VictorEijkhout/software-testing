@@ -71,6 +71,9 @@ if [ "${skipc}" != "1" ] ; then
     fi
 
     for package in mumps parmetis ptscotch strumpack superlu superlu_dist ; do
+	if [[ "${PETSC_ARCH}" == *i64* ]] ; then
+	    if [[ "$package" == superlu* ]] ; then continue ; fi
+	fi
 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
 			    --title "presence of ${package}" \
