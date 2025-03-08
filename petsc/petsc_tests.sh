@@ -49,19 +49,19 @@ if [ "${skipc}" != "1" ] ; then
 				complex.c
     fi
 
-    if [ "${TACC_SYSTEM}" != "vista" ] ; then 
-	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-	    -d phdf5 \
-                            ${p4pflag} \
-			    --title "presence of hdf5" \
-			    hdf5.c
-    fi
+    # if [ "${TACC_SYSTEM}" != "vista" ] ; then 
+    # 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+    # 	    -d phdf5 \
+    #                         ${p4pflag} \
+    # 			    --title "presence of hdf5" \
+    # 			    hdf5.c
+    # fi
 
-	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-                            ${p4pflag} \
-			    --title "presence of fftw3" \
-	-t accuracy \
-	fftw3.c
+	# ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+        #                     ${p4pflag} \
+	# 		    --title "presence of fftw3" \
+	# -t accuracy \
+	# fftw3.c
 
     if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
@@ -70,14 +70,28 @@ if [ "${skipc}" != "1" ] ; then
 				mumpsi64.c
     fi
 
-    for package in mumps parmetis ptscotch strumpack superlu superlu_dist ; do
+    fftw3_extra_test="-t accuracy"
+    for package in fftw3 mumps parmetis phdf5 ptscotch strumpack superlu superlu_dist ; do
 	if [[ "${PETSC_ARCH}" == *i64* ]] ; then
+	    if [[ "$package" == chaco ]] ; then continue ; fi
+	    if [[ "$package" == parmetis ]] ; then continue ; fi
 	    if [[ "$package" == superlu* ]] ; then continue ; fi
 	fi
-	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-                            ${p4pflag} \
-			    --title "presence of ${package}" \
-			    ${package}.c
+	if [[ "${PETSC_ARCH}" == *single* ]] ; then
+	    if [[ "$package" == fftw3 ]] ; then continue ; fi
+	    if [[ "$package" == *hdf5 ]] ; then continue ; fi
+	    if [[ "$package" == hypre ]] ; then continue ; fi
+	    if [[ "$package" == mumps ]] ; then continue ; fi
+	fi
+	if [[ "${PETSC_ARCH}" == *complex* ]] ; then
+	    if [[ "$package" == hypre ]] ; then continue ; fi
+	fi
+	eval extra_test=\${${package}_extra_test}
+	../cmake_test_driver.sh \
+	    ${standardflags} -l ${logfile} ${p4pflag} \
+	    ${extra_test} \
+	    --title "presence of ${package}" \
+	    ${package}.c
     done
 
 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
