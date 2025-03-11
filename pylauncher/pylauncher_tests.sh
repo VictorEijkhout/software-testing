@@ -43,14 +43,12 @@ for e in \
 	EXECUTABLE=${e}
 done
 
-e=gpu
 case ${TACC_SYSTEM} in \
     ( vista ) 
     ( frontera )  
-    ( ls6 ) e=gpu \
-         && make --no-print-directory script submit \
-	     NAME=${e} \
-	     EXECUTABLE=${e}
+    ( ls6 ) 
+        make --no-print-directory script submit \
+	     NAME=gpu EXECUTABLE=gpu
 	;;
     ( * ) echo "No GPUs on this system to test" ;;
-esac )
+esac
