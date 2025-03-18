@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+if not os.path.exists(commandlines):
+    raise Exception( f"input does not exist: {commandlines}" )
 ################################################################
 ####
 #### This file is part of the `pylauncher' package
@@ -20,11 +22,14 @@ import pylauncher as launcher
 
 example="resume"
 print( f"Script: {example}\n .. running: ClassicLauncher" )
-print( " .. input: queuestate314\n" )
+commandlines = "queuestate314"
+if not os.path.exists(commandlines):
+    raise Exception( f"input does not exist: {commandlines}" )
+print( f" .. input: {commandlines}\n" )
 
 launcher.ClassicLauncher\
-    ("queuestate314",
-     resume=1,
-     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
-     debug="host+exec+job")
+    ( commandlines,
+      resume=1,
+      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
+      debug="host+exec+job")
 

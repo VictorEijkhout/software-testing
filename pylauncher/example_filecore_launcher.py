@@ -20,10 +20,13 @@ import pylauncher
 
 example="filecore"
 print( f"Script: {example}_launcher\n .. running: ClassicLauncher" )
-print( " .. input: filecorelines\n" )
+commandlines = "filecorelines"
+if not os.path.exists(commandlines):
+    raise Exception( f"input does not exist: {commandlines}" )
+print( f" .. input: {commandlines}\n" )
 
 pylauncher.ClassicLauncher\
-    ( "filecorelines",cores="file",
+    ( commandlines,cores="file",
      # optional spec of output dir:
      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
      debug="host+exec+job+command")

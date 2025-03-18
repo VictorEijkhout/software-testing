@@ -20,10 +20,13 @@ import pylauncher
 
 example="node"
 print( f"Script: {example}_launcher\n .. running: ClassicLauncher" )
-print( " .. input: corelines\n" )
+commandlines = "corelines"
+if not os.path.exists(commandlines):
+    raise Exception( f"input does not exist: {commandlines}" )
+print( f" .. input: {commandlines}\n" )
 
 pylauncher.ClassicLauncher\
-    ("corelines",
-     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
-     cores="node",
-     debug="host+exec+task+job")
+    ( commandlines,
+      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
+      cores="node",
+      debug="host+exec+task+job")

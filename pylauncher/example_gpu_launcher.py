@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+if not os.path.exists(commandlines):
+    raise Exception( f"input does not exist: {commandlines}" )
 ################################################################
 ####
 #### This file is part of the `pylauncher' package
@@ -19,8 +21,11 @@ import pylauncher
 ##
 
 example = "GPULauncher"
+commandlines = "gpucommandlines"
+if not os.path.exists(commandlines):
+    raise Exception( f"input does not exist: {commandlines}" )
 pylauncher.GPULauncher\
-    ("gpucommandlines",
+    (commandlines,
      gpuspernode=os.environ['NGPUS'],
      # optional spec of output dir:
      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",

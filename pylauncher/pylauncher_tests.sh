@@ -58,3 +58,9 @@ case ${TACC_SYSTEM} in \
 	;;
     ( * ) echo "No GPUs on system ${TACC_SYSTEM} to test" ;;
 esac
+
+##
+## Submit launcher test
+## interactively, probably after everything else is done?
+##
+python3 example_submit_launcher.py 2>&1 | tee -a pylaunchertestsubmit.o000
