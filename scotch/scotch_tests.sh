@@ -34,5 +34,5 @@ case $version in
 	checkint64.cxx
     ;;
     ( * )
-    echo "strange version: <<${version}>>" ;;
+    echo "please test explicity 32/64 bit versions" && exit 1 ;;
 esac
