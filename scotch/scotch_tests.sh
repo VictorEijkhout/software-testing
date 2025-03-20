@@ -24,12 +24,12 @@ source ../test_setup.sh
 
 case $version in 
     ( *32 ) 
-    ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} -r \
 	--title "check 32bit int" \
 	checkint32.cxx
     ;;
     ( *64 )
-    ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} -r \
 	--title "check 64bit int" \
 	checkint64.cxx
     ;;
