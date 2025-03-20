@@ -6,7 +6,8 @@ defaultp=${defaultp##*/}
 function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] "
-    echo "    [ -p package (default: ${defaultp}) ]  [ -l logfile ] [ -x ( set x ) ]"
+    echo "    [ -p package (default: ${defaultp}) ] [ -v version ]"
+    echo "    [ -l logfile ] [ -x ( set x ) ]"
     echo "    [ -m : mpi mode ] [ -r : skip run ] [ -4 : do python tests ] [ -t v : test value ]"
     if [ "${buildsystem}" = "cmake" ] ; then 
 	echo "    [ --cmake cmake options separated by commas ]"
@@ -39,6 +40,7 @@ run=1
 runargs=
 testcaption=
 testvalue=
+version=unknownversion
 x=
 while [ $# -gt 1 ] ; do
     #echo "option: <<$1>>"
@@ -79,6 +81,10 @@ while [ $# -gt 1 ] ; do
 	shift && testcaption="$( argument $1 )" && shift
     elif [ "$1" = "-u" ] ; then
 	shift && docuda=1
+    elif [ "$1" = "-v" ] ; then
+	shift && version="$1" && shift
+    elif [ "$1" = "-V" ] ; then
+	shift && loadversion="$1" && shift
     elif [ "$1" = "-4" ] ; then 
 	shift && dopy=1
     elif [ "$1" = "-x" ] ; then 

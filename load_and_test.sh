@@ -36,7 +36,4 @@ cmdline="./${package}_tests.sh ${standardflags} \
 echo "cmdline=$cmdline" >>${logfile}
 eval $cmdline
 
-      # -p ${package} -P ${loadpackage} \
-      # ${mpiflag} ${cudaflag} ${runflag} ${p4pflag} ${xflag} 
-
 echo # blank line between successful configuration
