@@ -22,3 +22,17 @@ source ../test_setup.sh
 		     --title "lib" \
 		     --dir lib libscotch.so
 
+case $version in 
+    ( *32 ) 
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+	--title "check 32bit int" \
+	checkint32.cxx
+    ;;
+    ( *64 )
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+	--title "check 64bit int" \
+	checkint64.cxx
+    ;;
+    ( * )
+    echo "strange version: <<${version}>>" ;;
+esac
