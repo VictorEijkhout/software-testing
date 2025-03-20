@@ -19,11 +19,14 @@ import pylauncher
 ##
 
 example="comma"
+commandlines = "commalines"
+if not os.path.exists(commandlines):
+    raise Exception( f"input does not exist: {commandlines}" )
 print( f"Script: {example}_launcher\n .. running: ClassicLauncher" )
-print( " .. input: commalines\n" )
+print( f" .. input: {commandlines}\n" )
 
 pylauncher.ClassicLauncher\
-    ("commalines",
-     # optional spec of output dir:
-     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
-     debug="host+exec+task+job")
+    ( commandlines,
+      # optional spec of output dir:
+      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
+      debug="host+exec+task+job")

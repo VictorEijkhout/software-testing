@@ -1,7 +1,7 @@
 ################################################################
 ####
 #### Makefile for the pylauncher examples
-#### pylauncher is copyright Victor Eijkhout 2010-2024
+#### pylauncher is copyright Victor Eijkhout 2010-2025
 ####
 ################################################################
 
@@ -99,12 +99,12 @@ info ::
 .SECONDEXPANSION:
 .PHONY: programs ${CPROGRAMS}
 CPROGRAMS = parallel randomaction randomsleep randomcomma corecount
-programs : ${CPROGRAMS}
+programs : ${CPROGRAMS} ${CUPROGRAMS}
 parallel randomaction corecount :
 	@slurm=${SLURM_NPROCS} && slurm=$${slurm:=40} \
 	&& wait=${WAIT} && wait=$${wait:=$${slurm}} \
 	&& echo "compile $@ with wait=$$wait" \
-	&& cmdline="mpicc -qopenmp -o $@ $@.c -DWAIT=$${wait:=20}" \
+	&& cmdline="mpicc -fopenmp -o $@ $@.c -DWAIT=$${wait:=20}" \
 	&& echo $${cmdline} && eval $${cmdline}
 clean :: 
 	@rm -rf pylauncher_corecount
@@ -193,4 +193,4 @@ clean ::
 	@echo "clean test output"
 	@/bin/rm -rf pylaunchertest*
 totalclean :: clean
-
+	@rm -f ${CPROGRAMS}
