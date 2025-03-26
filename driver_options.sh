@@ -8,7 +8,8 @@ function usage() {
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] "
     echo "    [ -p package (default: ${defaultp}) ] [ -v version ]"
     echo "    [ -l logfile ] [ -x ( set x ) ]"
-    echo "    [ -m : mpi mode ] [ -r : skip run ] [ -4 : do python tests ] [ -t v : test value ]"
+    echo "    [ -m : mpi mode ] [ -r : skip run ] [ -4 : do python tests ]"
+    echo "    [ -t / --value v : test value ]"
     if [ "${buildsystem}" = "cmake" ] ; then 
 	echo "    [ --cmake cmake options separated by commas ]"
     fi
@@ -75,7 +76,7 @@ while [ $# -gt 1 ] ; do
 	shift && run=
     elif [ "$1" = "--run_args" ] ; then
 	shift && runargs="$1" && shift
-    elif [ "$1" = "-t" ] ; then 
+    elif [ "$1" = "-t" -o "$1" = "--value" ] ; then 
 	shift && testvalue="$1" && shift
     elif [ "$1" = "--title" ] ; then
 	shift && testcaption="$( argument $1 )" && shift

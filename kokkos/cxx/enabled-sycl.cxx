@@ -18,11 +18,13 @@ using std::cout;
 int main(int argc,char **argv) {
   Kokkos::initialize(argc,argv);
 
-#ifdef KOKKOS_ENABLE_OPENMP
+#ifdef KOKKOS_ENABLE_SYCL
   cout << "Yes\n";
 #else
   cout << "No\n";
 #endif
+
+  Kokkos::finalize();
 
   return 0;
 }
