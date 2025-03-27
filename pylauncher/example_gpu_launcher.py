@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-if not os.path.exists(commandlines):
-    raise Exception( f"input does not exist: {commandlines}" )
 ################################################################
 ####
 #### This file is part of the `pylauncher' package
