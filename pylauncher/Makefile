@@ -65,7 +65,10 @@ script :
 	 && if [ -z "${QUEUE}" ] ; then \
 	      case $$( hostname ) in \
 	        ( *frontera* )  QUEUE=development ; export NGPUS=2 ;; \
-	        ( *ls6* )       QUEUE=normal      ; export NGPUS=3 ;; \
+	        ( *ls6* )       \
+	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
+	                        QUEUE=gpu-a100    ; export NGPUS=3 ; \
+	            else        QUEUE=normal ; fi ;; \
 	        ( *stampede3* ) QUEUE=skx-dev     ;; \
 	        ( *vista* )     \
 	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
