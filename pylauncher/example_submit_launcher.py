@@ -18,7 +18,7 @@ import pylauncher
 
 try:
     jobid = os.environ['SLURM_JOBID']
-    raise Exception("This example should be run outisde of SLURm")
+    raise Exception("This example should be run outside of SLURm")
 except:
     pass
 
