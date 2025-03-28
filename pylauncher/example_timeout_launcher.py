@@ -19,11 +19,14 @@ import pylauncher as launcher
 ##
 
 example="timeout"
+commandlines = "commandlines"
+if not os.path.exists(commandlines):
+    raise Exception( f"input does not exist: {commandlines}" )
 print( f"Script: {example}_launcher\n  running: ClassicLauncher" )
-print( " .. input: commandlines\n" )
+print( f" .. input: {commandlines}\n" )
 
 launcher.ClassicLauncher\
-    ("commandlines",
+    (commandlines,
      # optional spec of output dir:
      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
      queuestate="queuestate314",

@@ -8,7 +8,7 @@ source ../functions.sh
 function usage() {
     if [ ! -z "${help_string}" ] ; then
 	echo && echo ${help_string} && echo ; fi 
-    echo "Usage: $0 [ -v version (default=${version}) ]"
+    echo "Usage: $0 [ -v version (default=${version}) ] [ -V loadversion (default: version) ]"
     echo "    [ -c compiler ] [ -l logfile ] [ -r (skip running) ] "
     echo "    [ -4 (do 4py tests) ] [ -u (do cuda tests) ]"
     if [ "${python_option}" = "1" ] ; then
@@ -61,6 +61,8 @@ while [ $# -gt 0 ] ; do
 	shift && docuda=1 && skipcu=0 && cudaflag="-u"
     elif [ "$1" = "-v" ] ; then
 	shift && version="$1" && shift
+    elif [ "$1" = "-V" ] ; then
+	shift && loadversion="$1" && shift
     elif [ "$1" = "-x" ] ; then
 	set -x && xflag="-x" && shift 
     elif [ "$1" = "-4" ] ; then
@@ -82,6 +84,8 @@ enforcenonzero package "${logfile}"
 ##
 if [ -z "${loadpackage}" ] ; then
     export loadpackage=${package}
+fi
+if [ -z "${loadversion}" ] ; then
     export loadversion=${version}
 fi
 
@@ -119,7 +123,7 @@ function set_flags () {
     fi
     # command_args have been set in the calling environment
     echo "Invoking package=${package} tests: ${command_args}" >> ${logfile}
-    standardflags="${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage}"
+    standardflags="${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion}"
     echo " .. running with standardflags=<<${standardflags}>>" >> ${logfile}
 }
 set_flags

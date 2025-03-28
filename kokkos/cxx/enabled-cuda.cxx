@@ -18,7 +18,7 @@ using std::cout;
 int main(int argc,char **argv) {
   Kokkos::initialize(argc,argv);
 
-#ifdef KOKKOS_ENABLE_OPENMP
+#ifdef KOKKOS_ENABLE_CUDA
   cout << "Yes\n";
 #else
   cout << "No\n";

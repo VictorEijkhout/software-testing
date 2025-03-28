@@ -26,3 +26,17 @@ source ../test_setup.sh
 		     --title "ptscotch lib" \
 		     --dir lib libptscotch.so
 
+case $version in 
+    ( *32 ) 
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} -r \
+	--title "check 32bit int" \
+	checkint32.cxx
+    ;;
+    ( *64 )
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} -r \
+	--title "check 64bit int" \
+	checkint64.cxx
+    ;;
+    ( * )
+    echo "please test explicity 32/64 bit versions" && exit 1 ;;
+esac

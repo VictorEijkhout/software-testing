@@ -22,9 +22,12 @@ import pylauncher
 ##
 example="ibrun"
 print( f"Script: {example}_launcher\n .. running: IbrunLauncher" )
-print( " .. input: parallellines\n" )
+commandlines = "parallellines"
+if not os.path.exists(commandlines):
+    raise Exception( f"input does not exist: {commandlines}" )
+print( f" .. input: {commandlines}\n" )
 
 pylauncher.IbrunLauncher\
-    ("parallellines",cores=3,
-     workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
-     debug="job+host+task+exec")
+    ( commandlines,cores=3,
+      workdir=f"pylauncher_tmp_{example}_{ os.environ['SLURM_JOBID'] }",
+      debug="job+host+task+exec")

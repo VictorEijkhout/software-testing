@@ -1,7 +1,7 @@
 ################################################################
 ####
 #### Makefile for the pylauncher examples
-#### pylauncher is copyright Victor Eijkhout 2010-2024
+#### pylauncher is copyright Victor Eijkhout 2010-2025
 ####
 ################################################################
 
@@ -64,11 +64,19 @@ script :
 	    ; fi \
 	 && if [ -z "${QUEUE}" ] ; then \
 	      case $$( hostname ) in \
+<<<<<<< HEAD
 	        ( *frontera* )  QUEUE=development ; export NGPUS=2 ;; \
 	        ( *ls6* )       \
 	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
 	                        QUEUE=gpu-a100    ; export NGPUS=3 ; \
 	            else        QUEUE=normal ; fi ;; \
+=======
+	        ( *frontera* ) \
+	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
+	                        QUEUE=rtx         ; export NGPUS=2 ; \
+	            else        QUEUE=development ; fi ;; \
+	        ( *ls6* )       QUEUE=normal      ; export NGPUS=3 ;; \
+>>>>>>> 8b338c9caa7f13cebebd7493ac19fc56ff8ca351
 	        ( *stampede3* ) QUEUE=skx-dev     ;; \
 	        ( *vista* )     \
 	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
@@ -99,12 +107,12 @@ info ::
 .SECONDEXPANSION:
 .PHONY: programs ${CPROGRAMS}
 CPROGRAMS = parallel randomaction randomsleep randomcomma corecount
-programs : ${CPROGRAMS}
+programs : ${CPROGRAMS} ${CUPROGRAMS}
 parallel randomaction corecount :
 	@slurm=${SLURM_NPROCS} && slurm=$${slurm:=40} \
 	&& wait=${WAIT} && wait=$${wait:=$${slurm}} \
 	&& echo "compile $@ with wait=$$wait" \
-	&& cmdline="mpicc -qopenmp -o $@ $@.c -DWAIT=$${wait:=20}" \
+	&& cmdline="mpicc -fopenmp -o $@ $@.c -DWAIT=$${wait:=20}" \
 	&& echo $${cmdline} && eval $${cmdline}
 clean :: 
 	@rm -rf pylauncher_corecount
@@ -193,4 +201,4 @@ clean ::
 	@echo "clean test output"
 	@/bin/rm -rf pylaunchertest*
 totalclean :: clean
-
+	@rm -f ${CPROGRAMS}
