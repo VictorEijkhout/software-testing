@@ -64,19 +64,14 @@ script :
 	    ; fi \
 	 && if [ -z "${QUEUE}" ] ; then \
 	      case $$( hostname ) in \
-<<<<<<< HEAD
-	        ( *frontera* )  QUEUE=development ; export NGPUS=2 ;; \
-	        ( *ls6* )       \
-	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
-	                        QUEUE=gpu-a100    ; export NGPUS=3 ; \
-	            else        QUEUE=normal ; fi ;; \
-=======
 	        ( *frontera* ) \
 	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
 	                        QUEUE=rtx         ; export NGPUS=2 ; \
 	            else        QUEUE=development ; fi ;; \
-	        ( *ls6* )       QUEUE=normal      ; export NGPUS=3 ;; \
->>>>>>> 8b338c9caa7f13cebebd7493ac19fc56ff8ca351
+	        ( *ls6* )       \
+	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
+	                        QUEUE=gpu-a100    ; export NGPUS=3 ; \
+	            else        QUEUE=normal ; fi ;; \
 	        ( *stampede3* ) QUEUE=skx-dev     ;; \
 	        ( *vista* )     \
 	            if [ $${EXECUTABLE} = "example_gpu_launcher" ] ; then \
