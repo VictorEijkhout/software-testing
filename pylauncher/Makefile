@@ -92,31 +92,32 @@ submit :
 
 example_shifted_ibrun_dependencies = parallel
 
-info ::
-	@echo 
-	@echo "make programs"
-	@echo "make PROGRAM"
-	@echo "    with C programs: ${CPROGRAMS}"
-	@echo "    compiled with WAIT=SLURM_NPROCS"
-.SECONDEXPANSION:
-.PHONY: programs ${CPROGRAMS}
-CPROGRAMS = parallel randomaction randomsleep randomcomma corecount
-programs : ${CPROGRAMS} ${CUPROGRAMS}
-parallel randomaction corecount :
-	@slurm=${SLURM_NPROCS} && slurm=$${slurm:=40} \
-	&& wait=${WAIT} && wait=$${wait:=$${slurm}} \
-	&& echo "compile $@ with wait=$$wait" \
-	&& cmdline="mpicc -fopenmp -o $@ $@.c -DWAIT=$${wait:=20}" \
-	&& echo $${cmdline} && eval $${cmdline}
-clean :: 
-	@rm -rf pylauncher_corecount
-randomsleep randomcomma : $$@.c
-	mpicc -g -O2 -o $@ $@.c 
-CUPROGRAMS = gpusleep
-gpusleep : $$@.cu
-	nvcc -allow-unsupported-compiler -g -O2 -o $@ $@.cu
-totalclean ::
-	@rm -f ${CPROGRAMS} ${CUPROGRAMS}
+include Make.programs
+# info ::
+# 	@echo 
+# 	@echo "make programs"
+# 	@echo "make PROGRAM"
+# 	@echo "    with C programs: ${CPROGRAMS}"
+# 	@echo "    compiled with WAIT=SLURM_NPROCS"
+# .SECONDEXPANSION:
+# .PHONY: programs ${CPROGRAMS}
+# CPROGRAMS = parallel randomaction randomsleep randomcomma corecount
+# programs : ${CPROGRAMS} ${CUPROGRAMS}
+# parallel randomaction corecount :
+# 	@slurm=${SLURM_NPROCS} && slurm=$${slurm:=40} \
+# 	&& wait=${WAIT} && wait=$${wait:=$${slurm}} \
+# 	&& echo "compile $@ with wait=$$wait" \
+# 	&& cmdline="mpicc -fopenmp -o $@ $@.c -DWAIT=$${wait:=20}" \
+# 	&& echo $${cmdline} && eval $${cmdline}
+# clean :: 
+# 	@rm -rf pylauncher_corecount
+# randomsleep randomcomma : $$@.c
+# 	mpicc -g -O2 -o $@ $@.c 
+# CUPROGRAMS = gpusleep
+# gpusleep : $$@.cu
+# 	nvcc -allow-unsupported-compiler -g -O2 -o $@ $@.cu
+# totalclean ::
+# 	@rm -f ${CPROGRAMS} ${CUPROGRAMS}
 
 info ::
 	@echo 
