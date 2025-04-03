@@ -1,0 +1,1 @@
+export PYTHONPATH=${HOME}/Projects/pylauncher-git/src:${PYTHONPATH}

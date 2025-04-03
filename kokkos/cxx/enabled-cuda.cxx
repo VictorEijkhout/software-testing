@@ -24,5 +24,6 @@ int main(int argc,char **argv) {
   cout << "No\n";
 #endif
 
+  Kokkos::finalize();
   return 0;
 }
