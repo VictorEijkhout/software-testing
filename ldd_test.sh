@@ -29,7 +29,7 @@ else
 	failure 0 "lib <<$testlib>> no unresolved references" | tee -a ${testlog}
     else
 	failure 1 "lib <<$testlib>> unresolved libraries" | tee -a ${testlog}
-	for l in $( ldd ${libdir}/${testlib} | grep "not found" | awk '{print $1}' ) ; do
+	for l in $( ldd ${libfile} | grep "not found" | awk '{print $2}' ) ; do
 	    echo "${l}"
 	done >>${testlog}
     fi

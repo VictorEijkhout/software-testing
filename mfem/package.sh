@@ -1,3 +1,3 @@
 package=mfem
-version=4.7
+version=4.8
 mpi=1

@@ -13,7 +13,7 @@ function usage() {
     if [ "${buildsystem}" = "cmake" ] ; then 
 	echo "    [ --cmake cmake options separated by commas ]"
     fi
-    echo "    [ --in-build-run ]"
+    echo "    [ --in-build-run ] [ --run-options options ]"
     echo "    [ --ldd ]"
     echo "    [ --title test caption ]"
     echo "    [ --run_args \"arg1 arg2 arg3\" ]"
@@ -31,6 +31,7 @@ dir=dir
 dopy=
 fulllog=
 inbuildrun=
+runoptions=
 mpi=
 docuda=
 ldd=
@@ -57,6 +58,8 @@ while [ $# -gt 1 ] ; do
 	shift && dir=$( argument $1 ) && shift
     elif [ "$1" = "--in-build-run" ] ; then
 	shift && inbuildrun=1
+    elif [ "$1" = "--run-options" ] ; then
+	shift && runoptions="$1" && shift
     elif [ "$1" = "--ldd" ] ; then
 	shift && ldd=1
     elif [ "$1" = "-m" ] ; then 

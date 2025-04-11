@@ -185,12 +185,12 @@ function run_executable () {
     rm -f ${runlog}
     if [ -z "${mpi}" ] ; then
 	if [ ! -z "${inbuildrun}" ] ; then 
-	    cmdline="( cd build && ./${executable} )"
+	    cmdline="( cd build && ./${executable} ${runoptions} )"
 	else
-	    cmdline="./build/${executable}"
+	    cmdline="./build/${executable} ${runoptions}"
 	fi
     else
-	cmdline="ibrun -np 1 ./build/${executable}"
+	cmdline="ibrun -np 1 ./build/${executable} ${runoptions}"
     fi
     cmdline="${cmdline} ${runargs}"
     echo "Running: $cmdline" >>${testlog}
