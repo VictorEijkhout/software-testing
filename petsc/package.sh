@@ -3,7 +3,7 @@
 ##
 
 package=petsc
-version=3.22
+version=3.23
 modules=
 mkl=1
 mpi=1
