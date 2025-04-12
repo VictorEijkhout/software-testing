@@ -11,6 +11,8 @@ source ../driver_options.sh
 
 logfile=${testlog} load_dependencies
 
+( echo && echo "Cmake build single: ${source}" && echo ) >>${testlog}
+
 retcode=0
 ../cmake_build_single.sh -p ${package} ${x} \
     $( if [ ! -z "${mpi}" ] ; then echo "-m" ; fi ) \
@@ -25,6 +27,7 @@ failure $retcode "${executable} compilation" | tee -a ${testlog}
 ##
 if [ $retcode -eq 0 -a ! -z "${run}" ] ; then
 
+    ( echo && echo "Run executable: ${source}" && echo ) >>${testlog}
     run_executable
 
 else
