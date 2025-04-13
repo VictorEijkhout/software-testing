@@ -194,6 +194,7 @@ function run_executable () {
     fi
     cmdline="${cmdline} ${runargs}"
     echo "Running: $cmdline" >>${testlog}
+    echo LD_LIBRARY_PATH:${LD_LIBRARY_PATH} | tr ':' '\n' >>${testlog}
     eval $cmdline  >>${runlog} 2>&1 || retcode=$?
     failure $retcode "${executable} test run" | tee -a ${testlog}
 
