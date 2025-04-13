@@ -59,6 +59,7 @@ fi
 echo
 echo " .. with PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
 echo " .. with CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
+echo 
 
 cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} \
@@ -66,14 +67,18 @@ cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     ../${variant}"
 echo "cmake cmdline: ${cmdline}"
 retcode=0 && eval $cmdline || retcode=$?
-if [ ${retcode} -ne 0 ] ; then 
+if [ ${retcode} -eq 0 ] ; then
+    echo && echo "    Cmake completed" && echo
+else
     echo
     echo "    ERROR CMake failed program=${program} and ${package}/${v}; exit ${retcode}"
     echo
     exit ${retcode}
 fi
 
+echo && echo "Compilation start" && echo 
 retcode=0 && make || retcode=$?
+echo && echo " .. compilation finished" && echo 
 
 build_final_report
 
