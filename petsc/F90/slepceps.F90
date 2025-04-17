@@ -19,9 +19,11 @@
 ! ----------------------------------------------------------------------
 !
       program main
-#include <slepc/finclude/slepceps.h>
+!! #include <slepc/finclude/slepceps.h>
       use slepceps
-      implicit none
+      use petscmat
+      use MPI
+   implicit none
 
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 !     Declarations

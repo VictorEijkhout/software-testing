@@ -128,6 +128,15 @@ if [ "${skipf}" != "1" ] ; then
     else echo ".... skip f90 test" | tee -a ${logfile}
     fi
 
+    ##
+    ## syntax error
+    ##
+    # ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+    #                         ${p4pflag} \
+    # 			    --cmake "-DUSESLEPC=ON" \
+    # 			    --title "presence of slepc" \
+    # 			    slepceps.F90
+
     if [[ "${PETSC_ARCH}" = *f08* ]] ; then 
 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 				--title "can we compile Fortran2008" \
