@@ -59,12 +59,32 @@ echo
 echo " .. with PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
 echo " .. with CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
 
-incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
-eval incpath=\${${incpath}}
-cmdline="${compiler} -o ${base} ../${lang}/${base}.${lang} -I${incpath}"
-echo "cmdline=${cmdline}"
-retcode=0
-eval ${cmdline} || retcode=$?
+makefile=../${variant}/Makefile
+if [ ! -f ${makefile} ] ; then
+    echo "    ERROR could not file makefile: <<${makefile}>>"
+    exit 1
+fi
+cmdline="make \
+    PROJECTNAME=${base} \
+    -f ${makefile} \
+echo "make cmdline: ${cmdline}"
+retcode=0 && eval $cmdline || retcode=$?
+if [ ${retcode} -eq 0 ] ; then
+    echo && echo "    make completed" && echo
+else
+    echo
+    echo "    ERROR Make failed program=${program} and ${package}/${v}"
+    echo
+    exit ${retcode}
+fi
+
+
+# incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
+# eval incpath=\${${incpath}}
+# cmdline="${compiler} -o ${base} ../${lang}/${base}.${lang} -I${incpath}"
+# echo "cmdline=${cmdline}"
+# retcode=0
+# eval ${cmdline} || retcode=$?
 
 build_final_report
 

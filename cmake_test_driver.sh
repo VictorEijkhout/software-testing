@@ -11,7 +11,7 @@ source ../driver_options.sh
 
 logfile=${testlog} load_dependencies
 
-( echo && echo "Cmake build single: ${source}" && echo ) >>${testlog}
+( echo && echo "${buildsystem} build single: ${source}" && echo ) >>${testlog}
 
 retcode=0
 ../cmake_build_single.sh -p ${package} ${x} \
