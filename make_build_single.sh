@@ -55,18 +55,15 @@ if [ ! -z "${mpi}" ] ; then
     echo "    where ${basecompiler}=$( which ${basecompiler} )"
 fi
 
-echo
-echo " .. with PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
-echo " .. with CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
-
 makefile=../${variant}/Makefile
 if [ ! -f ${makefile} ] ; then
     echo "    ERROR could not file makefile: <<${makefile}>>"
     exit 1
 fi
 cmdline="make \
-    PROJECTNAME=${base} \
+    PROJECTNAME=${base} ${PROJECTNAME}.o \
     -f ${makefile} \
+    "
 echo "make cmdline: ${cmdline}"
 retcode=0 && eval $cmdline || retcode=$?
 if [ ${retcode} -eq 0 ] ; then
