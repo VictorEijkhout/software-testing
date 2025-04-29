@@ -1,4 +1,4 @@
 package=siesta
-version=5.2.1
+version=5.2.2
 mpi=1
 modules=mkl
