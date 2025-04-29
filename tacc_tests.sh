@@ -51,7 +51,7 @@ fi
 compilers="$( for c in $( cat ../compilers.sh ) ; do echo $c | tr -d '/' ; done )"
 for compiler in $compilers ; do 
     if [ ! -z "${matchcompiler}" -a "${matchcompiler}" != "${compiler}" ] ; then
-	echo " ==== Configuration not matched: ${compiler}"
+	echo " ==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
 	continue
     fi
     configlog=${logdir}/${compiler}.log

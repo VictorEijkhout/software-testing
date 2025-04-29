@@ -61,7 +61,7 @@ if [ ! -f ${makefile} ] ; then
     exit 1
 fi
 cmdline="make \
-    PROJECTNAME=${base} ${PROJECTNAME}.o \
+    SRCDIR=../${variant} PROJECTNAME=${base} ${base}.o \
     -f ${makefile} \
     "
 echo "make cmdline: ${cmdline}"

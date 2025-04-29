@@ -1,1 +1,2 @@
-${PROJECTNAME}.o : ${PROJECTNAME}.cu
+${PROJECTNAME}.o : ${SRCDIR}/${PROJECTNAME}.cu
+	nvcc -c -o $@ $^
