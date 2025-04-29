@@ -71,7 +71,7 @@ if [ ${retcode} -eq 0 ] ; then
     echo && echo "    Cmake completed" && echo
 else
     echo
-    echo "    ERROR CMake failed program=${program} and ${package}/${v}; exit ${retcode}"
+    echo "    ERROR CMake failed program=${program} and ${package}/${v}"
     echo
     exit ${retcode}
 fi

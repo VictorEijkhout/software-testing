@@ -1,0 +1,1 @@
+${PROJECTNAME}.o : ${PROJECTNAME}.cu
