@@ -4,6 +4,7 @@ project( ${PROJECTNAME} VERSION 1.0 )
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.cpp )
 
 find_package( MPI REQUIRED )
+# https://github.com/mfem/mfem/issues/4525
 find_package( MFEM REQUIRED )
 
 message( STATUS "Mfem includes: ${MFEM_INCLUDE_DIRS}" )
