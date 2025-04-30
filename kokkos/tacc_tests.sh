@@ -2,6 +2,17 @@
 
 source ./package.sh
 source ../options.sh
+source ../tacc_tests.sh
+exit 0
+
+##
+## old kokkos tests
+##
+
+#!/bin/bash
+
+source ./package.sh
+source ../options.sh
 
 ##
 ## omp or cuda :
@@ -21,7 +32,7 @@ echo "================"
 echo 
 logfile=tacc_tests.log
 rm -f ${logfile}
-for compiler in intel/19 intel/23 intel/24 gcc/9 gcc/11 gcc/12 gcc/13 ; do \
+for compiler in $( cat ../compilers.sh ) ; do \
 
     retcode=0 && module load ${compiler} >/dev/null 2>&1 || retcode=$?
     if [ $retcode -gt 0 ] ; then 

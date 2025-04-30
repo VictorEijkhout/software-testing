@@ -16,8 +16,16 @@ case ${loadversion} in
     program=enabled-sycl ;;
 esac
 
+export OMP_PROC_BIND=spread
+export OMP_PLACES=threads
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--value Yes \
 			--title "testing ${program}" \
 			${program}.cxx
+
+case ${version} in
+    ( *cuda )
+    ./kokkos_gpu_tests.sh
+    ;;
+esac
 
