@@ -7,7 +7,7 @@ source ../test_setup.sh
 ##
 
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-			--title "severly insufficient compile test" \
+			--title "severely insufficient compile test" \
 			sanity.c
 
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
