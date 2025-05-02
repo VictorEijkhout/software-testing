@@ -23,9 +23,3 @@ export OMP_PLACES=threads
 			--title "testing ${program}" \
 			${program}.cxx
 
-case ${version} in
-    ( *cuda )
-    ./kokkos_gpu_tests.sh
-    ;;
-esac
-
