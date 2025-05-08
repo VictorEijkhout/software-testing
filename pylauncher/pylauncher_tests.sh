@@ -37,6 +37,11 @@ echo "Using ${cores_per_node} cores per node"
 if [ $recompile -eq 1 ] ; then
     make totalclean
     if [ $? -gt 0 ] ; then echo 1 ; fi
+    case ${TACC_SYSTEM} in \
+	( vista | frontera | ls6 )
+	module load cuda
+	;;
+    esac
     make programs
     if [ $? -gt 0 ] ; then echo 1 ; fi
 fi
