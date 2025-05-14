@@ -9,6 +9,14 @@ fi
 
 
 ##
+## without this we'r sunk
+##
+../existence_test.sh -p ${package} -l ${logfile} \
+		     --title "petsc.pc" \
+		     --dir lib/pkgconfig PETSC.pc
+
+
+##
 ## C tests
 ##
 if [ "${skipc}" != "1" ] ; then
