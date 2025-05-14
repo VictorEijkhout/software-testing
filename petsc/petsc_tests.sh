@@ -13,7 +13,7 @@ fi
 ##
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "petsc.pc" \
-		     --dir lib/pkgconfig PETSc.pc
+		     --dir lib pkgconfig/PETSc.pc
 
 
 ##
