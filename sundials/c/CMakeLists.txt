@@ -17,6 +17,8 @@ target_link_libraries(
 	# there are many of these targets;
 	# these are just for this example.
 	SUNDIALS::cvode SUNDIALS::nvecparallel
+	# prevent gcc stumbling on math operations @@GLIBC
+	m dl
 	)
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
