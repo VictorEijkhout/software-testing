@@ -6,5 +6,5 @@ add_executable( ${PROJECTNAME} ${PROJECTNAME}.cpp )
 
 find_package( MPI )
 find_package( deal.II REQUIRED )
-find_package( aspect REQUIRED )
+find_package( Aspect REQUIRED )
 
