@@ -8,3 +8,10 @@ find_package( MPI )
 find_package( deal.II REQUIRED )
 find_package( Aspect REQUIRED )
 
+target_link_libraries(
+	${PROJECTNAME} PUBLIC
+	# WRONG
+	Aspect::Aspect
+)
+
+install( TARGETS ${PROJECTNAME} DESTINATION . )
