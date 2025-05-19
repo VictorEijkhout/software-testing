@@ -7,3 +7,9 @@ add_executable( ${PROJECTNAME} ${PROJECTNAME}.cpp )
 find_package( MPI )
 find_package( deal.II REQUIRED )
 
+target_link_libraries(
+	${PROJECTNAME} PUBLIC
+	dealii::dealii_release 
+)
+
+install( TARGETS ${PROJECTNAME} DESTINATION . )
