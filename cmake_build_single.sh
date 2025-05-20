@@ -21,7 +21,7 @@ echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null
 
 set_compilers
-echo "Using cmake: $( cmake --version | head -n 1 )"
+echo "Using cmake: $( cmake --version )"
 
 echo
 echo " .. using compilers for mpi=${mpi}:"
@@ -59,6 +59,7 @@ fi
 echo
 echo " .. with PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
 echo " .. with CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
+echo " .. with LD_LIBRARY_PATH=${LD_LIBRARY_PATH}"
 echo 
 
 cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
@@ -66,6 +67,7 @@ cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     $( if [ ! -z ${cmake} ] ; then echo ${cmake} | tr ',' ' ' ; fi ) \
     ../${variant}"
 echo "cmake cmdline: ${cmdline}"
+echo " .. with cmake=$( which cmake )"
 retcode=0 && eval $cmdline || retcode=$?
 if [ ${retcode} -eq 0 ] ; then
     echo && echo "    Cmake completed" && echo
