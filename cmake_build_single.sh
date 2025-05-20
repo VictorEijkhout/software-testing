@@ -57,15 +57,21 @@ if [ ! -z "${mpi}" ] ; then
 fi
 
 echo
+echo " .. modules loaded:"
+for m in $( module -t list 2>&1 | sort ) ; do
+    module -t show $m
+done
+
+echo
 echo " .. with PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
 echo " .. with CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
 echo " .. with LD_LIBRARY_PATH=${LD_LIBRARY_PATH}"
-echo 
 
 cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} \
     $( if [ ! -z ${cmake} ] ; then echo ${cmake} | tr ',' ' ' ; fi ) \
     ../${variant}"
+echo 
 echo "cmake cmdline: ${cmdline}"
 echo " .. with cmake=$( which cmake )"
 retcode=0 && eval $cmdline || retcode=$?
