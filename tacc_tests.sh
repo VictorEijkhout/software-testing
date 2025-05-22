@@ -17,7 +17,7 @@ if [ -z "${version}" ] ; then
 fi
 
 module reset >/dev/null 2>&1
-module load cmake$( if [ ! -z ${cmakeversion} ] ; then echo "/${cmakeversion}" ; fi ) 2>/dev/null
+
 ##
 ## spider this package unless we're testing some environment like mpi
 ##
@@ -98,6 +98,13 @@ for compiler in $compilers ; do
     ## Load prereq modules
     ##
     load_dependencies
+
+    ##
+    ## load cmake
+    ## Note: on frontera this may do some libc path fixes
+    ##
+    module load cmake$( if [ ! -z ${cmakeversion} ] ; then echo "/${cmakeversion}" ; fi ) \
+	2>/dev/null
 
     ## 
     ## load module (if there is one) and execute all tests

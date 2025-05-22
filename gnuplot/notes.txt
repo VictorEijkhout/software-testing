@@ -1,0 +1,10 @@
+$ gnuplot simple.dem </bin/yes
+$ GNUPLOT_DRIVER_DIR=../src ../src/gnuplot simple.dem </bin/yes
+
+   To run all demos non-interactively, use
+
+$ gnuplot all.dem </bin/yes
+$ GNUPLOT_DRIVER_DIR=../src ../src/gnuplot all.dem </bin/yes
+   For convenience, the special make target 'check' will run the above
+   if you run it from the demo directory of the source tree:
+make check
