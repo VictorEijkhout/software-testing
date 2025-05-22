@@ -9,7 +9,9 @@ package=$(pwd) && package=${package##*/}
 source ../options.sh
 source ../failure.sh
 
-../existence_test.sh -p ${package} -l ${logfile} \
+# we can't run without actual build.ninja input file
+../existence_test.sh -p ${package} -l ${logfile} -r \
 		     --title "base executable" \
-		     --dir bin swig
+		     --ldd \
+		     --dir bin ninja
 
