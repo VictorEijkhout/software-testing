@@ -169,7 +169,9 @@ fi
 ##
 if [ ! -z "${dopy}" ] ; then 
     echo "Python language" | tee -a ${logfile}
-    module load python3 && module list 2>/dev/null
+    if [ "$( which python3 )" = "/usr/bin/python3" ] ; then 
+	module load python3 && module list 2>/dev/null
+    fi
 
     ../python_test_driver.sh -p ${package} -l ${logfile} \
 	--title "import 4py modules" \
