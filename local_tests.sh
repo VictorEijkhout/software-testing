@@ -9,6 +9,9 @@ if [ -z "${package}" ] ; then
     echo "You are calling ../local_tests.sh without setting package"
     exit 1
 fi
+if [ -z "${version}" ] ; then
+    version=default
+fi
 
 module reset >/dev/null 2>&1
 ( echo "================" \

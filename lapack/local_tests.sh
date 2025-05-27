@@ -1,8 +1,6 @@
 #!/bin/bash
 
-package=mpi
-mpi=1
-
+source ./package.sh
 source ../options.sh
 source ../local_tests.sh
 
