@@ -1,3 +1,3 @@
 package=cfitsio
-version=4.2.0
+version=4.6.2
 
