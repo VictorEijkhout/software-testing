@@ -38,3 +38,11 @@ source ../test_setup.sh
 			--title "can we single precision" \
 			single.c
 # should this give output 4? it seems to give 0
+
+##
+## Fortran
+##
+
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "has F90" \
+			has.F90
