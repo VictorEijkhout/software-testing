@@ -1,2 +1,2 @@
-import petsc4py,slepc4py
+from petsc4py import PETSc
 print(1)

@@ -2,7 +2,7 @@ from mpi4py import MPI
 comm = MPI.COMM_WORLD
 procid = comm.Get_rank()
 
-import sys, petsc4py,slepc4py
+import sys, petsc4py
 petsc4py.init(sys.argv)
 if procid==0: print("Successful petsc init")
 slepc4py.init(sys.argv)
