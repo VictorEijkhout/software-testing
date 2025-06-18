@@ -2,11 +2,14 @@
 
 package=$( cat package.sh | grep package= | cut -d '=' -f 2 )
 
+compiler=
 trace=0
 version=
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
-	echo "$0 [ -h ] [ -t : trace ] [ -v 1.2.3 ]" && exit 0
+	echo "$0 [ -h ] [ -c compiler ] [ -t : trace ] [ -v 1.2.3 ]" && exit 0
+    elif [ $1 = "-c" ] ; then 
+	shift && compiler="-c $1" && shift
     elif [ $1 = "-t" ] ; then 
 	shift && trace=1
     elif [ $1 = "-v" ] ; then 
@@ -18,7 +21,7 @@ done
 
 echo "State of package: ${package} " \
     $( if [ ! -z "${version}" ] ; then echo "version=${version}" ; fi )
-./tacc_tests.sh -r \
+./tacc_tests.sh -r ${compiler} \
     $( if [ ! -z "${version}" ] ; then echo "-v ${version}" ; fi ) \
     | awk -v trace=${trace} '\
         trace==1 {print}

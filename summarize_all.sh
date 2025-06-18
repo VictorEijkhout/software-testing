@@ -1,9 +1,12 @@
 #!/bin/bash
 
 trace=
+compiler=
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
-	echo "$0 [ -h ] [ -t : trace ]" && exit 0
+	echo "$0 [ -h ] [ -c compiler ] [ -t : trace ]" && exit 0
+    elif [ $1 = "-c" ] ; then 
+	shift && compiler="-c $1" && shift
     elif [ $1 = "-t" ] ; then 
 	shift && trace="-t"
     else
@@ -20,7 +23,7 @@ for p in \
     siesta silo sqlite3 suitesparse sundials    \
     swig sz trilinos zlib                      \
     ; do 
-    ( cd $p && ../summarize_package.sh ${trace} )
+    ( cd $p && ../summarize_package.sh ${compiler} ${trace} )
 done
 
 # packages with multiple versions
