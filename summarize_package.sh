@@ -16,15 +16,19 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
-echo "State of package: ${package}"
+echo "State of package: ${package} " \
+    $( if [ ! -z "${version}" ] ; then echo "version=${version}" ; fi )
 ./tacc_tests.sh -r \
     $( if [ ! -z "${version}" ] ; then echo "-v ${version}" ; fi ) \
     | awk -v trace=${trace} '\
         trace==1 {print}
         /Configuration:/ {configuration = $3 }
-        /could not load/ {missing = missing " " configuration }
-        /failed.*compilation/ { errors = errors " " configuration }
-        END { print "Missing:" missing ; print "Errors:" errors ;
+        /could not load/ {missing[configuration]=1 }
+        /failed.*compilation/ { errors[configuration]=1 }
+        END { mcount=0 ; for ( mkey in missing ) mcount++ ;
+              if (mcount>0) { printf("Missing:") ; for (mkey in missing) printf(" %s",mkey) ; printf("\n"); }
+              ecount=0 ; for ( ekey in errors ) ecount++ ;
+              if (ecount>0) { printf("Errors:") ; for (ekey in errors) printf(" %s",ekey) ; printf("\n"); }
             }
         ' 
     2>&1 | tee ${package}_summary.log
