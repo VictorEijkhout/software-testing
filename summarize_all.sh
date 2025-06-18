@@ -12,7 +12,7 @@ while [ $# -gt 0 ] ; do
 done
 
 for p in \
-    adios2 arpack aspect autoconf boost catch2 \
+    adios2 arpack aspect boost catch2 \
     cfitsio cxxopts dealii eigen fftw2 fftw3   \
     gsl hypre jsonc libmesh metis mfem     \
     netcdf parallelnetcdf pnetcdf              \
