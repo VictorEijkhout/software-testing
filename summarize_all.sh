@@ -3,10 +3,10 @@
 for p in \
     adios2 arpack aspect autoconf boost catch2 \
     cfitsio cxxopts dealii eigen fftw2 fftw3   \
-    gmp gsl hypre jsonc libmesh metis mfem     \
+    gsl hypre jsonc libmesh metis mfem     \
     netcdf parallelnetcdf pnetcdf              \
     octopus p4est pcre2 scotch ptscotch        \
-    siesta silo sqlite suitesparse sundials    \
+    siesta silo sqlite3 suitesparse sundials    \
     swig sz trilinos zlib                      \
     ; do 
     ( cd $p && ../summarize_package.sh )
