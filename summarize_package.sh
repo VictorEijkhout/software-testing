@@ -23,6 +23,7 @@ echo "State of package: ${package} " \
     | awk -v trace=${trace} '\
         trace==1 {print}
         /Configuration:/ {configuration = $3 }
+        /not installed here/ {missing["all"]=1 }
         /could not load/ {missing[configuration]=1 }
         /failed.*compilation/ { errors[configuration]=1 }
         END { mcount=0 ; for ( mkey in missing ) mcount++ ;
