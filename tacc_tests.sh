@@ -48,7 +48,7 @@ fi
 #
 # loop through compiler names without slash
 #
-compilers="$( for c in $( cat ../compilers.sh ) ; do echo $c | tr -d '/' ; done )"
+compilers="$( for c in $( if [ -f "../compilers_${TACC_SYSTEM}.sh" ] ; then cat ../compilers_${TACC_SYSTEM}.sh ; else cat ../compilers.sh ; fi ) ; do echo $c | tr -d '/' ; done )"
 for compiler in $compilers ; do 
     if [ ! -z "${matchcompiler}" -a "${matchcompiler}" != "${compiler}" ] ; then
 	echo " ==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
