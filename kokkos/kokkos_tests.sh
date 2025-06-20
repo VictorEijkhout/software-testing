@@ -14,6 +14,8 @@ case ${loadversion} in
     program=enabled-cuda ;;
     ( *sycl ) 
     program=enabled-sycl ;;
+    ( * )
+    program=SET-OMP-CUDA-SYCL
 esac
 
 export OMP_PROC_BIND=spread

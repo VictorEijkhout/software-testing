@@ -72,6 +72,8 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
+echo "Testing $package/$version, loaded as $loadpackage/$loadversion"
+
 ##
 ## Package is set by package.sh at top level,
 ## or through the "-p" option in package_tests.sh

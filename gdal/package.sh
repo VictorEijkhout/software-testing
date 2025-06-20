@@ -3,7 +3,7 @@
 ##
 
 package=gdal
-version=3.9.2
+version=3.11.0
 modules=
 mkl=
 mpi=

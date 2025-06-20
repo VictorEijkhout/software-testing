@@ -36,8 +36,11 @@ TACCproject = "A-ccsc" # this only works for Victor. Customize!
 #
 system=os.environ['TACC_SYSTEM']
 if system=="stampede3":
-    queue="skx"
-else: queue="small"
+    queue = "skx"
+elif system=="ls6":
+    queue = "vm-small"
+else:
+    queue = "small"
 
 #
 # how many jobs can be in the queue?
@@ -54,6 +57,8 @@ if not os.path.exists(commandlines):
     raise Exception( f"input does not exist: {commandlines}" )
 workdir = f"pylauncher_tmp_{example}"
 shutil.rmtree(workdir,ignore_errors=True)
+outputdir = "pylauncher_output_submit"
+shutil.rmtree(outputdir,ignore_errors=True)
 
 pylauncher.SubmitLauncher\
     (commandlines,

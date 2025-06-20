@@ -61,7 +61,7 @@ if [ ! -f ${makefile} ] ; then
     exit 1
 fi
 cmdline="make \
-    SRCDIR=../${variant} PROJECTNAME=${base} ${base}.o \
+    SRCDIR=../${variant} PROJECTNAME=${base} ${base} \
     -f ${makefile} \
     "
 echo "make cmdline: ${cmdline}"
@@ -75,13 +75,6 @@ else
     exit ${retcode}
 fi
 
-
-# incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
-# eval incpath=\${${incpath}}
-# cmdline="${compiler} -o ${base} ../${lang}/${base}.${lang} -I${incpath}"
-# echo "cmdline=${cmdline}"
-# retcode=0
-# eval ${cmdline} || retcode=$?
 
 build_final_report
 
