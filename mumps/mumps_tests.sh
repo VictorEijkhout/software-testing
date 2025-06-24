@@ -7,6 +7,10 @@ source ../test_setup.sh
 ##
 
 ../existence_test.sh -p ${package} -l ${logfile} \
+		     --title "settings file" \
+		     --dir dir Makefile.inc
+
+../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "c single header" \
 		     --dir inc smumps_c.h
 
