@@ -1,3 +1,3 @@
 package=octopus
-version=15.1
+version=16.0
 mpi=1

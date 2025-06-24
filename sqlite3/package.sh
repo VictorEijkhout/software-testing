@@ -1,2 +1,2 @@
 package=sqlite
-version=3.46.1
+version=3.49.2
