@@ -22,7 +22,7 @@
 #ifndef _aspect_unit_tests_common_h
 #define _aspect_unit_tests_common_h
 
-#include <catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <deal.II/base/table.h>
 
