@@ -46,7 +46,7 @@ if [ -f "${filename}" ] ; then
     fi
 else
     failure 1 "file <<$source>> in section <<$dir>>" | tee -a "${testlog}"
-    ( echo "dir contents of <<${fullpath}>>:" && ls -d ${fullpath}/* ) >>"${fulllog}"
+    ( echo "dir contents of <<${fullpath}>>:" && ls -d ${fullpath}/* ) >>"${testlog}"
 fi
 
 echo " .. include testlog <<${testlog}>> into full log: <<${fulllog}>>" >>"${fulllog}"
