@@ -1,6 +1,6 @@
 #include "petsc.h"
 
-#if PETSC_USE_DEBUG == 1
+#if defined(PETSC_USE_DEBUG)
 #error debug mode not disabled
 #endif
 
