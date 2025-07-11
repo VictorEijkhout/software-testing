@@ -37,7 +37,7 @@ if [ "${loadpackage}" != "none" ] ; then
 	if [ $retcode -eq 0 ] ; then
 	    echo "Loaded package:  ${loadpackage}/${loadversion}" >>${logfile}
 	    echo " .. $( module -t show ${loadpackage}/${loadversion} 2>&1 )" >>${logfile}
-	    for dir in dir inc lib ; do
+	    for dir in dir bin inc lib ; do
 		check_dir "${loadpackage}" "$dir"
 	    done
 	else 
