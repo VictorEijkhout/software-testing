@@ -9,7 +9,7 @@ fi
 
 
 ##
-## without this we'r sunk
+## without this we're sunk
 ##
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "petsc.pc" \
@@ -27,6 +27,18 @@ if [ "${skipc}" != "1" ] ; then
 			    --title "Sanity test" \
 			    sanity.c
 
+    if [[ "${PETSC_ARCH}" = *debug* ]] ; then
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+				${p4pflag} \
+				--title "Debug enabled" \
+				debug1.c
+    else
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+				${p4pflag} \
+				--title "Debug disabled" \
+				debug0.c
+    fi
+    
     # echo "Test if we have amgx preconditioner"
     # retcode=0
     # ../cmake_build_single.sh -m -p ${package} amgx.c >>${logfile} 2>&1 || retcode=$?
@@ -56,20 +68,6 @@ if [ "${skipc}" != "1" ] ; then
 				--title "complex type" \
 				complex.c
     fi
-
-    # if [ "${TACC_SYSTEM}" != "vista" ] ; then 
-    # 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-    # 	    -d phdf5 \
-    #                         ${p4pflag} \
-    # 			    --title "presence of hdf5" \
-    # 			    hdf5.c
-    # fi
-
-	# ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-        #                     ${p4pflag} \
-	# 		    --title "presence of fftw3" \
-	# -t accuracy \
-	# fftw3.c
 
     if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
