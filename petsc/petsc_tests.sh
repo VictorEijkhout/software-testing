@@ -9,7 +9,7 @@ fi
 
 
 ##
-## without this we'r sunk
+## without this we're sunk
 ##
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "petsc.pc" \
@@ -27,6 +27,18 @@ if [ "${skipc}" != "1" ] ; then
 			    --title "Sanity test" \
 			    sanity.c
 
+    if [[ "${PETSC_ARCH}" = *debug* ]] ; then
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+				${p4pflag} \
+				--title "Debug enabled" \
+				debug1.c
+    else
+	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+				${p4pflag} \
+				--title "Debug disabled" \
+				debug0.c
+    fi
+    
     # echo "Test if we have amgx preconditioner"
     # retcode=0
     # ../cmake_build_single.sh -m -p ${package} amgx.c >>${logfile} 2>&1 || retcode=$?

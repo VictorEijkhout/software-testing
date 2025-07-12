@@ -4,6 +4,26 @@
 ####
 ################################################################
 
+function check_dir () {
+    pkg=$1
+    if [ -z "${pkg}" ] ; then
+	echo "INTERNAL ERROR zero pkg argument" && exit 1
+    fi
+    dir=$2
+    if [ -z "${dir}" ] ; then
+	echo "INTERNAL ERROR zero dir argument" && exit 1
+    fi
+    dirname=TACC_$( echo ${pkg} | tr a-z A-Z )_$( echo $dir | tr a-z A-Z )
+    eval variable=\${${dirname}}
+    if [ -z "${variable}" ] ; then
+	echo "Diagnostic: package <<$pkg>> has no <<$dir>> variable <<$dirname>>"
+    else
+	if [ ! -d "${variable}" ] ; then
+	    echo "FATAL: package <<$pkg>> variable <<$dir>>: <<${variable}>> does not exist"
+	fi
+    fi
+}
+
 ##
 ## Load actual module and execute all tests
 ##
@@ -17,6 +37,9 @@ if [ "${loadpackage}" != "none" ] ; then
 	if [ $retcode -eq 0 ] ; then
 	    echo "Loaded package:  ${loadpackage}/${loadversion}" >>${logfile}
 	    echo " .. $( module -t show ${loadpackage}/${loadversion} 2>&1 )" >>${logfile}
+	    for dir in dir bin inc lib ; do
+		check_dir "${loadpackage}" "$dir"
+	    done
 	else 
 	    echo "     could not load ${loadpackage}/${loadversion}" | tee -a ${logfile}
 	    echo "     currently loaded: $( module -t list 2>&1 ) " >>${logfile}
