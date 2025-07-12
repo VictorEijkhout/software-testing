@@ -57,20 +57,6 @@ if [ "${skipc}" != "1" ] ; then
 				complex.c
     fi
 
-    # if [ "${TACC_SYSTEM}" != "vista" ] ; then 
-    # 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-    # 	    -d phdf5 \
-    #                         ${p4pflag} \
-    # 			    --title "presence of hdf5" \
-    # 			    hdf5.c
-    # fi
-
-	# ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-        #                     ${p4pflag} \
-	# 		    --title "presence of fftw3" \
-	# -t accuracy \
-	# fftw3.c
-
     if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
 	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                             ${p4pflag} \
@@ -79,7 +65,7 @@ if [ "${skipc}" != "1" ] ; then
     fi
 
     fftw3_extra_test="-t accuracy"
-    for package in fftw3 mumps parmetis phdf5 ptscotch strumpack superlu superlu_dist ; do
+    for package in fftw3 mumps parmetis hdf5 ptscotch strumpack superlu superlu_dist ; do
 	if [[ "${PETSC_ARCH}" == *i64* ]] ; then
 	    if [[ "$package" == chaco ]] ; then continue ; fi
 	    if [[ "$package" == parmetis ]] ; then continue ; fi
