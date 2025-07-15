@@ -17,3 +17,8 @@ source ../test_setup.sh
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile and run" \
 			valuesWrite.cpp 
+
+## https://github.com/ornladios/ADIOS2/issues/4585
+# ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+# 			--title "can we compile and run Fortran" \
+# 			values.F90
