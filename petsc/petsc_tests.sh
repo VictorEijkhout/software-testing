@@ -77,7 +77,7 @@ if [ "${skipc}" != "1" ] ; then
     fi
 
     fftw3_extra_test="-t accuracy"
-    for package in fftw3 mumps parmetis phdf5 ptscotch strumpack superlu superlu_dist ; do
+    for package in fftw3 mumps parmetis hdf5 ptscotch strumpack superlu superlu_dist ; do
 	if [[ "${PETSC_ARCH}" == *i64* ]] ; then
 	    if [[ "$package" == chaco ]] ; then continue ; fi
 	    if [[ "$package" == parmetis ]] ; then continue ; fi
