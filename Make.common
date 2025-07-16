@@ -46,6 +46,7 @@ localtests :
 	; done
 
 clean ::
-	@rm -f a.out ${TESTS} *.o *~ *.out */*~
+	@rm -f a.out ${TESTS} \
+	    *.o ./{c,cxx,cpp,F90}/*.o *~ *.out */*~
 	@rm -rf build
 	@rm -rf *.log *logs/
