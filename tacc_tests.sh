@@ -48,14 +48,28 @@ fi
 #
 # loop through compiler names without slash
 #
-compilers="$( for c in $( if [ -f "../compilers_${TACC_SYSTEM}.sh" ] ; then cat ../compilers_${TACC_SYSTEM}.sh ; else cat ../compilers.sh ; fi ) ; do echo $c | tr -d '/' ; done )"
+compilers="$( if [ -f "../compilers_${TACC_SYSTEM}.sh" ] ; then cat ../compilers_${TACC_SYSTEM}.sh ; else cat ../compilers.sh ; fi )"
 for compiler in $compilers ; do 
+
+    #
+    # parse compiler & possible module use path
+    #
+    if [[ ${compiler} = *:* ]] ; then
+	usepath=$( echo ${compiler} | cut -d ':' -f 1 )
+	compiler=$( echo ${compiler} | cut -d ':' -f 2 )
+    else usepath= ; fi
+    compiler=$( echo $compiler | tr -d '/' )
+    #
+    # skip if we match a particular compiler
+    #
     if [ ! -z "${matchcompiler}" ] ; then
 	if [[ ${compiler} != ${matchcompiler}* ]] ; then
 	    echo " ==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
 	    continue
 	fi
     fi
+
+    # local log file
     configlog=${logdir}/${compiler}.log
     rm -f ${configlog}
     touch ${configlog}
@@ -70,10 +84,20 @@ for compiler in $compilers ; do
     ## load compiler by version
     ##
     echo >>${logfile}
+    if [ ! -z "${usepath}" ] ; then 
+	if [ ! -d "${usepath}" ] ; then
+	    echo "ERROR invalid module use path <<${usepath}>>" | tee -a ${logfile}
+	    continue # try next compiler
+	fi
+	module use ${usepath} >>${logfile} 2>&1
+    fi
     retcode=0 && module -t load ${cname}/${cversion} >>${logfile} 2>&1 || retcode=$?
     if [ $retcode -eq 0 ] ; then 
 	## successful load needs to be visually offset
 	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${logfile}
+	if [ ! -z "${usepath}" ] ; then 
+	    echo "     from path: ${usepath}" | tee -a ${logfile}
+	fi
 	echo "Loaded compiler: ${cname}/${cversion}"  >>${logfile}
     else
 	echo "==== Configuration failed to load: ${cname}/${cversion}" | tee -a ${logfile}
