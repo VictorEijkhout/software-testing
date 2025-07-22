@@ -50,9 +50,11 @@ fi
 #
 compilers="$( for c in $( if [ -f "../compilers_${TACC_SYSTEM}.sh" ] ; then cat ../compilers_${TACC_SYSTEM}.sh ; else cat ../compilers.sh ; fi ) ; do echo $c | tr -d '/' ; done )"
 for compiler in $compilers ; do 
-    if [ ! -z "${matchcompiler}" -a "${matchcompiler}" != "${compiler}" ] ; then
-	echo " ==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
-	continue
+    if [ ! -z "${matchcompiler}" ] ; then
+	if [[ ${compiler} != ${matchcompiler}* ]] ; then
+	    echo " ==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
+	    continue
+	fi
     fi
     configlog=${logdir}/${compiler}.log
     rm -f ${configlog}
