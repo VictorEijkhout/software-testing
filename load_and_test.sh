@@ -15,9 +15,7 @@ function check_dir () {
     fi
     dirname=TACC_$( echo ${pkg} | tr a-z A-Z )_$( echo $dir | tr a-z A-Z )
     eval variable=\${${dirname}}
-    if [ -z "${variable}" ] ; then
-	echo "Diagnostic: package <<$pkg>> has no <<$dir>> variable <<$dirname>>"
-    else
+    if [ ! -z "${variable}" ] ; then
 	if [ ! -d "${variable}" ] ; then
 	    echo "FATAL: package <<$pkg>> variable <<$dir>>: <<${variable}>> does not exist"
 	fi
