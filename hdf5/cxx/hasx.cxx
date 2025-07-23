@@ -1,4 +1,4 @@
-#include "hdf5.h"
+#include "H5Cpp.h"
 
 int main() {
   hid_t file_id;
