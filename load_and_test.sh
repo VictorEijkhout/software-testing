@@ -17,7 +17,8 @@ function check_dir () {
     eval variable=\${${dirname}}
     if [ ! -z "${variable}" ] ; then
 	if [ ! -d "${variable}" ] ; then
-	    echo "FATAL: package <<$pkg>> variable <<$dir>>: <<${variable}>> does not exist"
+	    echo "FATAL: package <<$pkg>> variable <<$dir>>: <<${variable}>> does not exist" \
+		| tee -a ${logfile}
 	fi
     fi
 }

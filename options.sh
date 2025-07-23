@@ -28,7 +28,10 @@ fi
 #
 logfile=
 
-matchcompiler=
+# do not set matchcompiler other than through commandline options;
+# this way it can be set in the package.sh
+## matchcompiler=
+
 ## mpi= this is set in the tacc/local_tests.sh top level file
 run=1
 docuda=

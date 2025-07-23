@@ -13,6 +13,14 @@ source ../failure.sh
 ## the leftover argument is the program
 ##
 source=$1
+if [[ ${source} = var=* ]] ; then
+    var=$( echo $source | cut -d '=' -f 2 )
+    eval source=\${$var}
+    if [ -z "${source}" ] ; then
+	echo "ERROR variable <<$var>> is undefined"
+	exit 1
+    fi
+fi
 
 if [ ! -f "${testlog}" ] ; then 
     echo "WARNING test log <<${testlog}>> does not exist in existencetest"

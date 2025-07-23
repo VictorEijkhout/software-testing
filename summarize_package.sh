@@ -20,11 +20,11 @@ while [ $# -gt 0 ] ; do
 done
 
 echo "State of package: ${package} " \
-    $( if [ ! -z "${version}" ] ; then echo "version=${version}" ; fi )
+     $( if [ ! -z "${version}" -a "${version}" != "none" ] ; then echo "version=${version}" ; fi )
 ./tacc_tests.sh -r ${compiler} \
     $( if [ ! -z "${version}" ] ; then echo "-v ${version}" ; fi ) \
     | awk -v trace=${trace} '\
-        trace==1 {print}
+        trace==1 {print "trace: " $0}
         /Configuration:/ {configuration = $3 }
         /not installed here/ {missing["all"]=1 }
         /could not load/ {missing[configuration]=1 }
