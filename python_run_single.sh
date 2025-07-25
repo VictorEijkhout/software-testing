@@ -23,7 +23,11 @@ incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
 eval incpath=\${${incpath}}
 srcfile=../${lang}/${base}.${lang}
 cp ${srcfile} .
-cmdline="python3 ${base}.py"
+if [ ! -z "${mpi}" ] ; then
+    cmdline="ibrun python3 ${base}.py"
+else
+    cmdline="python3 ${base}.py"
+fi
 echo "cmdline=${cmdline}"
 retcode=0
 eval ${cmdline} || retcode=$?
