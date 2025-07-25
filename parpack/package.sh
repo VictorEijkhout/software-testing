@@ -1,3 +1,3 @@
-package=arpack
+package=parpack
 version=3.9.1
-modules="hdf5 mkl"
+modules="phdf5 mkl"
