@@ -56,14 +56,15 @@ function argument () {
 # this is used in both tacc & local tests
 #
 function compiler_name_and_version () {
-    cname=${compiler%%[0-9]*}
-    cversion=${compiler##*[a-z]}
-    if [ ! -z "${matchcompiler}" ] ; then 
-	if [[ $compiler != *${matchcompiler}* ]] ; then
-	    echo "==== Skip compiler: $compiler" 
-	    found=0
-	fi
-    fi
+    cname=${compiler%%[0-9\.\/]*}
+    cversion=${compiler##*[a-z\/]}
+    ## this test duplicates the one in tacc_tests.sh
+    # if [ ! -z "${matchcompiler}" ] ; then 
+    # 	if [[ $compiler != *${matchcompiler}* ]] ; then
+    # 	    echo "==== Skip compiler: $compiler" 
+    # 	    found=0
+    # 	fi
+    # fi
 }
 
 #
