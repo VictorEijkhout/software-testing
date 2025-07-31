@@ -63,9 +63,9 @@ for m in $( module -t list 2>&1 | sort ) ; do
 done
 
 echo
-echo " .. with PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
-echo " .. with CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
-echo " .. with LD_LIBRARY_PATH=${LD_LIBRARY_PATH}"
+echo " .. with PKG_CONFIG_PATH=  $( echo :${PKG_CONFIG_PATH}   | tr ':' '\n' )"
+echo " .. with CMAKE_PREFIX_PATH=$( echo :${CMAKE_PREFIX_PATH} | tr ':' '\n' )"
+echo " .. with LD_LIBRARY_PATH=  $( echo :${LD_LIBRARY_PATH}  | tr ':' '\n' )"
 
 cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
     -D PROJECTNAME=${base} \
