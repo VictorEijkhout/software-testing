@@ -58,6 +58,7 @@ function argument () {
 function compiler_name_and_version () {
     cname=${compiler%%[0-9\.\/]*}
     cversion=${compiler##*[a-z\/]}
+    configuration=${cname}$( echo ${cversion} | tr -d '\.' )
     ## this test duplicates the one in tacc_tests.sh
     # if [ ! -z "${matchcompiler}" ] ; then 
     # 	if [[ $compiler != *${matchcompiler}* ]] ; then

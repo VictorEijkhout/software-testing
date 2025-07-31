@@ -39,41 +39,44 @@ for compiler in $compilers ; do
 	compiler=$( echo ${compiler} | cut -d ':' -f 2 )
     else usepath= ; fi
     compiler=$( echo $compiler | tr -d '/' )
+
     #
     # skip if we match a particular compiler
     #
     if [ ! -z "${matchcompiler}" ] ; then
-	if [[ ${compiler} != ${matchcompiler}* ]] ; then
-	    echo "==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
+	# test equality of sanitized names
+	if [[ $( echo ${compiler} | tr -d '/\.' ) \
+	      != \
+	      $( echo ${matchcompiler} | tr -d '/\.' )* ]] ; then
+	    echo " ==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
 	    continue
 	fi
     fi
-
-    # local log file
-    configlog=${logdir}/${compiler}.log
-    rm -f ${configlog}
-    touch ${configlog}
 
     # split into name and version
     found=1
     compiler_name_and_version >>${logfile}
     if [ $found -eq 0 ] ; then continue ; fi
 
+    # local log file
+    configlog=${logdir}/${compiler}.log
+    rm -f ${configlog}
+    touch ${configlog}
+
     ##
     ## load local configuration
     ## which includes MPI
     ##
-    config=${cname}${cversion}
-    envfile=${HOME}/Software/env_${TACC_SYSTEM}_${config}.sh
+    envfile=${HOME}/Software/env_${TACC_SYSTEM}_${configuration}.sh
     if [ ! -f "${envfile}" ] ; then
 	if [ -z "${failed}" ] ; then 
 	    echo | tee -a ${logfile}
 	fi
-	echo "==== Configuration: ${config} undefined for system ${TACC_SYSTEM}" | tee -a ${logfile}
+	echo "==== Configuration: ${configuration} undefined for system ${TACC_SYSTEM}" | tee -a ${logfile}
 	failed=1
 	continue
     else
-	( echo && echo "==== Configuration: ${config}" ) | tee -a ${logfile}
+	( echo && echo "==== Configuration: ${configuration}" ) | tee -a ${logfile}
 	echo " .. loaded from ${envfile}" >>${logfile}
 	failed=
     fi
