@@ -1,7 +1,8 @@
 cmake_minimum_required( VERSION 3.12 )
 project( ${PROJECTNAME} VERSION 1.0 )
 
-add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
+enable_language( Fortran )
+add_executable( ${PROJECTNAME} ${PROJECTNAME}.f )
 
 find_package( MPI )
 # find_package( PkgConfig REQUIRED )
