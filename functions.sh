@@ -214,6 +214,10 @@ function run_executable () {
 
 }
 
+function module_list () {
+    module -t list 2>&1 | sort | awk '{m=m FS $1} END {print m}'
+}
+
 function build_usage () {
     echo "Usage: $0 [ -m moduleversion ] [ -p package ]  [ -v variant ] [ -x (set -x) ]"
     if [ "${buildsystem}" = "cmake" ] ; then 
