@@ -15,8 +15,8 @@ function usage() {
 	echo "    [ -p : python tests only ]"
     fi
     echo "    [ -x (set -x) ]"
-    if [ ! -z "${extra_help}" ] ; then
-	echo ${extra_help}
+    if [ ! -z "${optional_help}" ] ; then
+	echo "    ${optional_help}"
     fi
 }
 if [ $# -eq 1 -a "$1" = "-h" ] ; then
@@ -70,6 +70,12 @@ while [ $# -gt 0 ] ; do
 	set -x && xflag="-x" && shift 
     elif [ "$1" = "-4" ] ; then
 	p4pflag="-4" && dopy=1 && shift
+    elif [[ "${optional_flags}" = *$1* ]] ; then
+	# echo " .. parsing extra flag <<$1>>"
+	flag=$1 && flag=${flag##*\-}
+	extra_flags="${extra_flags} --${flag}"
+	eval ${flag}=1
+	shift
     else
 	echo "ERROR: unrecognized option <<$1>>" && exit 1
     fi
