@@ -25,7 +25,7 @@ source ../test_setup.sh
 		     --title "C++ library" \
 		     --dir lib libhdf5_cpp.so
 
-# this uses pkg-config
+# this uses find_package
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile C++" \
 			hascxx.cxx
