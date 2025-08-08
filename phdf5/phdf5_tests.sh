@@ -9,9 +9,10 @@ source ../test_setup.sh
 ##
 ## C tests
 ##
+# this uses pkg-config
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile C" \
-			has.c
+			hasc.c
 
 ##
 ## C++ tests
@@ -24,9 +25,15 @@ source ../test_setup.sh
 		     --title "C++ library" \
 		     --dir lib libhdf5_cpp.so
 
+# this uses pkg-config
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "can we compile C++" \
+			hascxx.cxx
+
 ##
 ## Fortran tests
 ##
+# this uses find_package
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile Fortran" \
 			fmod.F90
