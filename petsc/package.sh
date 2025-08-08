@@ -8,3 +8,5 @@ modules=
 mkl=1
 mpi=1
 python_option=1
+optional_flags="--small"
+optional_help="[ --small : no external package tests, slepc excluded ]"
