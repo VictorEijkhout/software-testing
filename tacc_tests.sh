@@ -51,6 +51,16 @@ fi
 compilers="$( if [ -f "../compilers_${TACC_SYSTEM}.sh" ] ; then cat ../compilers_${TACC_SYSTEM}.sh ; else cat ../compilers.sh ; fi )"
 for compiler in $compilers ; do 
 
+    # start from a clean environment
+    module -t purge >/dev/null 2>&1
+    module -t reset >/dev/null 2>&1
+
+    (
+	echo "==== Configuration attempt <<${compiler}>>" 
+	echo " .. module path:"
+	echo $MODULEPATH | tr ':' '\n'
+    ) >>${logfile}
+
     #
     # parse compiler & possible module use path
     #
@@ -58,27 +68,30 @@ for compiler in $compilers ; do
 	usepath=$( echo ${compiler} | cut -d ':' -f 1 )
 	compiler=$( echo ${compiler} | cut -d ':' -f 2 )
     else usepath= ; fi
-    compiler=$( echo $compiler | tr -d '/' )
+
     #
     # skip if we match a particular compiler
     #
     if [ ! -z "${matchcompiler}" ] ; then
-	if [[ ${compiler} != ${matchcompiler}* ]] ; then
+	# test equality of sanitized names
+	if [[ $( echo ${compiler} | tr -d '/\.' ) \
+	      != \
+	      $( echo ${matchcompiler} | tr -d '/\.' )* ]] ; then
 	    echo " ==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
 	    continue
 	fi
     fi
 
-    # local log file
-    configlog=${logdir}/${compiler}.log
-    rm -f ${configlog}
-    touch ${configlog}
-
     # split into name and version; 
     # report if skipped
-    found=1
+    ## found=1
     compiler_name_and_version >>${logfile}
-    if [ $found -eq 0 ] ; then continue ; fi
+    ## if [ $found -eq 0 ] ; then continue ; fi
+    
+    # local log file
+    configlog=${logdir}/${cname}${cversion}.log
+    rm -f ${configlog}
+    touch ${configlog}
 
     ##
     ## load compiler by version
@@ -91,6 +104,7 @@ for compiler in $compilers ; do
 	fi
 	module use ${usepath} >>${logfile} 2>&1
     fi
+    echo "Actual load: ${cname}/${cversion}" >>${logfile}
     retcode=0 && module -t load ${cname}/${cversion} >>${logfile} 2>&1 || retcode=$?
     if [ $retcode -eq 0 ] ; then 
 	## successful load needs to be visually offset
@@ -99,6 +113,7 @@ for compiler in $compilers ; do
 	    echo "     from path: ${usepath}" | tee -a ${logfile}
 	fi
 	echo "Loaded compiler: ${cname}/${cversion}"  >>${logfile}
+	module_list >>${logfile}
     else
 	echo "==== Configuration failed to load: ${cname}/${cversion}" | tee -a ${logfile}
 	continue

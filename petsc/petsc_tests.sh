@@ -11,7 +11,7 @@ fi
 ##
 ## without this we're sunk
 ##
-../existence_test.sh -p ${package} -l ${logfile} \
+../existence_test.sh ${standardflags} -l ${logfile} \
 		     --title "petsc.pc" \
 		     --dir lib pkgconfig/PETSc.pc
 
@@ -41,7 +41,7 @@ if [ "${skipc}" != "1" ] ; then
     
     # echo "Test if we have amgx preconditioner"
     # retcode=0
-    # ../cmake_build_single.sh -m -p ${package} amgx.c >>${logfile} 2>&1 || retcode=$?
+    # ../cmake_build_single.sh -m ${standardflags} amgx.c >>${logfile} 2>&1 || retcode=$?
     # failure $retcode "amgx compilation"
 
     if [[ "${PETSC_ARCH}" = *single* ]] ; then
@@ -69,42 +69,51 @@ if [ "${skipc}" != "1" ] ; then
 				complex.c
     fi
 
-    if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
-	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-                            ${p4pflag} \
-				--title "presence of mumpsi64" \
-				mumpsi64.c
+    ##
+    ## Test external packages
+    ##
+    if [ -z "${small}" ] ; then
+	echo "test external packages"
+	if [[ "${PETSC_ARCH}" == *i64* ]] ; then 
+	    ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+                ${p4pflag} \
+		--title "presence of mumpsi64" \
+		mumpsi64.c
+	fi
+
+	fftw3_extra_test="-t accuracy"
+	for package in fftw3 mumps parmetis hdf5 ptscotch strumpack superlu superlu_dist ; do
+	    if [[ "${PETSC_ARCH}" == *i64* ]] ; then
+		if [[ "$package" == chaco ]] ; then continue ; fi
+		if [[ "$package" == parmetis ]] ; then continue ; fi
+		if [[ "$package" == superlu* ]] ; then continue ; fi
+	    fi
+	    if [[ "${PETSC_ARCH}" == *single* ]] ; then
+		if [[ "$package" == fftw3 ]] ; then continue ; fi
+		if [[ "$package" == *hdf5 ]] ; then continue ; fi
+		if [[ "$package" == hypre ]] ; then continue ; fi
+		if [[ "$package" == mumps ]] ; then continue ; fi
+	    fi
+	    if [[ "${PETSC_ARCH}" == *complex* ]] ; then
+		if [[ "$package" == hypre ]] ; then continue ; fi
+	    fi
+	    eval extra_test=\${${package}_extra_test}
+	    ../cmake_test_driver.sh \
+		${standardflags} -l ${logfile} ${p4pflag} \
+		${extra_test} \
+		--title "presence of ${package}" \
+		${package}.c
+	done
+    else
+	echo "skip external packages"
     fi
 
-    fftw3_extra_test="-t accuracy"
-    for package in fftw3 mumps parmetis hdf5 ptscotch strumpack superlu superlu_dist ; do
-	if [[ "${PETSC_ARCH}" == *i64* ]] ; then
-	    if [[ "$package" == chaco ]] ; then continue ; fi
-	    if [[ "$package" == parmetis ]] ; then continue ; fi
-	    if [[ "$package" == superlu* ]] ; then continue ; fi
-	fi
-	if [[ "${PETSC_ARCH}" == *single* ]] ; then
-	    if [[ "$package" == fftw3 ]] ; then continue ; fi
-	    if [[ "$package" == *hdf5 ]] ; then continue ; fi
-	    if [[ "$package" == hypre ]] ; then continue ; fi
-	    if [[ "$package" == mumps ]] ; then continue ; fi
-	fi
-	if [[ "${PETSC_ARCH}" == *complex* ]] ; then
-	    if [[ "$package" == hypre ]] ; then continue ; fi
-	fi
-	eval extra_test=\${${package}_extra_test}
-	../cmake_test_driver.sh \
-	    ${standardflags} -l ${logfile} ${p4pflag} \
-	    ${extra_test} \
-	    --title "presence of ${package}" \
-	    ${package}.c
-    done
+    ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+        ${p4pflag} \
+	--cmake "-DUSESLEPC=ON" \
+	--title "presence of slepc" \
+	slepceps.c
 
-	../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-                            ${p4pflag} \
-			    --cmake "-DUSESLEPC=ON" \
-			    --title "presence of slepc" \
-			    slepceps.c
 fi
 
 ##
@@ -113,7 +122,7 @@ fi
 if [ "${skipf}" != "1" ] ; then
     echo "Fortran language"
 
-	# ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} -p ${package} -l ${logfile} \
+	# ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} ${standardflags} -l ${logfile} \
 	    # --title "can we compile fortran"
 	    # fortran.F90
 
@@ -171,15 +180,15 @@ if [ ! -z "${dopy}" ] ; then
 	module load python3 && module list 2>/dev/null
     fi
 
-    ../python_test_driver.sh -p ${package} -l ${logfile} \
+    ../python_test_driver.sh ${standardflags} -l ${logfile} \
 	--title "import 4py modules" \
 	import.py
 
-    ../python_test_driver.sh -p ${package} -l ${logfile} \
+    ../python_test_driver.sh ${standardflags} -l ${logfile} \
 	--title "Test init from argv" \
 	p4p.py 
 
-    ../python_test_driver.sh -p ${package} -l ${logfile} \
+    ../python_test_driver.sh ${standardflags} -l ${logfile} \
 	--title "Python allreduce" \
         allreduce.py
 
@@ -189,4 +198,3 @@ fi
 if [ ! -z "${locallog}" ] ; then 
     echo && echo "See: ${logfile}" && echo
 fi | tee -a ${logfile}
-

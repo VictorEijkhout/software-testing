@@ -56,14 +56,16 @@ function argument () {
 # this is used in both tacc & local tests
 #
 function compiler_name_and_version () {
-    cname=${compiler%%[0-9]*}
-    cversion=${compiler##*[a-z]}
-    if [ ! -z "${matchcompiler}" ] ; then 
-	if [[ $compiler != *${matchcompiler}* ]] ; then
-	    echo "==== Skip compiler: $compiler" 
-	    found=0
-	fi
-    fi
+    cname=${compiler%%[0-9\.\/]*}
+    cversion=${compiler##*[a-z\/]}
+    configuration=${cname}$( echo ${cversion} | tr -d '\.' )
+    ## this test duplicates the one in tacc_tests.sh
+    # if [ ! -z "${matchcompiler}" ] ; then 
+    # 	if [[ $compiler != *${matchcompiler}* ]] ; then
+    # 	    echo "==== Skip compiler: $compiler" 
+    # 	    found=0
+    # 	fi
+    # fi
 }
 
 #
@@ -210,6 +212,10 @@ function run_executable () {
     fi | tee -a ${testlog}
     ( echo ">>>> runlog:" && cat ${runlog} && echo ".... runlog" ) >>${testlog}
 
+}
+
+function module_list () {
+    module -t list 2>&1 | sort | awk '{m=m FS $1} END {print m}'
 }
 
 function build_usage () {

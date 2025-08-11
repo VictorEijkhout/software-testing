@@ -6,17 +6,23 @@ add_executable( ${PROJECTNAME} ${PROJECTNAME}.F90 )
 
 find_package( MPI REQUIRED )
 
-target_include_directories(
-	${PROJECTNAME} PUBLIC 
-	${MPI_Fortran_INCLUDE_DIRS}
-	)
-target_link_directories(
-	${PROJECTNAME} PUBLIC 
-	)
 target_link_libraries(
 	${PROJECTNAME} PUBLIC
-	${MPI_Fortran_LIBRARIES} 
+	MPI::MPI_Fortran
+	# ${MPI_C_LIBRARIES} 
 	)
+
+# target_include_directories(
+# 	${PROJECTNAME} PUBLIC 
+# 	${MPI_Fortran_INCLUDE_DIRS}
+# 	)
+# target_link_directories(
+# 	${PROJECTNAME} PUBLIC 
+# 	)
+# target_link_libraries(
+# 	${PROJECTNAME} PUBLIC
+# 	${MPI_Fortran_LIBRARIES} 
+# 	)
 
 if( "${USEHDF5}" STREQUAL "ON" ) 
 

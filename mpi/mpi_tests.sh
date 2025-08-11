@@ -7,6 +7,14 @@ source ../test_setup.sh
 ##
 
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "compile c" \
+			mpi.c
+
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "compile c++" \
+			mpi.cxx
+
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "compile f90" \
 			mpif90.F90
 
