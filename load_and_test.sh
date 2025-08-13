@@ -53,7 +53,7 @@ fi
     && echo "----------------" \
     ) | tee -a ${logfile}
 
-cmdline="./${package}_tests.sh ${standardflags} \
+cmdline="./${package}_tests.sh ${standardflags} ${extra_flags} \
       -l ${configlog}"
 echo "cmdline=$cmdline" >>${logfile}
 eval $cmdline
