@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
-project( ${PROJECTNAME} )
+project( ${PROJECTNAME}
+  DESCRIPTION "Fortran programs for Adios2 testing"
+)
 enable_language( Fortran )
 
 find_package(MPI)

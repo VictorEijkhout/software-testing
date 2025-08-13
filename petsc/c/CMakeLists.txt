@@ -2,7 +2,9 @@
 ## General test configuration for Petsc C programs
 ##
 cmake_minimum_required( VERSION 3.20 )
-project( ${PROJECTNAME} VERSION 1.0 LANGUAGES C )
+project( ${PROJECTNAME}
+  DESCRIPTION "C programs for PETSc testing"
+  VERSION 1.0 LANGUAGES C )
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
 
