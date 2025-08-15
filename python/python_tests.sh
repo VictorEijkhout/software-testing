@@ -15,3 +15,6 @@ python3 -c "import h5py"
 echo && echo "Paramiko test" && echo
 
 python3 localhost.py
+if [ ! -f "paramiko_test.dat" ] ; then
+    echo "ERROR failed to create file through paramiko ssh connection"
+fi
