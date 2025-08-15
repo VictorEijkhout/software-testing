@@ -18,3 +18,10 @@ python3 localhost.py
 if [ ! -f "paramiko_test.dat" ] ; then
     echo "ERROR failed to create file through paramiko ssh connection"
 fi
+
+if [ -z "${SLURM_JOBID}" ] ; then
+    echo "WARNING skipping mpi test because not in SLURM"
+else
+    echo && echo "MPI4PY test" && echo
+    ibrun -n 2 python3 importmpi.py
+fi
