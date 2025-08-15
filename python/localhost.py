@@ -13,5 +13,14 @@ def ssh_client(host):
 hostname = socket.gethostname()
 pwd = os.getcwd()
 ssh = ssh_client(hostname)
-stdin,stdout,stderr = ssh.exec_command( f"touch {pwd}/paramiko_test.dat" )
+datafile = f"{pwd}/paramiko_test.dat"
+print( f"create file through ssh tunnel to <<{hostname}>> : <<{datafile}>>" )
+stdin,stdout,stderr = ssh.exec_command( f"touch {datafile}" )
+
+##
+## make sure the file is there
+##
+ssh.close()
+import time
+time.sleep(1)
 
