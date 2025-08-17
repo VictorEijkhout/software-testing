@@ -1,3 +1,14 @@
+import re
+
+#
+# sanity check on MPI
+#
+import MPI
+mpi_init = MPI.__file__
+print( f"MPI imported from <<{mpi_init}>>" )
+pi_location = re.sub( "__init__.py", "", mpi_init )
+print( f"MPI located at <<{mpi_location}>>" )
+
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 procid = comm.Get_rank()
