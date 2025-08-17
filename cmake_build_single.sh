@@ -68,6 +68,7 @@ echo " .. with CMAKE_PREFIX_PATH=$( echo :${CMAKE_PREFIX_PATH} | tr ':' '\n' )"
 echo " .. with LD_LIBRARY_PATH=  $( echo :${LD_LIBRARY_PATH}  | tr ':' '\n' )"
 
 cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=ON \
     -D PROJECTNAME=${base} \
     $( if [ ! -z ${cmake} ] ; then echo ${cmake} | tr ',' ' ' ; fi ) \
     ../${variant}"
@@ -77,6 +78,9 @@ echo " .. with cmake=$( which cmake )"
 retcode=0 && eval $cmdline || retcode=$?
 if [ ${retcode} -eq 0 ] ; then
     echo && echo "    Cmake completed" && echo
+    mkdir -p ../jsonfiles
+    cp ./compile_commands.json \
+       ../jsonfiles/compile_commands_${package}_${base}_${TACC_CC:-NO_TACC_CC}.json
 else
     echo
     echo "    ERROR CMake failed program=${program} and ${package}/${v}"

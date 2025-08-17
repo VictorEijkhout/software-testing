@@ -1,5 +1,7 @@
 cmake_minimum_required( VERSION 3.20 )
-project( ${PROJECTNAME} VERSION 1.0 LANGUAGES C CXX CUDA )
+project( ${PROJECTNAME}
+  DESCRIPTION "Cuda programs for PETSc testing"
+  VERSION 1.0 LANGUAGES C CXX CUDA )
 
 enable_language( CUDA )
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.cu )

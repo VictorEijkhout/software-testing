@@ -3,7 +3,9 @@
 ##
 cmake_minimum_required(VERSION 3.31.5)
 
-project( ${PROJECTNAME} VERSION 1.0 )
+project( ${PROJECTNAME}
+  DESCRIPTION "C++ programs for DealIItesting"
+  VERSION 1.0 )
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.cpp )
 

@@ -1,5 +1,7 @@
 cmake_minimum_required( VERSION 3.12 )
-project( ${PROJECTNAME} VERSION 1.0 )
+project( ${PROJECTNAME}
+  DESCRIPTION "Fortran programs for Phdf5 testing"
+  VERSION 1.0 )
 
 enable_language( Fortran )
 

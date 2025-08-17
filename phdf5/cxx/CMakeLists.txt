@@ -1,5 +1,7 @@
 cmake_minimum_required( VERSION 3.19 ) # 3.19 needed for hdf5_cpp target
-project( ${PROJECTNAME} VERSION 1.0 )
+project( ${PROJECTNAME}
+  DESCRIPTION "C++ programs for Phdf5 testing"
+  VERSION 1.0 )
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.cxx )
 target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )

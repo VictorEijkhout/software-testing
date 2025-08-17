@@ -1,5 +1,7 @@
 cmake_minimum_required( VERSION 3.20 )
-project( ${PROJECTNAME} VERSION 1.0 )
+project( ${PROJECTNAME}
+  DESCRIPTION "C++ programs for Silo testing"
+  VERSION 1.0 )
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.cxx )
 

@@ -1,5 +1,7 @@
 cmake_minimum_required( VERSION 3.12 )
-project( ${PROJECTNAME} VERSION 1.0 )
+project( ${PROJECTNAME}
+  DESCRIPTION "C programs for Lapack testing"
+  VERSION 1.0 )
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
 target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )

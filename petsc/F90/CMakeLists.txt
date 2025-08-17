@@ -2,7 +2,9 @@
 ## General test configuration for Petsc Fortran programs
 ##
 cmake_minimum_required( VERSION 3.20 )
-project( ${PROJECTNAME} VERSION 1.0 )
+project( ${PROJECTNAME}
+  DESCRIPTION "Fortran programs for PETSc testing"
+  VERSION 1.0 LANGUAGES C CXX CUDA )
 
 enable_language( Fortran )
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.F90 )

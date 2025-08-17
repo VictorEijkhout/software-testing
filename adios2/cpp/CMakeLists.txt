@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
-project( ${PROJECTNAME} )
+project( ${PROJECTNAME}
+  DESCRIPTION "C++ programs for Adios2 testing"
+  VERSION 1.0 )
 
 find_package(MPI)
 find_package(ADIOS2 REQUIRED)

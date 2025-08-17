@@ -1,5 +1,7 @@
 cmake_minimum_required( VERSION 3.12 )
-project( ${PROJECTNAME} VERSION 1.0 )
+project( ${PROJECTNAME}
+  DESCRIPTION "C++ programs for MPL testing"
+  VERSION 1.0 )
 
 find_package( mpl REQUIRED )
 

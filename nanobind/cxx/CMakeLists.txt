@@ -1,7 +1,9 @@
 # https://nanobind.readthedocs.io/en/latest/building.html#building
 
 cmake_minimum_required(VERSION 3.15...3.27)
-project( ${PROJECTNAME} )
+project( ${PROJECTNAME}
+  DESCRIPTION "C++ programs for Nanobind testing"
+)
 find_package(Python 3.8...3.13 COMPONENTS Interpreter Development.Module REQUIRED)
 
 if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
