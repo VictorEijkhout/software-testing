@@ -177,6 +177,7 @@ fi
 if [ ! -z "${dopy}" ] ; then 
     echo "Python language" | tee -a ${logfile}
     if [ "$( which python3 )" = "/usr/bin/python3" ] ; then 
+	echo "Loading python3 module" # >>${locallog}
 	module load python3 && module list 2>/dev/null
     fi
 
