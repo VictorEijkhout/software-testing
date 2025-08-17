@@ -19,12 +19,20 @@ parse_build_options $*
 echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null
 
-incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
-eval incpath=\${${incpath}}
+# Unused?
+# incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
+# eval incpath=\${${incpath}}
+
+##
+## What is our python environment?
+##
+echo "Python3 = $(which python3)"
+echo ">> Python path:" && echo $PYTHONPATH | tr ':' '\n' && echo " <<"
+
 srcfile=../${lang}/${base}.${lang}
 cp ${srcfile} .
 if [ ! -z "${mpi}" ] ; then
-    cmdline="ibrun python3 ${base}.py"
+    cmdline="ibrun -n 1 python3 ${base}.py"
 else
     cmdline="python3 ${base}.py"
 fi
