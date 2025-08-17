@@ -28,6 +28,42 @@ test :
 	 && echo && echo "See: ${TEST}.log" && echo
 
 #
+# Find file
+#
+.PHONY: findfile
+info ::
+	@echo "make findfile FILE="
+findfile :
+	@if [ -z "${FILE}"  ] ; then \
+	    echo "Specify FILE to find" && exit 1 ; fi
+	@cd .. \
+	 && if [ ! -z "${COMPILER}" ] ; then \
+	   compilers=${COMPILER}  \
+	  ; else \
+	   compilers="$$( cat compilers_${TACC_SYSTEM}.sh )" \
+	  ; fi \
+	 && echo "Searching in compilers: $${compilers}" \
+	 && for compiler in $${compilers} ; do \
+	    ( module -t load $$compiler 2>/dev/null \
+	       && for package in * ; do \
+	            if [ -d $${package} ] ; then \
+	              for version in $$( module -t avail $${package} 2>&1 | grep "^$${package}" | sed -e 's?'$${package}/'??' ) ; do \
+	                module -t load $${package}/$${version} 2>/dev/null \
+	                 && echo "Try loading $${package}/$${version}" >/dev/null \
+                         && if [ "$$( module is-loaded $${package} && echo $$? )" = "1" ] ; then continue ; fi \
+	                 && packagedir=TACC_$$( echo $${package} | tr a-z A-Z )_DIR \
+	                 && eval packagepath=\$${$${packagedir}} \
+	                 && echo "Package dir for <<$${package}>> : $${packagedir}=<<$${packagepath}>>" >/dev/null \
+	                 && if [ -z "$${packagepath}" ] ; then continue ; fi \
+	                 && if [ ! -d "$${packagepath}" ] ; then \
+	                      echo "Warning: $${package}/$${version} : $${packagepath} does not exist" && continue ; fi \
+	                 && find $${packagepath} -name "${FILE}" \
+	              ; done \
+	            ; fi \
+	          ; done \
+	    ) \
+	   ; done
+#
 # Clean
 #
 .PHONY : clean

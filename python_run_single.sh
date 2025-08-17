@@ -19,6 +19,14 @@ parse_build_options $*
 echo "----" && echo "testing <<${variant}/${program}>>" && echo "----"
 rm -rf build && mkdir build && pushd build >/dev/null
 
+echo "Python3=$( which python3 )"
+
+echo "Python path:"
+echo ${PYTHONPATH} |  tr ':' '\n'
+
+echo "Library path:"
+echo ${LD_LIBRARY_PATH} | tr ':' '\n'
+
 incpath=TACC_$( echo ${package} | tr a-z A-Z )_INC
 eval incpath=\${${incpath}}
 srcfile=../${lang}/${base}.${lang}

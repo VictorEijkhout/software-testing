@@ -19,7 +19,7 @@ fi
 ##
 ## C tests
 ##
-if [ "${skipc}" != "1" ] ; then
+if [ 0 -eq 1 -a "${skipc}" != "1" ] ; then
     echo "C language"
 
     ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
@@ -119,7 +119,7 @@ fi
 ##
 ## Fortran tests
 ##
-if [ "${skipf}" != "1" ] ; then
+if [ 0 -eq 1 -a "${skipf}" != "1" ] ; then
     echo "Fortran language"
 
 	# ../cmake_test_driver.sh ${mpiflag} ${runflag} ${xflag} ${standardflags} -l ${logfile} \
@@ -161,20 +161,12 @@ if [ "${skipf}" != "1" ] ; then
 fi
 
 ##
-## CUDA tests
-##
-if [ ! -z "${docuda}" ] ; then
-    echo "CUDA language"
-    ../petsc_test_driver.sh ${standardflags} -l ${logfile} \
-			   --title "cu example 47" \
-			   --run_args "-dm_vec_type cuda -da_grid_x 3000000" \
-			   ex47cu.cu
-fi
-
-##
 ## Python tests
 ##
 if [ ! -z "${dopy}" ] ; then 
+    if [ -z "${SLURM_JOBID}" ] ; then
+	echo "ERROR can only do python tests in SLURM" && exit 1
+    fi
     echo "Python language" | tee -a ${logfile}
     if [ "$( which python3 )" = "/usr/bin/python3" ] ; then 
 	module load python3 && module list 2>/dev/null
@@ -193,6 +185,17 @@ if [ ! -z "${dopy}" ] ; then
         allreduce.py
 
 else echo ".... skipping python tests" | tee -a ${logfile}
+fi
+
+##
+## CUDA tests
+##
+if [ ! -z "${docuda}" ] ; then
+    echo "CUDA language"
+    ../petsc_test_driver.sh ${standardflags} -l ${logfile} \
+			   --title "cu example 47" \
+			   --run_args "-dm_vec_type cuda -da_grid_x 3000000" \
+			   ex47cu.cu
 fi
 
 if [ ! -z "${locallog}" ] ; then 
