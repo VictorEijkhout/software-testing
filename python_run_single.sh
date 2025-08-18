@@ -33,7 +33,12 @@ echo ">> Library path:" && echo ${LD_LIBRARY_PATH} | tr ':' '\n' && echo "<<"
 srcfile=../${lang}/${base}.${lang}
 cp ${srcfile} .
 if [ ! -z "${mpi}" ] ; then
-    cmdline="ibrun -n 1 python3 ${base}.py"
+    mpilib=${TACC_IMPI_LIB}
+    if [ -z "${mpilib}" ] ; then
+	echo "ERROR zero TACC_IMPI_LIB" && exit 1 ; fi
+    preload="LD_PRELOAD=${mpilib}/libmpi.so"
+    #preload="LD_DEBUG=libs"
+    cmdline="${preload} ibrun -n 1 python3 ${base}.py"
 else
     cmdline="python3 ${base}.py"
 fi
