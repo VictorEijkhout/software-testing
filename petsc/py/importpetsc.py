@@ -8,4 +8,4 @@ petsc_location = re.sub( "__init__.py", "", petsc_init )
 print( f"PETSc located at <<{petsc_location}>>" )
 
 from petsc4py import PETSc
-print(1)
+print( "from petsc4py imported PETSc successfull" )

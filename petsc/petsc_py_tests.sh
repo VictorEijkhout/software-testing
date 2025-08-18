@@ -9,7 +9,7 @@ fi
 
 ../python_test_driver.sh ${standardflags} -l ${logfile} \
 			 --title "import 4py modules" \
-			 import.py
+			 importpetsc.py
 
 ../python_test_driver.sh ${standardflags} -l ${logfile} \
 			 --title "Test init from argv" \

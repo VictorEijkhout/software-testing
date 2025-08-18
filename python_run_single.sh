@@ -27,7 +27,8 @@ rm -rf build && mkdir build && pushd build >/dev/null
 ## What is our python environment?
 ##
 echo "Python3 = $(which python3)"
-echo ">> Python path:" && echo $PYTHONPATH | tr ':' '\n' && echo " <<"
+echo ">> Python path:" && echo $PYTHONPATH | tr ':' '\n' && echo "<<"
+echo ">> Library path:" && echo ${LD_LIBRARY_PATH} | tr ':' '\n' && echo "<<"
 
 srcfile=../${lang}/${base}.${lang}
 cp ${srcfile} .

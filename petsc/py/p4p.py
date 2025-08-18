@@ -1,19 +1,30 @@
 import re
+import sys
+
+def module_report( m ):
+    m_init = m.__file__
+    print( f"module {m.__name__} imported from <<{m_init}>>" )
+    m_location = re.sub( "__init__.py", "", m_init )
+    print( f"module {m.__name__} located at <<{m_location}>>" )
+    print()
 
 #
 # sanity check on MPI
 #
-import MPI
-mpi_init = MPI.__file__
-print( f"MPI imported from <<{mpi_init}>>" )
-pi_location = re.sub( "__init__.py", "", mpi_init )
-print( f"MPI located at <<{mpi_location}>>" )
+import mpi4py
+module_report(mpi4py)
+# mpi_init = mpi4py.__file__
+# print( f"mpi4py imported from <<{mpi_init}>>" )
+# mpi_location = re.sub( "__init__.py", "", mpi_init )
+# print( f"mpi4py located at <<{mpi_location}>>" )
 
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 procid = comm.Get_rank()
 
-import sys, petsc4py
+import petsc4py
+module_report(petsc4py)
+
 petsc4py.init(sys.argv)
 if procid==0: print("Successful petsc init")
 slepc4py.init(sys.argv)
