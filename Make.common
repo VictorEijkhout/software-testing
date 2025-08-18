@@ -68,8 +68,16 @@ findfile :
 #
 .PHONY : clean
 clean ::
-	@rm -f *.log
+	@rm -f a.out ${TESTS} \
+	    *.o ./{c,cxx,cpp,F90}/*.o *~ *.out */*~
+	@rm -rf build
+	@rm -rf __pycache__
+	@rm -rf *.log *logs/
+	@rm -rf jsonfiles
 
+#
+# Tests
+#
 tests :
 	@for t in ${TESTS} ; do \
 	    make --no-print-directory test TEST=$$t \
@@ -80,14 +88,3 @@ localtests :
 	        make --no-print-directory test TEST=$$t \
 	    ;; esac \
 	; done
-
-#
-# Clean
-#
-.PHONY : clean
-clean ::
-	@rm -f a.out ${TESTS} \
-	    *.o ./{c,cxx,cpp,F90}/*.o *~ *.out */*~
-	@rm -rf build
-	@rm -rf __pycache__
-	@rm -rf *.log *logs/
