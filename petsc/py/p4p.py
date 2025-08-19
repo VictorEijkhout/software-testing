@@ -20,14 +20,14 @@ procid = comm.Get_rank()
 import petsc4py
 module_report(petsc4py)
 petsc4py.init(sys.argv)
-if procid==0: print("Successful petsc init")
+print("Successful petsc init")
 from petsc4py import PETSc
 
 import slepc4py
 module_report(slepc4py)
 slepc4py.init(sys.argv)
+print("Successful slepc init")
 from slepc4py import SLEPc
-if procid==0: print("Successful slepc init")
 
 Print = PETSc.Sys.Print
 if procid==0: print("All imported")
