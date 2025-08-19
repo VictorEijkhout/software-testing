@@ -2,6 +2,7 @@
 
 source ../test_setup.sh
 python_option=1
+do_c=1 && do_f=1 && do_py=1
 if [ ! -z "${docuda}" ] ; then
     echo " .. skipping C / F / Py because of CUDA"
     do_c="" && do_f="" && do_py=""

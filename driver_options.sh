@@ -17,7 +17,10 @@ function usage() {
     echo "    [ --ldd ]"
     echo "    [ --title test caption ]"
     echo "    [ --run_args \"arg1 arg2 arg3\" ]"
-    echo "    program.{c.F90}"
+    if [ ! -z "${optional_help}" ] ; then
+	echo "    ${optional_help}"
+    fi
+    echo "    program.{c,F90,py}"
 }
 
 if [ $# -eq 0 -o "$1" = "-h" ] ; then 
@@ -93,6 +96,12 @@ while [ $# -gt 1 ] ; do
 	shift && dopy=1
     elif [ "$1" = "-x" ] ; then 
 	shift && set -x && x="-x"
+    elif [[ "${optional_flags}" = *$1* ]] ; then
+	# echo " .. parsing extra flag <<$1>>"
+	flag=$1 && flag=${flag##*\-}
+	extra_flags="${extra_flags} --${flag}"
+	eval ${flag}=1
+	shift
     else
 	echo "Unknown option <<$1>>" && break
     fi
