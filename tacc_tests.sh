@@ -55,19 +55,22 @@ for compiler in $compilers ; do
     module -t purge >/dev/null 2>&1
     module -t reset >/dev/null 2>&1
 
-    (
-	echo "==== Configuration attempt <<${compiler}>>" 
-	echo " .. module path:"
-	echo $MODULEPATH | tr ':' '\n'
-    ) >>${logfile}
+    echo "==== Configuration attempt <<${compiler}>>" >>${logfile}
 
     #
     # parse compiler & possible module use path
     #
     if [[ ${compiler} = *:* ]] ; then
 	usepath=$( echo ${compiler} | cut -d ':' -f 1 )
+	echo "use path: <<${usepath}>>" >>${logfile}
+	module -t use ${usepath}
 	compiler=$( echo ${compiler} | cut -d ':' -f 2 )
     else usepath= ; fi
+
+    (
+	echo " .. module path:"
+	echo $MODULEPATH | tr ':' '\n'
+    ) >>${logfile} 
 
     #
     # skip if we match a particular compiler
@@ -77,7 +80,7 @@ for compiler in $compilers ; do
 	if [[ $( echo ${compiler} | tr -d '/\.' ) \
 	      != \
 	      $( echo ${matchcompiler} | tr -d '/\.' )* ]] ; then
-	    echo " ==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
+	    echo "==== Configuration not matched: ${compiler} to desired ${matchcompiler}"
 	    continue
 	fi
     fi
