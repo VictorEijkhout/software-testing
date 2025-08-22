@@ -109,8 +109,11 @@ for compiler in $compilers ; do
     fi
     echo "Actual load: ${cname}/${cversion}" >>${logfile}
     retcode=0 && module -t load ${cname}/${cversion} >>${logfile} 2>&1 || retcode=$?
+    # cmake is a touchy topic
+    if [ ! -z "${cmakeversion}" ] ; then
+	module -t load cmake/${cmakeversion}
+    fi
     if [ $retcode -eq 0 ] ; then 
-	## successful load needs to be visually offset
 	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${logfile}
 	if [ ! -z "${usepath}" ] ; then 
 	    echo "     from path: ${usepath}" | tee -a ${logfile}

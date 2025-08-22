@@ -17,6 +17,7 @@ function usage() {
     echo "    [ --ldd ]"
     echo "    [ --title test caption ]"
     echo "    [ --run_args \"arg1 arg2 arg3\" ]"
+    echo "    [ --cmake_version 1.2.3 ]"
     if [ ! -z "${optional_help}" ] ; then
 	echo "    ${optional_help}"
     fi
@@ -29,6 +30,7 @@ fi
 
 package=unknown
 loadpackage=unknown
+cmakeversion=
 cmake=
 dir=dir
 dopy=
@@ -55,6 +57,8 @@ while [ $# -gt 1 ] ; do
 	noibrun=1 && shift
     elif [ "$1" = "--cmake" ] ; then
 	shift && cmake="$1" && shift
+    elif [ "$1" = "--cmake_version" ] ; then
+	shift && cmakeversion=$1 && shift
     elif [ "$1" = "-d" ] ; then 
 	shift && modules="$1" && shift
     elif [ "$1" = "--dir" ] ; then 
