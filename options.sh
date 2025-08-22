@@ -138,7 +138,10 @@ function set_flags () {
     fi
     # command_args have been set in the calling environment
     echo "Invoking package=${package} tests: ${command_args}" >> ${logfile}
-    standardflags="${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion} --cmake_version ${cmakeversion}"
+    standardflags="${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion}"
+    if [ ! -z "${cmakeversion}" ] ; then
+	standardflags="${standardflags} --cmake_version ${cmakeversion}"
+    fi
     echo " .. running with standardflags=<<${standardflags}>>" >> ${logfile}
 }
 set_flags
