@@ -11,6 +11,10 @@ source ../test_setup.sh
 			has.c
 
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "are we threadsafe" \
+			thread.c
+
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we run C" \
 			dataset.c
 
