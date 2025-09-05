@@ -10,7 +10,7 @@ function usage() {
 	echo && echo ${help_string} && echo ; fi 
     echo "Usage: $0 [ -v version (default=${version}) ] [ -V loadversion (default: version) ]"
     echo "    [ -c compiler ] [ -l logfile ] [ -r (skip running) ] "
-    echo "    [ -4 (do 4py tests) ] [ -u (do cuda tests) ]"
+    echo "    [ -4 (do 4py tests) ] [ -f : skip fortran ] [ -u (do cuda tests) ]"
     if [ "${python_option}" = "1" ] ; then
 	echo "    [ -p : python tests only ]"
     fi
@@ -35,6 +35,7 @@ logfile=
 ## mpi= this is set in the tacc/local_tests.sh top level file
 run=1
 docuda=
+dofortran=1
 skipcu=1
 # by default don't do python tests
 dopy=
@@ -48,6 +49,8 @@ while [ $# -gt 0 ] ; do
 	shift && matchcompiler=$( echo "$1" | tr -d '/' ) && shift
     elif [ "$1" = "-e" ] ; then
 	echo=1  && shift
+    elif [ "$1" = "-f" ] ; then
+	dofortran=  && shift
     elif [ "$1" = "-l" ] ; then
 	shift && logfile="$1" && shift
     elif [ "$1" = "-m" ] ; then
@@ -122,6 +125,10 @@ export standardflags
 function set_flags () {
     if [ -z "${run}" ] ; then
 	runflag="-r"
+    fi
+
+    if [ ! -z "${dofortran}" ] ; then
+	fortranflag="-f"
     fi
 
     if [ ! -z "${mpi}" ] ; then

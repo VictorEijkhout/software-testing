@@ -3,13 +3,14 @@
 function usage () {
     echo "Usage: $0 [ -h ]"
     echo "    [ -c compiler (default: all compilers) ]"
-    echo "    [ -r : skip runs ] [ -t trace ]"
-echo "    [ -v baseversion (default: ${base}) ]"
+    echo "    [ - f : skip fortran ] [ -r : skip runs ] [ -t trace ]"
+    echo "    [ -v baseversion (default: ${base}) ]"
 }
 
 base=$( make --no-print-directory version )
 compiler=
 docuda=
+fortranflag=
 runflag=
 trace=
 while [ $# -gt 0 ] ; do
@@ -17,6 +18,8 @@ while [ $# -gt 0 ] ; do
 	usage && exit 0
     elif [ $1 = "-c" ] ; then
 	shift && compiler=$1 && shift
+    elif [ $1 = "-f" ] ; then
+	shift && fortranflag=-r
     elif [ $1 = "-r" ] ; then
 	shift && runflag=-r
     elif [ $1 = "-u" ] ; then
@@ -41,7 +44,7 @@ for variant in \
     echo "==== Testing version ${version}"
     if [ ! -z "${trace}" ] ; then 
 	./tacc_tests.sh -v ${version} \
-	    ${runflag} \
+	    ${runflag} ${fortranflag} \
 	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
 	    $( if [ ! -z "${docuda}" ] ; then echo "-u" ; fi ) \
 	  | tee ${variant}_trace.log \
@@ -52,7 +55,7 @@ for variant in \
 	'
     else
 	./tacc_tests.sh -v ${version} \
-	    ${runflag} \
+	    ${runflag} ${fortranflag} \
 	    $( if [ ! -z "${docuda}" ] ; then echo "-u" ; fi ) \
 	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
           | awk -v version=${version} '\
