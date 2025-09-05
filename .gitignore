@@ -2,6 +2,7 @@ pylauncher/corecount
 pylauncher/parallel
 pylauncher/randomcomma
 pylauncher/randomsleep
+pylauncher/randomaction
 
 siesta/data
 commandlines_classic

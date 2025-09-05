@@ -1,4 +1,4 @@
-##
+ ##
 ## include file for top level both tacc/local tests
 ## also loaded in ${package}_tests.sh
 ##
@@ -15,7 +15,8 @@ function usage() {
 	echo "    [ -p : python tests only ]"
     fi
     echo "    [ -x (set -x) ]"
-    if [ ! -z "${optional_help}" ] ; then
+    echo "    [ --cmake_version 1.2.3 ]"
+   if [ ! -z "${optional_help}" ] ; then
 	echo "    ${optional_help}"
     fi
 }
@@ -39,6 +40,7 @@ dofortran=1
 skipcu=1
 # by default don't do python tests
 dopy=
+cmakeversion=
 python=
 
 ## echo "parse command args <<$*>>"
@@ -71,6 +73,8 @@ while [ $# -gt 0 ] ; do
 	shift && loadversion="$1" && shift
     elif [ "$1" = "-x" ] ; then
 	set -x && xflag="-x" && shift 
+    elif [ "$1" = "--cmake_version" ] ; then
+	shift && cmakeversion=$1 && shift
     elif [ "$1" = "-4" ] ; then
 	p4pflag="-4" && dopy=1 && shift
     elif [[ "${optional_flags}" = *$1* ]] ; then
@@ -142,6 +146,9 @@ function set_flags () {
     # command_args have been set in the calling environment
     echo "Invoking package=${package} tests: ${command_args}" >> ${logfile}
     standardflags="${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion}"
+    if [ ! -z "${cmakeversion}" ] ; then
+	standardflags="${standardflags} --cmake_version ${cmakeversion}"
+    fi
     echo " .. running with standardflags=<<${standardflags}>>" >> ${logfile}
 }
 set_flags

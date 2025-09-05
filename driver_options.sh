@@ -17,7 +17,11 @@ function usage() {
     echo "    [ --ldd ]"
     echo "    [ --title test caption ]"
     echo "    [ --run_args \"arg1 arg2 arg3\" ]"
-    echo "    program.{c.F90}"
+    echo "    [ --cmake_version 1.2.3 ]"
+    if [ ! -z "${optional_help}" ] ; then
+	echo "    ${optional_help}"
+    fi
+    echo "    program.{c,F90,py}"
 }
 
 if [ $# -eq 0 -o "$1" = "-h" ] ; then 
@@ -26,6 +30,7 @@ fi
 
 package=unknown
 loadpackage=unknown
+cmakeversion=
 cmake=
 dir=dir
 dopy=
@@ -52,6 +57,8 @@ while [ $# -gt 1 ] ; do
 	noibrun=1 && shift
     elif [ "$1" = "--cmake" ] ; then
 	shift && cmake="$1" && shift
+    elif [ "$1" = "--cmake_version" ] ; then
+	shift && cmakeversion=$1 && shift
     elif [ "$1" = "-d" ] ; then 
 	shift && modules="$1" && shift
     elif [ "$1" = "--dir" ] ; then 
@@ -93,6 +100,12 @@ while [ $# -gt 1 ] ; do
 	shift && dopy=1
     elif [ "$1" = "-x" ] ; then 
 	shift && set -x && x="-x"
+    elif [[ "${optional_flags}" = *$1* ]] ; then
+	# echo " .. parsing extra flag <<$1>>"
+	flag=$1 && flag=${flag##*\-}
+	extra_flags="${extra_flags} --${flag}"
+	eval ${flag}=1
+	shift
     else
 	echo "Unknown option <<$1>>" && break
     fi

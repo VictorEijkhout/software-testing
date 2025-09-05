@@ -3,5 +3,5 @@
 ##
 
 package=ninja
-version=1.12.1
+version=1.13.1
 modules=

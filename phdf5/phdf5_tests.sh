@@ -14,6 +14,10 @@ source ../test_setup.sh
 			--title "can we compile C" \
 			hasc.c
 
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "are we threadsafe" \
+			thread.c
+
 ##
 ## C++ tests
 ##

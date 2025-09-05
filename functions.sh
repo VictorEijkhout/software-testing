@@ -59,13 +59,6 @@ function compiler_name_and_version () {
     cname=${compiler%%[0-9\.\/]*}
     cversion=${compiler##*[a-z\/]}
     configuration=${cname}$( echo ${cversion} | tr -d '\.' )
-    ## this test duplicates the one in tacc_tests.sh
-    # if [ ! -z "${matchcompiler}" ] ; then 
-    # 	if [[ $compiler != *${matchcompiler}* ]] ; then
-    # 	    echo "==== Skip compiler: $compiler" 
-    # 	    found=0
-    # 	fi
-    # fi
 }
 
 #
@@ -121,6 +114,12 @@ function parse_build_options () {
 	    shift && variant=$1 && shift 
 	elif [ $1 = "-x" ] ; then
 	    shift && set -x
+	elif [[ "${optional_flags}" = *$1* ]] ; then
+	    # echo " .. parsing extra flag <<$1>>"
+	    flag=$1 && flag=${flag##*\-}
+	    extra_flags="${extra_flags} --${flag}"
+	    eval ${flag}=1
+	    shift
 	else
 	    echo "ERROR unknown option <<$1>>" && exit 1
 	fi
