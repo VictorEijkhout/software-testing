@@ -17,6 +17,7 @@ if [ -z "${version}" ] ; then
 fi
 
 module reset >/dev/null 2>&1
+module unload python
 
 ##
 ## spider this package unless we're testing some environment like mpi

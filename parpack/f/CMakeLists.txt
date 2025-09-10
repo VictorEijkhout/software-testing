@@ -29,7 +29,7 @@ endif()
 find_package(arpackng)
 target_include_directories(${PROJECTNAME} PUBLIC
   ${MPI_Fortran_INCLUDE_DIRS}
-  ARPACK::ARPACK)
+)
 target_link_libraries(${PROJECTNAME} PUBLIC
   ${MPI_Fortran_LIBRARIES} 
   ARPACK::ARPACK)
