@@ -14,6 +14,7 @@ elseif( DEFINED ENV{TACC_MKL_DIR} )
   set( MKL_ARCH "intel64" )
   set( MKL_THREADING "sequential" )
   set( MKL_INTERFACE "lp64" )
+  set( ENABLE_SCALAPACK true )
   find_package( MKL CONFIG REQUIRED )
   target_compile_options(
 	  ${PROJECTNAME} PUBLIC
@@ -24,6 +25,7 @@ elseif( DEFINED ENV{TACC_MKL_DIR} )
   target_link_libraries(
 	  ${PROJECTNAME} PUBLIC 
 	  $<LINK_ONLY:MKL::MKL>)
+  # NOPE target_link_libraries( ${PROJECTNAME} PRIVATE MKL::MKL_SCALAPACK MPI::MPI_Fortran)
 endif()
 
 find_package(arpackng)
@@ -35,6 +37,6 @@ target_link_libraries(${PROJECTNAME} PUBLIC
   ARPACK::ARPACK)
 
 find_package( MPI )
-
+find_package( MPI COMPONENTS Fortran REQUIRED )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
