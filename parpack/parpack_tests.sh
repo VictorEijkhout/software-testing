@@ -15,6 +15,10 @@ source ../test_setup.sh
 		     --dir inc arpack/parpack.hpp
 
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "can we compile C" \
+			has.c
+
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile Fortran" \
 			issue46.f
 
