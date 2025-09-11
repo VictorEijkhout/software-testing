@@ -15,4 +15,5 @@ target_include_directories(
 target_link_libraries(
     ${PROJECTNAME} PUBLIC
     ${HDF5_C_LIBRARIES} ${HDF5_HL_LIBRARIES}
+    -lpthread
     )
