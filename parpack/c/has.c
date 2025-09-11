@@ -1,4 +1,4 @@
-#include "arpack/arpack.h"
+#include "arpack/parpack.h"
 
 int main() {
 
