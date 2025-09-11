@@ -12,16 +12,14 @@ if( DEFINED ENV{TACC_NVPL_DIR} )
 elseif( DEFINED ENV{TACC_MKL_DIR} )
 
   set( MKL_ARCH "intel64" )
-  set( MKL_THREADING "sequential" )
   set( MKL_INTERFACE "lp64" )
-  set( ENABLE_SCALAPACK true )
   find_package( MKL CONFIG REQUIRED )
   target_compile_options(
 	  ${PROJECTNAME} PUBLIC
 	  $<TARGET_PROPERTY:MKL::MKL,INTERFACE_COMPILE_OPTIONS> )
-  target_include_directories(
-	  ${PROJECTNAME} PUBLIC
-	  $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES> )
+  # target_include_directories(
+  # 	  ${PROJECTNAME} PUBLIC
+  # 	  $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES> )
   target_link_libraries(
 	  ${PROJECTNAME} PUBLIC 
 	  $<LINK_ONLY:MKL::MKL>

@@ -5,6 +5,6 @@ add_executable( ${PROJECTNAME} ${PROJECTNAME}.cpp )
 target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )
 
 find_package( HighFive REQUIRED )
-target_link_libraries( ${PROJECTNAME} HighFive)
+target_link_libraries( ${PROJECTNAME} HighFive -lpthread )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )

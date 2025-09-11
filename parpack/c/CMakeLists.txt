@@ -6,9 +6,7 @@ project( ${PROJECTNAME}
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
 target_compile_features( ${PROJECTNAME} PRIVATE cxx_std_17 )
 
-find_package( PkgConfig REQUIRED )
-pkg_check_modules( HDF REQUIRED hdf5 )
-message( STATUS "Hdf5 includes: ${HDF_INCLUDE_DIRS}" )
+find_package(arpackng)
 
 target_include_directories(
         ${PROJECTNAME} PUBLIC
@@ -18,12 +16,7 @@ target_include_directories(
 set( BLA_VENDOR "Intel10_64lp_seq" )
 find_package( BLAS REQUIRED )      
 
-# set( MKL_ARCH "intel64" )
-# set( MKL_THREADING "sequential" )
-# set( MKL_INTERFACE "lp64" )
-# find_package( MKL CONFIG REQUIRED PATHS $ENV{MKLROOT} )
-
-# find_package( MKL CONFIG REQUIRED )
+find_package( MKL CONFIG REQUIRED PATHS $ENV{MKLROOT} )
 
 target_compile_options(
         ${PROJECTNAME} PUBLIC
@@ -34,7 +27,8 @@ target_include_directories(
 target_link_libraries(
         ${PROJECTNAME} PUBLIC
         $<LINK_ONLY:MKL::MKL>)
-
-## find_package( OpenMP REQUIRED )
+target_link_libraries(${PROJECTNAME} PUBLIC
+	  MPI::MPI_Fortran
+  ARPACK::ARPACK)
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
