@@ -10,6 +10,7 @@ find_package( HDF5 REQUIRED COMPONENTS CXX C )
 target_link_libraries(
     ${PROJECTNAME} PUBLIC
     hdf5::hdf5_cpp hdf5::hdf5 # both needed
+    -lpthread
 )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )

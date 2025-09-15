@@ -1,0 +1,2 @@
+package=yamlcpp
+version=0.8.0

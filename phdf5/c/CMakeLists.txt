@@ -27,6 +27,7 @@ target_link_directories(
 target_link_libraries(
         ${PROJECTNAME} PUBLIC
         ${HDF_LIBRARIES}
+	-lpthread
         )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )
