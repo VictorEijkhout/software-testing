@@ -3,6 +3,11 @@
 ##
 ## Existence test
 ##
+## Usage:
+## existence_test.sh -p PACKAGE -l LOGFILE
+##    --title "title of this test"
+##    -ldd : ldd on executable or library
+##    --dir DIR binary-name : tests presence in TACC_<PACKAGE>_<DIR>
 
 buildsystem=cmake
 source ../functions.sh
