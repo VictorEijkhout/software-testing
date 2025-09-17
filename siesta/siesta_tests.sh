@@ -12,9 +12,14 @@ source ../failure.sh
 		     --ldd --run_args --help \
 		     --dir bin siesta
 
+##
+## non-functioning test
+## forrtl: severe (174): SIGSEGV, segmentation fault occurred
+##
+
 # if [ ! -z "${run}" ] ; then
 #     runtimeerror=
-#     ( cd data/work && siesta < ../input.fdf >/dev/null 2>&1 ) || runtimeerror=1
+#     ( cd data/work && ibrun -np 1 siesta < ../input.fdf >unittest_log 2>&1 ) || runtimeerror=1
 #     if [ ! -z "${runtimeerror}" ] ; then
 # 	echo "ERROR runtime error"
 #     fi
