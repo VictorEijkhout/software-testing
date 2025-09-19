@@ -48,9 +48,8 @@ if [ -f "${filename}" ] ; then
 	failure ${unresolved} "resolving shared libraries" | tee -a "${testlog}"
 	if [ ${unresolved} -eq 0 -a "${dir}" = "bin" -a ! -z "${run}" ] ; then
 	    export cmdline="${filename} ${runargs}"
-	    ## echo "running <<${filename}>>: <<${cmdline}>>" 
 	    retcode=$( \
-		        echo "running <<${filename}>>:" >>"${fulllog}" \
+		        echo "running <<${cmdline}>>:" >>"${fulllog}" \
 		         && retcode=0 \
 		         && ${cmdline} >>"${fulllog}" 2>&1 || retcode=$? \
 		         && echo ${retcode} )
