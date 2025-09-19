@@ -46,7 +46,7 @@ if [ -f "${filename}" ] ; then
 	( echo "ldd on <<${filename}>>:" && ldd "${filename}" ) >>"${fulllog}"
 	unresolved=$( ldd "${filename}" | grep -i "not found" | wc -l )
 	failure ${unresolved} "resolving shared libraries" | tee -a "${testlog}"
-	if [ ${unresolved} -eq 0 -a ! -z "${run}" ] ; then
+	if [ ${unresolved} -eq 0 -a "${dir}" = "bin" -a ! -z "${run}" ] ; then
 	    export cmdline="${filename} ${runargs}"
 	    ## echo "running <<${filename}>>: <<${cmdline}>>" 
 	    retcode=$( \
