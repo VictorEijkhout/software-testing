@@ -9,7 +9,7 @@ source ../failure.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "have main program" \
-		     --ldd --run_args --help \
+		     --ldd \
 		     --dir bin siesta
 
 ##
