@@ -2,7 +2,7 @@
 #  This file is part of MUMPS 5.8.0, released
 #  on Tue May  6 08:27:40 UTC 2025
 #
-topdir = ..
+topdir = ${TACC_MUMPS_DIR}
 libdir = $(topdir)/lib
 
 default: d
@@ -19,14 +19,13 @@ d:	dsimpletest dsimpletest_save_restore c_example_save_restore c_example
 multi:	multiple_arithmetics_example
 
 
-include $(topdir)/Makefile.inc
+## maybe in an update
+## include $(topdir)/Makefile.inc
 
-
-
-LIBSMUMPS = -L$(libdir) -lsmumps$(PLAT) -lmumps_common$(PLAT)
-LIBCMUMPS = -L$(libdir) -lcmumps$(PLAT) -lmumps_common$(PLAT)
-LIBSDMUMPS = -L$(libdir) -lsmumps$(PLAT) -ldmumps$(PLAT) -lmumps_common$(PLAT)
-LIBCZMUMPS = -L$(libdir) -lcmumps$(PLAT) -lzmumps$(PLAT) -lmumps_common$(PLAT)
+LIBSMUMPS = -L$(libdir) -lsmumps -lmumps_common
+LIBCMUMPS = -L$(libdir) -lcmumps -lmumps_common
+LIBSDMUMPS = -L$(libdir) -lsmumps -ldmumps -lmumps_common
+LIBCZMUMPS = -L$(libdir) -lcmumps -lzmumps -lmumps_common
 
 ssimpletest:   $$@.o
 	$(FL) -o $@ $(OPTL) ssimpletest.o  $(LIBSMUMPS) $(LORDERINGS) $(LIBS) $(RPATH_OPT) $(LIBBLAS) $(LIBOTHERS)
@@ -41,7 +40,7 @@ zsimpletest:  $$@.o
 	$(FL) -o $@ $(OPTL) zsimpletest.o  $(LIBCZMUMPS) $(LORDERINGS) $(LIBS) $(RPATH_OPT) $(LIBBLAS) $(LIBOTHERS)
 
 c_example: $$@.o
-	$(FL) -o $@ $(OPTL) $@.o $(LIBSDMUMPS) $(LORDERINGS) $(LIBS) $(RPATH_OPT) $(LIBBLAS) $(LIBOTHERS)
+	$(CC) -fopenmp -o $@ $(OPTL) $@.o $(LIBSDMUMPS) $(LORDERINGS) $(LIBS) $(RPATH_OPT) $(LIBBLAS) $(LIBOTHERS)
 
 
 multiple_arithmetics_example: $$@.o
@@ -65,8 +64,10 @@ c_example_save_restore: $$@.o
 .SUFFIXES: .c .F .o
 .F.o:
 	$(FC) $(OPTF) -I. -I$(topdir)/include -I$(topdir)/src $(INCS) -c $*.F $(OUTF)$*.o
-.c.o:
-	$(CC) $(OPTC) $(CDEFS) -I. -I$(topdir)/include -I$(topdir)/src $(INCS) -c $*.c $(OUTC)$*.o
+## .c.o:
+## csimpletest.o : ${SRCDIR}/csimpletest.c
+c_example.o : ${SRCDIR}/c_example.c
+	$(CC) $(OPTC) $(CDEFS) -I. -I$(topdir)/include -I$(topdir)/src $(INCS) -c $< -o $(OUTC)$*.o
 
 clean:
 	$(RM) *.o [sdcz]simpletest c_example multiple_arithmetics_example ssimpletest_save_restore dsimpletest_save_restore csimpletest_save_restore zsimpletest_save_restore c_example_save_restore
