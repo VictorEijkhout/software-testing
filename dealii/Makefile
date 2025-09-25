@@ -3,5 +3,5 @@ TEST =
 include ../Make.common
 
 clean ::
-	@rm -f *.svg
+	@rm -f *.svg *.vtu
 

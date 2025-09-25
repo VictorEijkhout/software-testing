@@ -1,11 +1,10 @@
 ##
-## Include file to
 ## test all programs for this package,
 ## looping over tacc available modules
 ##
 ## options have been set by options.sh at top level
-##
-## this file is textually included
+###
+# this file is textually included
 ##
 
 if [ -z "${package}" ] ; then
@@ -17,7 +16,6 @@ if [ -z "${version}" ] ; then
 fi
 
 module reset >/dev/null 2>&1
-module unload python
 
 ##
 ## spider this package unless we're testing some environment like mpi

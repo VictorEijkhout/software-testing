@@ -2,6 +2,8 @@
 ## test all programs for this package,
 ## looping over locally available modules
 ##
+## options have been set by options.sh at top level
+##
 ## this file is textually included
 ##
 
