@@ -7,7 +7,7 @@ source ../test_setup.sh
 ##
 
 ../existence_test.sh -p ${package} -l ${logfile} \
-		     --ldd --run_args -h \
+		     --run_args -h \
 		     --title "random executable" \
 		     --dir bin yaml2ck 
 
