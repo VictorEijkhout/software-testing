@@ -15,6 +15,24 @@ python3 -c "import numpy as np; np.__config__.show()" \
     --title "numpy matmult" \
     matmult.py
 
+#
+# libhdf5.so
+# gcc 9    : python 3.7.0 & hdf5 103
+# gcc 13   : python 3.8.2 & partially initialized module h5py
+#
+# intel 19 : python 3.7.0 & 103
+# 10.4 10.11 : 103
+# 12.0 12.2 : 200
+# 14 : 310.various
+#
+# intel 23 : python 3.9.2 & 103
+# 10.11 : 103
+# 14 : 310.various
+#
+# all hdf5 versions have 310
+#
+# intel 24 : python 3.7.0 & 103
+#
 ../python_test_driver.sh ${standardflags} -l ${logfile} \
     --title "hdf5 importing" \
     importh5.py
