@@ -25,10 +25,15 @@ failure $retcode "${executable} compilation" | tee -a ${testlog}
 ## Run test
 ## if compilation successful, and not skipping runs
 ##
-if [ $retcode -eq 0 -a ! -z "${run}" ] ; then
+if [ $retcode -eq 0 ] ; then
 
-    ( echo && echo "Run executable: ${source}" && echo ) >>${testlog}
-    run_executable
+    # report shared libraries
+    ( echo "ldd ${executable}:" && ldd "./build/${executable}" ) >>${fulllog}
+
+    if [ ! -z "${run}" ] ; then
+	( echo && echo "Run executable: ${source}" && echo ) >>${testlog}
+	run_executable
+    fi
     
 else
     echo " .. skipping run after unsuccessful compilation" >>${testlog}

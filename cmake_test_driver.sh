@@ -28,7 +28,7 @@ failure $retcode "${executable} compilation" | tee -a ${testlog}
 if [ $retcode -eq 0 ] ; then
 
     # report shared libraries
-    ( echo "${executable}:" && ldd "./build/${executable}" ) >>${fulllog}
+    ( echo "ldd ${executable}:" && ldd "./build/${executable}" ) >>${fulllog}
 
     if [ ! -z "${run}" ] ; then
 	( echo && echo "Run executable: ${source}" && echo ) >>${testlog}
