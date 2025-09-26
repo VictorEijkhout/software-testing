@@ -16,7 +16,8 @@ function usage() {
     fi
     echo "    [ -x (set -x) ]"
     echo "    [ --cmake_version 1.2.3 ]"
-   if [ ! -z "${optional_help}" ] ; then
+    echo "    [ --mvapich ]"
+    if [ ! -z "${optional_help}" ] ; then
 	echo "    ${optional_help}"
     fi
 }
@@ -37,6 +38,7 @@ logfile=
 run=1
 docuda=
 dofortran=1
+mvapich=
 skipcu=1
 # by default don't do python tests
 dopy=
@@ -59,6 +61,8 @@ while [ $# -gt 0 ] ; do
 	## top level this is set in *_tests.sh
 	## in embedded calls this is set on the commandline
 	mpi=1 && shift
+    elif [ "$1" = "--mvapich" ] ; then
+	mvapich=1 && shift
     elif [ "$1" = "-p" ] ; then
        shift && package=$1 && shift
     elif [ "$1" = "-P" ] ; then
@@ -145,10 +149,10 @@ function set_flags () {
     fi
     # command_args have been set in the calling environment
     echo "Invoking package=${package} tests: ${command_args}" >> ${logfile}
-    standardflags="${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion}"
-    if [ ! -z "${cmakeversion}" ] ; then
-	standardflags="${standardflags} --cmake_version ${cmakeversion}"
-    fi
+    standardflags="\
+	${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion} \
+    	$( if [ ! -z "${cmakeversion}" ] ; then echo  --cmake_version ${cmakeversion} ; fi ) \
+	"
     echo " .. running with standardflags=<<${standardflags}>>" >> ${logfile}
 }
 set_flags
