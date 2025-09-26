@@ -24,8 +24,10 @@ source ../test_setup.sh
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "single lib" \
-		     --dir lib libsmumps.a
+		     --ldd \
+		     --dir lib libsmumps.so
 
 ../existence_test.sh -p ${package} -l ${logfile} \
 		     --title "double lib" \
-		     --dir lib libdmumps.a
+		     --ldd \
+		     --dir lib libdmumps.so
