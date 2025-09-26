@@ -15,8 +15,8 @@ logfile=${testlog} load_dependencies
 
 retcode=0
 ../cmake_build_single.sh -p ${package} ${x} \
-    $( if [ ! -z "${mpi}" ] ; then echo "-m" ; fi ) \
-    $( if [ ! -z "${cmake}" ] ; then echo "--cmake ${cmake}" ; fi ) \
+    $( if [ ! -z "${mpi}"     ] ; then echo "-m"               ; fi ) \
+    $( if [ ! -z "${cmake}"   ] ; then echo "--cmake ${cmake}" ; fi ) \
     "${source}" \
     >>${testlog} 2>&1 || retcode=$?
 failure $retcode "${executable} compilation" | tee -a ${testlog}

@@ -129,7 +129,11 @@ for compiler in $compilers ; do
     ##
     if [ ! -z "${mpi}" ] ; then
 	retcode=0
-	module load impi >/dev/null 2>&1 || retcode=$?
+	if [ ! -z "${mvapich}" ] ; then 
+	    module load mvapich >/dev/null 2>&1 || retcode=$?
+	else
+	    module load impi >/dev/null 2>&1 || retcode=$?
+	fi
 	if [ $retcode -gt 0 ] ; then
 	    retcode=0
 	    module load openmpi >/dev/null 2>&1 || retcode=$?
