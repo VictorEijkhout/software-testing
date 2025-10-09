@@ -1,0 +1,3 @@
+CC=${TACC_CC} FC=${TACC_FC} make c_example
+
+gives multiple mains

@@ -191,7 +191,7 @@ function run_executable () {
 	    cmdline="./build/${executable} ${runoptions}"
 	fi
     else
-	cmdline="ibrun -np 1 ./build/${executable} ${runoptions}"
+	cmdline="ibrun -np 2 ./build/${executable} ${runoptions}"
     fi
     cmdline="${cmdline} ${runargs}"
     echo "Running: $cmdline" >>${testlog}
