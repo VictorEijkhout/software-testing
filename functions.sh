@@ -184,16 +184,25 @@ function run_executable () {
 
     runlog=${logdir}/${executable}_run.log
     rm -f ${runlog}
-    if [ -z "${mpi}" ] ; then
-	if [ ! -z "${inbuildrun}" ] ; then 
-	    cmdline="( cd build && ./${executable} ${runoptions} )"
-	else
-	    cmdline="./build/${executable} ${runoptions}"
-	fi
-    else
-	cmdline="ibrun -np 2 ./build/${executable} ${runoptions}"
+    if [ ! -z "${inbuildrun}" ] ; then
+	# executable can only be run from inside build, so is local
+	execcall="./${executable}"
+    else 
+	execcall="./build/${executable}"
     fi
-    cmdline="${cmdline} ${runargs}"
+    execcall="${execcall} ${runoptions} ${runargs}"
+    if [ ! -z "${mpi}" ] ; then
+	execcall="ibrun -np  2 build/${executable}"
+    fi
+    if [ ! -z "${omp}" ] ; then
+	execcall="OMP_PROC_BIND=true ${execcall}"
+    fi
+    if [ ! -z "${inbuildrun}" ] ; then
+	# can only be run from inside build dir
+	cmdline="( cd build && ${execcall} )"
+    else
+	cmdline="${execcall}"
+    fi
     echo "Running: $cmdline" >>${testlog}
     echo LD_LIBRARY_PATH:${LD_LIBRARY_PATH} | tr ':' '\n' >>${testlog}
     eval $cmdline  >>${runlog} 2>&1 || retcode=$?

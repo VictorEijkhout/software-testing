@@ -99,6 +99,15 @@ int main(int argc, char **args)
   PetscCall(MatSetUp(nest));
   PetscCall(MatConvert(nest, MATAIJKOKKOS, MAT_INITIAL_MATRIX, &AA));
   PetscCall(MatDestroy(&nest));
+  /*
+   * Test on type,
+   */
+  {
+    MatType type;
+    PetscCall( MatGetType(AA,&type) );
+    PetscPrintf( PETSC_COMM_WORLD,"%s\n",type );
+  }
+
   for (PetscInt bid = 0; bid < nblocks; bid++) PetscCall(MatDestroy(&array[bid * nblocks + bid]));
   if (ismpi) {
     Mat AAseq;

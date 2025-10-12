@@ -135,13 +135,9 @@ function set_flags () {
 	runflag="-r"
     fi
 
-    if [ ! -z "${dofortran}" ] ; then
-	fortranflag="-f"
-    fi
-
-    if [ ! -z "${mpi}" ] ; then
-	mpiflag="-m"
-    fi
+    if [ ! -z "${dofortran}" ] ; then fortranflag="-f"; fi
+    if [ ! -z "${mpi}" ]       ; then mpiflag="-m"    ; fi
+    if [ ! -z "${omp}" ]       ; then ompflag="-o"    ; fi
 
     if [ -z "${logfile}" ] ; then
 	locallog=1
@@ -150,7 +146,7 @@ function set_flags () {
     # command_args have been set in the calling environment
     echo "Invoking package=${package} tests: ${command_args}" >> ${logfile}
     standardflags="\
-	${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion} \
+	${ompflag} ${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion} \
     	$( if [ ! -z "${cmakeversion}" ] ; then echo  --cmake_version ${cmakeversion} ; fi ) \
 	"
     echo " .. running with standardflags=<<${standardflags}>>" >> ${logfile}
