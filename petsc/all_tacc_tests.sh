@@ -50,8 +50,8 @@ for variant in \
 	  | tee ${variant}_trace.log \
           | awk -v version=${version} '\
         /Configuration/ { configuration=$3 } \
-	/^---- / { $1="" ; test=$0 } \
-	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
+        /^---- / { $1="" ; test=$0 } \
+        /ERROR/ && configuration!="failed" { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
 	'
     else
 	./tacc_tests.sh -v ${version} \
@@ -60,8 +60,8 @@ for variant in \
 	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
           | awk -v version=${version} '\
         /Configuration/ { configuration=$3 } \
-	/^---- / { $1="" ; test=$0 } \
-	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
+        /^---- / { $1="" ; test=$0 } \
+        /ERROR/ && configuration!="failed" { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
 	'
     fi
 done 2>&1 | tee all_tacc_tests.log
