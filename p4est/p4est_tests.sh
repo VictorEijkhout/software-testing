@@ -15,3 +15,9 @@ source ../test_setup.sh
     --ldd \
     --title "example from src trree" \
     simple2.c
+
+# cpp is really C, but uses find_package instead of pkg_config
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+    --title "if we can compile" \
+    has.cpp
+
