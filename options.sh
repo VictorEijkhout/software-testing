@@ -10,7 +10,8 @@ function usage() {
 	echo && echo ${help_string} && echo ; fi 
     echo "Usage: $0 [ -v version (default=${version}) ] [ -V loadversion (default: version) ]"
     echo "    [ -c compiler ] [ -l logfile ] [ -r (skip running) ] "
-    echo "    [ -4 (do 4py tests) ] [ -f : skip fortran ] [ -u (do cuda tests) ]"
+    echo "    [ -4 (do 4py tests) ] [ -f : skip fortran ]"
+    echo "    [ -o : openmp mode ] [ -u (do cuda tests) ]"
     if [ "${python_option}" = "1" ] ; then
 	echo "    [ -p : python tests only ]"
     fi
@@ -39,6 +40,7 @@ run=1
 docuda=
 dofortran=1
 mvapich=
+omp=
 skipcu=1
 # by default don't do python tests
 dopy=
@@ -63,6 +65,8 @@ while [ $# -gt 0 ] ; do
 	mpi=1 && shift
     elif [ "$1" = "--mvapich" ] ; then
 	mvapich=1 && shift
+    elif [ "$1" = "-o" ] ; then
+	omp=$1 && shift
     elif [ "$1" = "-p" ] ; then
        shift && package=$1 && shift
     elif [ "$1" = "-P" ] ; then
