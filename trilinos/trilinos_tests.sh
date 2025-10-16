@@ -7,5 +7,10 @@ source ../test_setup.sh
 ##
 
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-			--title "if we can compile" \
+			--title "can we compile" \
 			has.c
+
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "do we have kokkos" \
+			kokkos_run.cpp
+
