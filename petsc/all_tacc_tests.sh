@@ -3,7 +3,8 @@
 function usage () {
     echo "Usage: $0 [ -h ]"
     echo "    [ -c compiler (default: all compilers) ]"
-    echo "    [ - f : skip fortran ] [ -r : skip runs ] [ -t trace ]"
+    echo "    [ - f : skip fortran ] [ --small : no external package ]"
+    echo "    [ -r : skip runs ] [ -t trace ]"
     echo "    [ -v baseversion (default: ${base}) ]"
 }
 
@@ -12,6 +13,7 @@ compiler=
 docuda=
 fortranflag=
 runflag=
+small=
 trace=
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
@@ -22,6 +24,8 @@ while [ $# -gt 0 ] ; do
 	shift && fortranflag=-r
     elif [ $1 = "-r" ] ; then
 	shift && runflag=-r
+    elif [ $1 = "--small" ] ; then
+	shift && small=--small
     elif [ $1 = "-u" ] ; then
 	shift && docuda=1
     elif [ $1 = "-t" ] ; then
@@ -43,7 +47,7 @@ for variant in \
     fi
     echo "==== Testing version ${version}"
     ./tacc_tests.sh -v ${version} \
-		    ${runflag} ${fortranflag} \
+		    ${runflag} ${fortranflag} ${small} \
 		    $( if [ ! -z "${docuda}" ] ; then echo "-u" ; fi ) \
 		    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
         | awk -v version=${version} '\

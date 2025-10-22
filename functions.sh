@@ -192,7 +192,7 @@ function run_executable () {
     fi
     execcall="${execcall} ${runoptions} ${runargs}"
     if [ ! -z "${mpi}" ] ; then
-	execcall="ibrun -np  2 build/${executable}"
+	execcall="ibrun build/${executable}"
     fi
     if [ ! -z "${omp}" ] ; then
 	execcall="OMP_PROC_BIND=true ${execcall}"
