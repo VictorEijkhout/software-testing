@@ -10,7 +10,8 @@ function usage() {
 	echo && echo ${help_string} && echo ; fi 
     echo "Usage: $0 [ -v version (default=${version}) ] [ -V loadversion (default: version) ]"
     echo "    [ -c compiler ] [ -l logfile ] [ -r (skip running) ] "
-    echo "    [ -4 (do 4py tests) ] [ -f : skip fortran ] [ -u (do cuda tests) ]"
+    echo "    [ -4 (do 4py tests) ] [ -f : skip fortran ]"
+    echo "    [ -o : openmp mode ] [ -u (do cuda tests) ]"
     if [ "${python_option}" = "1" ] ; then
 	echo "    [ -p : python tests only ]"
     fi
@@ -39,6 +40,7 @@ run=1
 docuda=
 dofortran=1
 mvapich=
+omp=
 skipcu=1
 # by default don't do python tests
 dopy=
@@ -63,6 +65,8 @@ while [ $# -gt 0 ] ; do
 	mpi=1 && shift
     elif [ "$1" = "--mvapich" ] ; then
 	mvapich=1 && shift
+    elif [ "$1" = "-o" ] ; then
+	omp=$1 && shift
     elif [ "$1" = "-p" ] ; then
        shift && package=$1 && shift
     elif [ "$1" = "-P" ] ; then
@@ -135,13 +139,9 @@ function set_flags () {
 	runflag="-r"
     fi
 
-    if [ ! -z "${dofortran}" ] ; then
-	fortranflag="-f"
-    fi
-
-    if [ ! -z "${mpi}" ] ; then
-	mpiflag="-m"
-    fi
+    if [ ! -z "${dofortran}" ] ; then fortranflag="-f"; fi
+    if [ ! -z "${mpi}" ]       ; then mpiflag="-m"    ; fi
+    if [ ! -z "${omp}" ]       ; then ompflag="-o"    ; fi
 
     if [ -z "${logfile}" ] ; then
 	locallog=1
@@ -150,7 +150,7 @@ function set_flags () {
     # command_args have been set in the calling environment
     echo "Invoking package=${package} tests: ${command_args}" >> ${logfile}
     standardflags="\
-	${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion} \
+	${ompflag} ${mpiflag} ${cudaflag} ${p4pflag} ${runflag} ${xflag} -p ${package} -P ${loadpackage} -v ${version} -V ${loadversion} \
     	$( if [ ! -z "${cmakeversion}" ] ; then echo  --cmake_version ${cmakeversion} ; fi ) \
 	"
     echo " .. running with standardflags=<<${standardflags}>>" >> ${logfile}

@@ -8,7 +8,7 @@ function usage() {
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] "
     echo "    [ -p package (default: ${defaultp}) ] [ -v version ]"
     echo "    [ -l logfile ] [ -x ( set x ) ]"
-    echo "    [ -m : mpi mode ] [ -r : skip run ] [ -4 : do python tests ]"
+    echo "    [ -m : mpi mode ] [ -o : omp mode ] [ -r : skip run ] [ -4 : do python tests ]"
     echo "    [ -t / --value v : test value ]"
     if [ "${buildsystem}" = "cmake" ] ; then 
 	echo "    [ --cmake cmake options separated by commas ]"
@@ -38,6 +38,7 @@ fulllog=
 inbuildrun=
 runoptions=
 mpi=
+omp=
 docuda=
 ldd=
 modules=
@@ -71,6 +72,8 @@ while [ $# -gt 1 ] ; do
 	shift && ldd=1
     elif [ "$1" = "-m" ] ; then 
 	shift && mpi=1
+    elif [ "$1" = "-o" ] ; then 
+	shift && omp=1
     elif [ "$1" = "-l" ] ; then 
 	shift && fulllog="$( argument $1 )" && shift
 	if [ ! -f "${fulllog}" ] ; then 

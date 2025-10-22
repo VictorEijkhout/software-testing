@@ -1,15 +1,14 @@
 #!/bin/bash
 
+source ../test_setup.sh
+
 ##
-## run tests, given a loaded compiler
+## Tests
 ##
 
-source ../options.sh
-source ../failure.sh
-
-../existence_test.sh -p ${package} -l ${logfile} \
+../existence_test.sh ${standardflags} -l ${logfile} \
 		     --title "have main program" \
-		     --ldd \
+		     --ldd --run_args -h \
 		     --dir bin siesta
 
 ##

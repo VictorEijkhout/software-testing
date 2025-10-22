@@ -38,13 +38,13 @@ for variant in \
     fi
     echo "==== Testing version ${version}"
     ./local_tests.sh -v ${version} \
-	${runflag} \
-	$( if [ ! -z "${docuda}" -a "${variant}" = "cuda" ] ; then echo "-u" ; fi ) \
-	$( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
-      | awk -v version=${version} '\
+		    ${runflag} ${fortranflag} \
+		    $( if [ ! -z "${docuda}" ] ; then echo "-u" ; fi ) \
+		    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
+        | awk -v version=${version} '\
         /Configuration/ { configuration=$3 } \
-	/^---- / { $1="" ; test=$0 } \
-        /could not load/ { printf(" .. not installed\n") } \
-	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
+        /^---- / { $1="" ; test=$0 } \
+        /ERROR/ && configuration!="failed" { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
 	'
-done
+    cp petsc_logs/full.log ./${version}_local.log
+done 2>&1 | tee all_local_tests.log

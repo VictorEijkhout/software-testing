@@ -110,7 +110,8 @@ for compiler in $compilers ; do
     retcode=0 && module -t load ${cname}/${cversion} >>${logfile} 2>&1 || retcode=$?
     # cmake is a touchy topic
     if [ ! -z "${cmakeversion}" ] ; then
-	module -t load cmake/${cmakeversion}
+	echo " .. loading cmake/${cmakeversion}" >>${logfile}
+	module -t load cmake/${cmakeversion} >>${logfile} 2>&1
     fi
     if [ $retcode -eq 0 ] ; then 
 	( echo && echo "==== Configuration: ${compiler}" ) | tee -a ${logfile}
@@ -154,7 +155,7 @@ for compiler in $compilers ; do
     ## Note: on frontera this may do some libc path fixes
     ##
     module load cmake$( if [ ! -z ${cmakeversion} ] ; then echo "/${cmakeversion}" ; fi ) \
-	2>/dev/null
+	   1>>${logfile} 2>&1
 
     ## 
     ## load module (if there is one) and execute all tests

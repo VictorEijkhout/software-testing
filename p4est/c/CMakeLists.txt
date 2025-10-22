@@ -10,7 +10,7 @@ find_package( PkgConfig REQUIRED )
 pkg_check_modules( P4EST REQUIRED p4est )
 
 message( STATUS "P4est includes: ${P4EST_INCLUDE_DIRS}" )
-message( STATUS "P4est library dires: ${P4EST_LIBRARY_DIRS}" )
+message( STATUS "P4est library dirs: ${P4EST_LIBRARY_DIRS}" )
 message( STATUS "P4est libraries: ${P4EST_LIBRARIES}" )
 
 target_include_directories(

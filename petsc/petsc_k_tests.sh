@@ -10,5 +10,6 @@
                         ${p4pflag} \
 			--title "ksp19 kokkos" \
 			--run_args "-ksp_type cg -pc_type bjkokkos -pc_bjkokkos_ksp_max_it 60 -pc_bjkokkos_ksp_type tfqmr -pc_bjkokkos_pc_type jacobi -pc_bjkokkos_ksp_rtol 1e-3 -mat_type aijkokkos" \
+			--value seqaijkokkos \
 			ksp19kokkos.c
 

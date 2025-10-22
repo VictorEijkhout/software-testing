@@ -42,28 +42,16 @@ for variant in \
         version=${base}-${variant}
     fi
     echo "==== Testing version ${version}"
-    if [ ! -z "${trace}" ] ; then 
-	./tacc_tests.sh -v ${version} \
-	    ${runflag} ${fortranflag} \
-	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
-	    $( if [ ! -z "${docuda}" ] ; then echo "-u" ; fi ) \
-	  | tee ${variant}_trace.log \
-          | awk -v version=${version} '\
+    ./tacc_tests.sh -v ${version} \
+		    ${runflag} ${fortranflag} \
+		    $( if [ ! -z "${docuda}" ] ; then echo "-u" ; fi ) \
+		    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
+        | awk -v version=${version} '\
         /Configuration/ { configuration=$3 } \
-	/^---- / { $1="" ; test=$0 } \
-	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
+        /^---- / { $1="" ; test=$0 } \
+        /ERROR/ && configuration!="failed" { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
 	'
-    else
-	./tacc_tests.sh -v ${version} \
-	    ${runflag} ${fortranflag} \
-	    $( if [ ! -z "${docuda}" ] ; then echo "-u" ; fi ) \
-	    $( if [ ! -z "${compiler}" ] ; then echo "-c ${compiler}" ; fi ) \
-          | awk -v version=${version} '\
-        /Configuration/ { configuration=$3 } \
-	/^---- / { $1="" ; test=$0 } \
-	/ERROR/ { printf("Error: version <<%s>> configuration <<%s>> test <<%s>>\n",version,configuration,test) } \
-	'
-    fi
+    cp petsc_logs/full.log ./${version}_tacc.log
 done 2>&1 | tee all_tacc_tests.log
 
 echo && echo "See: all_tacc_tests.log" && echo
