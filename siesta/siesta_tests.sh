@@ -6,7 +6,7 @@ source ../test_setup.sh
 ## Tests
 ##
 
-../existence_test.sh -p ${package} -l ${logfile} \
+../existence_test.sh ${standardflags} -l ${logfile} \
 		     --title "have main program" \
 		     --ldd --run_args -h \
 		     --dir bin siesta
