@@ -14,6 +14,18 @@ source ../test_setup.sh
 		     --title "config program" \
 		     --dir bin nc-config
 
+../existence_test.sh -p ${package} -l ${logfile} \
+		     --title "fortran config program" \
+		     --dir bin nf-config
+
+../make_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "if we can compile with config" \
+			sanity.cc
+
+../make_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "if we can compile F90 with config" \
+			simple_xy_wr.F90
+
 echo "---- Test: nc-config libdir"
 if [ -d $( nc-config --libdir ) ] ; then
     echo "     nc-config correctly reports lib"

@@ -48,6 +48,9 @@ if [ -f "${filename}" ] ; then
 	failure ${unresolved} "resolving shared libraries" | tee -a "${testlog}"
 	if [ ${unresolved} -eq 0 -a "${dir}" = "bin" -a ! -z "${run}" ] ; then
 	    export cmdline="${filename} ${runargs}"
+	    if [ "${mpi}" = "1" ] ; then
+		cmdline="ibrun -np 2 ${cmdline}"
+	    fi
 	    retcode=$( \
 		        echo "running <<${cmdline}>>:" >>"${fulllog}" \
 		         && retcode=0 \
