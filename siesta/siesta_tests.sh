@@ -12,14 +12,15 @@ source ../test_setup.sh
 		     --dir bin siesta
 
 ##
-## non-functioning test
-## forrtl: severe (174): SIGSEGV, segmentation fault occurred
+## example with lowered precision to make it finish relatively quickly.
 ##
-
-# if [ ! -z "${run}" ] ; then
-#     runtimeerror=
-#     ( cd data/work && ibrun -np 1 siesta < ../input.fdf >unittest_log 2>&1 ) || runtimeerror=1
-#     if [ ! -z "${runtimeerror}" ] ; then
-# 	echo "ERROR runtime error"
-#     fi
-# fi
+echo "---- Test: run official example"
+test=Carbon_Nanoscroll
+rm -rf ${test}
+cp -r ${TACC_SIESTA_DIR}/Examples/${test} .
+cd ${test}
+# lower tolerance
+testfdf=carbon_nanoscroll.fdf
+sed -i -e '/Tolerance/s/d-5/d-1/' ${testfdf}
+time ( ibrun -np 2 siesta < ${testfdf} 2>/dev/null \
+      | grep "End of run:" )
