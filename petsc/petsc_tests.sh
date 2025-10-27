@@ -21,6 +21,11 @@ fi
 		     --title "petsc.pc" \
 		     --dir lib pkgconfig/PETSc.pc
 
+../existence_test.sh ${standardflags} -l ${logfile} \
+		     --title "libpetsc.so" \
+		     --ldd \
+		     --dir lib libpetsc.so
+
 
 ##
 ## C tests

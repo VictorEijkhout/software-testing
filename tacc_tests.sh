@@ -30,19 +30,12 @@ if [ "${loadpackage}" != "none" ] ; then
 	exit 0
     fi
 fi
-( echo "================" \
- && echo "==== TACC modules" \
- && if [ "${package}" = "${loadpackage}" ] ; then \
-     echo "==== Testing: ${package}/${version}" \
-    ; else \
-     echo "==== Testing: ${package}/${version} from ${loadpackage}/${loadversion}" \
-    ; fi \
- && if [ "${loadpackage}" != "none" ] ; then \
-     echo "==== available configuations: $( module -t spider ${loadpackage}/${loadversion} 2>&1 )" \
-     ; fi \
- && echo "================" \
- && echo \
- ) | tee -a ${logfile}
+
+source ../configurations.sh
+package_header \
+    | tee -a ${logfile}
+list_configurations
+echo "About to test ${nconfigs} configurations"
 
 #
 # loop through compiler names without slash
