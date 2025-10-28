@@ -1,0 +1,49 @@
+%include ../base_fe3.fdf
+SystemLabel         fullmix
+
+Mixer.Debug.MPI
+SCF.Mixer.Weight 0.01
+SCF.Mixer.History 4
+SCF.Mixer.Restart 2
+SCF.Mixer.Restart.Save 3
+
+%block SCF.Mixers
+  linear-before
+  pulay
+  broyden
+  linear-after
+  kick
+%endblock
+
+%block SCF.Mixer.linear-before
+  method linear
+  iterations 2
+  history 2
+  next pulay
+%endblock
+
+%block SCF.Mixer.pulay
+  method pulay
+  iterations 10
+  next kick
+  next.conv linear-after
+%endblock
+
+%block SCF.Mixer.linear-after
+  method linear
+  w 0.025
+%endblock
+
+%block SCF.Mixer.kick
+  method linear
+  w 0.1
+  iterations 1
+  next broyden
+%endblock
+
+%block SCF.Mixer.broyden
+  method broyden
+  iterations 10
+  next kick
+  next.conv linear-after
+%endblock

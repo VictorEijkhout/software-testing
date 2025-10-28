@@ -1,0 +1,11 @@
+%include ../base_wat_bigbox.fdf
+SystemLabel     gate_charge
+
+Slab.DipoleCorrection True
+%block Geometry.Charge
+ plane -0.001 charge
+  gauss 1. 2. Ang
+   0. 20. 0. Ang
+   0.  1. 0.
+%endblock Geometry.Charge
+

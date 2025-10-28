@@ -1,0 +1,155 @@
+SystemName         graphene
+#                  Graphene layer
+#                  Ghost atoms included at the center of the bonds
+#                  MeshCutoff: 600 Ry
+#                  20 x 20 x 1 Monkhorst-Pack mesh
+
+SystemLabel        graphene
+
+NumberOfAtoms          5         # Number of atoms in the unit cell
+                                 # We include here:
+                                 # - The two carbon atoms of the motif
+                                 # - Three Hydrogen ghost atoms at the center
+                                 #   of the bonds between first-neighbors
+                                 # Only the atomic orbitals of the atoms 
+                                 #   will be included in the simulation, 
+                                 #   while the atomic nuclei will not be 
+                                 #   considered  
+NumberOfSpecies        2         # Number of different atomic species in the
+                                 #   simulation.
+                                 # We include here:
+                                 # - C (with an atomic number of 6)
+                                 # - pseudo-Hydrogen atom 
+                                 #   (with an atomic number of -1)
+%block ChemicalSpeciesLabel      # Chemical species label as indicated above
+  1   6  C
+  2  -1  Ghost-H
+%endblock ChemicalSpeciesLabel
+
+
+%block PAO.Basis                 # Define Basis set
+C           2                    # Species label, number of l-shells
+ n=2   0   1                     # n, l, Nzeta
+   4.088    
+   1.000    
+ n=2   1   1                     # n, l, Nzeta
+   4.870      
+   1.000      
+Ghost-H     1
+ n=1   0   1                     # n, l, Nzeta
+   5.000    
+   1.000    
+%endblock PAO.Basis
+
+#
+# Atomic structure: lattice vectors and atomic coordinates
+#
+
+LatticeConstant      1.46700 Ang # Nearest-neighbor distance, d
+                                 # The primitive translation vectors
+                                 #   will be given by 
+                                 #   a_{1} = (3/2 d, - sqrt(3)/2 d, 0)
+                                 #   a_{2} = (3/2 d, + sqrt(3)/2 d, 0)
+                                 #   Here the z-component of the vectors
+                                 #   is large enough to avoid interactions
+                                 #   between periodic replicas of the slab
+
+%block LatticeVectors
+   1.500000000       -0.8660254038        0.0000000000
+   1.500000000        0.8660254038        0.0000000000
+   0.000000000        0.0000000000       20.0000000000
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat Fractional 
+%block AtomicCoordinatesAndAtomicSpecies
+   0.3333333333   0.3333333333   0.0000000000  1
+   0.6666666667   0.6666666667   0.0000000000  1
+   0.5000000000   0.5000000000   0.0000000000  2
+   0.5000000000   0.0000000000   0.0000000000  2
+   0.0000000000   0.5000000000   0.0000000000  2
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+%block kgrid_Monkhorst_Pack
+  20   0   0  0.0
+   0  20   0  0.0
+   0   0   1  0.0
+%endblock Kgrid_Monkhorst_Pack
+
+#
+# DFT, Grid, SCF
+#
+
+XC.functional          GGA      # Exchange and correlation functional
+                                #   General Gradient Approximation
+XC.authors             PBE      #   Perdew-Burke-Erzerhof
+
+MeshCutoff             600.0 Ry # Defines the plane wave cutoff for the grid
+MaxSCFIterations       500      # Maximum number of SCF Iterations 
+DM.MixingWeight        0.1        
+DM.NumberPulay         5        # It controls the Pulay convergence
+                                #   accelerator.
+DM.Tolerance           1.d-4    # Tolerance in maximum difference
+                                # between input and output DM
+DM.UseSaveDM           F        # Use the Density Matrix from the DM file
+                                #   if found
+SolutionMethod         diagon   # The Hamiltonian will be solved by 
+                                #   a diagonalization
+ElectronicTemperature  0.075 eV # Electronic Temperature for the smearing
+                                #   of the Fermi-Dirac occupation function
+
+
+#
+# Plotting the band structure
+#
+
+BandLinesScale      ReciprocalLatticeVectors
+%block BandLines
+1   0.0       0.0        0.0   \Gamma      # Begin at \Gamma
+50  0.33333   0.666667   0.0   K           # 50 points from \Gamma to K
+50  0.5       0.5        0.0   M           # 50 points from K to M
+50  0.0       0.0        0.0   \Gamma      # 50 points from M to \Gamma
+%endblock BandLines
+
+#
+# Plotting the Projected Density Of States
+#
+
+%block ProjectedDensityOfStates
+  -70.00  5.00  0.150 3000  eV
+%endblock ProjectedDensityOfStates
+
+%PDOS.kgrid_Monkhorst_Pack
+   60  0  0  0.5
+    0 60  0  0.5
+    0  0  2  0.5
+%end PDOS.kgrid_Monkhorst_Pack
+
+#
+# Variables related with the Wannierization of the manifolds
+#
+%block Wannier.Manifolds
+  entangled
+%endblock Wannier.Manifolds
+
+%block Wannier.Manifold.entangled
+ # Indices of the initial and final band of the manifold
+ bands   1   8
+ # Indices of the orbitals that will be used as localized trial orbitals
+ trial-orbitals  9 10 11  3  7
+ # Number of iterations for the minimization of \Omega
+ spreading.nitt 0         
+ wannier_plot  3 
+ fermi_surface_plot true
+ write_hr true
+ write_tb true
+ # Bottom and top of the outer energy window for band disentanglement
+ window  -30.0    5.0   eV
+ # Bottom and top of the inner energy window for band disentanglement
+ window.frozen  -30.0   -7.5   eV
+%endblock Wannier.Manifold.entangled
+
+Wannier.Manifolds.Unk  .false.
+Wannier.k [20  20  1]
+
+WriteMullikenPop    1
+

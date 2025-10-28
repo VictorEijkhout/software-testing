@@ -1,0 +1,220 @@
+## This is a simpler version of the SrTiO3 example,
+##   with fewer k-points and lower cutoffs 
+
+SystemName      Strontium titanate (SrTiO3) cubic structure
+#               Cubic phase
+#               LDA functional, Ceperley-Alder parametrization
+#               Theoretical lattice constant 
+#               Mesh Cutoff: 150 Ry
+#               Monkhorst-Pack grid: 2 x 2 x 2 ; displaced 0.5 0.5 0.5 
+
+SystemLabel	w90-on-the-fly
+
+NumberOfSpecies	3
+NumberOfAtoms	5
+%block ChemicalSpeciesLabel
+      1      38     Sr
+      2      22     Ti
+      3       8     O
+%endblock ChemicalSpeciesLabel
+
+%block PS.lmax
+   Sr    3
+   Ti    3
+    O    3
+%endblock PS.lmax
+
+%block PAO.Basis
+Sr   5      1.64000
+ n=4   0   1   E   155.00000     6.00000
+     6.49993
+     1.00000
+ n=5   0   2   E   149.48000     6.50000
+     6.99958     5.49957
+     1.00000     1.00000
+ n=4   1   1   E   148.98000     5.61000
+     6.74964
+     1.00000
+ n=5   1   1   E     4.57000     1.20000
+     4.00000
+     1.00000
+ n=4   2   1   E   146.26000     6.09000
+     6.63062
+     1.00000
+Ti    5      1.91
+ n=3    0    1   E     93.95      5.20
+   5.69946662616249
+   1.00000000000000
+ n=3    1    1   E     95.47      5.20
+   5.69941339465994
+   1.00000000000000
+ n=4    0    2   E     96.47      5.60
+   6.09996398975307        5.09944363262274
+   1.00000000000000        1.00000000000000
+ n=3    2    2   E     46.05      4.95
+   5.94327035784617        4.70009988294302
+   1.00000000000000        1.00000000000000
+ n=4    1    1   E      0.50      1.77
+   3.05365979938936
+   1.00000000000000
+O     3     -0.28
+ n=2    0    2   E     40.58      3.95
+   4.95272270428712        3.60331408800389
+   1.00000000000000        1.00000000000000
+ n=2    1    2   E     36.78      4.35
+   4.99990228025066        3.89745395068600
+   1.00000000000000        1.00000000000000
+ n=3    2    1   E     21.69      0.93
+   2.73276990670788
+   1.00000000000000
+%endblock PAO.Basis
+
+
+LatticeConstant       3.874 Ang       # Theoretical lattice constant for the
+                                      #    cubic phase  
+%block LatticeVectors
+  1.00  0.00  0.00
+  0.00  1.00  0.00
+  0.00  0.00  1.00
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat	     Fractional
+%block AtomicCoordinatesAndAtomicSpecies
+  0.00  0.00  0.00       1      87.62       Sr
+  0.50  0.50  0.50       2      47.867      Ti
+  0.00  0.50  0.50       3      15.9994     O
+  0.50  0.00  0.50       3      15.9994     O
+  0.50  0.50  0.00       3      15.9994     O
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+WriteCoorStep           .true.        #  Write the atomic coordinates to 
+                                      #     standard output at every 
+                                      #     MD time step or relaxation step.
+
+%block kgrid_Monkhorst_Pack
+   2  0  0  0.5
+   0  2  0  0.5
+   0  0  2  0.5
+%endblock kgrid_Monkhorst_Pack
+
+#
+# DFT, Grid, SCF
+#
+
+XC.Functional          LDA
+XC.Authors             CA 
+
+MeshCutoff             150 Ry      # Defines the plane wave cutoff for the grid
+DM.NumberPulay         3           # It controls the Pulay convergence 
+                                   #   accelerator.
+DM.UseSaveDM           .false.     # Use the Density Matrix from the DM file 
+                                   #   if found
+DM.Tolerance           1.d-3       # Tolerance in maximum difference
+                                   # between input and output DM
+MaxSCFIterations       100         # Maximum number of SCF Iterations
+ElectronicTemperature  0.075 eV    # Electronic Temperature for the smearing
+                                   #   of the Fermi-Dirac occupation function
+SCF.MixAfterConvergence .false.    # Logical variable to indicate whether mixing
+                                   #   is done in the last SCF cycle 
+                                   #   (after convergence has been achieved) 
+                                   #   or not. 
+                                   #   Not mixing after convergence improves 
+                                   #   the quality of the final Kohn-Sham 
+                                   #   energy and of the forces when mixing 
+                                   #   the DM.
+
+# Variables related with the Wannierization of the manifolds
+#
+%block Wannier.Manifolds
+  first
+  second
+  third
+%endblock
+
+%block Wannier.Manifold.first
+  # Indices of the initial and final band of the manifold
+  bands 12 20
+  # Indices of the orbitals that will be used as localized trial orbitals
+  #   (any number of lines allowed)
+  trial-orbitals [36 37 38]
+  trial-orbitals [49 50 51]
+  trial-orbitals [62 63 64]
+  # Number of iterations for the minimization of \Omega
+  spreading.nitt 0
+  wannier_plot 3
+  fermi_surface_plot true
+  write_hr true
+  write_tb true
+%endblock
+
+%block Wannier.Manifold.second
+  bands 21 23
+  trial-orbitals [24 25 27]
+  spreading.nitt 0
+  wannier_plot 3
+  fermi_surface_plot true
+  write_hr true
+  write_tb true
+%endblock
+
+%block Wannier.Manifold.third
+  bands 12 23
+  spreading.nitt 0
+  trial-orbitals 24 25 27
+  trial-orbitals [36 37 38]
+  trial-orbitals [49 50 51]
+  trial-orbitals 62 63 64
+  wannier_plot 3
+  fermi_surface_plot true
+  write_hr true
+  write_tb true
+%endblock
+
+Wannier.Manifolds.Unk  .false.
+
+Wannier.k [2 2 2]
+
+Wannier.Compute.Coeffs .true.
+
+#  *************************************************************************
+#                     Input variables for Denchar
+#  (besides SystemLabel, NumberOfSpecies and ChemicalSpecies, defined above)
+#  *************************************************************************
+WriteDenchar                     .true.
+
+Denchar.TypeOfRun           3D
+
+Denchar.PlotCharge          .true.
+Denchar.PlotWaveFunctions   .true.
+
+Denchar.CoorUnits      bohr            # Format for coordinate of the points
+                                       # Bohr
+                                       # Ang
+
+Denchar.DensityUnits   Ele/bohr**3     # Units of Charge Density
+                                       # Ele/bohr**3
+                                       # Ele/Ang**3
+                                       # Ele/UnitCell
+
+Denchar.MinX           -10.0  bohr      # Minimum coord of the window in X-dir
+Denchar.MaxX            10.0  bohr      # Maximum coord of the window in X-dir
+
+Denchar.MinY           -10.0  bohr      # Minimum coord of the window in Y-dir
+Denchar.MaxY            10.0  bohr      # Maximum coord of the window in Y-dir
+
+Denchar.MinZ           -10.0  bohr      # Minimum coord of the window in Z-dir
+Denchar.MaxZ            10.0  bohr      # Maximum coord of the window in Z-dir
+
+Denchar.NumberPointsX    20            # Number of points in X-axis
+Denchar.NumberPointsY    20            # Number of points in Y-axis
+Denchar.NumberPointsZ    20            # Number of points in Z-axis
+
+Denchar.PlaneGeneration  ThreeAtomicIndices      # Option to generate the plane
+                                                 # NormalVector
+                                                 # TwoLine
+                                                 # ThreePoints
+                                                 # ThreeAtomicIndices
+%block Denchar.Indices3Atoms                # Indices of three atoms
+   2  3  4 
+%endblock Denchar.Indices3Atoms
+

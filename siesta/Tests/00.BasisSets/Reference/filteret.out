@@ -1,0 +1,117 @@
+Siesta Version  : 5.0.0-alpha-123-gfb8fd7d02
+Architecture    : ----
+Compiler version: GNU-11.4.0
+Compiler flags  : -fallow-argument-mismatch;-O3 -march=native
+PP flags        : ----
+Libraries       : ----
+Parallelisations: none
+GEMM3M support
+NetCDF support
+NetCDF-4 support
+Lua support
+
+Runtime information:
+* Directory : /home/fnpedron/Siesta/siesta-dev/Tests/00.BasisSets/work/filteret
+* Running in serial mode.
+>> Start of run:  28-SEP-2023  15:35:04
+
+                           *********************** 
+                           *  WELCOME TO SIESTA  * 
+                           *********************** 
+
+reinit: Reading from standard input
+reinit: Dumping input in INPUT_TMP.98550
+************************** Dump of input data file ****************************
+%include ../../basejob.fdf
+SystemLabel         filteret
+NumberOfAtoms       3
+NumberOfSpecies     2
+%block ChemicalSpeciesLabel
+ 1  8  O
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+AtomicCoordinatesFormat  Ang
+%block AtomicCoordinatesAndAtomicSpecies
+ 0.000  0.000  0.000  1
+ 0.757  0.586  0.000  2
+-0.757  0.586  0.000  2
+%endblock AtomicCoordinatesAndAtomicSpecies
+PAO.BasisType filteret
+PAO.EnergyCutoff 25.0 Ry
+FilterCutoff 150 Ry
+************************** End of input data file *****************************
+
+reinit: -----------------------------------------------------------------------
+reinit: System Name: Water molecule
+reinit: -----------------------------------------------------------------------
+reinit: System Label: filteret
+reinit: -----------------------------------------------------------------------
+
+initatom: Reading input for the pseudopotentials and atomic orbitals ----------
+Species number:   1 Atomic number:    8 Label: O
+Species number:   2 Atomic number:    1 Label: H
+
+
+---- Processing specs for species: O
+Ground state valence configuration:   2s02  2p04
+Reading pseudopotential information in formatted form from:
+  /home/fnpedron/Siesta/siesta-dev/Tests/Pseudos/O.psf
+
+---- Processing specs for species: H
+Ground state valence configuration:   1s01
+Reading pseudopotential information in formatted form from:
+  /home/fnpedron/Siesta/siesta-dev/Tests/Pseudos/H.psf
+
+---- Pseudopotential check for O 
+
+Pseudized shells:
+2s( 2.00) rc: 1.14
+2p( 4.00) rc: 1.14
+3d( 0.00) rc: 1.14
+4f( 0.00) rc: 1.14
+Valence configuration for ps generation: (assumed as above)
+
+---- Pseudopotential check for H 
+
+Pseudized shells:
+1s( 1.00) rc: 1.25
+2p( 0.00) rc: 1.25
+3d( 0.00) rc: 1.25
+4f( 0.00) rc: 1.25
+Valence configuration for ps generation: (assumed as above)
+For O, standard SIESTA heuristics set lmxkb to 3
+ (one more than the basis l, including polarization orbitals).
+Use PS.lmax or PS.KBprojectors blocks to override.
+For H, standard SIESTA heuristics set lmxkb to 2
+ (one more than the basis l, including polarization orbitals).
+Use PS.lmax or PS.KBprojectors blocks to override.
+
+<basis_specs>
+===============================================================================
+O                    Z=   8    Mass=  15.999        Charge= 0.17977+309
+Lmxo=2 Lmxkb= 3    BasisType=filteret   Semic=F
+L=0  Nsemic=0  Cnfigmx=2
+          i=1  nzeta=2  polorb=0  (2s)
+            fcutoff:    0.0000    
+               vcte:    40.000    
+               rinn:  -0.90000    
+               qcoe:    0.0000    
+               qyuk:    0.0000    
+               qwid:   0.10000E-01
+                rcs:    0.0000      0.0000    
+            lambdas:    1.0000      1.0000    
+L=1  Nsemic=0  Cnfigmx=2
+          i=1  nzeta=2  polorb=1  (2p)  (to be polarized perturbatively)
+            fcutoff:    0.0000    
+               vcte:    40.000    
+               rinn:  -0.90000    
+               qcoe:    0.0000    
+               qyuk:    0.0000    
+               qwid:   0.10000E-01
+                rcs:    0.0000      0.0000    
+            lambdas:    1.0000      1.0000    
+L=2  Nsemic=0  Cnfigmx=3
+          i=1  nzeta=0  polorb=0  (3d)  (perturbative polarization orbital) (from 2p)
+-------------------------------------------------------------------------------
+L=0  Nkbl=1  erefs: 0.17977+309
+L=1  Nkbl=1  erefs: 0.17977+309

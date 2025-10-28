@@ -1,0 +1,8 @@
+%include ../base_wat_bigbox.fdf
+SystemLabel     dip_corr_vac
+
+Slab.DipoleCorrection vacuum
+%block Slab.DipoleCorrection.Vacuum
+  point 0. 17. 0. Ang
+%endblock
+

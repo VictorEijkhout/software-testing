@@ -1,0 +1,53 @@
+SystemName TDDFT_h2o
+SystemLabel TDDFT_h2o
+
+
+################################################################
+
+xc.functional LDA
+xc.authors CA
+Atom.Ignore.Ghosts
+
+MeshCutoff 150.0 Ry
+
+SolutionMethod diagon
+ElectronicTemperature 5 meV
+
+DM.MixingWeight 0.2
+DM.NumberPulay 3
+DM.UseSaveDM F
+
+################################################################
+
+TDED.WF.Initialize T
+
+%block ExternalElectricField
+0.200  -0.200  0.000  V/Ang
+%endblock ExternalElectricField
+
+###############################################################
+NumberOfAtoms 3
+NumberOfSpecies 2
+
+%block ChemicalSpeciesLabel
+1 8 O
+2 1 H
+%endblock ChemicalSpeciesLabel
+
+PAO.BasisSize DZP
+
+LatticeConstant 10.0 Ang
+
+%block LatticeVectors
+1.0 0.0 0.0
+0.0 1.0 0.0
+0.0 0.0 1.0
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat NotScaledCartesianAng
+
+%block AtomicCoordinatesAndAtomicSpecies
+0.401406    0.437428    0.768445 1
+0.004485   -0.004402    0.000174 2
+0.004730   -0.004345    1.536873 2
+%endblock AtomicCoordinatesAndAtomicSpecies

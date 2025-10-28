@@ -1,0 +1,29 @@
+SystemName   Si bulk
+
+NumberOfAtoms       2
+NumberOfSpecies     1
+
+PAO.BasisSize       SZP
+
+LatticeConstant     5.430 Ang
+%block LatticeVectors
+  0.000  0.500  0.500
+  0.500  0.000  0.500
+  0.500  0.500  0.000
+%endblock LatticeVectors
+
+%block kgrid_Monkhorst_Pack
+ 3 0 0  0.
+ 0 3 0  0.
+ 0 0 3  0.
+%endblock kgrid_Monkhorst_Pack
+
+MeshCutoff          150.0 Ry
+DM.UseSaveDM        F
+
+AtomicCoordinatesFormat  ScaledCartesian
+%block AtomicCoordinatesAndAtomicSpecies
+    0.000    0.000    0.000   1 #  Si  1
+    0.250    0.250    0.250   1 #  Si  2
+%endblock AtomicCoordinatesAndAtomicSpecies
+

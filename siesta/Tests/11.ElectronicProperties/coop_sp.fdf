@@ -1,0 +1,8 @@
+%include ../base_fen.fdf
+SystemLabel     coop_sp
+
+Spin non-collinear
+
+COOP.write    T
+WFS.EnergyMax 10.0 eV
+

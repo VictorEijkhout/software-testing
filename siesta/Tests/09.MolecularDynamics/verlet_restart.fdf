@@ -1,0 +1,6 @@
+%include ../base_wat2.fdf
+SystemLabel           verlet
+
+MD.TypeOfRun          verlet
+MD.InitialTemperature 600 K
+MD.UseSaveXV          T

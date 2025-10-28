@@ -1,0 +1,30 @@
+NumberOfAtoms 1
+NumberOfSpecies 1
+%block ChemicalSpeciesLabel
+ 1 26 Fe_soc
+%endblock ChemicalSpeciesLabel
+
+LatticeConstant 1.0 Ang
+%block LatticeVectors
+ -1.39187300  1.39187300  1.39187300
+  1.39187300 -1.39187300  1.39187300
+  1.39187300  1.39187300 -1.39187300
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat Fractional
+%block AtomicCoordinatesAndAtomicSpecies
+ 0.00000000 0.00000000 0.00000000 1 # 1: Fe
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+PAO.BasisSize SZP
+kgrid.MonkhorstPack [7 7 7]
+XC.Functional GGA
+XC.Authors    PBE
+
+MaxSCFIterations 50
+SCF.Mixer.Weight 0.01
+SCF.Mixer.History 10
+DM.UseSaveDM      F
+
+ElectronicTemperature 10 meV
+Mesh.Cutoff 300 Ry

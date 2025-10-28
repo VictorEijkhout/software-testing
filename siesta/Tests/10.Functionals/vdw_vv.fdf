@@ -1,0 +1,7 @@
+%include ../base_graph.fdf
+SystemLabel     vdw_vv
+
+xc.functional   VDW
+xc.authors      VV
+
+ReparametrizePseudos T

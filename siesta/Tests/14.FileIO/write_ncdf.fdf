@@ -1,0 +1,8 @@
+%include ../base_wat.fdf
+SystemLabel     write_ncdf
+
+WriteDM.NetCDF           T
+WriteDM.History.NetCDF   T
+WriteDMHS.NetCDF         T
+WriteDMHS.History.NetCDF T
+DM.UseSaveDM F

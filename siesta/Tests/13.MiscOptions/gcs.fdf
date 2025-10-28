@@ -1,0 +1,18 @@
+%include ../base_wat_smallbox.fdf
+SystemLabel     gcs
+
+%block ChemicalSpeciesLabel
+ 1  8  O
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+
+%block GridCellSampling
+   0.5  0.0  0.0
+   0.0  0.5  0.0
+   0.0  0.0  0.5
+   0.0  0.5  0.5
+   0.5  0.0  0.5
+   0.5  0.5  0.0
+   0.5  0.5  0.5
+%endblock GridCellSampling
+

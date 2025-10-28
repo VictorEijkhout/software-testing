@@ -1,0 +1,11 @@
+%include ../base_wat2.fdf
+SystemLabel           anneal_pt
+
+MD.TypeOfRun          anneal
+MD.AnnealOption       TemperatureAndPressure
+MD.InitialTemperature 100 K
+MD.TargetTemperature  600 K
+MD.TauRelax           25 fs
+MD.TargetPressure     10.0 GPa
+MD.UseSaveXV          F
+

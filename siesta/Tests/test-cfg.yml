@@ -1,0 +1,51 @@
+%YAML 1.2
+---
+
+# Default test parameters:
+# - fail_allow : whether it is OK for a test to fail
+# - fail_expect: whether a test is expected to fail (new feature development)
+# - timeout    : maximum run time allowed (in case the program hangs)
+# All these parameters can be overridden individually for each test.
+defaults:
+  category: basic
+  fail_allow: no
+  fail_expect: no
+  timeout: 300
+
+# Term-wise tolerances (can be overridden individually for each test)
+# Note: the following values were imported from ~siesta/Tests/tolerances.dat
+tolerances:
+  DEna:     0.015
+  DUscf:    0.001
+  Eharris:  0.003
+  Harris_E: 0.003
+  Ekin:     0.017
+  Ena:      0.003
+  Enl:      0.005
+  Etot:     0.003
+  Exc:      0.003
+  FreeEng:  0.005
+  Uscf:     0.015
+  Ebs:      0.004
+  KS_E:     0.007
+  Eions:    0.004
+  Fermi:    0.009
+  Edftu:    0.001 # Review. Arbitrary.
+  Eso:      0.001 # Review. Arbitrary.
+  EDFTD3:   0.001 # Review. Arbitrary.
+  f_sum_rule:     0.0001 # Review. Arbitrary.
+  Res_force: 0.002
+  Max_force: 0.002
+  Spin_pol:  0.0002
+  Qtot:     0.001
+  Stress:   0.001
+  Cellvec:  0.002
+  Cellang:  0.002
+
+# Values from tolerances that are not yet incorporated:
+# siesta:I-e    0.018
+# siesta:E_KS_egg 0.007
+# siesta:Uscf   0.015
+# "Pressure of Solid" 0.04
+# "Pressure of Molecule" 0.04
+# "Actual Cut-Off" 0.0002

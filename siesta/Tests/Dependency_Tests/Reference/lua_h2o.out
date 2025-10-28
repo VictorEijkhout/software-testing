@@ -1,0 +1,2308 @@
+Siesta Version  : 5.0.0-alpha-123-gfb8fd7d02
+Architecture    : ----
+Compiler version: GNU-11.4.0
+Compiler flags  : -fallow-argument-mismatch;-O3 -march=native
+PP flags        : ----
+Libraries       : ----
+Parallelisations: none
+GEMM3M support
+NetCDF support
+NetCDF-4 support
+Lua support
+
+Runtime information:
+* Directory : /home/fnpedron/Siesta/siesta-dev/Tests/Dependency_Tests/work/lua_h2o
+* Running in serial mode.
+>> Start of run:  28-SEP-2023  15:41:52
+
+                           *********************** 
+                           *  WELCOME TO SIESTA  * 
+                           *********************** 
+
+reinit: Reading from standard input
+reinit: Dumping input in INPUT_TMP.06364
+************************** Dump of input data file ****************************
+SystemName          Water molecule
+SystemLabel         lua_h2o
+NumberOfAtoms       3
+NumberOfSpecies     2
+# File name that should be
+# runned by the Lua interpreter
+LUA.Script siesta.lua
+# Debug (create loads of print-out)
+LUA.Debug T
+MD.TypeOfRun CG
+MD.NumCGSteps 100
+MeshCutoff  50 Ry
+%block ChemicalSpeciesLabel
+ 1  8  O      # Species index, atomic number, species label
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+AtomicCoordinatesFormat  Ang
+%block AtomicCoordinatesAndAtomicSpecies
+ 0.000  0.000  0.000  1
+ 0.757  0.586  0.000  2
+-0.757  0.586  0.000  2
+%endblock AtomicCoordinatesAndAtomicSpecies
+save-rho T
+save-delta-rho T
+save-total-potential T
+save-neutral-atom-potential T
+save-hs T
+************************** End of input data file *****************************
+
+reinit: -----------------------------------------------------------------------
+reinit: System Name: Water molecule
+reinit: -----------------------------------------------------------------------
+reinit: System Label: lua_h2o
+reinit: -----------------------------------------------------------------------
+
+initatom: Reading input for the pseudopotentials and atomic orbitals ----------
+Species number:   1 Atomic number:    8 Label: O
+Species number:   2 Atomic number:    1 Label: H
+
+
+---- Processing specs for species: O
+Ground state valence configuration:   2s02  2p04
+Reading pseudopotential information in formatted form from:
+  /home/fnpedron/Siesta/siesta-dev/Tests/Pseudos/O.psf
+
+---- Processing specs for species: H
+Ground state valence configuration:   1s01
+Reading pseudopotential information in formatted form from:
+  /home/fnpedron/Siesta/siesta-dev/Tests/Pseudos/H.psf
+
+---- Pseudopotential check for O 
+
+Pseudized shells:
+2s( 2.00) rc: 1.14
+2p( 4.00) rc: 1.14
+3d( 0.00) rc: 1.14
+4f( 0.00) rc: 1.14
+Valence configuration for ps generation: (assumed as above)
+
+---- Pseudopotential check for H 
+
+Pseudized shells:
+1s( 1.00) rc: 1.25
+2p( 0.00) rc: 1.25
+3d( 0.00) rc: 1.25
+4f( 0.00) rc: 1.25
+Valence configuration for ps generation: (assumed as above)
+For O, standard SIESTA heuristics set lmxkb to 3
+ (one more than the basis l, including polarization orbitals).
+Use PS.lmax or PS.KBprojectors blocks to override.
+For H, standard SIESTA heuristics set lmxkb to 2
+ (one more than the basis l, including polarization orbitals).
+Use PS.lmax or PS.KBprojectors blocks to override.
+
+<basis_specs>
+===============================================================================
+O                    Z=   8    Mass=  15.999        Charge= 0.17977+309
+Lmxo=2 Lmxkb= 3    BasisType=split      Semic=F
+L=0  Nsemic=0  Cnfigmx=2
+          i=1  nzeta=2  polorb=0  (2s)
+            splnorm:   0.15000    
+               vcte:    40.000    
+               rinn:  -0.90000    
+               qcoe:    0.0000    
+               qyuk:    0.0000    
+               qwid:   0.10000E-01
+                rcs:    0.0000      0.0000    
+            lambdas:    1.0000      1.0000    
+L=1  Nsemic=0  Cnfigmx=2
+          i=1  nzeta=2  polorb=1  (2p)  (to be polarized perturbatively)
+            splnorm:   0.15000    
+               vcte:    40.000    
+               rinn:  -0.90000    
+               qcoe:    0.0000    
+               qyuk:    0.0000    
+               qwid:   0.10000E-01
+                rcs:    0.0000      0.0000    
+            lambdas:    1.0000      1.0000    
+L=2  Nsemic=0  Cnfigmx=3
+          i=1  nzeta=0  polorb=0  (3d)  (perturbative polarization orbital) (from 2p)
+-------------------------------------------------------------------------------
+L=0  Nkbl=1  erefs: 0.17977+309
+L=1  Nkbl=1  erefs: 0.17977+309
+L=2  Nkbl=1  erefs: 0.17977+309
+L=3  Nkbl=1  erefs: 0.17977+309
+===============================================================================
+</basis_specs>
+
+Using PAO.SplitTailNorm
+atom: Called for O                     (Z =   8)
+Maximum radius (at nrval) set to   50.00000 8518
+
+read_vps: Pseudopotential generation method:
+read_vps: ATM3      Troullier-Martins                       
+Valence charge in pseudo generation:    6.00000
+
+xc_check: Exchange-correlation functional:
+xc_check: Ceperley-Alder
+V l=0 = -2*Zval/r beyond r=  1.1366
+V l=1 = -2*Zval/r beyond r=  1.1332
+V l=2 = -2*Zval/r beyond r=  1.1298
+V l=3 = -2*Zval/r beyond r=  1.1264
+All V_l potentials equal beyond r=  1.1355
+This should be close to max(r_c) in ps generation
+All pots = -2*Zval/r beyond r=  1.1366
+Using small-core scheme (local charge) for Vlocal
+
+VLOCAL_FROM_CHLOCAL: 99.0% of the norm of Vloc inside     33.667 Ry
+VLOCAL_FROM_CHLOCAL: 99.9% of the norm of Vloc inside     76.727 Ry
+atom: Maximum radius for chlocal:    1.37241
+atom: Maximum radius for r*vlocal+2*Zval:    1.25469
+
+KBgen: Kleinman-Bylander projectors: 
+GHOST: No ghost state for L =  0
+   l= 0   rc=  1.293209   el= -1.742414   Ekb=  9.076872   kbcos=  0.325320
+GHOST: No ghost state for L =  1
+   l= 1   rc=  1.284119   el= -0.676589   Ekb= -8.194485   kbcos= -0.396010
+GHOST: No ghost state for L =  2
+   l= 2   rc=  1.433152   el=  0.013307   Ekb= -2.071665   kbcos= -0.003690
+GHOST: No ghost state for L =  3
+   l= 3   rc=  1.540891   el=  0.019584   Ekb= -0.817137   kbcos= -0.000371
+
+KBgen: Total number of Kleinman-Bylander projectors:  16
+atom: -------------------------------------------------------------------------
+
+atom: SANKEY-TYPE ORBITALS:
+atom: Selected multiple-zeta basis: split     
+
+SPLIT: Orbitals with angular momentum L= 0
+
+SPLIT: Basis orbitals for state 2s
+
+SPLIT: PAO cut-off radius determined from an
+SPLIT: energy shift=  0.010000 Ry
+Split based on tail norm
+
+   izeta = 1
+                 lambda =    1.000000
+                     rc =    3.560943
+                 energy =   -1.731321
+                kinetic =    1.587329
+    potential(screened) =   -3.318651
+       potential(ionic) =  -11.260325
+
+   izeta = 2
+                 rmatch =    2.319910
+              splitnorm =    0.150000
+                 energy =   -1.319217
+                kinetic =    2.736746
+    potential(screened) =   -4.055963
+       potential(ionic) =  -12.745464
+
+SPLIT: Orbitals with angular momentum L= 1
+
+SPLIT: Basis orbitals for state 2p
+
+SPLIT: PAO cut-off radius determined from an
+SPLIT: energy shift=  0.010000 Ry
+Split based on tail norm
+
+   izeta = 1
+                 lambda =    1.000000
+                     rc =    4.290924
+                 energy =   -0.665565
+                kinetic =    4.934810
+    potential(screened) =   -5.600376
+       potential(ionic) =  -13.346429
+
+   izeta = 2
+                 rmatch =    2.782200
+              splitnorm =    0.150000
+                 energy =   -0.468052
+                kinetic =    6.936835
+    potential(screened) =   -7.404886
+       potential(ionic) =  -15.957492
+
+POLgen: Perturbative polarization orbital with L=  2
+
+POLgen: Polarization orbital for state 2p
+Split based on tail norm
+
+   izeta = 1
+                     rc =    4.290924
+                 energy =    2.236783
+                kinetic =    4.278617
+    potential(screened) =   -2.041834
+       potential(ionic) =   -8.171412
+atom: Total number of Sankey-type orbitals: 13
+
+atm_pop: Valence configuration (for local Pseudopot. screening):
+ 2s( 2.00)                                                            
+ 2p( 4.00)                                                            
+ 3d( 0.00)                                                            
+Vna: chval, zval:    6.00000   6.00000
+
+Vna:  Cut-off radius for the neutral-atom potential:   4.290924
+
+atom: _________________________________________________________________________
+
+<basis_specs>
+===============================================================================
+H                    Z=   1    Mass=  1.0080        Charge= 0.17977+309
+Lmxo=1 Lmxkb= 2    BasisType=split      Semic=F
+L=0  Nsemic=0  Cnfigmx=1
+          i=1  nzeta=2  polorb=1  (1s)  (to be polarized perturbatively)
+            splnorm:   0.15000    
+               vcte:    40.000    
+               rinn:  -0.90000    
+               qcoe:    0.0000    
+               qyuk:    0.0000    
+               qwid:   0.10000E-01
+                rcs:    0.0000      0.0000    
+            lambdas:    1.0000      1.0000    
+L=1  Nsemic=0  Cnfigmx=2
+          i=1  nzeta=0  polorb=0  (2p)  (perturbative polarization orbital) (from 1s)
+-------------------------------------------------------------------------------
+L=0  Nkbl=1  erefs: 0.17977+309
+L=1  Nkbl=1  erefs: 0.17977+309
+L=2  Nkbl=1  erefs: 0.17977+309
+===============================================================================
+</basis_specs>
+
+Using PAO.SplitTailNorm
+atom: Called for H                     (Z =   1)
+Maximum radius (at nrval) set to   50.00000 8518
+
+read_vps: Pseudopotential generation method:
+read_vps: ATM3      Troullier-Martins                       
+Valence charge in pseudo generation:    1.00000
+
+xc_check: Exchange-correlation functional:
+xc_check: Ceperley-Alder
+V l=0 = -2*Zval/r beyond r=  1.2384
+V l=1 = -2*Zval/r beyond r=  1.2321
+V l=2 = -2*Zval/r beyond r=  1.2272
+All V_l potentials equal beyond r=  1.2371
+This should be close to max(r_c) in ps generation
+All pots = -2*Zval/r beyond r=  1.2384
+Using small-core scheme (local charge) for Vlocal
+
+VLOCAL_FROM_CHLOCAL: 99.0% of the norm of Vloc inside     28.363 Ry
+VLOCAL_FROM_CHLOCAL: 99.9% of the norm of Vloc inside     64.639 Ry
+atom: Maximum radius for chlocal:    1.44620
+atom: Maximum radius for r*vlocal+2*Zval:    1.31026
+
+KBgen: Kleinman-Bylander projectors: 
+GHOST: No ghost state for L =  0
+   l= 0   rc=  1.364142   el= -0.467325   Ekb= -2.009475   kbcos= -0.336680
+GHOST: No ghost state for L =  1
+   l= 1   rc=  1.430269   el=  0.007562   Ekb= -0.503817   kbcos= -0.022554
+GHOST: No ghost state for L =  2
+   l= 2   rc=  1.469686   el=  0.013286   Ekb= -0.191752   kbcos= -0.002430
+
+KBgen: Total number of Kleinman-Bylander projectors:   9
+atom: -------------------------------------------------------------------------
+
+atom: SANKEY-TYPE ORBITALS:
+atom: Selected multiple-zeta basis: split     
+
+SPLIT: Orbitals with angular momentum L= 0
+
+SPLIT: Basis orbitals for state 1s
+
+SPLIT: PAO cut-off radius determined from an
+SPLIT: energy shift=  0.010000 Ry
+Split based on tail norm
+
+   izeta = 1
+                 lambda =    1.000000
+                     rc =    5.285354
+                 energy =   -0.456120
+                kinetic =    0.900445
+    potential(screened) =   -1.356565
+       potential(ionic) =   -1.890080
+
+   izeta = 2
+                 rmatch =    3.582433
+              splitnorm =    0.150000
+                 energy =   -0.289774
+                kinetic =    1.649095
+    potential(screened) =   -1.938868
+       potential(ionic) =   -2.516427
+
+POLgen: Perturbative polarization orbital with L=  1
+
+POLgen: Polarization orbital for state 1s
+Split based on tail norm
+
+   izeta = 1
+                     rc =    5.285354
+                 energy =    0.642323
+                kinetic =    1.282472
+    potential(screened) =   -0.640149
+       potential(ionic) =   -1.117275
+atom: Total number of Sankey-type orbitals:  5
+
+atm_pop: Valence configuration (for local Pseudopot. screening):
+ 1s( 1.00)                                                            
+ 2p( 0.00)                                                            
+Vna: chval, zval:    1.00000   1.00000
+
+Vna:  Cut-off radius for the neutral-atom potential:   5.285354
+
+atom: _________________________________________________________________________
+
+prinput: Basis input 
+
+PAO.BasisType split     
+
+%block ChemicalSpeciesLabel
+    1    8 O                       # Species index, atomic number, species label
+    2    1 H                       # Species index, atomic number, species label
+%endblock ChemicalSpeciesLabel
+
+%block PAO.Basis                 # Define Basis set
+# WARNING: This information might be incomplete!
+O                     2                    # Species label, number of l-shells
+ n=2   0   2                         # n, l, Nzeta 
+   3.561      2.320   
+   1.000      1.000   
+ n=2   1   2 P   1                   # n, l, Nzeta, Polarization, NzetaPol
+   4.291      2.782   
+   1.000      1.000   
+H                     1                    # Species label, number of l-shells
+ n=1   0   2 P   1                   # n, l, Nzeta, Polarization, NzetaPol
+   5.285      3.582   
+   1.000      1.000   
+%endblock PAO.Basis
+
+prinput: ----------------------------------------------------------------------
+
+Dumping basis to NetCDF file O.ion.nc
+Dumping basis to NetCDF file H.ion.nc
+coor:   Atomic-coordinates input format  =     Cartesian coordinates
+coor:                                          (in Angstroms)
+
+siesta: Atomic coordinates (Bohr) and species
+siesta:      0.00000   0.00000   0.00000  1        1
+siesta:      1.43052   1.10738   0.00000  2        2
+siesta:     -1.43052   1.10738   0.00000  2        3
+
+siesta: Automatic unit cell vectors (Ang):
+siesta:    7.818555    0.000000    0.000000
+siesta:    0.000000    6.218903    0.000000
+siesta:    0.000000    0.000000    6.153155
+
+siesta: System type = molecule  
+
+initatomlists: Number of atoms, orbitals, and projectors:      3    23    34
+
+siesta: ******************** Simulation parameters ****************************
+siesta:
+siesta: The following are some of the parameters of the simulation.
+siesta: A complete list of the parameters used, including default values,
+siesta: can be found in file out.fdf
+siesta:
+redata: Spin configuration                          = none
+redata: Number of spin components                   = 1
+redata: Time-Reversal Symmetry                      = T
+redata: Spin spiral                                 = F
+redata: Long output                                 =   F
+redata: Number of Atomic Species                    =        2
+redata: Charge density info will appear in .RHO file
+redata: Write Mulliken Pop.                         = NO
+redata: Matel table size (NRTAB)                    =     1024
+redata: Mesh Cutoff                                 =    50.0000 Ry
+redata: Net charge of the system                    =     0.0000 |e|
+redata: Min. number of SCF Iter                     =        0
+redata: Max. number of SCF Iter                     =     1000
+redata: SCF convergence failure will abort job
+redata: SCF mix quantity                            = Hamiltonian
+redata: Mix DM or H after convergence               =   F
+redata: Recompute H after scf cycle                 =   F
+redata: Mix DM in first SCF step                    =   T
+redata: Write Pulay info on disk                    =   F
+redata: New DM Occupancy tolerance                  = 0.000000000001
+redata: No kicks to SCF
+redata: DM Mixing Weight for Kicks                  =     0.5000
+redata: Require Harris convergence for SCF          =   F
+redata: Harris energy tolerance for SCF             =     0.000100 eV
+redata: Require DM convergence for SCF              =   T
+redata: DM tolerance for SCF                        =     0.000100
+redata: Require EDM convergence for SCF             =   F
+redata: EDM tolerance for SCF                       =     0.001000 eV
+redata: Require H convergence for SCF               =   T
+redata: Hamiltonian tolerance for SCF               =     0.001000 eV
+redata: Require (free) Energy convergence for SCF   =   F
+redata: (free) Energy tolerance for SCF             =     0.000100 eV
+redata: Using DFT-D3 dispersion                     =   F
+redata: Using Saved Data (generic)                  =   F
+redata: Use continuation files for DM               =   F
+redata: Neglect nonoverlap interactions             =   F
+redata: Method of Calculation                       = Diagonalization
+redata: Electronic Temperature                      =   299.9863 K
+redata: Fix the spin of the system                  =   F
+...After initialization...
+redata: Max. number of TDED Iter                    =        1
+redata: Number of TDED substeps                     =        3
+redata: Dynamics option                             = CG coord. optimization
+redata: Variable cell                               =   F
+redata: Use continuation files for CG               =   F
+redata: Max atomic displ per move                   =     0.1058 Ang
+redata: Maximum number of optimization moves        =      100
+redata: Force tolerance                             =     0.0400 eV/Ang
+mix.SCF: Pulay mixing                            = Pulay
+mix.SCF:    Variant                              = stable
+mix.SCF:    History steps                        = 2
+mix.SCF:    Linear mixing weight                 =     0.250000
+mix.SCF:    Mixing weight                        =     0.250000
+mix.SCF:    SVD condition                        = 0.1000E-07
+redata: Save all siesta data in one NC              =   F
+redata: ***********************************************************************
+
+%block SCF.Mixers
+  Pulay
+%endblock SCF.Mixers
+
+%block SCF.Mixer.Pulay
+  # Mixing method
+  method pulay
+  variant stable
+
+  # Mixing options
+  weight 0.2500
+  weight.linear 0.2500
+  history 2
+%endblock SCF.Mixer.Pulay
+
+DM_history_depth set to one: no extrapolation allowed by default for geometry relaxation
+Size of DM history Fstack: 1
+Total number of electrons:     8.000000
+Total ionic charge:     8.000000
+
+siesta: k-grid: Number of k-points = 1
+siesta: k-point is Gamma-only
+
+diag: Algorithm                                     = D&C
+diag: Used triangular part                          = Lower
+diag: Absolute tolerance                            =  0.100E-15
+diag: Orthogonalization factor                      =  0.100E-05
+diag: Memory factor                                 =  1.0000
+
+
+ts: **************************************************************
+ts: Save H and S matrices                           =    F
+ts: Save DM and EDM matrices                        =    F
+ts: Only save the overlap matrix S                  =    F
+ts: **************************************************************
+
+************************ Begin: TS CHECKS AND WARNINGS ************************
+************************ End: TS CHECKS AND WARNINGS **************************
+
+    siesta2lua; dtype = d0  , var = Units.amu
+    siesta2lua; dtype = d0  , var = Units.Ang
+    siesta2lua; dtype = d0  , var = Units.GPa
+    siesta2lua; dtype = d0  , var = Units.kBar
+    siesta2lua; dtype = d0  , var = Units.Debye
+    siesta2lua; dtype = d0  , var = Units.hbar
+    siesta2lua; dtype = d0  , var = Units.eV
+    siesta2lua; dtype = d0  , var = Units.Pi
+    siesta2lua; dtype = d0  , var = Units.Kelvin
+    siesta2lua; dtype = d0  , var = Units.Joule
+
+LUA successfully initialized: siesta.lua
+
+siesta-lua: calling siesta_comm() @ 1
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...Right before entering the SCF loop...
+
+                     ====================================
+                        Begin CG opt. move =      0
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+        7.818555    0.000000    0.000000
+        0.000000    6.218903    0.000000
+        0.000000    0.000000    6.153155
+
+outcell: Cell vector modules (Ang)   :    7.818555    6.218903    6.153155
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :    299.1839
+<dSpData1D:S at geom step 0
+  <sparsity:sparsity for geom step 0
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 7>
+  <dData1D:(new from dSpData1D) n=529, refcount: 1>
+refcount: 1>
+new_DM -- step:     1
+Initializing Density Matrix...
+DM filled with atomic data:
+<dSpData2D:DM initialized from atoms
+  <sparsity:sparsity for geom step 0
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 8>
+  <dData2D:DM n=529 m=1, refcount: 1>
+refcount: 1>
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+InitMesh: MESH = 36 x 30 x 30 = 32400
+InitMesh: Mesh cutoff (required, used) =    50.000    58.594 Ry
+New grid distribution [1]: sub = 2
+siesta-lua: calling siesta_comm() @ 2
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+stepf: Fermi-Dirac step function
+
+siesta: Program's energy decomposition (eV):
+siesta: Ebs     =       -80.204204
+siesta: Eions   =       810.513381
+siesta: Ena     =       174.158273
+siesta: Ekin    =       378.896231
+siesta: Enl     =       -70.921080
+siesta: Eso     =         0.000000
+siesta: Edftu   =         0.000000
+siesta: DEna    =       -21.910068
+siesta: DUscf   =         2.666745
+siesta: DUext   =         0.000000
+siesta: Ex      =      -104.754824
+siesta: Ec      =       -12.801811
+siesta: Exc     =      -117.556635
+siesta: EbV     =         0.000000
+siesta: eta*DQ  =         0.000000
+siesta: Emadel  =         0.000000
+siesta: Emeta   =         0.000000
+siesta: Emolmec =         0.000000
+siesta: Ekinion =         0.000000
+siesta: Eharris =      -465.952445
+siesta: Etot    =      -465.179916
+siesta: FreeEng =      -465.179916
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1     -465.952445     -465.179916     -465.179916  1.176914 -0.767639  8.301973
+...At start of SCF...
+timer: Routine,Calls,Time,% = IterSCF        1       0.004   0.34
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    2     -466.839609     -466.161373     -466.161373  0.110847 -6.084304  3.251141
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    3     -466.313402     -466.292858     -466.292858  0.048279 -5.120341  0.338266
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    4     -466.299716     -466.296628     -466.296628  0.011000 -5.049140  0.277411
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    5     -466.299056     -466.298114     -466.298114  0.013747 -4.905227  0.128221
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    6     -466.298196     -466.298161     -466.298161  0.006789 -4.780138  0.035446
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    7     -466.298263     -466.298220     -466.298220  0.001998 -4.799729  0.014064
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    8     -466.298229     -466.298225     -466.298225  0.000908 -4.813003  0.002575
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    9     -466.298226     -466.298226     -466.298226  0.000191 -4.811267  0.001138
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:   10     -466.298226     -466.298226     -466.298226  0.000091 -4.810595  0.000589
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0000905099
+max |H_out - H_in|      (eV) :     0.0005885510
+SCF cycle converged after 10 iterations
+...At start of SCF...
+...At atomic movement...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+siesta: E_KS(eV) =             -466.2982
+
+siesta: E_KS - E_eggbox =      -466.2982
+siesta-lua: calling siesta_comm() @ 4
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d2  , var = geom.fa
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot    0.000000    0.040952    0.000000
+----------------------------------------
+   Max    1.093728
+   Res    0.618607    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    1.093728    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):      -13.47       -3.84        2.37        0.00       -0.00        0.00
+(Free)E + p*V (eV/cell)     -465.3683
+Target enthalpy (eV/cell)     -466.2982
+siesta-lua: calling siesta_comm() @ 6
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...Right before entering the SCF loop...
+
+                     ====================================
+                        Begin CG opt. move =      1
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+        7.818555    0.000000    0.000000
+        0.000000    6.218903    0.000000
+        0.000000    0.000000    6.153155
+
+outcell: Cell vector modules (Ang)   :    7.818555    6.218903    6.153155
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :    299.1839
+<dSpData1D:S at geom step 1
+  <sparsity:sparsity for geom step 1
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 7>
+  <dData1D:(new from dSpData1D) n=529, refcount: 1>
+refcount: 1>
+new_DM -- step:     2
+Re-using DM from previous geometries...
+Number of DMs in history: 1
+ DM extrapolation coefficients: 
+1   1.00000
+New DM after history re-use:
+<dSpData2D:SpM extrapolated using coords
+  <sparsity:sparsity for geom step 1
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 9>
+  <dData2D:(temp array for extrapolation) n=529 m=1, refcount: 1>
+refcount: 1>
+Note: For starting DM, Qtot, Tr[D*S] =          8.00000000          7.87689462
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+InitMesh: MESH = 36 x 30 x 30 = 32400
+InitMesh: Mesh cutoff (required, used) =    50.000    58.594 Ry
+New grid distribution [1]: sub = 2
+siesta-lua: calling siesta_comm() @ 2
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1     -466.513971     -466.004559     -466.004559  0.162176 -4.615125  1.880734
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    2     -465.178466     -465.799873     -465.799873  0.129228 -5.787736  3.534585
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    3     -466.171961     -466.075707     -466.075707  0.085610 -5.016929  0.039938
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    4     -466.075926     -466.075825     -466.075825  0.001247 -5.017886  0.044125
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    5     -466.075934     -466.075881     -466.075881  0.001482 -5.024182  0.029381
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    6     -466.075922     -466.075903     -466.075903  0.001966 -5.034888  0.002075
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    7     -466.075904     -466.075904     -466.075904  0.000108 -5.034952  0.001105
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    8     -466.075904     -466.075904     -466.075904  0.000076 -5.034928  0.000405
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0000759964
+max |H_out - H_in|      (eV) :     0.0004051370
+SCF cycle converged after 8 iterations
+...At start of SCF...
+...At atomic movement...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+siesta: E_KS(eV) =             -466.0759
+siesta-lua: calling siesta_comm() @ 4
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d2  , var = geom.fa
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot   -0.000000   -0.185099   -0.000000
+----------------------------------------
+   Max    2.876519
+   Res    1.261526    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    2.876519    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):        1.09       12.91        2.98        0.00        0.00        0.00
+(Free)E + p*V (eV/cell)     -467.1332
+Target enthalpy (eV/cell)     -466.0759
+siesta-lua: calling siesta_comm() @ 6
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...Right before entering the SCF loop...
+
+                     ====================================
+                        Begin CG opt. move =      2
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+        7.818555    0.000000    0.000000
+        0.000000    6.218903    0.000000
+        0.000000    0.000000    6.153155
+
+outcell: Cell vector modules (Ang)   :    7.818555    6.218903    6.153155
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :    299.1839
+<dSpData1D:S at geom step 2
+  <sparsity:sparsity for geom step 2
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 7>
+  <dData1D:(new from dSpData1D) n=529, refcount: 1>
+refcount: 1>
+new_DM -- step:     3
+Re-using DM from previous geometries...
+Number of DMs in history: 1
+ DM extrapolation coefficients: 
+1   1.00000
+New DM after history re-use:
+<dSpData2D:SpM extrapolated using coords
+  <sparsity:sparsity for geom step 2
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 9>
+  <dData2D:(temp array for extrapolation) n=529 m=1, refcount: 1>
+refcount: 1>
+Note: For starting DM, Qtot, Tr[D*S] =          8.00000000          8.07907929
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+InitMesh: MESH = 36 x 30 x 30 = 32400
+InitMesh: Mesh cutoff (required, used) =    50.000    58.594 Ry
+New grid distribution [1]: sub = 2
+siesta-lua: calling siesta_comm() @ 2
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1     -465.799320     -466.257832     -466.257832  0.110850 -5.152177  1.319965
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    2     -465.905601     -466.173013     -466.173013  0.076602 -4.338974  2.343208
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    3     -466.333335     -466.292173     -466.292173  0.048285 -4.860314  0.050291
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    4     -466.292261     -466.292218     -466.292218  0.000999 -4.854097  0.027687
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    5     -466.292283     -466.292252     -466.292252  0.001308 -4.847069  0.007737
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    6     -466.292257     -466.292255     -466.292255  0.000437 -4.844073  0.002067
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    7     -466.292255     -466.292255     -466.292255  0.000040 -4.843217  0.001481
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    8     -466.292255     -466.292255     -466.292255  0.000015 -4.842712  0.000655
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0000152567
+max |H_out - H_in|      (eV) :     0.0006552920
+SCF cycle converged after 8 iterations
+...At start of SCF...
+...At atomic movement...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+siesta: E_KS(eV) =             -466.2923
+siesta-lua: calling siesta_comm() @ 4
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d2  , var = geom.fa
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot   -0.000000    1.301524   -0.000000
+----------------------------------------
+   Max    1.410943
+   Res    0.495055    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    1.410943    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):       -8.71        0.19        2.50       -0.00       -0.00        0.00
+(Free)E + p*V (eV/cell)     -465.9178
+Target enthalpy (eV/cell)     -466.2923
+
+cgvc: Finished line minimization    1.  Mean atomic displacement =    0.0318
+siesta-lua: calling siesta_comm() @ 6
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...Right before entering the SCF loop...
+
+                     ====================================
+                        Begin CG opt. move =      3
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+        7.818555    0.000000    0.000000
+        0.000000    6.218903    0.000000
+        0.000000    0.000000    6.153155
+
+outcell: Cell vector modules (Ang)   :    7.818555    6.218903    6.153155
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :    299.1839
+<dSpData1D:S at geom step 3
+  <sparsity:sparsity for geom step 3
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 7>
+  <dData1D:(new from dSpData1D) n=529, refcount: 1>
+refcount: 1>
+new_DM -- step:     4
+Re-using DM from previous geometries...
+Number of DMs in history: 1
+ DM extrapolation coefficients: 
+1   1.00000
+New DM after history re-use:
+<dSpData2D:SpM extrapolated using coords
+  <sparsity:sparsity for geom step 3
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 9>
+  <dData2D:(temp array for extrapolation) n=529 m=1, refcount: 1>
+refcount: 1>
+Note: For starting DM, Qtot, Tr[D*S] =          8.00000000          7.96798753
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+InitMesh: MESH = 36 x 30 x 30 = 32400
+InitMesh: Mesh cutoff (required, used) =    50.000    58.594 Ry
+New grid distribution [1]: sub = 2
+siesta-lua: calling siesta_comm() @ 2
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1     -466.381154     -466.220487     -466.220487  0.045077 -4.788574  0.488388
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    2     -466.170919     -466.208460     -466.208460  0.030900 -5.098021  0.878429
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    3     -466.230997     -466.225125     -466.225125  0.019917 -4.898995  0.013231
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    4     -466.225135     -466.225131     -466.225131  0.000306 -4.900681  0.010549
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    5     -466.225138     -466.225135     -466.225135  0.000718 -4.905365  0.000816
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    6     -466.225135     -466.225135     -466.225135  0.000010 -4.905584  0.000193
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0000102901
+max |H_out - H_in|      (eV) :     0.0001929917
+SCF cycle converged after 6 iterations
+...At start of SCF...
+...At atomic movement...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+siesta: E_KS(eV) =             -466.2251
+siesta-lua: calling siesta_comm() @ 4
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d2  , var = geom.fa
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot    0.000000    1.683657   -0.000000
+----------------------------------------
+   Max    2.981574
+   Res    1.042930    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    2.981574    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):       -4.49        4.96        2.73       -0.00        0.00       -0.00
+(Free)E + p*V (eV/cell)     -466.4243
+Target enthalpy (eV/cell)     -466.2251
+siesta-lua: calling siesta_comm() @ 6
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...Right before entering the SCF loop...
+
+                     ====================================
+                        Begin CG opt. move =      4
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+        7.818555    0.000000    0.000000
+        0.000000    6.218903    0.000000
+        0.000000    0.000000    6.153155
+
+outcell: Cell vector modules (Ang)   :    7.818555    6.218903    6.153155
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :    299.1839
+<dSpData1D:S at geom step 4
+  <sparsity:sparsity for geom step 4
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 7>
+  <dData1D:(new from dSpData1D) n=529, refcount: 1>
+refcount: 1>
+new_DM -- step:     5
+Re-using DM from previous geometries...
+Number of DMs in history: 1
+ DM extrapolation coefficients: 
+1   1.00000
+New DM after history re-use:
+<dSpData2D:SpM extrapolated using coords
+  <sparsity:sparsity for geom step 4
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 9>
+  <dData2D:(temp array for extrapolation) n=529 m=1, refcount: 1>
+refcount: 1>
+Note: For starting DM, Qtot, Tr[D*S] =          8.00000000          8.05616756
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+InitMesh: MESH = 36 x 30 x 30 = 32400
+InitMesh: Mesh cutoff (required, used) =    50.000    58.594 Ry
+New grid distribution [1]: sub = 2
+siesta-lua: calling siesta_comm() @ 2
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1     -465.951692     -466.285277     -466.285277  0.087143 -5.049459  0.916882
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    2     -466.132964     -466.249225     -466.249225  0.052628 -4.453596  1.569525
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    3     -466.319526     -466.301034     -466.301034  0.032810 -4.827587  0.030697
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    4     -466.301060     -466.301047     -466.301047  0.000531 -4.821874  0.018050
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    5     -466.301070     -466.301059     -466.301059  0.000821 -4.813655  0.002902
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    6     -466.301060     -466.301060     -466.301060  0.000135 -4.812371  0.000643
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    7     -466.301060     -466.301060     -466.301060  0.000016 -4.812180  0.000263
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0000155603
+max |H_out - H_in|      (eV) :     0.0002629358
+SCF cycle converged after 7 iterations
+...At start of SCF...
+...At atomic movement...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+siesta: E_KS(eV) =             -466.3011
+siesta-lua: calling siesta_comm() @ 4
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d2  , var = geom.fa
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot   -0.000000    0.180720   -0.000000
+----------------------------------------
+   Max    0.833340
+   Res    0.535030    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    0.825393    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):      -12.96       -3.45        2.37        0.00        0.00        0.00
+(Free)E + p*V (eV/cell)     -465.4272
+Target enthalpy (eV/cell)     -466.3011
+
+cgvc: Finished line minimization    2.  Mean atomic displacement =    0.0286
+siesta-lua: calling siesta_comm() @ 6
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...Right before entering the SCF loop...
+
+                     ====================================
+                        Begin CG opt. move =      5
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+        7.818555    0.000000    0.000000
+        0.000000    6.218903    0.000000
+        0.000000    0.000000    6.153155
+
+outcell: Cell vector modules (Ang)   :    7.818555    6.218903    6.153155
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :    299.1839
+<dSpData1D:S at geom step 5
+  <sparsity:sparsity for geom step 5
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 7>
+  <dData1D:(new from dSpData1D) n=529, refcount: 1>
+refcount: 1>
+new_DM -- step:     6
+Re-using DM from previous geometries...
+Number of DMs in history: 1
+ DM extrapolation coefficients: 
+1   1.00000
+New DM after history re-use:
+<dSpData2D:SpM extrapolated using coords
+  <sparsity:sparsity for geom step 5
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 9>
+  <dData2D:(temp array for extrapolation) n=529 m=1, refcount: 1>
+refcount: 1>
+Note: For starting DM, Qtot, Tr[D*S] =          8.00000000          7.97213817
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+InitMesh: MESH = 36 x 30 x 30 = 32400
+InitMesh: Mesh cutoff (required, used) =    50.000    58.594 Ry
+New grid distribution [1]: sub = 2
+siesta-lua: calling siesta_comm() @ 2
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1     -466.438529     -466.288582     -466.288582  0.043002 -4.727333  0.442323
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    2     -466.252125     -466.279891     -466.279891  0.027228 -5.019479  0.766454
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    3     -466.296699     -466.292247     -466.292247  0.017240 -4.835460  0.012030
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    4     -466.292256     -466.292252     -466.292252  0.000220 -4.837758  0.009011
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    5     -466.292258     -466.292255     -466.292255  0.000461 -4.842579  0.001455
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    6     -466.292255     -466.292255     -466.292255  0.000026 -4.842764  0.000611
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0000259468
+max |H_out - H_in|      (eV) :     0.0006105851
+SCF cycle converged after 6 iterations
+...At start of SCF...
+...At atomic movement...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+siesta: E_KS(eV) =             -466.2923
+siesta-lua: calling siesta_comm() @ 4
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d2  , var = geom.fa
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot    0.000000    1.301504    0.000000
+----------------------------------------
+   Max    1.410877
+   Res    0.495040    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    1.410877    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):       -8.71        0.19        2.50        0.00        0.00       -0.00
+(Free)E + p*V (eV/cell)     -465.9177
+Target enthalpy (eV/cell)     -466.2923
+siesta-lua: calling siesta_comm() @ 6
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...Right before entering the SCF loop...
+
+                     ====================================
+                        Begin CG opt. move =      6
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+        7.818555    0.000000    0.000000
+        0.000000    6.218903    0.000000
+        0.000000    0.000000    6.153155
+
+outcell: Cell vector modules (Ang)   :    7.818555    6.218903    6.153155
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :    299.1839
+<dSpData1D:S at geom step 6
+  <sparsity:sparsity for geom step 6
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 7>
+  <dData1D:(new from dSpData1D) n=529, refcount: 1>
+refcount: 1>
+new_DM -- step:     7
+Re-using DM from previous geometries...
+Number of DMs in history: 1
+ DM extrapolation coefficients: 
+1   1.00000
+New DM after history re-use:
+<dSpData2D:SpM extrapolated using coords
+  <sparsity:sparsity for geom step 6
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 9>
+  <dData2D:(temp array for extrapolation) n=529 m=1, refcount: 1>
+refcount: 1>
+Note: For starting DM, Qtot, Tr[D*S] =          8.00000000          8.01711894
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+InitMesh: MESH = 36 x 30 x 30 = 32400
+InitMesh: Mesh cutoff (required, used) =    50.000    58.594 Ry
+New grid distribution [1]: sub = 2
+siesta-lua: calling siesta_comm() @ 2
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1     -466.205754     -466.303247     -466.303247  0.026790 -4.892144  0.275862
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    2     -466.289484     -466.300044     -466.300044  0.016341 -4.710506  0.473549
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    3     -466.306411     -466.304721     -466.304721  0.010253 -4.824461  0.008161
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    4     -466.304724     -466.304722     -466.304722  0.000143 -4.822823  0.005442
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    5     -466.304724     -466.304723     -466.304723  0.000270 -4.819875  0.000551
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    6     -466.304723     -466.304723     -466.304723  0.000013 -4.819798  0.000318
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0000126891
+max |H_out - H_in|      (eV) :     0.0003178868
+SCF cycle converged after 6 iterations
+...At start of SCF...
+...At atomic movement...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+siesta: E_KS(eV) =             -466.3047
+siesta-lua: calling siesta_comm() @ 4
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d2  , var = geom.fa
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot    0.000000    0.642766   -0.000000
+----------------------------------------
+   Max    0.637089
+   Res    0.331425    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    0.052803    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):      -11.34       -2.17        2.40        0.00        0.00       -0.00
+(Free)E + p*V (eV/cell)     -465.6133
+Target enthalpy (eV/cell)     -466.3047
+
+cgvc: Finished line minimization    3.  Mean atomic displacement =    0.0105
+siesta-lua: calling siesta_comm() @ 6
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...Right before entering the SCF loop...
+
+                     ====================================
+                        Begin CG opt. move =      7
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+        7.818555    0.000000    0.000000
+        0.000000    6.218903    0.000000
+        0.000000    0.000000    6.153155
+
+outcell: Cell vector modules (Ang)   :    7.818555    6.218903    6.153155
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :    299.1839
+<dSpData1D:S at geom step 7
+  <sparsity:sparsity for geom step 7
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 7>
+  <dData1D:(new from dSpData1D) n=529, refcount: 1>
+refcount: 1>
+new_DM -- step:     8
+Re-using DM from previous geometries...
+Number of DMs in history: 1
+ DM extrapolation coefficients: 
+1   1.00000
+New DM after history re-use:
+<dSpData2D:SpM extrapolated using coords
+  <sparsity:sparsity for geom step 7
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 9>
+  <dData2D:(temp array for extrapolation) n=529 m=1, refcount: 1>
+refcount: 1>
+Note: For starting DM, Qtot, Tr[D*S] =          8.00000000          7.98982406
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+InitMesh: MESH = 36 x 30 x 30 = 32400
+InitMesh: Mesh cutoff (required, used) =    50.000    58.594 Ry
+New grid distribution [1]: sub = 2
+siesta-lua: calling siesta_comm() @ 2
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1     -466.355710     -466.299645     -466.299645  0.015825 -4.789263  0.162422
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    2     -466.294785     -466.298490     -466.298490  0.009849 -4.896529  0.280233
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    3     -466.300732     -466.300139     -466.300139  0.006213 -4.829100  0.004448
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    4     -466.300140     -466.300139     -466.300139  0.000082 -4.830000  0.003261
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    5     -466.300140     -466.300140     -466.300140  0.000167 -4.831796  0.000396
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    6     -466.300140     -466.300140     -466.300140  0.000006 -4.831825  0.000214
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0000060815
+max |H_out - H_in|      (eV) :     0.0002142652
+SCF cycle converged after 6 iterations
+...At start of SCF...
+...At atomic movement...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+siesta: E_KS(eV) =             -466.3001
+siesta-lua: calling siesta_comm() @ 4
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d2  , var = geom.fa
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot   -0.000000    1.055169    0.000000
+----------------------------------------
+   Max    0.876219
+   Res    0.363516    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    0.876219    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):       -9.78       -0.81        2.45        0.00        0.00       -0.00
+(Free)E + p*V (eV/cell)     -465.7935
+Target enthalpy (eV/cell)     -466.3001
+siesta-lua: calling siesta_comm() @ 6
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...Right before entering the SCF loop...
+
+                     ====================================
+                        Begin CG opt. move =      8
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+        7.818555    0.000000    0.000000
+        0.000000    6.218903    0.000000
+        0.000000    0.000000    6.153155
+
+outcell: Cell vector modules (Ang)   :    7.818555    6.218903    6.153155
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :    299.1839
+<dSpData1D:S at geom step 8
+  <sparsity:sparsity for geom step 8
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 7>
+  <dData1D:(new from dSpData1D) n=529, refcount: 1>
+refcount: 1>
+new_DM -- step:     9
+Re-using DM from previous geometries...
+Number of DMs in history: 1
+ DM extrapolation coefficients: 
+1   1.00000
+New DM after history re-use:
+<dSpData2D:SpM extrapolated using coords
+  <sparsity:sparsity for geom step 8
+    nrows_g=23 nrows=23 sparsity=1.0000 nnzs=529, refcount: 9>
+  <dData2D:(temp array for extrapolation) n=529 m=1, refcount: 1>
+refcount: 1>
+Note: For starting DM, Qtot, Tr[D*S] =          8.00000000          8.01066164
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+InitMesh: MESH = 36 x 30 x 30 = 32400
+InitMesh: Mesh cutoff (required, used) =    50.000    58.594 Ry
+New grid distribution [1]: sub = 2
+siesta-lua: calling siesta_comm() @ 2
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1     -466.243589     -466.304208     -466.304208  0.016805 -4.864694  0.172425
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    2     -466.298841     -466.302937     -466.302937  0.010244 -4.750641  0.295307
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    3     -466.305420     -466.304762     -466.304762  0.006426 -4.822093  0.004980
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    4     -466.304763     -466.304763     -466.304763  0.000087 -4.821062  0.003393
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    5     -466.304764     -466.304763     -466.304763  0.000166 -4.819187  0.000376
+...At start of SCF...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+   scf:    6     -466.304763     -466.304763     -466.304763  0.000008 -4.819149  0.000221
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0000076057
+max |H_out - H_in|      (eV) :     0.0002212817
+SCF cycle converged after 6 iterations
+...At start of SCF...
+...At atomic movement...
+siesta-lua: calling siesta_comm() @ 3
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:       3      23
+
+siesta: E_KS(eV) =             -466.3048
+siesta-lua: calling siesta_comm() @ 4
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d0  , var = SCF.Mixer.Weight
+    lua2siesta; dtype = d2  , var = geom.fa
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot    0.000000    0.614305   -0.000000
+----------------------------------------
+   Max    0.649373
+   Res    0.338863    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    0.002265    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):      -11.45       -2.25        2.40        0.00       -0.00       -0.00
+(Free)E + p*V (eV/cell)     -465.6015
+Target enthalpy (eV/cell)     -466.3048
+siesta-lua: calling siesta_comm() @ 6
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+...At analysis...
+siesta-lua: calling siesta_comm() @ 7
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+-- siesta table structure available in LUA
+siesta = {
+  Node = 1,
+  SCF.EDM.Tolerance,
+  Use.DM,
+  SCF.Mixer.Weight,
+  SCF.MonitorForces,
+  SCF.EDM.Converge,
+  Write.EndOfCycle.DM,
+  DM.HistoryDepth,
+  Write.Voronoi,
+  Mesh.Cutoff.Minimum,
+  FC.Displacement,
+  Write.DenChar,
+  SCF.H.Tolerance,
+  Mesh.Write.NeutralAtomPotential,
+  Mesh.Write.IonicRho,
+  MD.MaxStressTol,
+  SCF.NumberPulay,
+  FC.First,
+  SCF.NumberBroyden,
+  SCF.H.Converge,
+  MD.DM.History.Depth,
+  MD.Temperature.Target,
+  MD.FinalTimeStep,
+  Mesh.Write.TotalRho,
+  Write.H,
+  Write.HirshfeldPop,
+  SCF.Mixer.Restart,
+  SCF.MixHamiltonian,
+  SCF.Harris.Tolerance,
+  Label,
+  SCF.Harris.Converge,
+  SCF.FreeE.Converge,
+  SCF.MaxIterations,
+  SCF.DM.Converge,
+  Mesh.Write.TotalPotential,
+  Write.Forces,
+  MD.Relax.Cell,
+  Write.VoronoiPop,
+  MD.Relax.CellOnly,
+  MD.Steps.Last,
+  SCF.MixingWeight,
+  Mesh.Write.HartreePotential,
+  MD.MaxForceTol,
+  SCF.MixCharge,
+  Mesh.Write.Rho,
+  ElectronicTemperature,
+  FC.Last,
+  Write.EndOfCycle.H,
+  SCF.DM.Tolerance,
+  Mesh.Write.BaderRho,
+  SCF.NumberKick,
+  MD.MaxDispl,
+  Mesh.Write.RhoXC,
+  SCF.FreeE.Tolerance,
+  MD.Steps.First,
+  Write.Hirshfeld,
+  Write.HS,
+  Write.DM,
+  Write.MullikenPop,
+  SCF.MinIterations,
+  SCF.Mixer.Iterations,
+  Mesh.Write.DeltaRho,
+  SCF.KickMixingWeight,
+  SCF.charge,
+  sparse.EDM,
+  SCF.Mixer.Weight,
+  SCF.iteration,
+  geom.na_u,
+  geom.xa_last,
+  geom.nsc,
+  sparse.S,
+  Mesh.Cutoff.Minimum,
+  SCF.drhoG,
+  sparse.DM,
+  E.harris,
+  sparse.H,
+  E.neutral_atom,
+  BZ.k.Displacement,
+  sparse.H_kin,
+  SCF.Mixer.Switch,
+  geom.neutral_charge,
+  SCF.converged,
+  geom.mass,
+  geom.stress,
+  E.ions,
+  geom.species,
+  E.negf.dN,
+  SCF.Mixer.Restart,
+  E.negf.total,
+  E.free,
+  geom.fa,
+  E.exchange_correlation,
+  E.negf.kinetic,
+  geom.fa_pristine,
+  Mesh.Cutoff.Used,
+  geom.stress_constrained,
+  BZ.k.Matrix,
+  E.dftu,
+  sparse.H_Vkb,
+  geom.z,
+  E.negf.band_structure,
+  geom.va,
+  geom.cell_last,
+  E.band_structure,
+  geom.orbital_charge,
+  geom.stress_pristine,
+  E.ions_kinetic,
+  geom.last_orbital,
+  charge.protons,
+  SCF.dE,
+  SCF.dD,
+  E.kinetic,
+  geom.vcell,
+  E.fermi,
+  geom.xa,
+  E.negf.harris,
+  sparse.n_col,
+  geom.fa_constrained,
+  SCF.dH,
+  sparse.xij,
+  SCF.Mixer.Iterations,
+  SCF.dQ,
+  charge.electrons,
+  E.electrostatic,
+  geom.cell,
+  sparse.list_col,
+  sparse.list_ptr,
+  E.total,
+  E.spin_orbit,
+  sparse.nnzs,
+}
+  lua: siesta_send, Node = 1
+
+outcoor: Relaxed atomic coordinates (Ang):                  
+   -0.00000000   -0.01201145    0.00000000   1       1  O
+    0.75700000    0.58600000    0.00000000   2       2  H
+   -0.75700000    0.58600000    0.00000000   2       3  H
+
+siesta: Program's energy decomposition (eV):
+siesta: Ebs     =      -106.179503
+siesta: Eions   =       810.513381
+siesta: Ena     =       174.084327
+siesta: Ekin    =       350.047707
+siesta: Enl     =       -63.304710
+siesta: Eso     =         0.000000
+siesta: Edftu   =         0.000000
+siesta: DEna    =        -4.775928
+siesta: DUscf   =         0.841966
+siesta: DUext   =         0.000000
+siesta: Ex      =      -100.105181
+siesta: Ec      =       -12.579563
+siesta: Exc     =      -112.684743
+siesta: EbV     =         0.000000
+siesta: eta*DQ  =         0.000000
+siesta: Emadel  =         0.000000
+siesta: Emeta   =         0.000000
+siesta: Emolmec =         0.000000
+siesta: Ekinion =         0.000000
+siesta: Eharris =      -466.304763
+siesta: Etot    =      -466.304763
+siesta: FreeEng =      -466.304763
+
+siesta: Final energy (eV):
+siesta:  Band Struct. =    -106.179503
+siesta:       Kinetic =     350.047707
+siesta:       Hartree =     395.918652
+siesta:         Edftu =       0.000000
+siesta:       Eso     =       0.000000
+siesta:    Ext. field =       0.000000
+siesta:         Exch. =    -100.105181
+siesta:         Corr. =     -12.579563
+siesta:     Bulk bias =       0.000000
+siesta:   Exch.-corr. =    -112.684743
+siesta:  Ion-electron =   -1100.422828
+siesta:       Ion-ion =       0.836449
+siesta:       Ekinion =       0.000000
+siesta: D3 dispersion =       0.000000
+siesta:         Total =    -466.304763
+siesta:         Fermi =      -4.819149
+
+siesta: Atomic forces (eV/Ang):
+siesta:      1    0.000000   -0.002265   -0.000000
+siesta:      2    0.649373    0.308285    0.000000
+siesta:      3   -0.649373    0.308285    0.000000
+siesta: ----------------------------------------
+siesta:    Tot    0.000000    0.614305   -0.000000
+
+siesta: Stress tensor (static) (eV/Ang**3):
+siesta:    -0.007144    0.000000    0.000000
+siesta:    -0.000000   -0.001405    0.000000
+siesta:    -0.000000    0.000000    0.001497
+
+siesta: Cell volume =        299.183863 Ang**3
+
+siesta: Pressure (static):
+siesta:                Solid            Molecule  Units
+siesta:           0.00002560          0.00001217  Ry/Bohr**3
+siesta:           0.00235051          0.00111720  eV/Ang**3
+siesta:           3.76593179          1.78995214  kBar
+(Free)E+ p_basis*V_orbitals  =        -465.592126
+(Free)Eharris+ p_basis*V_orbitals  =        -465.592126
+
+siesta: Electric dipole (a.u.)  =    0.000000    0.591196   -0.000000
+siesta: Electric dipole (Debye) =    0.000000    1.502671   -0.000000
+
+dhscf: Vacuum level (max, mean) =    0.527782   -0.065384 eV
+
+cite: Please see "lua_h2o.bib" for an exhaustive BiBTeX file.
+cite: Please clearly indicate Siesta version in published work: 5.0.0-alpha-123-gfb8fd7d02
+cite: This calculation has made use of the following articles
+cite: which are encouraged to be cited in a published work.
+        Primary SIESTA paper
+          DOI: www.doi.org/10.1088/0953-8984/14/11/302
+
+siesta-lua: calling siesta_comm() @ 8
+  lua: siesta_receive, Node = 1
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d0  , var = SCF.Mixer.Weight
+    siesta2lua; dtype = d2  , var = geom.fa
+    siesta2lua; dtype = d2  , var = geom.xa
+  lua: siesta_send, Node = 1
+
+timer: Elapsed wall time (sec) =       1.444
+timer: CPU execution times (sec):
+
+Routine            Calls   Time/call    Tot.time        %
+siesta                 1       1.441       1.441   100.00
+Setup                  1       0.072       0.072     4.98
+bands                  1       0.000       0.000     0.00
+KSV_init               1       0.000       0.000     0.00
+LUA                   94       0.000       0.006     0.42
+LUA-init               1       0.000       0.000     0.01
+LUA-call              93       0.000       0.006     0.40
+IterGeom               9       0.152       1.364    94.70
+geom_init              9       0.117       1.053    73.10
+state_init             9       0.013       0.113     7.82
+hsparse                9       0.000       0.001     0.05
+overlap                9       0.012       0.111     7.69
+Setup_H0               9       0.101       0.911    63.23
+naefs                 18       0.000       0.001     0.05
+MolMec                18       0.000       0.000     0.00
+kinefsm               18       0.006       0.111     7.69
+nlefsm                18       0.041       0.739    51.29
+DHSCF_Init             9       0.007       0.065     4.49
+DHSCF1                 9       0.001       0.009     0.65
+INITMESH               9       0.000       0.000     0.00
+DHSCF2                 9       0.006       0.055     3.84
+REMESH                 9       0.000       0.004     0.30
+REORD                235       0.000       0.005     0.33
+PHION                  9       0.004       0.039     2.69
+COMM_BSC             354       0.000       0.005     0.34
+POISON                91       0.001       0.047     3.24
+fft                  182       0.000       0.033     2.28
+setup_H               72       0.003       0.227    15.79
+DHSCF                 82       0.004       0.324    22.52
+DHSCF3                82       0.003       0.260    18.07
+rhoofd                82       0.001       0.059     4.10
+XC                    82       0.001       0.091     6.34
+GXC-CellXC            82       0.001       0.089     6.17
+gridxc@cellXC         82       0.001       0.089     6.16
+vmat                  81       0.001       0.043     3.02
+IterSCF               63       0.003       0.206    14.27
+compute_dm            63       0.000       0.004     0.30
+diagon                63       0.000       0.004     0.29
+r-eigvec              63       0.000       0.004     0.24
+r-buildHS             63       0.000       0.000     0.01
+rdiag                 63       0.000       0.003     0.23
+rdiag1                63       0.000       0.000     0.01
+rdiag2                63       0.000       0.000     0.03
+rdiag3                63       0.000       0.002     0.15
+rdiag4                63       0.000       0.000     0.03
+r-buildD              63       0.000       0.000     0.03
+MIXER                 54       0.000       0.000     0.02
+PostSCF                9       0.011       0.099     6.90
+DHSCF4                 9       0.007       0.064     4.45
+dfscf                  9       0.006       0.055     3.82
+overfsm                9       0.000       0.001     0.06
+writeHSX               9       0.000       0.000     0.02
+state_analysis         9       0.000       0.001     0.09
+siesta_move            9       0.000       0.001     0.07
+Analysis               1       0.004       0.004     0.30
+optical                1       0.000       0.000     0.02
+  
+
+>> End of run:  28-SEP-2023  15:41:54
+Job completed

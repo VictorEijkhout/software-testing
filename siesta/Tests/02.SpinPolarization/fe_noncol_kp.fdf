@@ -1,0 +1,12 @@
+%include ../base_fe3.fdf
+SystemLabel         fe_noncol_kp
+
+Spin non-collinear
+
+%block kgrid_Monkhorst_Pack
+   2  0  0  0.5
+   0  2  0  0.5
+   0  0  2  0.5
+%endblock kgrid_Monkhorst_Pack
+Diag.ParallelOverK True
+

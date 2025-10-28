@@ -1,0 +1,36 @@
+%include ../water_box.fdf
+SystemLabel         custom_softbasis
+NumberOfAtoms       3
+NumberOfSpecies     2
+
+%block ChemicalSpeciesLabel
+ 1  8  O
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+
+# This defaults will partially apply to oxygen.
+PAO.BasisSize TZTP
+PAO.SoftDefault T
+PAO.SoftInnerRadius 0.75
+PAO.SplitValence.Legacy T
+
+%block PAO.Basis
+H    1  0.00
+n=1  0  2   S 0.35  P 2 E 30.0 -0.5 # Split norm, fractional r_inner
+    8.34 0.0
+    1.0 1.0
+O    2  0.00
+n=2  0  2  E 30.0 -0.5         # fractional r_inner
+    6.34 -0.8                  # fractional second_zeta
+    1.0 1.0
+n=2  1  3  S 0.4 E 40.0 -0.7 P #  Split_norm, fractional r_inner
+    0.0 0.0 -0.8
+    1.0 1.0  1.0
+%endblock PAO.Basis
+
+AtomicCoordinatesFormat  Ang
+%block AtomicCoordinatesAndAtomicSpecies
+ 0.000  0.000  0.000  1
+ 0.757  0.586  0.000  2
+-0.757  0.586  0.000  2
+%endblock AtomicCoordinatesAndAtomicSpecies

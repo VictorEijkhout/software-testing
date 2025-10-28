@@ -1,0 +1,5 @@
+The "wannier" example is a Siesta-adapted version of Wannier90 example 3.
+(Just the Siesta execution, with the older w90 interface based on reading
+the .nnkp file and generating the appropriate files for Wannier90)
+
+Refer to Wannier90 example 3 for physical details.

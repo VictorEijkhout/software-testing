@@ -1,0 +1,29 @@
+Systemname   si2 Force constants
+
+NumberOfAtoms      2
+NumberOfSpecies    1
+%block chemicalspecieslabel
+1 14 Si
+%endblock chemicalspecieslabel
+
+PAO.BasisSize SZ
+MeshCutoff    130.0 Ry
+DM.UseSaveDM  F
+
+LatticeConstant   10.2612169463  Bohr
+%block LatticeVectors
+   0.0000000000     0.5000000000     0.5000000000
+   0.5000000000     0.0000000000     0.5000000000
+   0.5000000000     0.5000000000     0.0000000000
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat  Fractional
+%block AtomicCoordinatesAndAtomicSpecies
+ 0.00 0.00 0.00 1
+ 0.25 0.25 0.25 1
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+MD.TypeOfRun           FC
+FC.first             1
+FC.last              2
+FC.Displacement      0.04 Bohr

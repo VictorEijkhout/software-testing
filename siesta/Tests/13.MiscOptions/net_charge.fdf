@@ -1,0 +1,6 @@
+%include ../base_wat_bigbox.fdf
+SystemLabel     net_charge
+
+NetCharge -1
+Slab.DipoleCorrection True
+

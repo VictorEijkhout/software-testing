@@ -1,0 +1,11 @@
+SystemName          Si Quantum Dot with ELSI-ELPA (1-stage, GPU)
+SystemLabel         si-qdot-elsi-elpa
+
+%include ../quantum-dot-base.fdf
+
+solution-method elsi
+elsi-solver elpa
+elsi-output-level 3
+elsi-elpa-flavor 1
+elsi-elpa-gpu 1
+

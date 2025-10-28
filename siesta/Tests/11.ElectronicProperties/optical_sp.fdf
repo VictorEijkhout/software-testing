@@ -1,0 +1,20 @@
+%include ../base_fen.fdf
+SystemLabel     optical_sp
+
+Spin Polarized
+
+OpticalCalculation       T
+Optical.OffsetMesh       T
+Optical.PolarizationType polarized
+Optical.Broaden          0.2 eV
+Optical.EnergyMaximum    20.0 eV
+Optical.EnergyMinimum    0.0 eV
+
+%block  Optical.Mesh
+  10 10 10
+%endblock  Optical.Mesh
+
+%block  Optical.Vector
+  1.0 0.0 0.0
+%endblock  Optical.Vector
+

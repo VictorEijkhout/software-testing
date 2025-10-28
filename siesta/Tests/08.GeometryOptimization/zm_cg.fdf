@@ -1,0 +1,5 @@
+%include ../base_benzene_zm.fdf
+SystemLabel      zm_cg
+
+MD.TypeOfRun     cg
+

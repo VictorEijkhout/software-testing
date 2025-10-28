@@ -1,0 +1,7 @@
+%include ../base_mgco3.fdf
+SystemLabel      cg_vc_constantvol
+
+MD.TypeOfRun      cg
+MD.VariableCell   T
+MD.ConstantVolume T
+

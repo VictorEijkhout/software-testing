@@ -1,0 +1,13 @@
+SystemName          Si Quantum Dot with ELSI-PEXSI
+SystemLabel         si-qdot-elsi-pexsi
+
+%include ../quantum-dot-base.fdf
+
+solution-method elsi
+elsi-solver pexsi
+elsi-pexsi-tasks-per-pole 2
+elsi-pexsi-number-of-poles 20
+elsi-pexsi-number-of-mu-points 2
+elsi-output-level 3
+DM.NormalizationTolerance 1.0e-3
+

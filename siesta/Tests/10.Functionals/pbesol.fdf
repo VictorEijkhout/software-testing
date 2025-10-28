@@ -1,0 +1,6 @@
+%include ../base_graph.fdf
+SystemLabel     pbesol
+
+xc.functional   GGA
+xc.authors      PBEsol
+

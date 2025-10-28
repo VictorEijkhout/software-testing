@@ -1,0 +1,10 @@
+%include ../base_si8.fdf
+SystemLabel     si_omm1
+
+SolutionMethod  OMM
+OMM.UseCholesky T
+OMM.Use2D       T
+OMM.Eigenvalues T
+OMM.LongOutput  T
+ON.eta          -3.85 eV
+

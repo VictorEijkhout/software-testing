@@ -1,0 +1,40 @@
+SystemName          Water molecule dimer
+SystemLabel         h2o_qmmm
+NumberOfAtoms       3
+NumberOfSpecies     2
+
+MeshCutoff  150 Ry
+
+%block ChemicalSpeciesLabel
+ 1  8  O      # Species index, atomic number, species label
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+
+AtomicCoordinatesFormat  Ang
+%block AtomicCoordinatesAndAtomicSpecies
+ 1.000  0.000  0.000  1
+ 1.757  0.586  0.000  2
+ 0.243  0.586  0.000  2
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+LatticeConstant     20.0 Ang
+%block LatticeVectors
+  1.000  0.000  0.000
+  0.000  1.000  0.000
+  0.000  0.000  1.000
+%endblock LatticeVectors
+
+DM.NumberPulay 3
+DM.MixingWeight 0.08
+DM.UseSaveDM F
+
+
+QMMM.Enabled T
+QMMM.CoulombType 2
+QMMM.Cutoff 8.0 Ang
+QMMM.DensityCut 1e-6 Ang
+%block PartialCharges
+  1.000  2.500  0.000  -0.834
+  1.757  3.086  0.000   0.417
+  0.243  3.086  0.000   0.417
+%endblock PartialCharges

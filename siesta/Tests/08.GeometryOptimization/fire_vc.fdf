@@ -1,0 +1,9 @@
+%include ../base_mgco3.fdf
+SystemLabel      fire_vc
+
+MD.TypeOfRun     fire
+MD.FIRE.TimeStep 0.3 fs
+MD.FIRE.Mass     1.0
+MD.FIRE.Nmin       5
+MD.VariableCell    T
+

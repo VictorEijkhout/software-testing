@@ -1,0 +1,6 @@
+%include ../base_wat2.fdf
+SystemLabel          npr
+
+MD.TypeOfRun         NoseParrinelloRahman
+MD.TargetPressure   10.0 GPa
+MD.UseSaveXV          F

@@ -1,0 +1,11 @@
+%include ../base_wat_smallbox.fdf
+SystemLabel     filter_cutoff
+
+%block ChemicalSpeciesLabel
+ 1  8  O
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+
+FilterCutoff 150.0 Ry
+MeshCutoff   200.0 Ry
+

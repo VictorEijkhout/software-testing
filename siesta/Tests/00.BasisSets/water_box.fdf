@@ -1,0 +1,14 @@
+SystemName          Water molecule
+
+LatticeConstant 10.0 Ang
+%block LatticeVectors
+1.0 0.0 0.0
+0.0 1.0 0.0
+0.0 0.0 0.8
+%endblock LatticeVectors
+
+Solution.Method       diagon
+MeshCutoff             100 Ry
+MaxSCFIterations         3
+SCF.MustConverge         F
+DM.UseSaveDM             F

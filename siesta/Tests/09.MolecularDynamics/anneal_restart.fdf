@@ -1,0 +1,9 @@
+%include ../base_wat2.fdf
+SystemLabel           anneal
+
+MD.TypeOfRun          anneal
+MD.AnnealOption       Temperature
+MD.InitialTemperature 100 K
+MD.TargetTemperature  600 K
+MD.TauRelax           25 fs
+MD.UseSaveXV          T

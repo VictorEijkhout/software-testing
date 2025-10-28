@@ -1,0 +1,10 @@
+%include ../base_fen.fdf
+SystemLabel     charge_sp
+
+Spin non-collinear
+
+WriteHirshfeldPop T
+WriteVoronoiPop   T
+WriteMullikenPop  1
+Save-Bader-Charge T
+

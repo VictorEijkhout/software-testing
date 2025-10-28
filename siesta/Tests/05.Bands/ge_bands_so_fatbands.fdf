@@ -1,0 +1,16 @@
+%include ../base_ge.fdf
+SystemLabel       ge_bands_so_fatbands
+
+Spin spin-orbit
+
+WFS.Write.For.Bands T
+Wfs.band.min 1
+Wfs.band.max 8
+WaveFuncKPointsScale  pi/a
+%block WaveFuncKPoints           
+0.000  0.000  0.000  from 1 to 10   # eigenstates 1-10 of Gamma
+2.000  0.000  0.000  1 3 5          # eigenstates 1,3,5 of X
+1.500  1.500  1.500                 # all eigenstates of K
+%endblock WaveFuncKPoints
+
+COOP.Write T

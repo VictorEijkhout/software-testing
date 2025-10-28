@@ -1,0 +1,11 @@
+%include ../base_si2.fdf
+SystemLabel       born_sp
+FC.Save.dHS
+Spin polarized
+BornCharge T
+%block PolarizationGrids
+7  3  3
+3  7  3
+3  3  7
+%endblock PolarizationGrids
+

@@ -1,0 +1,7 @@
+%include ../base_wat2.fdf
+SystemLabel           nose
+
+MD.TypeOfRun          Nose
+MD.InitialTemperature 100 K
+MD.TargetTemperature  600 K
+MD.UseSaveXV          T

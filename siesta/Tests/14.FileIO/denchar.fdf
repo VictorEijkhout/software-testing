@@ -1,0 +1,5 @@
+%include ../base_wat.fdf
+SystemLabel     denchar
+
+Write.Denchar T
+DM.UseSaveDM  F

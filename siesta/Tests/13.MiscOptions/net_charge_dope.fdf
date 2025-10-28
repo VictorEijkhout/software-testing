@@ -1,0 +1,10 @@
+%include ../base_wat_bigbox.fdf
+SystemLabel     net_charge_dope
+
+NetCharge -1
+Slab.DipoleCorrection T
+SimulateDoping        T
+
+SCF.MustConverge F
+MaxSCFIterations 30
+

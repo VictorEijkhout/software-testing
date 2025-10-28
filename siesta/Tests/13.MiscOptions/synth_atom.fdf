@@ -1,0 +1,13 @@
+%include ../base_wat_smallbox.fdf
+SystemLabel     synth_atom
+
+%block ChemicalSpeciesLabel
+ 1  201  ON-0.34560
+ 2    1  H
+%endblock ChemicalSpeciesLabel
+%block SyntheticAtoms
+ 1
+ 2 2 3 4
+ 2.0 3.3456 0.0 0.0
+%endblock SyntheticAtoms
+

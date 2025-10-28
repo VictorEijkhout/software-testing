@@ -1,0 +1,8 @@
+%include ../base_fe.fdf
+SystemLabel       pdos_k
+
+PDOS.kgrid.MonkhorstPack [10 10 10]
+%block ProjectedDensityOfStates
+EF -5.00 5.00 0.200000 1000 eV
+%endblock ProjectedDensityOfStates
+

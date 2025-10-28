@@ -1,0 +1,7 @@
+SystemLabel         full.psml
+
+%block ChemicalSpeciesLabel
+ 1  14  Si.full  Si.tm2.nrl.psml
+%endblock ChemicalSpeciesLabel
+
+%include ../base_si2.fdf

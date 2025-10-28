@@ -1,0 +1,14 @@
+%include ../base_si8.fdf
+SystemLabel     si_omm2
+
+SolutionMethod  OMM
+OMM.UseCholesky F
+OMM.Use2D       F
+OMM.UseSparse   T
+OMM.LongOutput  T
+OMM.Precon      4
+OMM.PreconFirstStep 8
+OMM.Diagon      1
+OMM.DiagonFirstStep 2
+ON.eta          -3.85 eV
+

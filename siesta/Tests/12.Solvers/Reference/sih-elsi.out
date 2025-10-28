@@ -1,0 +1,1585 @@
+Executable      : /home/fnpedron/Siesta/siesta-dev/_build/Src/siesta
+Version         : 5.2.0-17-gad84d481e
+Architecture    : x86_64
+Compiler version: GNU-11.4.0
+Compiler flags  : -fallow-argument-mismatch -O3 -march=native
+Environment variables: 
+  SIESTA_PS_PATH: /home/fnpedron/Siesta/siesta-dev/Tests/Pseudos
+Parallelisations: MPI, OpenMP
+* OpenMP version: 201511
+NetCDF support
+NetCDF-4 support
+Lua support
+Native ELPA support
+ELSI support. Solvers:
+   ELPA (internal) 
+   NTPoly
+   OMM
+   PEXSI
+DFT-D3 support
+Wannier90 wrapper support
+
+Runtime information:
+* Directory : /home/fnpedron/Siesta/siesta-dev/_build/Tests/12.Solvers/sih-elsi_mpi4_omp1/work
+* Running on 4 nodes in parallel.
+* Running 1 OpenMP threads.
+* Running 4 processes.
+* OpenMP NOT bound (please bind threads!)
+* OpenMP runtime schedule DYNAMIC, chunks 1
+** Changing chunk size:
+** OpenMP runtime schedule DYNAMIC, chunks 32
+** OpenMP (trying to FORCE nesting)
+* OpenMP allows 255 nested levels.
+>> Start of run:  17-JAN-2025  14:35:33
+
+                           *********************** 
+                           *  WELCOME TO SIESTA  * 
+                           *********************** 
+
+ NOTE: Siesta V5 introduces some new defaults for basis-set generation
+ NOTE: which might lead to slightly different numerical results.
+ NOTE: Please see the manual for full details and compatibility measures.
+
+
+reinit: Reading from file ../../sih-elsi.fdf
+
+reinit: -----------------------------------------------------------------------
+reinit: System Name: H in 64-atom silicon - ELSI solver
+reinit: -----------------------------------------------------------------------
+reinit: System Label: sih-elsi
+reinit: -----------------------------------------------------------------------
+
+initatom: Reading input for the pseudopotentials and atomic orbitals ----------
+Species number:   1 Atomic number:   14 Label: Si
+Species number:   2 Atomic number:    1 Label: H
+
+Ground state valence configuration (from tables):   3s02  3p02  3d00  4f00
+Ground state valence configuration (from tables):   1s01  2p00  3d00  4f00
+
+---- Processing specs for species: Si
+Reading pseudopotential information in formatted form from:
+  /home/fnpedron/Siesta/siesta-dev/Tests/Pseudos/Si.psf
+
+---- Processing specs for species: H
+Reading pseudopotential information in formatted form from:
+  /home/fnpedron/Siesta/siesta-dev/Tests/Pseudos/H.psf
+
+---- Pseudopotential check for H 
+
+Pseudized shells:
+1s( 1.00) rc: 1.25
+2p( 0.00) rc: 1.25
+3d( 0.00) rc: 1.25
+4f( 0.00) rc: 1.25
+Valence configuration for ps generation: (assumed as above)
+
+---- Pseudopotential check for Si
+
+Pseudized shells:
+3s( 2.00) rc: 1.89
+3p( 2.00) rc: 1.89
+3d( 0.00) rc: 1.89
+4f( 0.00) rc: 1.89
+Valence configuration for ps generation: (assumed as above)
+For Si, standard SIESTA heuristics set lmxkb to 3
+ (one more than the basis l, including polarization orbitals).
+Use PS.lmax or PS.KBprojectors blocks to override.
+For H, standard SIESTA heuristics set lmxkb to 1
+ (one more than the basis l, including polarization orbitals).
+Use PS.lmax or PS.KBprojectors blocks to override.
+
+<basis_specs>
+===============================================================================
+Si                   Z=  14    Mass=  28.090        Charge= 0.17977+309
+Lmxo=2 Lmxkb= 3    BasisType=split      Semic=F
+L=0  Nsemic=0  Cnfigmx=3
+          i=1  nzeta=2  polorb=0  (3s)
+            splnorm:   0.15000    
+               vcte:    40.000    
+               rinn:  -0.90000    
+               qcoe:    0.0000    
+               qyuk:    0.0000    
+               qwid:   0.10000E-01
+                rcs:    0.0000      0.0000    
+            lambdas:    1.0000      1.0000    
+L=1  Nsemic=0  Cnfigmx=3
+          i=1  nzeta=2  polorb=1  (3p)  (to be polarized perturbatively)
+            splnorm:   0.15000    
+               vcte:    40.000    
+               rinn:  -0.90000    
+               qcoe:    0.0000    
+               qyuk:    0.0000    
+               qwid:   0.10000E-01
+                rcs:    0.0000      0.0000    
+            lambdas:    1.0000      1.0000    
+L=2  Nsemic=0  Cnfigmx=3
+          i=1  nzeta=0  polorb=0  (3d)  (perturbative polarization orbital) (from 3p)
+-------------------------------------------------------------------------------
+L=0  Nkbl=1  erefs: 0.17977+309
+L=1  Nkbl=1  erefs: 0.17977+309
+L=2  Nkbl=1  erefs: 0.17977+309
+L=3  Nkbl=1  erefs: 0.17977+309
+===============================================================================
+</basis_specs>
+
+Using PAO.SplitTailNorm
+atom: Called for Si                    (Z =  14)
+Maximum radius (at nrval) set to   50.00000 8518
+
+read_vps: Pseudopotential generation method:
+read_vps: ATM3      Troullier-Martins                       
+Valence charge in pseudo generation:    4.00000
+
+xc_check: Exchange-correlation functional:
+xc_check: Ceperley-Alder
+V l=0 = -2*Zval/r beyond r=  2.5804
+V l=1 = -2*Zval/r beyond r=  2.5804
+V l=2 = -2*Zval/r beyond r=  2.5804
+V l=3 = -2*Zval/r beyond r=  2.5804
+All V_l potentials equal beyond r=  1.8729
+This should be close to max(r_c) in ps generation
+All pots = -2*Zval/r beyond r=  2.5804
+Using large-core scheme (fit) for Vlocal
+
+atom: Estimated core radius    2.58045
+
+atom: Including non-local core corrections could be a good idea
+Fit of Vlocal with continuous 2nd derivative
+Fitting vlocal at       1.8786
+Choosing vlocal chloc cutoff:  5647  2.821566
+qtot up to nchloc:    4.00020356
+atom: Maximum radius for chlocal:    2.82157
+atom: Maximum radius for r*vlocal+2*Zval:    2.82157
+
+KBgen: Kleinman-Bylander projectors: 
+GHOST: No ghost state for L =  0
+   l= 0   rc=  1.872931   el= -0.796617   Ekb=  5.353935   kbcos=  0.317881
+GHOST: No ghost state for L =  1
+   l= 1   rc=  1.886158   el= -0.307040   Ekb=  2.204864   kbcos=  0.299917
+GHOST: No ghost state for L =  2
+   l= 2   rc=  1.909049   el=  0.013097   Ekb= -2.473633   kbcos= -0.044292
+GHOST: No ghost state for L =  3
+   l= 3   rc=  1.951736   el=  0.019538   Ekb= -1.407727   kbcos= -0.001862
+
+KBgen: Total number of Kleinman-Bylander projectors:  16
+atom: -------------------------------------------------------------------------
+
+atom: SANKEY-TYPE ORBITALS:
+atom: Selected multiple-zeta basis: split     
+
+SPLIT: Orbitals with angular momentum L= 0
+
+SPLIT: Basis orbitals for state 3s
+
+SPLIT: PAO cut-off radius determined from an
+SPLIT: energy shift=  0.022050 Ry
+Split based on tail norm
+
+   izeta = 1
+                 lambda =    1.000000
+                     rc =    4.917490
+                 energy =   -0.771719
+                kinetic =    0.594730
+    potential(screened) =   -1.366449
+       potential(ionic) =   -3.854235
+
+   izeta = 2
+                 rmatch =    3.658672
+              splitnorm =    0.150000
+                 energy =   -0.444941
+                kinetic =    1.278283
+    potential(screened) =   -1.723224
+       potential(ionic) =   -4.356109
+
+SPLIT: Orbitals with angular momentum L= 1
+
+SPLIT: Basis orbitals for state 3p
+
+SPLIT: PAO cut-off radius determined from an
+SPLIT: energy shift=  0.022050 Ry
+Split based on tail norm
+
+   izeta = 1
+                 lambda =    1.000000
+                     rc =    6.081107
+                 energy =   -0.282170
+                kinetic =    0.913728
+    potential(screened) =   -1.195898
+       potential(ionic) =   -3.478408
+
+   izeta = 2
+                 rmatch =    4.584362
+              splitnorm =    0.150000
+                 energy =   -0.136607
+                kinetic =    1.418652
+    potential(screened) =   -1.555259
+       potential(ionic) =   -4.057700
+
+POLgen: Perturbative polarization orbital with L=  2
+
+POLgen: Polarization orbital for state 3p
+Split based on tail norm
+
+   izeta = 1
+                     rc =    6.081107
+                 energy =    0.384234
+                kinetic =    1.702613
+    potential(screened) =   -1.318379
+       potential(ionic) =   -3.513180
+atom: Total number of Sankey-type orbitals: 13
+
+atm_pop: Valence configuration (for local Pseudopot. screening):
+ 3s( 2.00)                                                            
+ 3p( 2.00)                                                            
+ 3d( 0.00)                                                            
+Vna: chval, zval:    4.00000   4.00000
+
+Vna:  Cut-off radius for the neutral-atom potential:   6.081107
+
+atom: _________________________________________________________________________
+
+<basis_specs>
+===============================================================================
+H                    Z=   1    Mass=  1.0080        Charge= 0.17977+309
+Lmxo=0 Lmxkb= 1    BasisType=split      Semic=F
+L=0  Nsemic=0  Cnfigmx=1
+          i=1  nzeta=1  polorb=0  (1s)
+            splnorm:   0.15000    
+               vcte:    40.000    
+               rinn:  -0.90000    
+               qcoe:    0.0000    
+               qyuk:    0.0000    
+               qwid:   0.10000E-01
+                rcs:    0.0000    
+            lambdas:    0.0000    
+-------------------------------------------------------------------------------
+L=0  Nkbl=1  erefs: 0.17977+309
+L=1  Nkbl=1  erefs: 0.17977+309
+===============================================================================
+</basis_specs>
+
+Using PAO.SplitTailNorm
+atom: Called for H                     (Z =   1)
+Maximum radius (at nrval) set to   50.00000 8518
+
+read_vps: Pseudopotential generation method:
+read_vps: ATM3      Troullier-Martins                       
+Valence charge in pseudo generation:    1.00000
+
+xc_check: Exchange-correlation functional:
+xc_check: Ceperley-Alder
+V l=0 = -2*Zval/r beyond r=  1.2384
+V l=1 = -2*Zval/r beyond r=  1.2321
+All V_l potentials equal beyond r=  1.2371
+This should be close to max(r_c) in ps generation
+All pots = -2*Zval/r beyond r=  1.2384
+Using small-core scheme (local charge) for Vlocal
+
+VLOCAL_FROM_CHLOCAL: 99.0% of the norm of Vloc inside     28.363 Ry
+VLOCAL_FROM_CHLOCAL: 99.9% of the norm of Vloc inside     64.639 Ry
+atom: Maximum radius for chlocal:    1.44620
+atom: Maximum radius for r*vlocal+2*Zval:    1.31026
+
+KBgen: Kleinman-Bylander projectors: 
+GHOST: No ghost state for L =  0
+   l= 0   rc=  1.364142   el= -0.467325   Ekb= -2.009475   kbcos= -0.336680
+GHOST: No ghost state for L =  1
+   l= 1   rc=  1.430269   el=  0.007562   Ekb= -0.503817   kbcos= -0.022554
+
+KBgen: Total number of Kleinman-Bylander projectors:   4
+atom: -------------------------------------------------------------------------
+
+atom: SANKEY-TYPE ORBITALS:
+
+SPLIT: Orbitals with angular momentum L= 0
+
+SPLIT: Basis orbitals for state 1s
+
+SPLIT: PAO cut-off radius determined from an
+SPLIT: energy shift=  0.022050 Ry
+Split based on tail norm
+
+   izeta = 1
+                 lambda =    1.000000
+                     rc =    4.667809
+                 energy =   -0.443242
+                kinetic =    0.962817
+    potential(screened) =   -1.406058
+       potential(ionic) =   -1.945613
+atom: Total number of Sankey-type orbitals:  1
+
+atm_pop: Valence configuration (for local Pseudopot. screening):
+ 1s( 1.00)                                                            
+Vna: chval, zval:    1.00000   1.00000
+
+Vna:  Cut-off radius for the neutral-atom potential:   4.667809
+
+atom: _________________________________________________________________________
+
+prinput: Basis input 
+
+PAO.BasisType split     
+
+%block ChemicalSpeciesLabel
+    1   14 Si                      # Species index, atomic number, species label
+    2    1 H                       # Species index, atomic number, species label
+%endblock ChemicalSpeciesLabel
+
+%block PAO.Basis                 # Define Basis set
+# WARNING: This information might be incomplete!
+Si                    2                    # Species label, number of l-shells
+ n=3   0   2                         # n, l, Nzeta 
+   4.917      3.659   
+   1.000      1.000   
+ n=3   1   2 P   1                   # n, l, Nzeta, Polarization, NzetaPol
+   6.081      4.584   
+   1.000      1.000   
+H                     1                    # Species label, number of l-shells
+ n=1   0   1                         # n, l, Nzeta 
+   4.668   
+   1.000   
+%endblock PAO.Basis
+
+prinput: ----------------------------------------------------------------------
+
+Dumping basis to NetCDF file Si.ion.nc
+Dumping basis to NetCDF file H.ion.nc
+coor:   Atomic-coordinates input format  =     Cartesian coordinates
+coor:                                          (in units of alat)
+
+siesta: Atomic coordinates (Bohr) and species
+siesta:      0.00000   0.00000   0.00000  1        1
+siesta:      2.56530   2.56530   2.56530  1        2
+siesta:      0.00000   5.13061   5.13061  1        3
+siesta:      2.56530   7.69591   7.69591  1        4
+siesta:      5.13061   0.00000   5.13061  1        5
+siesta:      7.69591   2.56530   7.69591  1        6
+siesta:      5.13061   5.13061   0.00000  1        7
+siesta:      7.69591   7.69591   2.56530  1        8
+siesta:     10.26121   0.00000   0.00000  1        9
+siesta:     12.82652   2.56530   2.56530  1       10
+siesta:     10.26121   5.13061   5.13061  1       11
+siesta:     12.82652   7.69591   7.69591  1       12
+siesta:     15.39182   0.00000   5.13061  1       13
+siesta:     17.95712   2.56530   7.69591  1       14
+siesta:     15.39182   5.13061   0.00000  1       15
+siesta:     17.95712   7.69591   2.56530  1       16
+siesta:      0.00000  10.26121   0.00000  1       17
+siesta:      2.56530  12.82652   2.56530  1       18
+siesta:      0.00000  15.39182   5.13061  1       19
+siesta:      2.56530  17.95712   7.69591  1       20
+siesta:      5.13061  10.26121   5.13061  1       21
+siesta:      7.69591  12.82652   7.69591  1       22
+siesta:      5.13061  15.39182   0.00000  1       23
+siesta:      7.69591  17.95712   2.56530  1       24
+siesta:      0.00000   0.00000  10.26121  1       25
+siesta:      2.56530   2.56530  12.82652  1       26
+siesta:      0.00000   5.13061  15.39182  1       27
+siesta:      2.56530   7.69591  17.95712  1       28
+siesta:      5.13061   0.00000  15.39182  1       29
+siesta:      7.69591   2.56530  17.95712  1       30
+siesta:      5.13061   5.13061  10.26121  1       31
+siesta:      7.69591   7.69591  12.82652  1       32
+siesta:     10.26121  10.26121   0.00000  1       33
+siesta:     12.82652  12.82652   2.56530  1       34
+siesta:     10.26121  15.39182   5.13061  1       35
+siesta:     12.82652  17.95712   7.69591  1       36
+siesta:     15.39182  10.26121   5.13061  1       37
+siesta:     17.95712  12.82652   7.69591  1       38
+siesta:     15.39182  15.39182   0.00000  1       39
+siesta:     17.95712  17.95712   2.56530  1       40
+siesta:     10.26121   0.00000  10.26121  1       41
+siesta:     12.82652   2.56530  12.82652  1       42
+siesta:     10.26121   5.13061  15.39182  1       43
+siesta:     12.82652   7.69591  17.95712  1       44
+siesta:     15.39182   0.00000  15.39182  1       45
+siesta:     17.95712   2.56530  17.95712  1       46
+siesta:     15.39182   5.13061  10.26121  1       47
+siesta:     17.95712   7.69591  12.82652  1       48
+siesta:      0.00000  10.26121  10.26121  1       49
+siesta:      2.56530  12.82652  12.82652  1       50
+siesta:      0.00000  15.39182  15.39182  1       51
+siesta:      2.56530  17.95712  17.95712  1       52
+siesta:      5.13061  10.26121  15.39182  1       53
+siesta:      7.69591  12.82652  17.95712  1       54
+siesta:      5.13061  15.39182  10.26121  1       55
+siesta:      7.69591  17.95712  12.82652  1       56
+siesta:     10.26121  10.26121  10.26121  1       57
+siesta:     12.82652  12.82652  12.82652  1       58
+siesta:     10.26121  15.39182  15.39182  1       59
+siesta:     12.82652  17.95712  17.95712  1       60
+siesta:     15.39182  10.26121  15.39182  1       61
+siesta:     17.95712  12.82652  17.95712  1       62
+siesta:     15.39182  15.39182  10.26121  1       63
+siesta:     17.95712  17.95712  12.82652  1       64
+siesta:     11.54386  11.54386  11.54386  2       65
+
+siesta: System type = bulk      
+
+initatomlists: Number of atoms, orbitals, and projectors:     65   833  1028
+
+siesta: ******************** Simulation parameters ****************************
+siesta:
+siesta: The following are some of the parameters of the simulation.
+siesta: A complete list of the parameters used, including default values,
+siesta: can be found in file out.fdf
+siesta:
+redata: Spin configuration                          = none
+redata: Number of spin components                   = 1
+redata: Time-Reversal Symmetry                      = T
+redata: Spin spiral                                 = F
+redata: Long output                                 =   F
+redata: Number of Atomic Species                    =        2
+redata: Charge density info will appear in .RHO file
+redata: Write Mulliken charges (when)               = none
+redata: Write Mulliken Pop.                         = NO
+redata: Write Hirshfeld charges (when)              = none
+redata: Write Voronoi charges (when)                = none
+redata: Write spin charge (when)                    = none
+redata: Matel table size (NRTAB)                    =     1024
+redata: Mesh Cutoff                                 =   100.0000 Ry
+redata: Net charge of the system                    =     0.0000 |e|
+redata: Min. number of SCF Iter                     =        0
+redata: Max. number of SCF Iter                     =       20
+redata: SCF convergence failure will abort job
+redata: SCF mix quantity                            = Hamiltonian
+redata: Mix DM or H after convergence               =   F
+redata: Recompute H after scf cycle                 =   F
+redata: Mix DM in first SCF step                    =   T
+redata: Write Pulay info on disk                    =   F
+redata: New DM Occupancy tolerance                  = 0.000000000001
+redata: No kicks to SCF
+redata: DM Mixing Weight for Kicks                  =     0.5000
+redata: Require Harris convergence for SCF          =   F
+redata: Harris energy tolerance for SCF             =     0.000100 eV
+redata: Require DM convergence for SCF              =   T
+redata: DM tolerance for SCF                        =     0.001000
+redata: Require EDM convergence for SCF             =   F
+redata: EDM tolerance for SCF                       =     0.001000 eV
+redata: Require H convergence for SCF               =   T
+redata: Hamiltonian tolerance for SCF               =     0.001000 eV
+redata: Require (free) Energy convergence for SCF   =   F
+redata: (free) Energy tolerance for SCF             =     0.000100 eV
+redata: Using DFT-D3 dispersion                     =   F
+redata: Using Saved Data (generic)                  =   F
+redata: Use continuation files for DM               =   T
+redata: Neglect nonoverlap interactions             =   F
+redata: Method of Calculation                       = ELSI solvers
+redata: Electronic Temperature                      =   290.1130 K
+redata: Fix the spin of the system                  =   F
+redata: Max. number of TDED Iter                    =        1
+redata: Number of TDED substeps                     =        3
+redata: Dynamics option                             = Single-point calculation
+mix.SCF: Pulay mixing                            = Pulay
+mix.SCF:    Variant                              = stable
+mix.SCF:    History steps                        = 4
+mix.SCF:    Linear mixing weight                 =     0.300000
+mix.SCF:    Mixing weight                        =     0.300000
+mix.SCF:    SVD condition                        = 0.1000E-07
+redata: Save all siesta data in one NC              =   F
+redata: ***********************************************************************
+
+%block SCF.Mixers
+  Pulay
+%endblock SCF.Mixers
+
+%block SCF.Mixer.Pulay
+  # Mixing method
+  method pulay
+  variant stable
+
+  # Mixing options
+  weight 0.3000
+  weight.linear 0.3000
+  history 4
+%endblock SCF.Mixer.Pulay
+
+DM_history_depth set to one: no extrapolation allowed by default for geometry relaxation
+Size of DM history Fstack: 1
+Total number of electrons:   257.000000
+Total ionic charge:   257.000000
+
+* ProcessorY, Blocksize:    2  64
+
+
+* Orbital distribution balance (max,min):   256   192
+
+
+siesta: k-grid: Number of k-points = 1
+siesta: k-point is Gamma-only
+
+
+ts: **************************************************************
+ts: Save H and S matrices                           =    F
+ts: Save DM and EDM matrices                        =    F
+ts: Only save the overlap matrix S                  =    F
+ts: **************************************************************
+
+************************ Begin: TS CHECKS AND WARNINGS ************************
+************************ End: TS CHECKS AND WARNINGS **************************
+
+
+                     ====================================
+                        Single-point calculation
+                     ====================================
+
+outcell: Unit cell vectors (Ang):
+       10.860000    0.000000    0.000000
+        0.000000   10.860000    0.000000
+        0.000000    0.000000   10.860000
+
+outcell: Cell vector modules (Ang)   :   10.860000   10.860000   10.860000
+outcell: Cell angles (23,13,12) (deg):     90.0000     90.0000     90.0000
+outcell: Cell volume (Ang**3)        :   1280.8241
+Gamma-point calculation with multiply-connected orbital pairs
+Folding of H and S implicitly performed
+<dSpData1D:S at geom step 0
+  <sparsity:sparsity for geom step 0
+    nrows_g=833 nrows=256 sparsity=.2240 nnzs=155437, refcount: 7>
+  <dData1D:(new from dSpData1D) n=155437, refcount: 1>
+refcount: 1>
+new_DM -- step:     1
+Initializing Density Matrix...
+
+Attempting to read DM from file... Failed...
+DM filled with atomic data:
+<dSpData2D:DM initialized from atoms
+  <sparsity:sparsity for geom step 0
+    nrows_g=833 nrows=256 sparsity=.2240 nnzs=155437, refcount: 8>
+  <dData2D:DM n=155437 m=1, refcount: 1>
+refcount: 1>
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:      65     162
+
+InitMesh: MESH = 72 x 72 x 72 = 373248
+InitMesh: Mesh cutoff (required, used) =   100.000   121.481 Ry
+New grid distribution [1]: sub = 2
+New grid distribution [2]: sub = 2
+New grid distribution [3]: sub = 2
+Setting up quadratic distribution...
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.391 MB for ham_real_den
+      Allocating      1.391 MB for ovlp_real_den
+      Allocating      1.243 MB for s_val_send
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Allocating      1.011 MB for s_val_recv
+      Deallocating s_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating s_val_recv
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.017 s
+      Allocating      0.007 MB for eval
+      Allocating      1.391 MB for evec_real
+      Allocating      1.391 MB for dm_real_den
+      Allocating      0.007 MB for occ
+  Starting ELPA eigensolver
+  Finished Cholesky decomposition
+  | Time :     0.016 s
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.024 s
+  Finished solving standard eigenproblem
+  | Time :     0.158 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.013 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.019 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.056 s
+
+siesta: Program's energy decomposition (eV):
+siesta: Ebs     =     -2294.862652
+siesta: Eions   =     15761.627089
+siesta: Ena     =      6818.808921
+siesta: Ekin    =      2698.863535
+siesta: Enl     =      1261.930552
+siesta: Eso     =         0.000000
+siesta: Edftu   =         0.000000
+siesta: DEna    =       177.432730
+siesta: DUscf   =        10.613499
+siesta: DUext   =         0.000000
+siesta: Ex      =     -1777.097840
+siesta: Ec      =      -327.671783
+siesta: Exc     =     -2104.769623
+siesta: EbV     =         0.000000
+siesta: eta*DQ  =         0.000000
+siesta: Emadel  =         0.000000
+siesta: Emeta   =         0.000000
+siesta: Emolmec =         0.000000
+siesta: Ekinion =         0.000000
+siesta: Eharris =     -6952.305065
+siesta: Etot    =     -6898.747475
+siesta: FreeEng =     -6898.828177
+
+        iscf     Eharris(eV)        E_KS(eV)     FreeEng(eV)     dDmax    Ef(eV) dHmax(eV)
+   scf:    1    -6952.305065    -6898.747475    -6898.828177  1.546484 -3.361436  2.260314
+timer: Routine,Calls,Time,% = IterSCF        1       0.695  30.19
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.010 s
+  Starting ELPA eigensolver
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.017 s
+  Finished solving standard eigenproblem
+  | Time :     0.141 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.014 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.025 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.055 s
+   scf:    2    -6898.020089    -6898.973260    -6899.047393  0.075999 -3.395599  2.172059
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.011 s
+  Starting ELPA eigensolver
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.017 s
+  Finished solving standard eigenproblem
+  | Time :     0.140 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.016 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.023 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.057 s
+   scf:    3    -6899.322131    -6899.291397    -6899.368408  0.044289 -3.368735  0.361224
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.011 s
+  Starting ELPA eigensolver
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.017 s
+  Finished solving standard eigenproblem
+  | Time :     0.146 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.015 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.023 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.057 s
+   scf:    4    -6899.326792    -6899.311254    -6899.388209  0.054311 -3.364818  0.238064
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.011 s
+  Starting ELPA eigensolver
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.016 s
+  Finished solving standard eigenproblem
+  | Time :     0.140 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.014 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.022 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.055 s
+   scf:    5    -6899.327858    -6899.320261    -6899.397121  0.054458 -3.359967  0.105424
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.009 s
+  Starting ELPA eigensolver
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.015 s
+  Finished solving standard eigenproblem
+  | Time :     0.174 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.014 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.023 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.057 s
+   scf:    6    -6899.322449    -6899.321441    -6899.398276  0.022434 -3.357616  0.013022
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.011 s
+  Starting ELPA eigensolver
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.017 s
+  Finished solving standard eigenproblem
+  | Time :     0.141 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.015 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.024 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.055 s
+   scf:    7    -6899.321720    -6899.321585    -6899.398363  0.004575 -3.357285  0.003869
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.011 s
+  Starting ELPA eigensolver
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.016 s
+  Finished solving standard eigenproblem
+  | Time :     0.140 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.014 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.024 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.055 s
+   scf:    8    -6899.321670    -6899.321629    -6899.398379  0.001426 -3.357236  0.003858
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.011 s
+  Starting ELPA eigensolver
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.017 s
+  Finished solving standard eigenproblem
+  | Time :     0.140 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.014 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.025 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.054 s
+   scf:    9    -6899.321660    -6899.321645    -6899.398382  0.000115 -3.357307  0.001054
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      1.243 MB for dest
+      Allocating      1.243 MB for perm
+      Allocating      1.243 MB for h_val_send
+      Allocating      0.622 MB for row_send
+      Allocating      0.622 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.506 MB for row_recv
+      Deallocating row_send
+      Allocating      0.506 MB for col_recv
+      Deallocating col_send
+      Allocating      1.011 MB for h_val_recv
+      Deallocating h_val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating h_val_recv
+      Deallocating row_recv
+      Deallocating col_recv
+  Finished matrix redistribution
+  | Time :     0.010 s
+  Starting ELPA eigensolver
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+  Finished transformation to standard eigenproblem
+  | Time :     0.018 s
+  Finished solving standard eigenproblem
+  | Time :     0.137 s
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished back-transformation of eigenvectors
+  | Time :     0.014 s
+      Allocating      0.007 MB for eval_all
+      Allocating      0.000 MB for k_wt
+      Deallocating eval_all
+      Deallocating k_wt
+      Allocating      1.391 MB for tmp
+      Allocating      1.605 MB for tmp
+      Deallocating tmp
+      Deallocating tmp
+  Finished density matrix calculation
+  | Time :     0.024 s
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.060 s
+   scf:   10    -6899.321671    -6899.321658    -6899.398384  0.000323 -3.357347  0.000298
+
+SCF Convergence by DM+H criterion
+max |DM_out - DM_in|         :     0.0003225226
+max |H_out - H_in|      (eV) :     0.0002980273
+SCF cycle converged after 10 iterations
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Allocating      0.622 MB for row_ind_sp2
+      Allocating      0.002 MB for col_ptr_sp2
+      Allocating      0.007 MB for factor
+      Allocating      1.391 MB for tmp
+      Deallocating tmp
+  Finished energy density matrix calculation
+  | Time :     0.046 s
+      Deallocating factor
+      Allocating      1.391 MB for dest
+      Allocating      1.391 MB for perm
+      Allocating      1.391 MB for val_send
+      Allocating      0.696 MB for row_send
+      Allocating      0.696 MB for col_send
+      Allocating      0.000 MB for send_count
+      Deallocating dest
+      Deallocating perm
+      Allocating      0.000 MB for recv_count
+      Allocating      0.000 MB for send_displ
+      Allocating      0.000 MB for recv_displ
+      Allocating      0.853 MB for row_recv
+      Deallocating row_send
+      Allocating      0.853 MB for col_recv
+      Deallocating col_send
+      Allocating      1.706 MB for val_recv
+      Deallocating val_send
+      Deallocating send_count
+      Deallocating recv_count
+      Deallocating send_displ
+      Deallocating recv_displ
+      Deallocating row_recv
+      Deallocating col_recv
+      Deallocating val_recv
+  Finished matrix redistribution
+  | Time :     0.054 s
+
+Using DM_out to compute the final energy and forces
+No. of atoms with KB's overlaping orbs in proc 0. Max # of overlaps:      65     162
+      Deallocating ham_real_den
+      Deallocating ovlp_real_den
+      Deallocating eval
+      Deallocating evec_real
+      Deallocating dm_real_den
+      Deallocating row_ind_sp2
+      Deallocating col_ptr_sp2
+      Deallocating occ
+
+siesta: E_KS(eV) =            -6899.3217
+
+siesta: E_KS - E_eggbox =     -6899.3217
+
+siesta: Atomic forces (eV/Ang):
+----------------------------------------
+   Tot   -0.000000   -0.000000   -0.000000
+----------------------------------------
+   Max    8.093994
+   Res    1.422160    sqrt( Sum f_i^2 / 3N )
+----------------------------------------
+   Max    8.093994    constrained
+
+Stress tensor Voigt[x,y,z,yz,xz,xy] (kbar):       11.98       11.98       11.98      -13.69      -13.69      -13.69
+(Free)E + p*V (eV/cell)    -6908.9747
+Target enthalpy (eV/cell)    -6899.3984
+
+siesta: Program's energy decomposition (eV):
+siesta: Ebs     =     -2300.056333
+siesta: Eions   =     15761.627089
+siesta: Ena     =      6818.808921
+siesta: Ekin    =      2689.070530
+siesta: Enl     =      1261.319567
+siesta: Eso     =         0.000000
+siesta: Edftu   =         0.000000
+siesta: DEna    =       185.719765
+siesta: DUscf   =         9.459302
+siesta: DUext   =         0.000000
+siesta: Ex      =     -1774.576992
+siesta: Ec      =      -327.495662
+siesta: Exc     =     -2102.072654
+siesta: EbV     =         0.000000
+siesta: eta*DQ  =         0.000000
+siesta: Emadel  =         0.000000
+siesta: Emeta   =         0.000000
+siesta: Emolmec =         0.000000
+siesta: Ekinion =         0.000000
+siesta: Eharris =     -6899.321671
+siesta: Etot    =     -6899.321658
+siesta: FreeEng =     -6899.398384
+
+siesta: Final energy (eV):
+siesta:  Band Struct. =   -2300.056333
+siesta:       Kinetic =    2689.070530
+siesta:       Hartree =     501.523445
+siesta:         Edftu =       0.000000
+siesta:       Eso     =       0.000000
+siesta:    Ext. field =       0.000000
+siesta:         Exch. =   -1774.576992
+siesta:         Corr. =    -327.495662
+siesta:     Bulk bias =       0.000000
+siesta:   Exch.-corr. =   -2102.072654
+siesta:  Ion-electron =   -3251.156327
+siesta:       Ion-ion =   -4736.686652
+siesta:       Ekinion =       0.000000
+siesta: D3 dispersion =       0.000000
+siesta:         Total =   -6899.321658
+siesta:         Fermi =      -3.357347
+
+siesta: Atomic forces (eV/Ang):
+siesta:      1    0.012537    0.012537    0.012537
+siesta:      2   -0.012537   -0.012537   -0.012537
+siesta:      3    0.044423    0.003516    0.003516
+siesta:      4   -0.035183    0.000346    0.000346
+siesta:      5    0.003516    0.044423    0.003516
+siesta:      6    0.000346   -0.035183    0.000346
+siesta:      7    0.003516    0.003516    0.044423
+siesta:      8    0.000346    0.000346   -0.035183
+siesta:      9   -0.065604    0.004221    0.004221
+siesta:     10    0.065604   -0.004221   -0.004221
+siesta:     11   -0.215835    0.030619    0.030619
+siesta:     12    0.336015    0.088293    0.088293
+siesta:     13    0.049454   -0.014958    0.018184
+siesta:     14   -0.018184    0.014958   -0.049454
+siesta:     15    0.049454    0.018184   -0.014958
+siesta:     16   -0.018184   -0.049454    0.014958
+siesta:     17    0.004221   -0.065604    0.004221
+siesta:     18   -0.004221    0.065604   -0.004221
+siesta:     19   -0.014958    0.049454    0.018184
+siesta:     20    0.014958   -0.018184   -0.049454
+siesta:     21    0.030619   -0.215835    0.030619
+siesta:     22    0.088293    0.336015    0.088293
+siesta:     23    0.018184    0.049454   -0.014958
+siesta:     24   -0.049454   -0.018184    0.014958
+siesta:     25    0.004221    0.004221   -0.065604
+siesta:     26   -0.004221   -0.004221    0.065604
+siesta:     27   -0.014958    0.018184    0.049454
+siesta:     28    0.014958   -0.049454   -0.018184
+siesta:     29    0.018184   -0.014958    0.049454
+siesta:     30   -0.049454    0.014958   -0.018184
+siesta:     31    0.030619    0.030619   -0.215835
+siesta:     32    0.088293    0.088293    0.336015
+siesta:     33    0.043392    0.043392    0.026616
+siesta:     34   -0.043392   -0.043392   -0.026616
+siesta:     35    0.110526    0.001945   -0.009394
+siesta:     36   -0.110526    0.009394   -0.001945
+siesta:     37    0.001945    0.110526   -0.009394
+siesta:     38    0.009394   -0.110526   -0.001945
+siesta:     39   -0.000346   -0.000346    0.035183
+siesta:     40   -0.003516   -0.003516   -0.044423
+siesta:     41    0.043392    0.026616    0.043392
+siesta:     42   -0.043392   -0.026616   -0.043392
+siesta:     43    0.110526   -0.009394    0.001945
+siesta:     44   -0.110526   -0.001945    0.009394
+siesta:     45   -0.000346    0.035183   -0.000346
+siesta:     46   -0.003516   -0.044423   -0.003516
+siesta:     47    0.001945   -0.009394    0.110526
+siesta:     48    0.009394   -0.001945   -0.110526
+siesta:     49    0.026616    0.043392    0.043392
+siesta:     50   -0.026616   -0.043392   -0.043392
+siesta:     51    0.035183   -0.000346   -0.000346
+siesta:     52   -0.044423   -0.003516   -0.003516
+siesta:     53   -0.009394    0.110526    0.001945
+siesta:     54   -0.001945   -0.110526    0.009394
+siesta:     55   -0.009394    0.001945    0.110526
+siesta:     56   -0.001945    0.009394   -0.110526
+siesta:     57   -8.093994   -8.093994   -8.093994
+siesta:     58    8.093994    8.093994    8.093994
+siesta:     59   -0.336015   -0.088293   -0.088293
+siesta:     60    0.215835   -0.030619   -0.030619
+siesta:     61   -0.088293   -0.336015   -0.088293
+siesta:     62   -0.030619    0.215835   -0.030619
+siesta:     63   -0.088293   -0.088293   -0.336015
+siesta:     64   -0.030619   -0.030619    0.215835
+siesta:     65    0.000000   -0.000000   -0.000000
+siesta: ----------------------------------------
+siesta:    Tot   -0.000000   -0.000000   -0.000000
+
+siesta: Stress tensor (static) (eV/Ang**3):
+siesta:     0.007477   -0.008548   -0.008548
+siesta:    -0.008548    0.007477   -0.008548
+siesta:    -0.008548   -0.008548    0.007477
+
+siesta: Cell volume =       1280.824056 Ang**3
+
+siesta: Pressure (static):
+siesta:                Solid            Molecule  Units
+siesta:          -0.00008143         -0.00016978  Ry/Bohr**3
+siesta:          -0.00747670         -0.01558850  eV/Ang**3
+siesta:         -11.97899653        -24.97552601  kBar
+(Free)E+ p_basis*V_orbitals  =       -6863.912947
+(Free)Eharris+ p_basis*V_orbitals  =       -6863.912959
+
+cite: Please see "sih-elsi.bib" for an exhaustive BiBTeX file.
+cite: Please clearly indicate Siesta version in published work: 5.2.0-17-gad84d481e
+cite: This calculation has made use of the following articles
+cite: which are encouraged to be cited in a published work.
+        Primary SIESTA paper
+          DOI: www.doi.org/10.1088/0953-8984/14/11/302
+        ELSI library interface
+          DOI: www.doi.org/10.1016/j.cpc.2017.09.007
+        ELPA library
+          DOI: www.doi.org/10.1088/0953-8984/26/21/213201
+
+
+>> End of run:  17-JAN-2025  14:35:43
+Job completed

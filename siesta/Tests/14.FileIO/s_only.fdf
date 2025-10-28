@@ -1,0 +1,5 @@
+%include ../base_wat.fdf
+SystemLabel     s_only
+
+S.Only T
+DM.UseSaveDM F

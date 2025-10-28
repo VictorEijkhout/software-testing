@@ -1,0 +1,84 @@
+SystemName          H2 molecule with chemical shift (wannier)
+SystemLabel         w90-chem-h2
+NumberOfAtoms       2
+NumberOfSpecies     1
+
+%block ChemicalSpeciesLabel
+ 1   1  H
+%endblock ChemicalSpeciesLabel
+
+LatticeConstant       10.000 Ang 
+%block LatticeVectors
+    1.000   0.000   0.000
+    0.000   1.000   0.000
+    0.000   0.000   1.000
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat    Bohr
+%block AtomicCoordinatesAndAtomicSpecies
+  0.00000   0.00000   8.59958   1
+  0.00000   0.00000  10.29768   1
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+XC.functional           LDA
+XC.authors              CA 
+
+%block kgrid_Monkhorst_Pack
+  1  0  0   0.0
+  0  1  0   0.0
+  0  0  1   0.0
+%endblock kgrid_Monkhorst_Pack
+
+%block BandLines
+ 1  0.000  0.000  0.000 \Gamma
+%endblock BandLines
+
+PAO.BasisSize SZ
+
+MeshCutoff              400 Ry
+
+SCF.Mixer.Method        linear
+SCF.Mixer.Weight        0.200
+SCF.Mix.First           .false.
+SCF.MixAfterConvergence .false.
+DM.NumberPulay          3 
+DM.UseSaveDM            .false.
+DM.Tolerance            0.0001
+ElectronicTemperature   0.075 eV
+SCF.MixAfterConvergence .false.
+
+BandLinesScale      ReciprocalLatticeVectors
+
+WriteMullikenPop        1
+
+
+Wannier90_in_SIESTA_threshold_coeff 1.d-6
+
+!-------------------- Below this line input created by modelmaker --------------------
+SpinPolarized .false.
+Wannier.Manifold.IndexPerturbed        1
+
+%block WannierManifolds
+  first
+%endblock 
+
+%block WannierManifold.first
+  # Indices of the initial and final band of the manifold
+  bands 1 2
+  # Indices of the orbitals that will be used as localized trial orbitals
+  #   (any number of lines allowed)
+  trial-orbitals [1 2] 
+  # Number of iterations for the minimization of \Omega
+  spreading.nitt 0
+  wannier_plot 3
+  fermi_surface_plot true
+  write_hr true
+  write_tb true
+%endblock
+
+Wannier.k [2 1 1]
+
+%block Wannier.ChemicalPotential
+  1  1.500e-01  eV
+  2 -1.500e-01  eV
+%endblock 

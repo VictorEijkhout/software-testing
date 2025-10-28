@@ -1,0 +1,6 @@
+%include ../base_fe3.fdf
+SystemLabel         fe_spin_directphi
+
+Spin polarized
+DirectPhi True
+

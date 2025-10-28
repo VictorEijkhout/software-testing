@@ -1,0 +1,7 @@
+%include ../base_fe3.fdf
+SystemLabel         fe_noncol_gga
+
+XC.Functional GGA
+XC.Authors    PBE
+Spin non-collinear
+

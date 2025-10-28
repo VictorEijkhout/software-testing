@@ -1,0 +1,8 @@
+%include ../base_wat2.fdf
+SystemLabel          pr
+
+MD.TypeOfRun          ParrinelloRahman
+MD.TargetPressure     10.0 GPa
+MD.InitialTemperature 100 K
+MD.TargetTemperature  600 K
+MD.UseSaveXV          T

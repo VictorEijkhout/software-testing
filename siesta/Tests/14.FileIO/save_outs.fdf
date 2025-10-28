@@ -1,0 +1,14 @@
+%include ../base_wat.fdf
+SystemLabel     save_outs
+
+SaveRho                    T
+SaveRhoXC                  T
+SaveDeltaRho               T
+SaveTotalPotential         T
+SaveElectrostaticPotential T
+SaveNeutralAtomPotential   T
+SaveTotalCharge            T
+!SaveInitialChargeDensity   T
+SaveIonicCharge            T
+SaveHS                     T
+DM.UseSaveDM               F

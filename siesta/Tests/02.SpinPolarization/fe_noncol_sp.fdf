@@ -1,0 +1,14 @@
+%include ../base_fe3.fdf
+SystemLabel         fe_noncol_sp
+
+%block kgrid_Monkhorst_Pack
+   1  0  0  0.0
+   0  1  0  0.0
+   0  0  2  0.0
+%endblock kgrid_Monkhorst_Pack
+
+Spin non-collinear
+Spin.Spiral.Scale ReciprocalLatticeVectors
+%block Spin.Spiral
+   0.0 0.1 0.1
+%endblock

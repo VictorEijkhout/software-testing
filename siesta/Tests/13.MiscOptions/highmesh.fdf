@@ -1,0 +1,10 @@
+%include ../base_wat_smallbox.fdf
+SystemLabel     highmesh
+
+%block ChemicalSpeciesLabel
+ 1  8  O
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+
+MeshCutoff 1000 Ry
+

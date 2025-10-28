@@ -1,0 +1,7 @@
+%include ../base_fe.fdf
+SystemLabel       ldos
+
+%block LocalDensityOfStates
+ -4.2  -5.2   eV
+%endblock LocalDensityOfStates
+

@@ -1,0 +1,12 @@
+%include ../base_fe.fdf
+SystemLabel       pdos_kp_pol
+
+Spin Polarized
+DM.InitSpin.AF false
+Diag.ParallelOverK True
+
+PDOS.kgrid.MonkhorstPack [10 10 10]
+%block ProjectedDensityOfStates
+EF -5.00 5.00 0.200000 1000 eV
+%endblock ProjectedDensityOfStates
+

@@ -1,0 +1,7 @@
+SystemLabel         soft-full.psml
+
+%block ChemicalSpeciesLabel
+ 1  14  Si.soft-full   Si.soft-vnl.psml
+%endblock ChemicalSpeciesLabel
+
+%include ../base_si2.fdf

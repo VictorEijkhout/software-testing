@@ -1,0 +1,20 @@
+%include ../base_wat_smallbox.fdf
+SystemLabel     bulk_bias
+
+%block ChemicalSpeciesLabel
+ 1  8  O
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+
+BulkBias.Voltage 1. eV
+%block BulkBias.Direction
+ 0. 0. 1.
+%endblock
+
+Diag.ParallelOverK T
+%block kgrid.MonkhorstPack
+  2 0 0
+  0 2 0
+  0 0 2
+%endblock
+

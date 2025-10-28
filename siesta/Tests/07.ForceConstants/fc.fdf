@@ -1,0 +1,4 @@
+%include ../base_si2.fdf
+# Test whether TSHS fc write-outs works as intended
+TS.HS.Save
+SystemLabel       fc

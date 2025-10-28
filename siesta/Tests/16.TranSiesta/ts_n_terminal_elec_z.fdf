@@ -1,0 +1,55 @@
+SystemLabel ts_n_terminal_elec_z
+
+# This is really deprecated, used for testing purposes
+TS.HS.Save
+CDF.Save
+
+NumberOfAtoms 4
+NumberOfSpecies 1
+LatticeConstant 1.0 Ang
+AtomicCoordinatesFormat Ang
+%block LatticeVectors
+    0.0000    0.0000      5.08
+    0.0000   12.0000      0.0000
+   12.0000    0.0000      0.0000
+%endblock LatticeVectors
+%block AtomicCoordinatesAndAtomicSpecies
+ 0.0   0.0   0.00 1
+ 0.0   0.0   1.27 1
+ 0.0   0.0   2.54 1
+ 0.0   0.0   3.81 1
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+%block ChemicalSpeciesLabel
+ 1  6  C
+%endblock ChemicalSpeciesLabel
+%block PS.Lmax
+  C 2
+%endblock
+
+PAO.BasisSize         SZ
+PAO.SplitNorm         0.15
+PAO.EnergyShift       275 meV
+
+MeshCutoff              50. Ry
+XC.functional           LDA
+XC.authors              PZ
+
+MinSCFIterations       3
+MaxSCFIterations       200
+DM.MixingWeight        0.05
+DM.Tolerance           0.0001
+DM.NumberPulay         6
+DM.UseSaveDM           T
+DM.MixSCF1             T
+
+%block kgrid_Monkhorst_Pack
+     50    0    0    0.0
+      0    1    0    0.0
+      0    0    1    0.0
+%endblock kgrid_Monkhorst_Pack
+
+WriteMullikenPop                1
+WriteDM                         T
+WriteForces                     T
+SaveHS                          T

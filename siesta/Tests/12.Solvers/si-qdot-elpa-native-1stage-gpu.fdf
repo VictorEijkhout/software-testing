@@ -1,0 +1,7 @@
+SystemName          Si Quantum Dot with native ELPA interface (1 stage) GPU
+SystemLabel         si-qdot-elpa-native-1stage-gpu
+
+diag-algorithm   elpa-1
+diag-elpa-gpu T
+
+%include si-qdot-elpa-native.fdf

@@ -1,0 +1,51 @@
+SystemName              FePt distorted bulk structure -- soc test 
+SystemLabel             FePt-onsite
+NumberOfAtoms           2
+NumberOfSpecies         2
+
+%block Chemical_Species_label
+        1       26      Fe_fept_SOC
+        2       78      Pt_fept_SOC
+%endblock Chemical_Species_label
+
+PAO.BasisSize SZP
+Spin Spin-Orbit+onsite
+
+%block DM.InitSpin
+ 1  +2.   90.  90.
+ 2  +1.   90.  90.
+%endblock DM.InitSpin
+
+LatticeConstant  1.0 Ang
+%block LatticeVectors
+    2.793068700    0.000000000    0.000000000
+    0.000000000    2.70           0.000000000
+    0.000000000    0.000000000    3.792000000
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat NotScaledCartesianAng
+%block AtomicCoordinatesAndAtomicSpecies
+    1.396535500    1.45           0.000000000  1   
+    0.000000000    0.000000000    1.896000000  2   
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+%block kgrid_Monkhorst_Pack
+   1   0   0    0.0
+   0   2   0    0.0
+   0   0   2    0.0
+%endblock kgrid_Monkhorst_Pack
+
+xc.functional           GGA
+xc.authors              PBE
+MeshCutoff              50. Ry
+
+DM.Tolerance            1.0E-4
+MaxSCFIterations        6
+SCF.MustConverge        F
+DM.MixingWeight         0.01
+DM.NumberPulay          4
+SCF.Mix.Spin            all
+DM.UseSaveDM            F
+
+MullikenInSCF T
+WriteForces   T

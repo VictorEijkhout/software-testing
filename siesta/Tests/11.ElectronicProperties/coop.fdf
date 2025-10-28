@@ -1,0 +1,6 @@
+%include ../base_fen.fdf
+SystemLabel     coop
+
+COOP.write    T
+WFS.EnergyMax 10.0 eV
+

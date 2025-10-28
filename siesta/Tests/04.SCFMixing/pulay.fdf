@@ -1,0 +1,24 @@
+%include ../base_fe3.fdf
+SystemLabel        pulay
+
+Mixer.Debug.MPI
+SCF.Mixer.Weight 0.01
+SCF.Mixer.History 6
+
+%block SCF.Mixers
+  pulay
+  pulay-GR
+%endblock
+
+%block SCF.Mixer.pulay
+  method pulay
+  iterations 12
+  next pulay-GR
+%endblock
+
+%block SCF.Mixer.pulay-GR
+  method pulay
+  variant GR
+  iterations 12
+  next pulay
+%endblock

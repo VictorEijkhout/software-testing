@@ -1,0 +1,10 @@
+%include ../base_fe3.fdf
+SystemLabel         chargemix
+
+SCF.Mix Charge
+SCF.Mixer.Weight    0.5
+SCF.Rhog.DIIS.Depth 3
+SCF.DebugRhogMixing T
+
+MaxSCFIterations 15
+SCF.MustConverge false

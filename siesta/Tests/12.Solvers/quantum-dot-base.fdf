@@ -1,0 +1,47 @@
+#--------
+# For a quicker test. Remove if full test is desired
+MaxSCFIterations     1
+scf-must-converge F
+compute-forces F
+##   DirectPhi T # To save memory if needed
+#--------
+
+# CSIRO quantum dot
+%include ../coords.Si987H372.fdf
+
+number-of-eigenstates 2300
+use-tree-timer T
+
+WriteDMHS.NetCDF F
+WriteDM.NetCDF F
+WriteDM T
+
+SystemName          Si Quantum Dot
+SystemLabel         si-quantum-dot
+
+%block ChemicalSpeciesLabel
+ 1  14  Si
+ 2   1  H 
+%endblock ChemicalSpeciesLabel
+
+
+PAO.BasisSize       SZ
+PAO.EnergyShift     300 meV
+
+#
+LatticeConstant     45.0 Ang
+%block LatticeVectors
+  1.000  0.000  0.000
+  0.000  1.000  0.000
+  0.000  0.000  1.000
+%endblock LatticeVectors
+
+MeshCutoff          150.0 Ry
+
+MaxSCFIterations    40
+DM.MixingWeight      0.3 
+DM.NumberPulay       4  
+DM.Tolerance         1.d-3
+DM.UseSaveDM             
+
+ElectronicTemperature  25 meV  

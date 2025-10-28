@@ -1,0 +1,10 @@
+SystemLabel         reparam-rgoff
+
+Reparametrize.Pseudos  T
+Restricted.Radial.Grid F
+
+%block ChemicalSpeciesLabel
+ 1  14  Si.psf
+%endblock ChemicalSpeciesLabel
+
+%include ../base_si2.fdf

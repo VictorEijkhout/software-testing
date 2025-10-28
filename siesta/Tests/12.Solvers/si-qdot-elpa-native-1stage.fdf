@@ -1,0 +1,5 @@
+SystemName          Si Quantum Dot with native ELPA interface (1 stage)
+SystemLabel         si-qdot-elpa-native-1stage
+
+diag-algorithm   elpa-1
+%include si-qdot-elpa-native.fdf

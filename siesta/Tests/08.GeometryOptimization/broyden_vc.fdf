@@ -1,0 +1,8 @@
+%include ../base_mgco3.fdf
+SystemLabel      broyden_vc
+
+MD.TypeOfRun                        Broyden
+MD.Broyden.History.Steps            6
+MD.Broyden.Initial.Inverse.Jacobian 1.0
+MD.VariableCell                     T
+

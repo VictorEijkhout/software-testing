@@ -1,0 +1,6 @@
+%include ../base_graph.fdf
+SystemLabel     pbe
+
+xc.functional   GGA
+xc.authors      PBE
+

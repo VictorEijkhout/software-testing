@@ -1,0 +1,43 @@
+
+Automated tests for Siesta.
+
+**Please note that these are meant to execute quickly, and so in most
+cases use parameters which are not appropriate for a converged
+calculation. Results of this tests may also be unphysical. Please refer
+to the /Examples folder for more realistic use cases.**
+
+One can test separately the execution of the tests and the numerical precision
+of the results (when compared to the provided reference outputs). The latter
+test involves the setting of appropriate tolerances, and its results might sometimes
+depend on the libraries used or on whether MPI is used or not. Further work is
+being done on the architecture of the verification process, to make it more robust
+and complete.
+
+To test only the execution, use, in the build directory:
+
+    ctest -LE verify
+
+(this will exclude tests which are labelled with verify).
+
+One can further limit the number of tests run by using labels (do 'ctest --print-labels' to
+get a list). Currently the most useful is the 'simple' label:
+
+    ctest -L simple
+
+## Conventional and Dependency_Tests
+
+These tests are intended for usage with the existing CMake infrastructure.
+To run them, just head to the build directory (usually `_build`) and run "ctest".
+
+Outside cmake, it is possible to run tests with an existing SIESTA installation.
+To do so, you can execute the script present in each of the test folders, providing
+the parallel command (between "") and the SIESTA binary folder:
+
+    bash script.sh "mpirun -np 4" ../../../_siesta_bin/bin/
+
+
+## Interface_Tests
+
+Existing interface tests (FLOS/Wannier90/I-PI) do not work within the cmake scheme
+and must be run manually, using the scripts provided. Note that the I-PI test might
+fail depending on your native python installation.

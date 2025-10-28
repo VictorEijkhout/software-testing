@@ -1,0 +1,7 @@
+%include ../base_si8.fdf
+SystemLabel     si_on
+
+SolutionMethod  OrderN
+ON.RcLWF        4.0 Ang
+ON.eta          -3.85 eV
+

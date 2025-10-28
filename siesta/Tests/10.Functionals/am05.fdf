@@ -1,0 +1,6 @@
+%include ../base_graph.fdf
+SystemLabel     am05
+
+xc.functional   GGA
+xc.authors      AM05
+

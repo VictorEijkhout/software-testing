@@ -1,0 +1,39 @@
+SystemName          Water molecules MD
+NumberOfAtoms       6
+NumberOfSpecies     2
+
+%block ChemicalSpeciesLabel
+ 1  8  O
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+PAO.BasisSize SZ
+
+LatticeConstant 10.0 Ang
+%block LatticeVectors
+1.0 0.0 0.0
+0.0 1.0 0.0
+0.0 0.0 0.8
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat  Ang
+%block AtomicCoordinatesAndAtomicSpecies
+ 0.000   0.000  0.000  1
+ 0.757   0.586  0.000  2
+-0.757   0.586  0.000  2
+ 0.000   0.000  3.000  1
+ 0.757  -0.586  3.000  2
+-0.757  -0.586  3.000  2
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+MeshCutoff             100 Ry
+
+WriteCoorStep  T
+WriteForces    T
+WriteMDHistory T
+DM.UseSaveDM   F
+
+MD.Initial.Time.Step        1
+MD.Final.Time.Step         10
+MD.Length.Time.Step      1 fs
+
+

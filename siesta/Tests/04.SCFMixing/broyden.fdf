@@ -1,0 +1,16 @@
+%include ../base_fe3.fdf
+SystemLabel       broyden
+
+Mixer.Debug.MPI
+SCF.Mixer.Weight 0.01
+SCF.Mixer.History 6
+
+%block SCF.Mixers
+  broyden
+%endblock
+
+%block SCF.Mixer.broyden
+  method broyden
+  weight 0.01
+  weight.linear 0.005
+%endblock

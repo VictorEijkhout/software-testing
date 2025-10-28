@@ -1,0 +1,7 @@
+%include ../base_wat2.fdf
+SystemLabel          npr_rip
+
+MD.TypeOfRun         NoseParrinelloRahman
+MD.TargetPressure   10.0 GPa
+MD.RemoveIntramolecularPressure T
+MD.UseSaveXV          F

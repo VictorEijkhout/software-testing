@@ -1,0 +1,8 @@
+SystemLabel         soft.psml
+
+#Vlocal.Fit.3derivs T
+%block ChemicalSpeciesLabel
+ 1  14  Si.soft
+%endblock ChemicalSpeciesLabel
+
+%include ../base_si2.fdf

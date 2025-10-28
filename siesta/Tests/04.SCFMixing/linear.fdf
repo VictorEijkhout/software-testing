@@ -1,0 +1,28 @@
+%include ../base_fe3.fdf
+SystemLabel        linear
+
+%block SCF.Mixers
+  linear-1
+  linear-2
+  linear-3
+%endblock
+
+%block SCF.Mixer.linear-1
+  method linear
+  weight 0.01
+  iterations 10
+  next linear-2
+%endblock
+%block SCF.Mixer.linear-2
+  method linear
+  weight 0.02
+  iterations 7
+  next linear-3
+%endblock
+%block SCF.Mixer.linear-3
+  method linear
+  weight 0.03
+%endblock
+
+MaxSCFIterations 30
+SCF.MustConverge false

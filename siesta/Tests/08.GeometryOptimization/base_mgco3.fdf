@@ -1,0 +1,42 @@
+SystemName	      MgCO3
+NumberOfSpecies		3
+NumberOfAtoms	       10
+%block ChemicalSpeciesLabel
+      1      12     Mg
+      2       6     C
+      3       8     O
+%endblock ChemicalSpeciesLabel
+
+LatticeConstant     5.67783 Ang
+%block LatticeParameters   
+1.0 1.0 1.0 48.179 48.179 48.179
+%endblock LatticeParameters   
+
+AtomicCoordinatesFormat    Fractional
+%block AtomicCoordinatesAndAtomicSpecies
+  0.0         0.0         0.0      1
+  0.5         0.5         0.5      1
+  0.25        0.25        0.25     2
+ -0.25       -0.25       -0.25     2
+  0.5274     -0.0274      0.25     3
+  0.25        0.5274     -0.0274   3
+ -0.0274      0.25        0.5274   3
+ -0.5274      0.0274     -0.25     3
+ -0.25       -0.5274      0.0274   3
+  0.0274     -0.25       -0.5274   3
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+PAO.BasisSize      SZ
+kgrid_cutoff       5.0 Ang
+DM.UseSaveDM       F
+MeshCutoff         50 Ry
+WriteCoorStep      T
+WriteForces        T
+
+MD.Steps         5
+MD.MaxDispl      0.1  Ang
+MD.MaxForceTol   0.04 eV/Ang
+
+# Only used if VariableCell is true.
+MD.TargetPressure   100.0 GPa
+MD.MaxStressTol       2.0 GPa

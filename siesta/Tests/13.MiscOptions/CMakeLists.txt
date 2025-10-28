@@ -1,0 +1,15 @@
+#
+
+siesta_subtest(dip_corr LABELS simple)
+siesta_subtest(dip_corr_vac)
+siesta_subtest(gate_charge)
+siesta_subtest(gate_hartree)
+siesta_subtest(net_charge LABELS simple)
+siesta_subtest(net_charge_dope)
+siesta_subtest(gcs)
+siesta_subtest(highmesh)
+siesta_subtest(filter_cutoff)
+siesta_subtest(filter_tol)
+siesta_subtest(shift_cop)
+siesta_subtest(bulk_bias)
+siesta_subtest(synth_atom)

@@ -1,0 +1,11 @@
+%include ../base_wat_bigbox.fdf
+SystemLabel     gate_hartree
+
+Slab.DipoleCorrection True
+%block Geometry.Hartree
+ plane 10 eV
+  gauss 1. 2. Ang
+   0. 20. 0. Ang
+   0.  1. 0. Ang
+%endblock Geometry.Hartree
+

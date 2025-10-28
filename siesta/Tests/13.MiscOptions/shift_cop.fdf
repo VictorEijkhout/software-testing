@@ -1,0 +1,15 @@
+%include ../base_wat_smallbox.fdf
+SystemLabel     shift_cop
+
+%block ChemicalSpeciesLabel
+ 1  8  O
+ 2  1  H
+%endblock ChemicalSpeciesLabel
+
+AtomicCoordinatesOrigin COP
+%block supercell
+ 2 0 0
+ 0 1 0
+ 0 0 1
+%endblock supercell
+

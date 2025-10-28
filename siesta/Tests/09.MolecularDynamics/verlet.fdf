@@ -1,0 +1,8 @@
+%include ../base_wat2.fdf
+SystemLabel           verlet
+
+# Test that CDF saving works!
+CDF.Save true
+MD.TypeOfRun          verlet
+MD.InitialTemperature 600 K
+MD.UseSaveXV          F

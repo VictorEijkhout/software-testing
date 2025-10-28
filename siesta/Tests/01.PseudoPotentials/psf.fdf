@@ -1,0 +1,7 @@
+SystemLabel         psf
+
+%block ChemicalSpeciesLabel
+ 1  14  Si
+%endblock ChemicalSpeciesLabel
+
+%include ../base_si2.fdf
