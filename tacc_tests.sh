@@ -34,8 +34,9 @@ fi
 source ../configurations.sh
 package_header \
     | tee -a ${logfile}
-list_configurations
-echo "About to test ${nconfigs} configurations"
+# configurations over all compilers
+list_configurations $loadpackage $loadversion ""
+report_configurations "${logfile}"
 
 #
 # loop through compiler names without slash
