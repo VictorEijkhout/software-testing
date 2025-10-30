@@ -12,4 +12,5 @@ source ../test_setup.sh
 # 			first.cpp
 
 LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${TACC_ASPECT_DIR}/bin \
-	       aspect-release --test
+	       ibrun  -np 1 \
+	       aspect-release --test --list-test-names-only
