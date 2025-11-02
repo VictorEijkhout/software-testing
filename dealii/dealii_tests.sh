@@ -20,3 +20,8 @@ source ../test_setup.sh
 			--title "step-62 uses hdf5" \
     step-62-hdf5.cpp
 
+# test for petsc interface
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "step-86 uses petsc" \
+    step-86-petsc.cpp
+
