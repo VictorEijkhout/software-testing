@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  * Copyright (C) 2019 - 2025 by the deal.II authors
  *
- * VLE This file is adapted from step-62 of the deal.II library.
- * VLE by making it double instead of complex<double>.
- * VLE I can not vouch for correctness of results.
+ * This file is part of the deal.II library.
  *
  * Part of the source code is dual licensed under Apache-2.0 WITH
  * LLVM-exception OR LGPL-2.1-or-later. Detailed license information
@@ -15,7 +13,6 @@
  * ------------------------------------------------------------------------
  *
  * Author: Daniel Garcia-Sanchez, CNRS, 2019
- * conversion to double: Victor Eijkhout 2025
  */
 
 // @sect3{Include files}
@@ -118,12 +115,12 @@ namespace step62
   // This class is used to define the shape of the Perfectly Matches
   // Layer (PML) to absorb waves traveling towards the boundary:
   template <int dim>
-  class PML : public Function<dim, double>
+  class PML : public Function<dim, std::complex<double>>
   {
   public:
     PML(HDF5::Group &data);
 
-    virtual double
+    virtual std::complex<double>
     value(const Point<dim> &p, const unsigned int component) const override;
 
   private:
@@ -237,9 +234,9 @@ namespace step62
     // mass_coefficient and stiffness_coefficient. We store as well the
     // right_hand_side and JxW values which are going to be the same for all the
     // frequency steps.
-    FullMatrix<double>  mass_coefficient;
-    FullMatrix<double>  stiffness_coefficient;
-    std::vector<double> right_hand_side;
+    FullMatrix<std::complex<double>>  mass_coefficient;
+    FullMatrix<std::complex<double>>  stiffness_coefficient;
+    std::vector<std::complex<double>> right_hand_side;
     double                            JxW;
   };
 
@@ -329,7 +326,7 @@ namespace step62
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
 
-    AffineConstraints<double> constraints;
+    AffineConstraints<std::complex<double>> constraints;
 
     LinearAlgebraPETSc::MPI::SparseMatrix system_matrix;
     LinearAlgebraPETSc::MPI::Vector       locally_relevant_solution;
@@ -433,7 +430,7 @@ namespace step62
   // `pml_y` can be used to turn on and off the `x` and `y` PMLs.
   template <int dim>
   PML<dim>::PML(HDF5::Group &data)
-    : Function<dim, double>(dim)
+    : Function<dim, std::complex<double>>(dim)
     , data(data)
     , pml_coeff(data.get_attribute<double>("pml_coeff"))
     , pml_coeff_degree(data.get_attribute<int>("pml_coeff_degree"))
@@ -452,7 +449,7 @@ namespace step62
   // The PML coefficient for the `x` component takes the form
   // $s'_x = a_x x^{\textrm{degree}}$
   template <int dim>
-  double PML<dim>::value(const Point<dim>  &p,
+  std::complex<double> PML<dim>::value(const Point<dim>  &p,
                                        const unsigned int component) const
   {
     double calculated_pml_x_coeff = 0;
@@ -481,7 +478,7 @@ namespace step62
       }
 
     return 1. + std::max(calculated_pml_x_coeff, calculated_pml_y_coeff) *
-      1.; // VLE double(0., 1.);
+                  std::complex<double>(0., 1.);
   }
 
 
@@ -722,7 +719,7 @@ namespace step62
         "position",
         std::vector<hsize_t>{parameters.nb_probe_points, dim}))
     , displacement(
-        parameters.data.template create_dataset<double>(
+        parameters.data.template create_dataset<std::complex<double>>(
           "displacement",
           std::vector<hsize_t>{parameters.nb_probe_points,
                                parameters.nb_frequency_points}))
@@ -800,16 +797,16 @@ namespace step62
     const unsigned int dofs_per_cell = fe.n_dofs_per_cell();
     const unsigned int n_q_points    = quadrature_formula.size();
 
-    FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    FullMatrix<std::complex<double>> cell_matrix(dofs_per_cell, dofs_per_cell);
+    Vector<std::complex<double>>     cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     // Here we store the value of the right hand side, rho and the PML.
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim));
     std::vector<double>         rho_values(n_q_points);
-    std::vector<Vector<double>> pml_values(
-      n_q_points, Vector<double>(dim));
+    std::vector<Vector<std::complex<double>>> pml_values(
+      n_q_points, Vector<std::complex<double>>(dim));
 
     // We calculate the stiffness tensor for the $\lambda$ and $\mu$ that have
     // been defined in the Jupyter Notebook. Note that contrary to $\rho$ the
@@ -863,8 +860,8 @@ namespace step62
               // Below we declare the force vector and the parameters of the
               // PML $s$ and $\xi$.
               Tensor<1, dim>                       force;
-              Tensor<1, dim, double> s;
-              double                 xi{1}; // complex: (1, 0);
+              Tensor<1, dim, std::complex<double>> s;
+              std::complex<double>                 xi(1, 0);
 
               // The following block is calculated only in the first frequency
               // step.
@@ -883,8 +880,8 @@ namespace step62
 
                   // Here we calculate the $\alpha_{mnkl}$ and $\beta_{mnkl}$
                   // tensors.
-                  Tensor<4, dim, double> alpha;
-                  Tensor<4, dim, double> beta;
+                  Tensor<4, dim, std::complex<double>> alpha;
+                  Tensor<4, dim, std::complex<double>> beta;
                   for (unsigned int m = 0; m < dim; ++m)
                     for (unsigned int n = 0; n < dim; ++n)
                       for (unsigned int k = 0; k < dim; ++k)
@@ -918,7 +915,7 @@ namespace step62
 
                           // Loop over the $mnkl$ indices of the stiffness
                           // tensor.
-                          double stiffness_coefficient = 0;
+                          std::complex<double> stiffness_coefficient = 0;
                           for (unsigned int m = 0; m < dim; ++m)
                             for (unsigned int n = 0; n < dim; ++n)
                               for (unsigned int k = 0; k < dim; ++k)
@@ -968,7 +965,7 @@ namespace step62
                 {
                   for (unsigned int j = 0; j < dofs_per_cell; ++j)
                     {
-                      double matrix_sum = 0;
+                      std::complex<double> matrix_sum = 0;
                       matrix_sum += -Utilities::fixed_power<2>(omega) *
                                     quadrature_data.mass_coefficient[i][j];
                       matrix_sum += quadrature_data.stiffness_coefficient[i][j];
@@ -1057,7 +1054,7 @@ namespace step62
     // points of the probe that are located in locally owned cells. The vector
     // displacement_data contains the value of the displacement at these points.
     std::vector<hsize_t>              coordinates;
-    std::vector<double> displacement_data;
+    std::vector<std::complex<double>> displacement_data;
 
     const auto &mapping = get_default_linear_mapping(triangulation);
     GridTools::Cache<dim, dim> cache(triangulation, mapping);
@@ -1089,7 +1086,7 @@ namespace step62
           {
             // Then we can store the values of the displacement in the points of
             // the probe in `displacement_data`.
-            Vector<double> tmp_vector(dim);
+            Vector<std::complex<double>> tmp_vector(dim);
             VectorTools::point_value(dof_handler,
                                      locally_relevant_solution,
                                      point,
@@ -1111,10 +1108,10 @@ namespace step62
     // Therefore even if the process has no data to write it has to participate
     // in the collective call. For this we can use HDF5::DataSet::write_none().
     // Note that we have to specify the data type, in this case
-    // `double`.
+    // `std::complex<double>`.
     else
       {
-        displacement.write_none<double>();
+        displacement.write_none<std::complex<double>>();
       }
 
     // If the variable `save_vtu_files` in the input file equals `True` then all
@@ -1152,7 +1149,7 @@ namespace step62
                     force[dim_idx](cell->active_cell_index()) =
                       parameters.right_hand_side.value(cell->center(), dim_idx);
                     pml[dim_idx](cell->active_cell_index()) =
-                      parameters.pml.value(cell->center(), dim_idx); // VLE .imag();
+                      parameters.pml.value(cell->center(), dim_idx).imag();
                   }
                 rho(cell->active_cell_index()) =
                   parameters.rho.value(cell->center());
