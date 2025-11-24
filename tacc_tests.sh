@@ -82,8 +82,7 @@ for compiler in $compilers ; do
     # report if skipped
     ## found=1
     compiler_name_and_version >>${logfile}
-    ## if [ $found -eq 0 ] ; then continue ; fi
-    
+
     # local log file
     configlog=${logdir}/${cname}${cversion}.log
     rm -f ${configlog}
@@ -113,6 +112,10 @@ for compiler in $compilers ; do
 	    echo "     from path: ${usepath}" | tee -a ${logfile}
 	fi
 	echo "Loaded compiler: ${cname}/${cversion}"  >>${logfile}
+	eval comment=\${comments_${cname}${cversion}}
+	if [ ! -z "$comment" ] ; then
+	    echo "     Comment: $comment"
+	fi
 	module_list >>${logfile}
     else
 	echo "==== Configuration failed to load: ${cname}/${cversion}" | tee -a ${logfile}

@@ -18,6 +18,6 @@ source ../test_setup.sh
 
 # cpp is really C, but uses find_package instead of pkg_config
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-    --title "if we can compile" \
+    --title "if we can compile C++" \
     has.cpp
 
