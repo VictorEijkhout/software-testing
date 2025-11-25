@@ -46,18 +46,23 @@ if [ -f "${filename}" ] ; then
 	( echo "ldd on <<${filename}>>:" && ldd "${filename}" ) >>"${fulllog}"
 	unresolved=$( ldd "${filename}" | grep -i "not found" | wc -l )
 	failure ${unresolved} "resolving shared libraries" | tee -a "${testlog}"
-	if [ ${unresolved} -eq 0 -a "${dir}" = "bin" -a ! -z "${run}" ] ; then
-	    export cmdline="${filename} ${runargs}"
-	    if [ "${mpi}" = "1" ] ; then
-		cmdline="ibrun -np 2 ${cmdline}"
-	    fi
-	    retcode=$( \
-		        echo "running <<${cmdline}>>:" >>"${fulllog}" \
-		         && retcode=0 \
-		         && ${cmdline} >>"${fulllog}" 2>&1 || retcode=$? \
-		         && echo ${retcode} )
-	    failure ${retcode} "actually running" | tee -a "${testlog}"
+    fi
+    if [ ! -z "${runindir}" -a "${dir}" = "bin" -a ! -z "${run}" ] ; then
+	echo "Running ${filename} ${runargs}" >> "${fulllog}"
+	export cmdline="${filename} ${runargs}"
+	if [ ! -z "${inargs}" ] ; then
+	    cmdline="${cmdline} < ${inargs}"
 	fi
+	if [ "${mpi}" = "1" ] ; then
+	    cmdline="ibrun -np 2 ${cmdline}"
+	fi
+	cmdline="cd ${runindir} && ${cmdline}"
+	retcode=$( \
+	    echo "running <<${cmdline}>>:" >>"${fulllog}" \
+	    && retcode=0 \
+	    && ${cmdline} >>"${fulllog}" 2>&1 || retcode=$? \
+	    && echo ${retcode} )
+	failure ${retcode} "actually running" | tee -a "${testlog}"
     fi
 else
     failure 1 "file <<$source>> in section <<$dir>>" | tee -a "${testlog}"

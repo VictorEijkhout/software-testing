@@ -11,6 +11,14 @@ source ../test_setup.sh
 		     --ldd --run_args -h \
 		     --dir bin siesta
 
+
+../existence_test.sh ${standardflags} -l ${logfile} \
+		     --title "run carbon nanoscroll" \
+		     --run_args carbon_nanoscroll.fdf --run_in_dir Carbon_Nanoscroll \
+		     --dir bin siesta
+
+exit 0
+
 ##
 ## example with lowered precision to make it finish relatively quickly.
 ##

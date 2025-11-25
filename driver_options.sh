@@ -16,6 +16,7 @@ function usage() {
     echo "    [ --in-build-run ] [ --run-options options ]"
     echo "    [ --ldd ]"
     echo "    [ --title test caption ]"
+    echo "    [ --in_args \"arg1 arg2 arg3\" ]"
     echo "    [ --run_args \"arg1 arg2 arg3\" ]"
     echo "    [ --cmake_version 1.2.3 ]"
     if [ ! -z "${optional_help}" ] ; then
@@ -45,6 +46,7 @@ modules=
 noibrun=
 pkgconfig=
 run=1
+inargs=
 runargs=
 testcaption=
 testvalue=
@@ -87,8 +89,12 @@ while [ $# -gt 1 ] ; do
 	shift && pkgconfig="$1" && shift
     elif [ "$1" = "-r" ] ; then 
 	shift && run=
+    elif [ "$1" = "--run_in_dir" ] ; then
+	shift && runindir="$1" && shift
     elif [ "$1" = "--run_args" ] ; then
-	shift && runargs="$1" && shift
+ 	shift && runargs="$1" && shift
+    elif [ "$1" = "--in_args" ] ; then
+	shift && inargs="$1" && shift
     elif [ "$1" = "-t" -o "$1" = "--value" ] ; then 
 	shift && testvalue="$1" && shift
     elif [ "$1" = "--title" ] ; then
