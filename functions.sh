@@ -188,12 +188,13 @@ function run_executable () {
 	# executable can only be run from inside build, so is local
 	execcall="./${executable}"
     else 
-	execcall="./build/${executable}"
+	if [ ! -z "${mpi}" ] ; then
+	    execcall="ibrun build/${executable}"
+	else
+	    execcall="./build/${executable}"
+	fi
     fi
     execcall="${execcall} ${runoptions} ${runargs}"
-    if [ ! -z "${mpi}" ] ; then
-	execcall="ibrun build/${executable}"
-    fi
     if [ ! -z "${omp}" ] ; then
 	execcall="OMP_PROC_BIND=true ${execcall}"
     fi
