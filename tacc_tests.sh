@@ -112,7 +112,7 @@ for compiler in $compilers ; do
 	    echo "     from path: ${usepath}" | tee -a ${logfile}
 	fi
 	echo "Loaded compiler: ${cname}/${cversion}"  >>${logfile}
-	eval comment=\${comments_${cname}${cversion}}
+	eval comment=\${comments_${cname}${cversion%%.*}}
 	if [ ! -z "$comment" ] ; then
 	    echo "     Comment: $comment"
 	fi
