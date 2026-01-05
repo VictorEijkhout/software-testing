@@ -6,6 +6,7 @@ source ../test_setup.sh
 ## Tests
 ##
 
+# https://github.com/cburstedde/p4est/issues/359
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
     --title "if we can compile" \
     has.c

@@ -19,6 +19,10 @@ source ../test_setup.sh
 			has.c
 
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
+			--title "can we compile official example" \
+			icb_parpack_c.c
+
+../cmake_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "can we compile Fortran" \
 			issue46.f
 
