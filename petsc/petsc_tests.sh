@@ -33,7 +33,9 @@ fi
 if [ ! -z "${do_c}" ] ; then
     echo "C language" | tee -a ${logfile}
     source petsc_c_tests.sh
-    source petsc_k_tests.sh
+    if [[ ${version} = *kokkos* ]] ; then
+	source petsc_k_tests.sh
+    fi
 else
     echo "skip C tests" | tee -a ${logfile}
 fi
