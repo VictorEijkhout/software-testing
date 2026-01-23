@@ -65,10 +65,7 @@ fi
 ##
 if [ ! -z "${docuda}" ] ; then
     echo "CUDA language"
-    ../petsc_test_driver.sh ${standardflags} -l ${logfile} \
-			   --title "cu example 47" \
-			   --run_args "-dm_vec_type cuda -da_grid_x 3000000" \
-			   ex47cu.cu
+    source petsc_cuda_tests.sh
 fi
 
 if [ ! -z "${locallog}" ] ; then 

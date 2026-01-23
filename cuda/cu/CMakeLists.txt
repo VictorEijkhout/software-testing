@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 project( ${PROJECTNAME}
   DESCRIPTION "Cu programs for Cuda testing"
   LANGUAGES CXX CUDA)
+enable_language( CUDA )
 
 add_executable( ${PROJECTNAME} )
 target_sources( ${PROJECTNAME} PRIVATE ${PROJECTNAME}.cu )

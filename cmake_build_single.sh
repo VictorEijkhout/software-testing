@@ -68,6 +68,10 @@ echo " .. with CMAKE_PREFIX_PATH=$( echo :${CMAKE_PREFIX_PATH} | tr ':' '\n' )"
 echo " .. with LD_LIBRARY_PATH=  $( echo :${LD_LIBRARY_PATH}  | tr ':' '\n' )"
 
 cmdline="cmake -D CMAKE_VERBOSE_MAKEFILE=ON \
+    -D CMAKE_C_COMPILER=${TACC_CC} \
+    -D CMAKE_CXX_COMPILER=${TACC_CXX} \
+    -D CMAKE_Fortran_COMPILER=${TACC_FC} \
+    -D CMAKE_CUDA_COMPILER=nvcc -D CMAKE_CUDA_ARCHITECTURES=all \
     -D CMAKE_EXPORT_COMPILE_COMMANDS=ON \
     -D PROJECTNAME=${base} \
     $( if [ ! -z ${cmake} ] ; then echo ${cmake} | tr ',' ' ' ; fi ) \
