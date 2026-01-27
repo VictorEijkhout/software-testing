@@ -3,17 +3,21 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2016-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-2026 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** device.cxx : dealing with cuda devices
+ **** device.cu : dealing with cuda devices
  ****
  ****************************************************************/
 
 #include <iostream>
 using std::cout;
 
+#include <mpi.h>
+
 int main() {
 
+  MPI_Init(0,0);
+  
   const int ndev = 
     [] () ->int {
       //codesnippet cudevcount
@@ -56,6 +60,8 @@ int main() {
 #if CUDA_VERSION >= 12000
   cudaInitDevice(0,0,0);
 #endif
+
+  MPI_Finalize();
 
   return 0;
 }
