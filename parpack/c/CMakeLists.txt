@@ -40,8 +40,8 @@ target_link_libraries(
 target_link_libraries(
   ${PROJECTNAME} PUBLIC
   ${MPI_Fortran_LIBRARIES}
-  # MPI::MPI_Fortran
-  # ARPACK::ARPACK
+  MPI::MPI_Fortran
+  ARPACK::ARPACK
 )
 
 install( TARGETS ${PROJECTNAME} DESTINATION . )

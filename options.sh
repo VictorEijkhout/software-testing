@@ -47,7 +47,6 @@ dopy=
 cmakeversion=
 python=
 
-## echo "parse command args <<$*>>"
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then
 	usage && exit 0

@@ -1,5 +1,5 @@
 ##
-## General test configuration for Petsc C programs
+## Test configuration for Petsc C programs
 ##
 cmake_minimum_required( VERSION 3.20 )
 project( ${PROJECTNAME}
@@ -13,7 +13,6 @@ message( STATUS "MPI includes: ${MPI_C_INCLUDE_DIRS}" )
 
 find_package( PkgConfig REQUIRED )
 pkg_check_modules( PETSC REQUIRED petsc )
-
 message( STATUS "PETSc includes: ${PETSC_INCLUDE_DIRS}" )
 message( STATUS "PETSc libraries: ${PETSC_LIBRARY_DIRS}" )
 
