@@ -20,10 +20,8 @@ int main() {
   
   const int ndev = 
     [] () ->int {
-      //codesnippet cudevcount
       int ndev;
       auto status = cudaGetDeviceCount(&ndev);
-      //codesnippet end
       if (status==cudaSuccess)
 	return ndev;
       else if (status==cudaErrorNoDevice) {
@@ -34,11 +32,8 @@ int main() {
 
   cout << "Number of devices detected: " << ndev << '\n';
   for ( int idev=0; idev<ndev; ++idev ) {
-    //codesnippet cudevprop
     cudaDeviceProp properties;
     cudaGetDeviceProperties(&properties,idev);
-    //codesnippet end
-    //codesnippet cudevprops
     cout << "Device " << idev << "=" << properties.name << '\n';
     cout << "  async: " << properties.asyncEngineCount << '\n';
     cout << "  unified: " << properties.unifiedAddressing << '\n';
@@ -49,7 +44,6 @@ int main() {
 
     cout << "  global memory: " << properties.totalGlobalMem << '\n';
     cout << "  shared mem/block: " << properties.sharedMemPerBlock << '\n';
-    //codesnippet end
 
     cout << "  max threads/block: " << properties.maxThreadsPerBlock << '\n';
     cout << "  max thread dims: " << properties.maxThreadsDim[0] << ","
