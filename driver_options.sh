@@ -7,6 +7,7 @@ function usage() {
     echo "Usage: $0"
     echo "    [ -d mod1,mod2 ] [ -m ( use mpi ) ] "
     echo "    [ -p package (default: ${defaultp}) ] [ -v version ]"
+    echo "    [ --info infomsg ]"
     echo "    [ -l logfile ] [ -x ( set x ) ]"
     echo "    [ -m : mpi mode ] [ -o : omp mode ] [ -r : skip run ] [ -4 : do python tests ]"
     echo "    [ -t / --value v : test value ]"
@@ -70,6 +71,8 @@ while [ $# -gt 1 ] ; do
 	shift && inbuildrun=1
     elif [ "$1" = "--run-options" ] ; then
 	shift && runoptions="$1" && shift
+    elif [ "$1" = "--info" ] ; then
+	shift && info=$1 && shift
     elif [ "$1" = "--ldd" ] ; then
 	shift && ldd=1
     elif [ "$1" = "-m" ] ; then 

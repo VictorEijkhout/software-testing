@@ -2,13 +2,17 @@
 
 source ../test_setup.sh
 python_option=1
-do_c=1 && do_f=1 && do_py=1
+do_c=1 && do_f=1 && do_py=
 if [ ! -z "${docuda}" ] ; then
     echo " .. skipping C / F / Py because of CUDA"
     do_c="" && do_f="" && do_py=""
 fi
 
-if [ ! -z "${python_only}" ] ; then
+if [ ! -z "${nofortran}" ] ; then
+    do_f=""
+fi
+
+if [ ! -z "${pythononly}" ] ; then
     do_c=""
     do_f=""
     do_py="1"
@@ -57,12 +61,24 @@ if [ ! -z "${do_py}" ] ; then
     echo "Python language" | tee -a ${logfile}
     source petsc_py_tests.sh
 else
-    echo ".... skipping python tests" | tee -a ${logfile}
+    echo "skipping python tests" | tee -a ${logfile}
 fi
 
 ##
 ## CUDA tests
 ##
+havecuda=$( grep -i have_cuda ${TACC_PETSC_DIR}/include/petscconf.h | head -n 1 | cut -d ' ' -f 3 )
+../info_test.sh ${standardflags} -l ${logfile} \
+		--title "Presence of cuda" \
+		--info "Configured with CUDA" \
+		"${havecuda}"
+
+# if [ "${havecuda}" = "1" ] ; then
+#     failure 0 "Configured with CUDA"
+# else
+#     failure 0 "Configured without CUDA"
+# fi
+
 if [ ! -z "${docuda}" ] ; then
     echo "CUDA language"
     source petsc_cuda_tests.sh

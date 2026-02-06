@@ -3,7 +3,7 @@
 function usage () {
     echo "Usage: $0 [ -h ]"
     echo "    [ -c compiler (default: all compilers) ]"
-    echo "    [ - f : skip fortran ] [ --small : no external package ]"
+    echo "    [ -f : skip fortran ] [ --small : no external package ]"
     echo "    [ -r : skip runs ] [ -t trace ]"
     echo "    [ -v baseversion (default: ${base}) ]"
 }
