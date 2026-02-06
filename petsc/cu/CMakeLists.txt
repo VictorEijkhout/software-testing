@@ -7,6 +7,7 @@ project( ${PROJECTNAME}
   VERSION 1.0 LANGUAGES C CXX CUDA )
 
 enable_language( CUDA )
+set(CMAKE_CUDA_ARCHITECTURES 70)
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.cu )
 
 find_package( MPI REQUIRED COMPONENTS C CXX )
