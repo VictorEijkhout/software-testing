@@ -7,7 +7,9 @@ find_package(MPI)
 find_package(ADIOS2 REQUIRED)
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.cpp)
-target_link_libraries( ${PROJECTNAME} adios2::cxx11_mpi MPI::MPI_C )
+# target_link_libraries( ${PROJECTNAME} adios2::cxx11_mpi MPI::MPI_C )
+# 2.11 deprecated the cxx11_mpi target, is now:
+target_link_libraries( ${PROJECTNAME} adios2::cxx_mpi MPI::MPI_C )
 
 add_custom_command(
   TARGET ${PROJECTNAME}
