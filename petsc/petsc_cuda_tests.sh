@@ -3,12 +3,12 @@
 ../cmake_test_driver.sh ${standardflags} -l ${logfile} \
                         ${p4pflag} \
 			--title "have cuda" \
-			--run_args "-dm_vec_type cuda" \
+			--run_args "-dm_vec_type cuda -use_gpu_aware_mpi 0" \
 			has_cuda.cu
 
 ../petsc_test_driver.sh ${standardflags} -l ${logfile} \
 			--title "cu example 47" \
-			--run_args "-dm_vec_type cuda -da_grid_x 3000000" \
+			--run_args "-dm_vec_type cuda -da_grid_x 3000000 -use_gpu_aware_mpi 0" \
 			ex47cu.cu
 
 exit 0

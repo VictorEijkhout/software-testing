@@ -7,9 +7,7 @@
 int main(int argc, char **argv)
 {
   DM        da;
-  char     *tmp, typeName[256];
-  char *help = "has_cuda.cu";
-  PetscBool flg;
+  char help[] = "has_cuda.cu";
 
   PetscFunctionBeginUser;
   PetscCall(PetscInitialize(&argc, &argv, NULL, help));
