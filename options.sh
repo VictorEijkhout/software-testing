@@ -44,7 +44,7 @@ omp=
 skipcu=1
 # by default don't do python tests
 dopy=
-cmakeversion=
+# cmakeversion=
 python=
 
 while [ $# -gt 0 ] ; do

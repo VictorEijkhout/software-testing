@@ -32,7 +32,7 @@ fi
 
 package=unknown
 loadpackage=unknown
-cmakeversion=
+# cmakeversion=
 cmake=
 dir=dir
 dopy=
