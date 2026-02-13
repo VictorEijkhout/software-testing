@@ -6,12 +6,12 @@ source ../test_setup.sh
 ## Tests
 ##
 
-../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-			--title "can we compile C" \
-    --cmake "-DHYPRE_INCLUDE_DIRS=${TACC_HYPRE_INC},-DHYPRE_LIBRARY_DIRS=${TACC_HYPRE_LIB},-DHYPRE_LIBRARIES=libHYPRE.so" \
-    has.c
+rm -rf channel/.cache
+export NEKRS_HOME=${TACC_NEKRS_DIR}
+../existence_test.sh -p ${package} -l ${logfile} \
+    --title "channel example" \
+    --ldd \
+    --run_in_dir channel --run_args "--setup channel/channel.par" \
+    --dir bin nekrs
 
-../cmake_test_driver.sh ${standardflags} -l ${logfile} \
-			--title "can we compile Fortran" \
-    --cmake "-DHYPRE_INCLUDE_DIRS=${TACC_HYPRE_INC},-DHYPRE_LIBRARY_DIRS=${TACC_HYPRE_LIB},-DHYPRE_LIBRARIES=libHYPRE.so" \
-    ex5f.f
+ 

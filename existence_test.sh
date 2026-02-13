@@ -60,7 +60,7 @@ if [ -f "${filename}" ] ; then
 	retcode=$( \
 	    echo "running <<${cmdline}>>:" >>"${fulllog}" \
 	    && retcode=0 \
-	    && ${cmdline} >>"${fulllog}" 2>&1 || retcode=$? \
+	    && eval ${cmdline} >>"${fulllog}" 2>&1 || retcode=$? \
 	    && echo ${retcode} )
 	failure ${retcode} "actually running" | tee -a "${testlog}"
     fi

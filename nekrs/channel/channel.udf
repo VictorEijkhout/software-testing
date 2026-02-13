@@ -1,0 +1,67 @@
+#include "ci.inc"
+
+static deviceMemory<dfloat> o_nekFU;
+static deviceMemory<dfloat> o_nekMue;
+static dfloat P_ROT;
+
+#ifdef __okl__
+
+#endif
+
+void userf(double time)
+{
+  nrs->fluid->o_explicitTerms().copyFrom(o_nekFU, nrs->fluid->fieldOffsetSum);
+}
+
+void uservp(double time)
+{
+  auto mesh = nrs->meshV;
+  platform->linAlg->fill(mesh->Nlocal, 1.0, nrs->fluid->o_rho);
+  nrs->fluid->o_mue.copyFrom(o_nekMue, mesh->Nlocal);
+}
+
+void UDF_Setup0(MPI_Comm comm, setupAide &options)
+{
+  options.getArgs("CI-MODE", ciMode);
+  if (ciMode) {
+    ciSetup(comm, options);
+  }
+  platform->par->extract("casedata", "p_rot", P_ROT);
+  if (platform->options.compareArgs("BUILD ONLY", "FALSE")) {
+    *nek::ptr<double>("p_rot") = P_ROT;
+  }
+}
+
+void UDF_Setup()
+{
+  auto mesh = nrs->meshV;
+
+  nrs->userSource = &userf;
+  nrs->userProperties = &uservp;
+
+  o_nekFU.resize(nrs->fluid->fieldOffsetSum);
+  o_nekMue.resize(mesh->Nlocal);
+
+  nek::userchk();
+  std::vector<double> mul(nek::ptr<double>("mul"), nek::ptr<double>("mul") + mesh->Nlocal);
+  o_nekMue.copyFrom(mul);
+
+  std::vector<double> FUx(nek::ptr<double>("forcx"), nek::ptr<double>("forcx") + mesh->Nlocal);
+  std::vector<double> FUy(nek::ptr<double>("forcy"), nek::ptr<double>("forcy") + mesh->Nlocal);
+  std::vector<double> FUz(nek::ptr<double>("forcz"), nek::ptr<double>("forcz") + mesh->Nlocal);
+
+  o_nekFU.copyFrom(FUx, mesh->Nlocal, 0 * nrs->fieldOffset);
+  o_nekFU.copyFrom(FUy, mesh->Nlocal, 1 * nrs->fieldOffset);
+  o_nekFU.copyFrom(FUz, mesh->Nlocal, 2 * nrs->fieldOffset);
+}
+
+void UDF_ExecuteStep(double time, int tstep)
+{
+  if (nrs->checkpointStep) {
+    nrs->copyToNek(time, tstep);
+    nek::userchk();
+  }
+  if (ciMode) {
+    ciTestErrors(nrs, time, tstep);
+  }
+}
