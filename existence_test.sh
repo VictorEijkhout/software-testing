@@ -43,8 +43,8 @@ echo "test file: <<${filename}>> from <<${pathmacro}=${fullpath}>> / ${source}" 
 if [ -f "${filename}" ] ; then
     failure 0 "file <<$source>> in section <<$dir>>" | tee -a "${testlog}"
     if [ ! -z "${ldd}" ] ; then
-	( echo "ldd on <<${filename}>>:" && ldd "${filename}" ) >>"${fulllog}"
-	unresolved=$( ldd "${filename}" | grep -i "not found" | wc -l )
+	( echo "ldd on <<${filename}>>:" && ldd "${filename}" ) >>"${fulllog}" 2>&1
+	unresolved=$( ldd "${filename}" 2>/dev/null | grep -i "not found" | wc -l )
 	failure ${unresolved} "resolving shared libraries" | tee -a "${testlog}"
     fi
     if [ ! -z "${runindir}" -a "${dir}" = "bin" -a ! -z "${run}" ] ; then
