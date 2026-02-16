@@ -2,6 +2,6 @@ TESTS =
 TEST = 
 include ../Make.common
 clean ::
-	@rm -f example.nc
+	@rm -f *.nc
 
 
