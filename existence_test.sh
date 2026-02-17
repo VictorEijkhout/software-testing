@@ -10,6 +10,7 @@
 ##    --dir DIR binary-name : tests presence in TACC_<PACKAGE>_<DIR>
 
 buildsystem=cmake
+source ./package.sh
 source ../functions.sh
 source ../driver_options.sh
 source ../failure.sh
@@ -30,7 +31,12 @@ fi
 if [ ! -f "${testlog}" ] ; then 
     echo "WARNING test log <<${testlog}>> does not exist in existencetest"
 fi
-echo "Testing existence of file <<$source>> in section <<${dir}>>" >>"${testlog}"
+( echo "================================================================" \
+      && echo "    Existence test:" \
+      && echo "    $0 ${cmd_args}" \
+      && echo "    => Testing existence of file <<$source>> in section <<${dir}>>" \
+    ) >>"${testlog}" 2>&1 
+
 
 pathmacro=TACC_$( echo ${loadpackage} | tr a-z A-Z )_$( echo ${dir} | tr a-z A-Z )
 echo "path macro=${pathmacro}" >>"${testlog}"
