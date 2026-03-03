@@ -123,6 +123,10 @@ if [ -z "${logfile}" ] ; then
     logfile=${logdir}/full.log
     rm -f ${logfile}
     touch ${logfile}
+    ( echo "================================================================"
+      echo " Test run at: $( date )"
+      echo "================================================================"
+      echo ) >>${logfile}
     echo "Using logfile: ${logfile}"
 fi
 if [ ! -f "${logfile}" ] ; then 

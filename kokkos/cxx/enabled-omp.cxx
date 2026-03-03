@@ -3,7 +3,7 @@
    %%%%
    %%%% This program file is part of the book and course
    %%%% "Parallel Computing"
-   %%%% by Victor Eijkhout, copyright 2013-2023
+   %%%% by Victor Eijkhout, copyright 2013-2026
    %%%%
    %%%% enabled.cxx : print what's enabled
    %%%%
@@ -24,5 +24,6 @@ int main(int argc,char **argv) {
   cout << "No\n";
 #endif
 
+  Kokkos::finalize();
   return 0;
 }
