@@ -49,6 +49,11 @@ for compiler in $compilers ; do
     module -t reset >/dev/null 2>&1
 
     echo "==== Configuration attempt <<${compiler}>>" >>${logfile}
+    # ( echo " .. default configuration:" \
+    # 	  && module -t list 2>&1 \
+    # 	  && echo " .. default modulepaths:" \
+    # 	  && echo ${MODULEPATH} | tr ':' '\n' \
+    # 	) >>${logfile}
 
     #
     # parse compiler & possible module use path
@@ -59,11 +64,6 @@ for compiler in $compilers ; do
 	module -t use ${usepath}
 	compiler=$( echo ${compiler} | cut -d ':' -f 2 )
     else usepath= ; fi
-
-    (
-	echo " .. module path:"
-	echo $MODULEPATH | tr ':' '\n'
-    ) >>${logfile} 
 
     #
     # skip if we match a particular compiler
@@ -136,6 +136,12 @@ for compiler in $compilers ; do
 	    fi
 	fi
     fi 
+
+    ( echo " .. using modules with compiler loaded:" \
+	  && module -t list 2>&1 \
+	  && echo " .. from modulepaths:" \
+	  && echo ${MODULEPATH} | tr ':' '\n' \
+	) >>${logfile}
 
     ##
     ## Load prereq modules

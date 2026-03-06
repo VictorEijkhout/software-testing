@@ -41,7 +41,7 @@ if [ ! -z "${do_c}" ] ; then
 	source petsc_k_tests.sh
     fi
 else
-    echo "skip C tests" | tee -a ${logfile}
+    echo " .. skip C tests" | tee -a ${logfile}
 fi
 
 ##
@@ -51,7 +51,7 @@ if [ ! -z "${do_f}" ] ; then
     echo "Fortran language" | tee -a ${logfile}
     source petsc_f_tests.sh
 else
-    echo "skip Fortran tests" | tee -a ${logfile}
+    echo " .. skip Fortran tests" | tee -a ${logfile}
 fi
 
 ##
@@ -61,7 +61,7 @@ if [ ! -z "${do_py}" ] ; then
     echo "Python language" | tee -a ${logfile}
     source petsc_py_tests.sh
 else
-    echo "skipping python tests" | tee -a ${logfile}
+    echo " .. skipping python tests" | tee -a ${logfile}
 fi
 
 ##
