@@ -77,12 +77,17 @@ for compiler in $compilers ; do
 	echo "==== Configuration: ${configuration} undefined for system ${TACC_SYSTEM}" | tee -a ${logfile}
 	failed=1
 	continue
-    else
-	( echo && echo "==== Configuration: ${configuration}" ) | tee -a ${logfile}
-	echo " .. loaded from ${envfile}" >>${logfile}
-	failed=
     fi
-    source ${envfile}  >/dev/null 2>&1
+    
+    ( echo && echo "==== Configuration: ${configuration}" ) | tee -a ${logfile}
+    source ${envfile}  >>${logfile} 2>&1
+    ( 
+	echo " .. loaded from ${envfile}"
+	echo "     currently loaded: $( module -t list 2>&1 ) "
+	echo "     modulepath: $( echo ${MODULEPATH} | tr ':' '\n' )"
+    ) >>${logfile}
+
+    failed=
 
     ##
     ## Load prereq modules

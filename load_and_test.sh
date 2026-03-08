@@ -41,7 +41,12 @@ if [ "${loadpackage}" != "none" ] ; then
 	    done
 	else 
 	    echo "     could not load ${loadpackage}/${loadversion}" | tee -a ${logfile}
-	    echo "     currently loaded: $( module -t list 2>&1 ) " >>${logfile}
+	    (
+		echo "     currently loaded: $( module -t list 2>&1 ) "
+		echo "     available versions: $( module -t avail ${loadpackage} 2>&1 )"
+		echo "     spider versions: $( module -t spider ${loadpackage} 2>&1 )"
+		echo "     modulepath: $( echo ${MODULEPATH} | tr ':' '\n' )"
+	    ) >>${logfile}
 	    continue
 	fi
     fi
