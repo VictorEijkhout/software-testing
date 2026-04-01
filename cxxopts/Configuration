@@ -1,0 +1,4 @@
+PACKAGE = cxxopts
+PACKAGEVERSION = 3.3.1
+
+CMAKETEST = --title "can we compile and run" has.cxx 
