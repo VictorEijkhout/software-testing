@@ -1,0 +1,11 @@
+##
+## Regression tests for swig
+## using MrPackMod
+##
+
+PACKAGE = swig
+PACKAGEVERSION = 4.2.0
+MODE = seq
+CPPSTANDARD = 20
+
+EXISTENCETEST = --title "base executable" --dir bin --ldd swig
