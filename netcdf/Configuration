@@ -1,0 +1,19 @@
+##
+## Regression tests for netcdf, C version
+## using MrPackMod
+##
+
+PACKAGE = netcdf
+PACKAGEVERSION = 4.10.0
+MODE = seq
+CPPSTANDARD = 20
+
+EXISTENCETEST = --title "config program" --dir bin nc-config
+EXISTENCETEST = --title "pkgconfig" --dir lib pkgconfig/netcdf.pc
+# this fails for private install but should work for the official deployment
+EXISTENCETEST = --title "fortran config program" --dir bin nf-config
+EXISTENCETEST = --title "pkgconfig" --dir lib pkgconfig/netcdf-fortran.pc
+
+CMAKETEST = --title "compile sanity test" sanity.c
+MAKETEST  = --title "compile with config" sanity.cc
+
