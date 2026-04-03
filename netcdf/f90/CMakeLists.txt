@@ -4,7 +4,7 @@ project( ${PROJECTNAME}
   VERSION 1.0 )
 
 enable_language( Fortran )
-add_executable( ${PROJECTNAME} ${PROJECTNAME}.F90 )
+add_executable( ${PROJECTNAME} ${PROJECTNAME}.f90 )
 
 find_package( PkgConfig REQUIRED )
 pkg_check_modules( NETCDF REQUIRED netcdf-fortran )
