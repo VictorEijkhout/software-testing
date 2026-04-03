@@ -10,10 +10,10 @@ PACKAGEVERSION = 4.6.2
 MODE = seq
 CPPSTANDARD = 20
 
-EXISTENCETEST = --title "fortran config" --dir bin nf-config
 EXISTENCETEST = --title "pkgconfig"      --dir lib --grep fmoddir pkgconfig/netcdf-fortran.pc
 EXISTENCETEST = --title "fortran module" --dir inc netcdf.mod
 
 # This test fails locally because libnetcdf and libnetcdff are not in the same lib dir
+EXISTENCETEST = --title "fortran config" --dir bin nf-config
 CMAKETEST = --title "compile with Fortran module" --run has.F90
 MAKETEST  = --title "compile F90 with config"     --run simple_xy_wr.F90
