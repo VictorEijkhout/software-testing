@@ -1,5 +1,7 @@
 PACKAGE = kokkos
+MODE = omp
+NONMODULES = cuda
 
 EXISTENCETEST = --title "header" --dir inc Kokkos_Core.hpp
 
-CMAKETEST = --title "compile and run" enabled-omp.cxx
+CMAKETEST = --title "compile and run" --ldd -r enabled-omp.cxx
