@@ -1,0 +1,11 @@
+##
+## Regression tests for cxxopts
+## using MrPackMod
+##
+
+PACKAGE = cxxopts
+PACKAGEVERSION = 3.2.0
+MODE = seq
+CPPSTANDARD = 20
+
+CMAKETEST = --title "can we compile and run" -r has.cxx 
