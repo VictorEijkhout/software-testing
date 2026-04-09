@@ -1,0 +1,5 @@
+PACKAGE = kokkos
+
+EXISTENCETEST = --title "header" --dir inc Kokkos_Core.hpp
+
+CMAKETEST = --title "compile and run" enabled-omp.cxx
