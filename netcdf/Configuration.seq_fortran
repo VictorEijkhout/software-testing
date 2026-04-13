@@ -1,0 +1,18 @@
+##
+## Fortran tests
+## on staff this is included in netcdff for separate testing
+## in jail this is included in netcdf for testing of the whole package
+##
+
+EXISTENCETEST = --title "fortran config" --keywords fortran \
+    --dir bin nf-config
+EXISTENCETEST = --title "pkgconfig"      --keywords fortran \
+    --dir lib --grep fmoddir pkgconfig/netcdf-fortran.pc
+EXISTENCETEST = --title "fortran module" --keywords fortran \
+    --dir inc netcdf.mod
+
+# This test fails in dev because libnetcdf and libnetcdff are not in the same lib dir
+CMAKETEST = --title "compile with Fortran module" --keywords fortran \
+    --run has.f90
+MAKETEST  = --title "compile F90 with config"     --keywords fortran \
+    --run simple_xy_wr.F90

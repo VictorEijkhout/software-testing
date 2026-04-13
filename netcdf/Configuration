@@ -15,9 +15,4 @@ CMAKETEST = --title "compile sanity test" sanity.c
 MAKETEST  = --title "compile with config" sanity.cc
 
 # this fails for private install but should work for the official deployment
-EXISTENCETEST = --title "fortran config" --dir bin nf-config
-EXISTENCETEST = --title "pkgconfig"      --dir lib --grep fmoddir pkgconfig/netcdf-fortran.pc
-EXISTENCETEST = --title "fortran module" --dir inc netcdf.mod
-
-CMAKETEST = --title "compile with Fortran module" --run has.f90
-MAKETEST  = --title "compile F90 with config"     --run simple_xy_wr.F90
+include Configuration.seq_fortran

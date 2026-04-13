@@ -1,0 +1,22 @@
+##
+## Regression tests for netcdf, C version
+## using MrPackMod
+##
+
+PACKAGE = parallelnetcdf
+PACKAGEVERSION = 4.10.0
+MODE = seq
+
+EXISTENCETEST = --title "config program" --dir bin nc-config
+EXISTENCETEST = --title "pkgconfig" --dir lib pkgconfig/netcdf.pc
+
+CMAKETEST = --title "compile parallel test" parallel_vara.c
+#MAKETEST  = --title "compile with config" sanity.cc
+
+# this fails for private install but should work for the official deployment
+EXISTENCETEST = --title "fortran config" --dir bin nf-config
+EXISTENCETEST = --title "pkgconfig"      --dir lib --grep fmoddir pkgconfig/netcdf-fortran.pc
+EXISTENCETEST = --title "fortran module" --dir inc netcdf.mod
+
+CMAKETEST = --title "compile with Fortran module" --run has.f90
+MAKETEST  = --title "compile F90 with config"     --run simple_xy_wr.F90
