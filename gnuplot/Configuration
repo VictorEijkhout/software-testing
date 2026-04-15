@@ -8,6 +8,6 @@ PACKAGEVERSION = 6.0.4
 MODE = seq
 
 EXISTENCETEST = --title "base executable" --dir bin --ldd gnuplot
-EXISTENCETEST = --title "do simple demo" --dir demo -r \
-    --run_prefix 'gnuplot ' --run_args ' </bin/yes' \
+EXISTENCETEST = --title "do simple demo" --dir demo \
+    --run_in_dir --run_prefix 'gnuplot ' --run_args ' </bin/yes' \
     simple.dem
