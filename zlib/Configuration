@@ -1,0 +1,6 @@
+PACKAGE = zlib
+PACKAGEVERSION = 1.3.2
+
+EXISTENCETEST = --title header --dir inc zlib.h
+EXISTENCETEST = --title "static library" --dir lib libz.a
+EXISTENCETEST = --title "shared library" --dir lib --ldd libz.so
