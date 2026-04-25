@@ -1,4 +1,5 @@
 PACKAGE = kokkos
+PACKAGEVERSION = 5.0.1-omp
 MODE = omp
 NONMODULES = cuda
 
