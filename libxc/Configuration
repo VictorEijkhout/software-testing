@@ -1,0 +1,13 @@
+PACKAGE = libxc
+PACKAGEVERSION = 7.0.0
+
+EXISTENCETEST = --title infobin --dir bin xc-info
+EXISTENCETEST = --title header  --dir inc xc_version.h
+EXISTENCETEST = --title fmod    --dir inc xc_f03_funcs_m.mod
+
+EXISTENCETEST = --title cpkgconfig --dir lib64/pkgconfig libxc.pc
+EXISTENCETEST = --title fpkgconfig --dir lib64/pkgconfig libxcf03.pc
+
+EXISTENCETEST = --title "shared library" --dir lib --ldd libxc.so
+
+
