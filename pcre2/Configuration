@@ -3,11 +3,11 @@ PACKAGEVERSION = 10.43
 MODE = seq
 
 EXISTENCETEST = \
-    --title "core header" \
+    --title "library" \
     --ldd -r \
     --dir lib libpcre2-8.so
 
 EXISTENCETEST = \
-		     --title "core header" \
-		     cmake/pcre2-config.cmake
+	      --title "cmake config" \
+	      cmake/pcre2-config.cmake
 

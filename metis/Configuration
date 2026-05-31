@@ -1,0 +1,17 @@
+PACKAGE = metis
+PACKAGEVERSION = git20250821
+MODE = seq
+
+EXISTENCETEST = \
+    --title "header" \
+    --dir inc metis.h
+
+EXISTENCETEST = \
+    --title "library" \
+    --dir lib --ldd libmetis.so
+
+CMAKETEST = \
+    -t 1 \
+    --title "can we compile C" \
+    has.c
+
