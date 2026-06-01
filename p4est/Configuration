@@ -1,0 +1,20 @@
+PACKAGE = p4est
+PACKAGEVERSION = 2.8.7
+MODE = mpi
+
+# https://github.com/cburstedde/p4est/issues/359
+CMAKETEST = \
+    --title "if we can compile" \
+    has.c
+
+# note: ldd test does not work on cmake driver, only on existence test
+CMAKETEST = \
+    --ldd \
+    --title "example from src trree" \
+    simple2.c
+
+# cpp is really C, but uses find_package instead of pkg_config
+CMAKETEST = \
+    --title "if we can compile C++" \
+    has.cpp
+

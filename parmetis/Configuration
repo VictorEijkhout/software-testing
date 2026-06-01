@@ -1,0 +1,7 @@
+PACKAGE = parmetis
+PACKAGEVERSION = 4.0.3
+MODE = mpi
+
+CMAKETEST = \
+			--title "if we can compile" \
+			has.c
