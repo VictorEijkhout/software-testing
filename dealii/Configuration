@@ -1,0 +1,39 @@
+PACKAGE = dealii
+PACKAGEVERSION = 9.7.1
+MODE = mpi
+BLASLAPACK = ON
+
+CMAKETEST = \
+	  --title "has petsc" \
+	  has_petsc.cpp
+
+CMAKETEST = \
+	  --title "has p4est" \
+	  has_p4est.cpp
+
+exit
+CMAKETEST = \
+	  --title "step-1" \
+	  step-1.cpp
+
+# test for complex numbers
+CMAKETEST = \
+	  --title "step-58 uses complex" \
+	  step-58-complex.cpp
+
+# test for hdf5 interface
+CMAKETEST = \
+	  --title "step-62 uses real hdf5" \
+	  step-62-hdf5.cpp
+
+# test for hdf5 & complex pesc interface
+CMAKETEST = \
+	  --title "step-62 uses complex petsc" \
+	  step-62-complex-petsc.cpp
+
+# test for petsc interface
+# this example is explicit for real petsc
+CMAKETEST = \
+	  --title "step-86 uses real petsc" \
+	  step-86-petsc.cpp
+

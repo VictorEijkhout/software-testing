@@ -1,5 +1,6 @@
 PACKAGE = zlib
 PACKAGEVERSION = 1.3.2
+MODE = seq
 
 EXISTENCETEST = --title header --dir inc zlib.h
 EXISTENCETEST = --title "static library" --dir lib libz.a

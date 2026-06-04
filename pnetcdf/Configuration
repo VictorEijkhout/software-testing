@@ -1,0 +1,22 @@
+PACKAGE = pnetcdf
+PACKAGEVERSION = 1.14.1
+MODE = mpi
+
+EXISTENCETEST = \
+		     --title "C header" \
+		     --dir inc pnetcdf.h
+EXISTENCETEST = \
+		     --title "fortran module" \
+		     --dir inc pnetcdf.mod
+EXISTENCETEST = \
+		     --title "library" \
+		     --ldd \
+		     --dir lib libpnetcdf.so
+
+CMAKETEST = \
+			--title "severely insufficient compile test" \
+			sanity.c
+CMAKETEST = \
+			--title "compile create_open" \
+			create_open.c
+

@@ -1,0 +1,7 @@
+PACKAGE = sundials
+PACKAGEVERSION = 7.6.0
+MODE = mpi
+
+CMAKETEST = \
+			--title "parallel example" \
+			cvAdvDiff_diag_p.c
