@@ -5,10 +5,10 @@
 ##
 
 EXISTENCETEST = --title "fortran config" \
-    --keywords fortran \
+    --keywords nc-config \
     --dir bin nf-config
 EXISTENCETEST = --title "fortran pkgconfig sets fmoddir" \
-    --keywords fortran \
+    --keywords fmoddir \
     --dir lib --grep fmoddir pkgconfig/netcdf-fortran.pc
 EXISTENCETEST = --title "fortran module" \
     --keywords fortran \
