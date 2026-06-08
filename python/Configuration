@@ -1,0 +1,8 @@
+PACKAGE = python
+PACKAGEVERSION = 3.12
+MODE = seq
+
+CMAKETEST = \
+	  --title "CMake find python" \
+	  null.py
+	  
