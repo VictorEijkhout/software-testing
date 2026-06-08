@@ -31,7 +31,8 @@ target_link_directories(
 target_link_libraries(
         ${PROJECTNAME} PUBLIC petsc m )
 
-if( DEFINED USESLEPC )
+option( USESLEPC "Enable slepc testing" OFF)
+if( DEFINED ${USESLEPC} )
   target_link_libraries(
     ${PROJECTNAME} PUBLIC slepc m )
 endif()

@@ -1,0 +1,24 @@
+PACKAGE = petsc
+PACKAGEVERSION = 3.25
+MODE = mpi
+
+EXISTENCETEST = \
+	--title "petsc.pc" \
+	--dir lib pkgconfig/PETSc.pc
+EXISTENCETEST = \
+	--title "libpetsc.so" \
+	--ldd \
+	--dir lib libpetsc.so
+
+#
+# C tests
+#
+CMAKETEST = \
+	--title "Sanity test" \
+	sanity.c
+CMAKETEST = \
+	--title "Debug enabled" \
+	debug1.c
+CMAKETEST = \
+	--title "Debug disabled" \
+	debug0.c

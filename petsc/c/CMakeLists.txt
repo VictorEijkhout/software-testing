@@ -29,7 +29,7 @@ target_link_libraries(
         ${PROJECTNAME} PUBLIC petsc m )
 
 option( USESLEPC "Enable slepc testing" OFF)
-if( DEFINED USESLEPC )
+if( DEFINED ${USESLEPC} )
   message( STATUS "CMake also linking to SLEPc" )
   target_link_libraries(
     ${PROJECTNAME} PUBLIC slepc m )

@@ -1,0 +1,12 @@
+PACKAGE = gsl
+PACKAGEVERSION = 2.8
+MODE = seq
+
+EXISTENCETEST = \
+		     --title "math header" \
+		     --dir inc gsl/gsl_math.h
+
+CMAKETEST = \
+			--title "can we compile and run" \
+			solve.cxx 
+
