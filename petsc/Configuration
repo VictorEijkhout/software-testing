@@ -22,3 +22,22 @@ CMAKETEST = \
 CMAKETEST = \
 	--title "Debug disabled" \
 	debug0.c
+CMAKETEST = \
+	--title "has complex" \
+	complex.c
+## if [[ "${PETSC_ARCH}" = *single* ]] ; then
+##     realsize=4 ; else realsize=8 ; fi
+## if [[ "${PETSC_ARCH}" = *complex* ]] ; then
+##     realsize=$(( realsize * 2 )) ; fi
+REALSIZE = 8
+CMAKETEST = \
+	--title "size of scalar" \
+	--run -t ${REALSIZE} \
+	scalar.c
+## if [[ "${PETSC_ARCH}" = *i64* ]] ; then
+##     intsize=8 ; else intsize=4 ; fi
+INNTSIZE = 4
+CMAKETEST = \
+	--title "size of int" \
+	--run -t ${INTSIZE} \
+	int.c
