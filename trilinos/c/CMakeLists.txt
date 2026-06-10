@@ -1,7 +1,10 @@
 cmake_minimum_required( VERSION 3.12 )
 project( ${PROJECTNAME}
   DESCRIPTION "C programs for trilinos testing"
+  LANGUAGES C CUDA
   VERSION 1.0 )
+enable_language( CUDA )
+set(CMAKE_CUDA_ARCHITECTURES 70)
 
 add_executable( ${PROJECTNAME} ${PROJECTNAME}.c )
 

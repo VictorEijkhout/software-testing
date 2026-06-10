@@ -1,0 +1,13 @@
+PACKAGE = berkeleygw
+PACKAGEVERSION = 4.0
+MODE = mpi
+
+EXISTENCETEST = \
+	      --title "random python bin" \
+	      --dir bin matrix.py
+EXISTENCETEST = \
+	      --title "fortran global mod" \
+	      --dir inc global_m.mod
+EXISTENCETEST = \
+	      --title "static library" \
+	      --dir lib libBGW_wfn.a
