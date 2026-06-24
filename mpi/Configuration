@@ -1,0 +1,47 @@
+PACKAGE = impi
+PACKAGEVERSION = 21
+MODE = mpi
+
+CMAKETEST = \
+			--title "compile c" \
+			mpi.c
+
+CMAKETEST = \
+			--title "compile c++" \
+			mpi.cxx
+
+CMAKETEST = \
+			--title "compile f90" \
+			mpif90.F90
+
+CMAKETEST = \
+			--title "compile f08" \
+			mpif08.F90
+
+CMAKETEST = \
+	  --title "mpi4" \
+	  mpi4.c
+
+##
+## do we have all names?
+## this tests a bug in intel 2024.{1,2} Not zero! Fixed in 2025.
+## But we should really extend this.
+##
+CMAKETEST = \
+			--title "names for c" \
+			names.c
+
+exit
+
+##
+## this comes from the hdf5 test suite
+##
+# ../cmake_test_driver.sh -m -p ${package} -l ${logfile} ${runflag} \
+# 			--title "overloaded allreduce" \
+# 			-d hdf5 --cmake -DUSEHDF5=ON \
+# 			hdf5async.F90
+CMAKETEST = \
+			--title "overloaded allreduce" \
+			-d hdf5 --cmake -DUSEHDF5=ON \
+			allreduce.F90
+
