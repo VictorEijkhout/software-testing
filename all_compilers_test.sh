@@ -8,7 +8,9 @@
 ################################################################
 
 function usage () {
-    echo "Usage: $0 [ -h] [ -c Configuration ] [ --intel/gcc : intel or gcc only ]"
+    echo "Usage: $0 [ -h] [ -c Configuration ]"
+    echo "    [ --intel/gcc : intel or gcc only ]"
+    echo "    [ --test mpmflags ]"
 }
 
 configuration=Configuration
@@ -25,7 +27,6 @@ while [ $# -gt 0 ] ; do
 	shift && compilers=intel
     elif [ "$1" = "--test" ] ; then
 	shift && testflags="$1" ; shift
-	echo "${testflags}"
     else
 	echo "Unknown option <<$1>>" && exit 1
     fi
