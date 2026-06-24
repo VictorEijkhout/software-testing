@@ -1,5 +1,6 @@
 PACKAGE = libxc
 PACKAGEVERSION = 7.0.0
+MODE = seq
 
 EXISTENCETEST = --title infobin --dir bin xc-info
 EXISTENCETEST = --title header  --dir inc xc_version.h

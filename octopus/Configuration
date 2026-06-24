@@ -1,5 +1,6 @@
 PACKAGE = octopus
 PACKAGEVERSION = 16.4
+MODE = mpi
 
 EXISTENCETEST = --title "executable"   --dir bin --ldd octopus
 EXISTENCETEST = --title "parse header" --dir inc liboct_parser.h
