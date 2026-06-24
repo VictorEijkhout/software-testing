@@ -13,6 +13,7 @@ function usage () {
 
 configuration=Configuration
 compilers="gcc intel"
+testflags=
 while [ $# -gt 0 ] ; do
     if [ "$1" = "-h" ] ; then
 	usage && exit 0
@@ -22,6 +23,9 @@ while [ $# -gt 0 ] ; do
 	shift && compilers=gcc
     elif [ "$1" = "--intel" ] ; then
 	shift && compilers=intel
+    elif [ "$1" = "--test" ] ; then
+	shift && testflags="$1" ; shift
+	echo "${testflags}"
     else
 	echo "Unknown option <<$1>>" && exit 1
     fi
@@ -32,9 +36,19 @@ if [ ! -f "${configuration}" ] ; then
     usage && exit 1
 fi
 
-for compiler in $( module -t avail ${compilers} 2>&1 | grep -v ":" ) ; do
+alltestslog=${PWD}/all_tests.log
+compilers="$( module -t avail ${compilers} 2>&1 | grep -v ':' )"
+
+echo -e "\nTesting $( mpm.py package ) on the following compilers:"
+echo    "${compilers}"
+if [ ! -z "${testflags}" ] ; then
+    echo " .. applying flags: ${testflags}"
+fi
+echo    "See output in ${alltestslog}"
+
+for compiler in ${compilers} ; do
     echo -e "\nTesting compiler: $compiler\n"
     module -t load "${compiler}" >/dev/null 2>&1
     SCRIPTSDIR="mpm_scripts_$( echo ${compiler} | tr -d '/' )" \
-	      mpm.py -c "${configuration}" clean regression
-done
+	      mpm.py -c "${configuration}" ${testflags} clean regression
+done 2>&1 | tee ${alltestslog}
