@@ -64,30 +64,44 @@ echo "Going to test <<$package>> for compilers: <<$compilers>>"
 for compiler in $compilers ; do
 
     ##
+    ## Split compiler into usepath / compiler
+    ##
+    usepath=${compiler%%:*}
+    if [ ! -z "${usepath}" ] ; then
+	module use "${usepath}"
+    fi
+    compiler="${compiler##*:}"
+
+    ##
     ## skip if we explicitly requested a compiler
     ##
-    if [ ! -z "$compilerselect" -a "$compiler" != "$compilerselect" ] ; then
-	echo "Compiler <<$compiler>> does not match selected compiler <<$compilerselect>>"
-	continue
+    if [ ! -z "$compilerselect" ] ; then
+	if [[ $compiler != ${compilerselect}* ]] ; then
+	       echo "Compiler <<$compiler>> does not match selected compiler <<$compilerselect>>"
+	       continue
+	   fi
     fi
 
+    ##
+    ## Reset modules and load compiler
+    ##
     module purge 2>/dev/null
     module reset 2/dev/null
     if [ ! -z "${set}" ] ; then set -x ; fi
-    path=${compiler%%:*}
-    if [ ! -z "${path}" ] ; then
-	module use "${path}"
-    fi
-    compiler="${compiler##*:}"
     module -t load ${compiler} 2>/dev/null
     if [ $? -gt 0 ] ; then
 	echo "Could not load compiler ${compiler}"
-	if [ ! -z "${path}" ] ; then echo " .. along path ${path}" ; fi
+	if [ ! -z "${usepath}" ] ; then echo " .. along path ${usepath}" ; fi
 	continue
+    else
+	echo "================================================================"
+	echo "================ Compiler: ${compiler} ================"
+	echo "================================================================"
     fi
-    echo "================================================================"
-    echo "================ Compiler: ${compiler} ================"
-    echo "================================================================"
+    
+    ##
+    ## Load package
+    ##
     module -t load ${package} 2>/dev/null
     if [ $? -gt 0 ] ; then
 	echo "FAILURE: Could not load ${package} for ${compiler}"
@@ -95,8 +109,9 @@ for compiler in $compilers ; do
     fi
     compilerlog="${package}_$( echo ${compiler} | tr -d '/' ).log"
     module -t list    >"${compilerlog}" 2>&1
+
     ##
-    ## and go
+    ## And go!
     ##
     mpm.py regression >"${compilerlog}" 2>&1
     if [ $( grep FAILURE "${compilerlog}" | wc -l ) -gt 0 ] ; then
@@ -104,5 +119,6 @@ for compiler in $compilers ; do
     else
 	echo SUCCESS
     fi
+
 done 2>&1 | tee ${package}_all.log
 
