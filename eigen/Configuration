@@ -1,0 +1,15 @@
+PACKAGE = eigen
+PACKAGEVERSION = 5.0.0
+MODE = seq
+
+EXISTENCETEST = \
+	  --title "core header" \
+	  --dir inc Eigen/Core
+
+CMAKETEST = \
+	  --title "compile and run with pkgconfig" \
+	  has.cxx 
+
+CMAKETEST = \
+	  --title "compile and run with find_package" \
+	  has.cpp

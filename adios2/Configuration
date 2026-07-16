@@ -1,0 +1,20 @@
+PACKAGE = adios2
+PACKAGEVERSION = 2.11.0
+MODE = mpi
+
+EXISTENCETEST = \
+	      --title "header" \
+	      --dir inc adios2.h
+
+EXISTENCETEST = \
+	      --title "config program" \
+	      --dir bin adios2-config
+
+CMAKETEST = \
+	  --title "can we compile and run c++" \
+	  valuesWrite.cpp 
+
+# https://github.com/ornladios/ADIOS2/issues/4585
+CMAKETEST = \
+	  --title "can we compile and run Fortran" \
+	  values.F90

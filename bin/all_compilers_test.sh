@@ -85,8 +85,8 @@ for compiler in $compilers ; do
     ##
     ## Reset modules and load compiler
     ##
-    module purge 2>/dev/null
-    module reset 2/dev/null
+    module -t purge 2>/dev/null
+    module -t reset 2>/dev/null
     if [ ! -z "${set}" ] ; then set -x ; fi
     module -t load ${compiler} 2>/dev/null
     if [ $? -gt 0 ] ; then

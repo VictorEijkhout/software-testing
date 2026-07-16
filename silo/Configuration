@@ -1,13 +1,15 @@
 PACKAGE = silo
-PACKAGEVERSION = 4.11.1
+PACKAGEVERSION = 4.12.0
 MODE = seq
 
-EXISTENCETEST = --title "browser executable" \
-    --dir bin browser
+EXISTENCETEST = \
+	      --title "browser executable" \
+	      --dir bin browser
 
 # CMAKEFLAGS="-DSILO_INC=${TACC_SILO_INC} -DSILO_LIB=${TACC_SILO_LIB} -DCMAKE_EXE_LINKER_FLAGS=-lpthread"
-CMAKETEST = --title "point functions cxx" \
-    point.cxx
+CMAKETEST = \
+	  --title "point functions cxx" \
+	  point.cxx
 
 exit
 

@@ -36,7 +36,7 @@ CMAKETEST = \
 	scalar.c
 ## if [[ "${PETSC_ARCH}" = *i64* ]] ; then
 ##     intsize=8 ; else intsize=4 ; fi
-INNTSIZE = 4
+INTSIZE = 4
 CMAKETEST = \
 	--title "size of int" \
 	--run -t ${INTSIZE} \

@@ -1,0 +1,23 @@
+PACKAGE = fftw3
+PACKAGEVERSION = 3.3.10
+MODE = mpi
+
+EXISTENCETEST = \
+	      --title "double precision header" \
+	      --dir inc fftw3.h
+
+EXISTENCETEST = \
+	      --title "double precision library" \
+	      --dir lib libfftw3.so
+
+CMAKETEST = \
+	  --title "can we compile and run" \
+	  has.c 
+
+##
+## Fortran
+##
+
+CMAKETEST = \
+	  --title "has F90" \
+	  has.F90
