@@ -1,7 +1,4 @@
-== Software testers
+THIS REPO HAS BEEN ABANDONED. PLEASE SEE:
 
-These are very special purpose scripts for Victor to
-test both the general and his private installations 
-of various packages.
+https://github.com/TACC/MrPackMod-testing
 
-Anyone who is not Victor will have no use for this.
