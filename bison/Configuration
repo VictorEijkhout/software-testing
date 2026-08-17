@@ -1,0 +1,9 @@
+PACKAGE=bison
+PACKAGEVERSION=3.8
+MODE = core
+
+EXISTENCETEST = \
+    --title "bison binary" \
+    --ldd \
+    --run_args "\-h" \
+    --dir bin bison

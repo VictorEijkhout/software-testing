@@ -1,0 +1,137 @@
+//
+// nekRS User Defined File
+//
+#include <math.h>
+#include "udf.hpp"
+#include <vector>
+#include <cmath>
+
+static dfloat xstart;
+static dfloat U_inf;
+static dfloat BETAM;
+static int N_blasius = 10001;
+static std::vector<double> eta, f, fp;
+
+#ifdef __okl__
+#include "flat_plate.oudf"
+#endif
+
+void UDF_LoadKernels(occa::properties &kernelInfo)
+{
+  
+  kernelInfo["defines/p_xstart"] = xstart;
+  kernelInfo["defines/p_U_inf"] = U_inf;
+
+  dfloat viscosity,density;
+  platform->options.getArgs("VISCOSITY", viscosity);
+  kernelInfo["defines/p_visc"] = viscosity;
+  platform->options.getArgs("DENSITY", density);
+  kernelInfo["defines/p_rho"] = density;
+  kernelInfo["defines/p_nu"] = viscosity/density;
+}
+
+
+// Numerically solve Blasius ODE (simple shooting method)
+void solve_blasius(std::vector<double>& eta, std::vector<double>& f, std::vector<double>& fp, int N, double eta_max)
+{
+  double deta = eta_max / (N - 1);
+  eta.resize(N);
+  f.resize(N);
+  fp.resize(N);
+
+  // Initial conditions
+  double f_tmp = 0.0;
+  double fp_tmp = 0.0;
+  double fpp_tmp = 0.332; // f''(0) ≈ 0.332
+  double fppp_tmp = 0.0;
+
+  for (int i = 0; i < N; ++i) {
+    eta[i] = i * deta;
+    f[i] = f_tmp;
+    fp[i] = fp_tmp;
+    fppp_tmp = -0.5 * f_tmp * fpp_tmp;
+    fpp_tmp += deta * fppp_tmp;
+    fp_tmp += deta * fpp_tmp;
+    f_tmp += deta * fp_tmp;
+  }
+}
+
+// Linear interpolation for arrays
+double interp1d(const std::vector<double>& x, const std::vector<double>& y, double xval)
+{
+  if (xval <= x.front()) return y.front();
+  if (xval >= x.back()) return y.back();
+  for (size_t i = 1; i < x.size(); ++i) {
+    if (xval < x[i]) {
+      double t = (xval - x[i-1]) / (x[i] - x[i-1]);
+      return y[i-1] + t * (y[i] - y[i-1]);
+    }
+  }
+  return y.back();
+}
+
+void useric(nrs_t *nrs)
+{
+  auto mesh = nrs->meshV;
+
+  dfloat mue, rho;
+  platform->options.getArgs("VISCOSITY", mue);
+  platform->options.getArgs("DENSITY", rho);
+  const dfloat nu = mue / rho;
+
+  // Precompute Blasius solution
+  
+  const double eta_max = 10.0;
+  solve_blasius(eta, f, fp, N_blasius, eta_max);
+
+  for (int i = 0; i < mesh->Nlocal; ++i) {
+    double x = mesh->x[i] + xstart;
+    double y = mesh->y[i];
+    double Rex = U_inf * x / nu;
+
+    double eta_tmp = (y / x) * std::sqrt(Rex);
+    double f_tmp = interp1d(eta, f, eta_tmp);
+    double fp_tmp = interp1d(eta, fp, eta_tmp);
+
+    double ux = U_inf * fp_tmp;
+    double uy = U_inf * (eta_tmp * fp_tmp - f_tmp) / (2.0 * std::sqrt(Rex));
+    double uz = 0.0;
+
+    nrs->U[i + 0 * nrs->fieldOffset] = ux;
+    nrs->U[i + 1 * nrs->fieldOffset] = uy;
+    nrs->U[i + 2 * nrs->fieldOffset] = uz;
+  }
+}
+
+/* UDF Functions */
+
+void UDF_Setup0(MPI_Comm comm, setupAide &options)
+{
+  platform->par->extract("casedata", "xstart", xstart);
+  platform->par->extract("casedata", "U_inf", U_inf);
+  platform->par->extract("casedata", "BETAM", BETAM);
+
+  *((double *)nek::scPtr(1)) = xstart;
+  *((double *)nek::scPtr(2)) = U_inf;
+  *((double *)nek::scPtr(3)) = BETAM;
+}
+
+void UDF_Setup(nrs_t *nrs)
+{
+  nrs->o_usrwrk = platform->device.malloc(nrs->NVfields * nrs->fieldOffset, sizeof(dfloat));
+  useric(nrs);
+  nrs->o_U.copyFrom(nrs->U, nrs->NVfields * nrs->fieldOffset * sizeof(dfloat));
+
+  nrs->o_usrwrk.copyFrom(nrs->o_U, nrs->NVfields * nrs->fieldOffset * sizeof(dfloat));
+}
+
+void UDF_ExecuteStep(nrs_t *nrs, dfloat time, int tstep)
+{
+
+#if 0
+  if (nrs->isOutputStep) {
+    nek::ocopyToNek(time, tstep);
+    nek::userchk();
+  }
+#endif
+}

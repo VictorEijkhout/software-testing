@@ -1,0 +1,14 @@
+PACKAGE = fmtlib
+PACKAGEVERSION = 12.1.0
+MODE = seq
+
+EXISTENCETEST = \
+	      --title "header" \
+	      --dir inc fmt/format.h
+EXISTENCETEST = \
+	      --title "library" \
+	      --dir lib libfmt.so
+
+CMAKETEST = \
+	  --title "if we can compile and run" \
+	  has.cxx

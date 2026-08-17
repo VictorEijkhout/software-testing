@@ -1,0 +1,8 @@
+PACKAGE = catch2
+PACKAGEVERSION = 3.8.1
+MODE = seq
+
+CMAKETEST = \
+	  --title "can we compile and run" \
+	  has.cxx 
+

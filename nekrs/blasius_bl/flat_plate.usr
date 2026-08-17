@@ -1,0 +1,447 @@
+!-----------------------------------------------------------------------
+!  nek5000 user-file template
+!
+!  user specified routines:
+!     - uservp  : variable properties
+!     - userf   : local acceleration term for fluid
+!     - userq   : local source term for scalars
+!     - userbc  : boundary conditions
+!     - useric  : initial conditions
+!     - userchk : general purpose routine for checking errors etc.
+!     - userqtl : thermal divergence for lowMach number flows 
+!     - usrdat  : modify element vertices 
+!     - usrdat2 : modify mesh coordinates
+!     - usrdat3 : general purpose routine for initialization
+!     
+!-----------------------------------------------------------------------
+! #define BETAM 3.0
+! #define U_inf 1.0
+! #define xstart 40.0
+!-----------------------------------------------------------------------
+      subroutine uservp(ix,iy,iz,eg) ! set variable properties
+
+!      implicit none
+
+      integer ix,iy,iz,eg
+     
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer e
+!     e = gllel(eg)
+
+      udiff  = 0.0
+      utrans = 0.0
+
+      return
+      end
+!-----------------------------------------------------------------------
+      subroutine userf(ix,iy,iz,eg) ! set acceleration term
+
+          implicit none
+
+          integer ix,iy,iz,eg
+          real pgain, igain
+
+          include 'SIZE'
+          include 'TOTAL'
+          include 'NEKUSE'
+
+          integer e
+          e = gllel(eg)
+
+
+          ffx = 0.0
+          ffy = 0.0
+          ffz = 0.0
+
+          return
+      end
+!-----------------------------------------------------------------------
+      subroutine userq(ix,iy,iz,eg) ! set source term
+
+!          implicit none
+
+          integer ix,iy,iz,eg
+
+          include 'SIZE'
+          include 'TOTAL'
+          include 'NEKUSE'
+
+          integer e
+!         e = gllel(eg)
+
+          qvol   = 0.0
+
+          return
+      end
+!-----------------------------------------------------------------------
+      subroutine userbc(ix,iy,iz,iside,eg) ! set up boundary conditions
+       
+          implicit none
+
+          integer ix,iy,iz,iside,eg,e
+          real xp
+
+          include 'SIZE'
+          include 'TOTAL'
+          include 'NEKUSE'
+
+          real ub(lx1,ly1,lz1,lelt), vb(lx1,ly1,lz1,lelt)
+          common /blasiusvel/ ub, vb
+
+
+          e = gllel(eg)
+		  xp = xm1(ix,iy,iz,e)
+
+          if (cbu .eq. 'v  ') then
+            ux   = ub(ix,iy,iz,e)
+            uy   = vb(ix,iy,iz,e)
+            uz   = 0.0
+            temp = 0.0
+		  else if (cbu .eq. 'o  ') then
+			pa = 0.0
+          end if
+
+          return
+      end
+!-----------------------------------------------------------------------
+      subroutine useric(ix,iy,iz,eg) ! set up initial conditions
+      
+          implicit none
+
+          integer ix,iy,iz,eg,e
+
+          include 'SIZE'
+          include 'TOTAL'
+          include 'NEKUSE'
+
+          real ub(lx1,ly1,lz1,lelt), vb(lx1,ly1,lz1,lelt)
+          common /blasiusvel/ ub, vb
+
+          e = gllel(eg)
+          ux   = ub(ix,iy,iz,e)
+          uy   = vb(ix,iy,iz,e)
+          uz   = 0.0
+          temp = 0.0
+
+          return
+      end
+!-----------------------------------------------------------------------
+      subroutine userchk
+          include 'SIZE'
+          include 'TOTAL'
+
+          return
+      end
+!-----------------------------------------------------------------------
+      subroutine userqtl ! Set thermal divergence
+
+      call userqtl_scig 
+
+      return
+      end
+!-----------------------------------------------------------------------
+      subroutine usrdat()   ! This routine to modify element vertices
+
+!      implicit none
+
+      include 'SIZE'
+      include 'TOTAL'
+
+       integer n
+       real ymin, ymax
+       real           xstart, U_inf, BETAM
+       COMMON /CASEDATA/ xstart, U_inf, BETAM  
+ 
+       ! Modify y-coordinate of elements
+       n = nelv * 2**ldim
+       ymin = glmin(yc,n)
+       ymax = glmax(yc,n)
+
+       do i = 1,n
+           yc(i,1) = ymin + (ymax - ymin)
+     &         * (tanh( BETAM * (yc(i,1)/(ymax-ymin)-1))
+     &         / tanh(BETAM) + 1)
+       end do
+
+      return
+      end
+!-----------------------------------------------------------------------
+      subroutine usrdat2()  ! This routine to modify mesh coordinates
+
+!         implicit none
+
+          include 'SIZE'
+          include 'TOTAL'
+
+          ! reconstruct boundary tags 
+          do iel=1,nelv
+          do ifc=1,2*ndim
+            if (cbc(ifc,iel,1) .eq. 'v  ') boundaryID(ifc,iel) = 1
+            if (cbc(ifc,iel,1) .eq. 'o  ') boundaryID(ifc,iel) = 2
+            if (cbc(ifc,iel,1) .eq. 'W  ') boundaryID(ifc,iel) = 3
+          enddo
+          enddo
+
+          return
+      end
+!-----------------------------------------------------------------------
+      subroutine usrdat3()
+
+          implicit none
+
+          include 'SIZE'
+          include 'TOTAL'
+
+        !   real ub(lx1,ly1,lz1,lelt), vb(lx1,ly1,lz1,lelt)
+        !   common /blasiusvel/ ub, vb
+
+        !   ! Set blasius velocity profile
+        !   call set_blasius(ub, vb)
+
+          return
+      end
+!-----------------------------------------------------------------------
+      subroutine usrdat0()
+        include 'SIZE'
+        include 'TOTAL'
+  
+        real           xstart, U_inf, BETAM
+        COMMON /CASEDATA/ xstart, U_inf, BETAM
+  
+        COMMON /NRSSCPTR/ nrs_scptr(3)
+        integer*8         nrs_scptr
+  
+        nrs_scptr(1) = loc(xstart)
+        nrs_scptr(2) = loc(U_inf)
+        nrs_scptr(3) = loc(BETAM)
+  
+        return
+        end
+!-----------------------------------------------------------------------
+      subroutine set_blasius(ub,vb)
+          
+          implicit none
+
+          include 'SIZE'
+          include 'TOTAL'
+
+
+          integer n, i
+          real ub(lx1,ly1,lz1,lelt), vb(lx1,ly1,lz1,lelt)
+          real nu
+          real xp, yp, eta_tmp, f_tmp, fp_tmp, Rex
+
+          real           xstart, U_inf, BETAM
+          COMMON /CASEDATA/ xstart, U_inf, BETAM
+
+          real eta(10001), f(10001), fp(10001)
+
+          ! 1. Solve the Falkner–Skan equation.
+          call solve_blasius(eta, f, fp)
+
+          ! 2. Iterate through all points and compute Blasius velocity
+          !    from the presolved FS equation. For locations not in eta,
+          !    do linear interpolation.
+
+          n = nx1*ny1*nz1*nelv
+
+          nu = param(2) / param(1) ! Kinematic viscosity
+
+          do i = 1, n
+              xp = xm1(i,1,1,1) + xstart
+              yp = ym1(i,1,1,1)
+              Rex = U_inf * xp / nu
+
+              eta_tmp = yp / xp * sqrt(Rex)
+              call pwl_value_1d(10001,eta,f,1,eta_tmp,f_tmp)
+              call pwl_value_1d(10001,eta,fp,1,eta_tmp,fp_tmp)
+
+              ub(i,1,1,1) = U_inf * fp_tmp
+              vb(i,1,1,1) = U_inf
+     &            * (eta_tmp * fp_tmp - f_tmp)/(2.0 * sqrt(Rex))
+          end do
+
+          return
+      end
+!-----------------------------------------------------------------------
+      subroutine solve_blasius(eta,f,fp)
+          
+          implicit none
+
+          include 'SIZE'
+          include 'TOTAL'
+
+          real, intent(out) :: eta(10001), f(10001), fp(10001)
+          real, parameter :: deta = 1.e-6
+          real f_tmp, fp_tmp, fpp_tmp, fppp_tmp, eta_tmp
+          integer i
+
+          f_tmp = 0
+          fp_tmp = 0
+          fpp_tmp = 0.332
+          fppp_tmp = 0
+          eta_tmp = 0
+          i = 1
+
+          do while (eta_tmp <= 10.0)
+              fpp_tmp = fpp_tmp + deta * fppp_tmp
+              fp_tmp = fp_tmp + deta * fpp_tmp
+              f_tmp = f_tmp + deta * fp_tmp
+              fppp_tmp = -0.5 * f_tmp * fpp_tmp
+
+              if (mod(i-1,1000) == 0) then
+                  eta(i/1000+1) = eta_tmp
+                  f(i/1000+1) = f_tmp
+                  fp(i/1000+1) = fp_tmp
+              end if
+
+              i = i + 1
+              eta_tmp = eta_tmp + deta
+          end do
+
+          return
+      end
+!-----------------------------------------------------------------------
+! Linear interpolation
+      subroutine pwl_basis_1d(nd,xd,ni,xi,bk)
+      !
+      !! PWL_BASIS_1D evaluates a 1D piecewise linear basis function.
+      !
+      !  Licensing:
+      !
+      !    This code is distributed under the GNU LGPL license.
+      !
+      !  Modified:
+      !
+      !    01 July 2015
+      !
+      !  Author:
+      !
+      !    John Burkardt
+      !
+      !  Parameters:
+      !
+      !    Input, integer ND, the number of data points.
+      !    Input, real ( kind = rk ) XD(ND), the data points.
+      !    Input, integer NI, the number of interpolation points.
+      !    Input, real ( kind = rk ) XI(NI), the interpolation points.
+      !    Output, real ( kind = rk ) BK(NI,ND), the basis functions at the 
+      !    interpolation points.
+      !
+          implicit none
+      
+          integer, parameter :: rk = kind (1.0D+00)
+      
+          integer nd
+          integer ni
+      
+          real (kind = rk) bk(ni,nd)
+          integer i
+          integer j
+          real (kind = rk) t
+          real (kind = rk) xd(nd)
+          real (kind = rk) xi(ni)
+      
+          bk(1:ni,1:nd) = 0.0D+00
+      
+          if ( nd == 1 ) then
+              bk(1:ni,1:nd) = 1.0D+00
+              return
+          end if
+      
+          do i = 1, ni
+              do j = 1, nd
+                  if ( j == 1 .and. xi(i) <= xd(j) ) then
+                      t = ( xi(i) - xd(j) ) / ( xd(j+1) - xd(j) )
+                      bk(i,j) = 1.0D+00 - t
+                  else if ( j == nd .and. xd(j) <= xi(i) ) then
+                      t = ( xi(i) - xd(j-1) ) / ( xd(j) - xd(j-1) )
+                      bk(i,j) = t
+                  else if ( xd(j-1) < xi(i) .and. xi(i) <= xd(j) ) then
+                      t = ( xi(i) - xd(j-1) ) / ( xd(j) - xd(j-1) )
+                      bk(i,j) = t
+                  else if ( xd(j) <= xi(i) .and. xi(i) < xd(j+1) ) then
+                      t = ( xi(i) - xd(j) ) / ( xd(j+1) - xd(j) )
+                      bk(i,j) = 1.0D+00 - t
+                  end if
+              end do
+          end do
+          return
+      end
+!-----------------------------------------------------------------------
+      subroutine pwl_value_1d(nd,xd,yd,ni,xi,yi)
+      !
+      !! PWL_VALUE_1D evaluates the piecewise linear interpolant.
+      !
+      !  Discussion:
+      !
+      !    The piecewise linear interpolant L(ND,XD,YD)(X) is the piecewise
+      !    linear function which interpolates the data (XD(I),YD(I)) for I = 1
+      !    to ND.
+      !
+      !  Licensing:
+      !
+      !    This code is distributed under the GNU LGPL license.
+      !
+      !  Modified:
+      !
+      !    22 September 2012
+      !
+      !  Author:
+      !
+      !    John Burkardt
+      !
+      !  Parameters:
+      !
+      !    Input, integer ND, the number of data points.
+      !    ND must be at least 1.
+      !    Input, real ( kind = rk ) XD(ND), the data points.
+      !    Input, real ( kind = rk ) YD(ND), the data values.
+      !    Input, integer NI, the number of interpolation points.
+      !    Input, real ( kind = rk ) XI(NI), the interpolation points.
+      !    Output, real ( kind = rk ) YI(NI), the interpolated values.
+      !
+          implicit none
+        
+          integer, parameter :: rk = kind (1.0D+00)
+        
+          integer nd
+          integer ni
+        
+          integer i
+          integer k
+          real (kind = rk) t
+          real (kind = rk) xd(nd)
+          real (kind = rk) yd(nd)
+          real (kind = rk) xi(ni)
+          real (kind = rk) yi(ni)
+        
+          yi(1:ni) = 0.0D+00
+        
+          if ( nd == 1 ) then
+              yi(1:ni) = yd(1)
+              return
+          end if
+        
+          do i = 1, ni
+              if ( xi(i) <= xd(1) ) then
+                  t = ( xi(i) - xd(1) ) / ( xd(2) - xd(1) )
+                  yi(i) = ( 1.0D+00 - t ) * yd(1) + t * yd(2)
+              else if ( xd(nd) <= xi(i) ) then
+                  t = ( xi(i) - xd(nd-1) ) / ( xd(nd) - xd(nd-1) )
+                  yi(i) = ( 1.0D+00 - t ) * yd(nd-1) + t * yd(nd)
+              else
+                  do k = 2, nd
+                      if ( xd(k-1) <= xi(i) .and. xi(i) <= xd(k) ) then
+                          t = ( xi(i) - xd(k-1) ) / ( xd(k) - xd(k-1) )
+                          yi(i) = ( 1.0D+00 - t ) * yd(k-1) + t * yd(k)
+                          exit
+                      end if
+                  end do
+              end if
+          end do
+          return
+      end

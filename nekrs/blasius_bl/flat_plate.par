@@ -1,0 +1,32 @@
+#
+# nek parameter file
+#
+[OCCA]
+backend = CUDA
+deviceNumber = LOCAL-RANK
+
+[GENERAL]
+#verbose = true
+polynomialOrder = 7
+stopAt = endTime
+endTime = 10
+
+dt = targetCFL=3 + max=5e-3 + initial=1e-3
+timeStepper = tombo2
+
+writeControl = simulationTime 
+writeInterval = 1
+
+[PRESSURE]
+residualTol = 1e-06
+
+[VELOCITY]
+boundaryTypeMap = codedFixedValue,fixedGradient,zeroValue
+viscosity = 1/1000
+density = 1.0
+residualTol = 1e-08
+
+[CASEDATA]
+xstart = 40    # xstart: location of inlet along the boundary layer
+U_inf = 1.0    # Freestream velocity.
+BETAM = 3.0

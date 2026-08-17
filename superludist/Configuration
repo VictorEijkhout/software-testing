@@ -1,0 +1,20 @@
+################################################################
+####
+#### MrPackMod tests for parallel SuperLU
+####
+################################################################
+
+PACKAGE = superludist
+PACKAGEVERSION = 9.2.1
+MODE = mpi
+
+EXISTENCETEST = --title "C header" \
+        --dir inc superlu_dist_config.h
+EXISTENCETEST = --title "Fortran mod" \
+        --dir inc superlu_mod.mod
+EXISTENCETEST = --title "C library" \
+        --dir lib libsuperlu_dist.so
+EXISTENCETEST = --title "Fortran library" \
+        --dir lib libsuperlu_dist_fortran.so
+EXISTENCETEST = --title "pkg config" \
+        --dir lib pkgconfig/superlu_dist.pc
